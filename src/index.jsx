@@ -1,6 +1,7 @@
 import React from "react";
 import {render} from "react-dom";
 import AwesomeComponent from "./awesomecomponent.jsx";
+import SizeMe from "./api/sizeme-api.js";
 
 class App extends React.Component {
     render() {
