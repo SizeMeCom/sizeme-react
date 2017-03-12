@@ -1,6 +1,6 @@
 # SizeMe React
 
-Build with yarn and webpack (or npm, that should work also):
+Build with [yarn](https://yarnpkg.com) and [webpack](https://webpack.js.org/) (or npm, that should work also):
 
 1. `yarn install`
 2. `yarn start` to build dev version once, or `yarn watch` to automatically build on file change
