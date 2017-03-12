@@ -8,7 +8,7 @@ const APP_DIR = path.resolve(__dirname, "src");
 
 module.exports = {
     entry: {
-        main: APP_DIR + "/sizeme-controller.js"
+        main: APP_DIR + "/SizeMeController.jsx"
     },
     output: {
         path: BUILD_DIR,
@@ -16,11 +16,14 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
-            names: ["vendor", "manifest"], // Specify the common bundle's name.
-            minChunks: function (module) {
-                // this assumes your vendor imports exist in the node_modules directory
+            name: "vendor",
+            minChunks: function(module){
                 return module.context && module.context.indexOf("node_modules") !== -1;
             }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
+            minChunks: Infinity
         })
     ],
     module: {
