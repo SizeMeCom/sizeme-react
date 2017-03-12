@@ -1,7 +1,9 @@
-import ga from "./ga.js";
+/* global ga */
+import "./ga.js";
 
 class SizeMe {
     constructor (contextAddress = "https://www.sizeme.com", gaTrackingID, pluginVersion = "UNKNOWN") {
+        console.log("Creating SizeMe..");
         this.contextAddress = contextAddress;
         this.pluginVersion = pluginVersion;
         this._authToken = null;
@@ -24,9 +26,12 @@ class SizeMe {
             }
         };
     }
-
     
     set authToken (authToken) { this._authToken = authToken; }
+
+    isLoggedIn() {
+        return this._authToken != null;
+    }
 }
 
 export default SizeMe;
