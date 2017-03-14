@@ -34,4 +34,9 @@ class SizeMe {
     }
 }
 
-export default SizeMe;
+export let sizeme;
+
+export const initSizeMe = (contextAddress, gaTrackingID, pluginVersion) => {
+    sizeme = new SizeMe(contextAddress, gaTrackingID, pluginVersion);
+    return sizeme;
+};
