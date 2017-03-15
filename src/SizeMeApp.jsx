@@ -1,12 +1,11 @@
-//noinspection Eslint
 import React from "react";
-import VisibleSection from "./section/VisibleSection";
+import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 
 const SizeMeApp = () => (
     <div className="sizeme-content">
         <SizeGuide/>
-        <VisibleSection/>
+        <Section/>
     </div>
 );
 

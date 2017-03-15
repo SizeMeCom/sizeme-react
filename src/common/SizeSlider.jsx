@@ -2,7 +2,7 @@ import React from "react";
 
 class SizeSlider extends React.Component {
 
-    render() {
+    render () {
         return <span>Here will be the SizeSlider</span>;
     }
 

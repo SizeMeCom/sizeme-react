@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import loggedIn from "./login";
 
 const sizeMeReducer = combineReducers({
