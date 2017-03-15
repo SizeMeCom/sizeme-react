@@ -24,13 +24,12 @@ class LoggedOut extends React.Component {
         } else {
             return (
                 <div id="sizeme_product_splash">
-                    <p>Unsure about the right size? Try <a href="https://sizeme.greitco.com"
-                                                           target="_blank"
-                                                           id="sizeme_product_page_link"
-                                                           title="SizeMe is a free service to help you know how this item will fit _you_">
-                    </a>
-                        <a id="sizeme_btn_no_thanks_product_splash" title="Close" onClick={this.hide}>
-                        </a>
+                    <p>Unsure about the right size? Try
+                        <a href="https://sizeme.greitco.com"
+                           target="_blank"
+                           id="sizeme_product_page_link"
+                           title="SizeMe is a free service to help you know how this item will fit _you_"/>
+                        <a id="sizeme_btn_no_thanks_product_splash" title="Close" onClick={this.hide}/>
                     </p>
                 </div>
             );

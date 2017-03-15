@@ -9,7 +9,9 @@ class SizeMe {
         this._authToken = null;
 
         let gaEnabled = false;
-        ga(() => gaEnabled = gaTrackingID != null);
+        ga(function () {
+            gaEnabled = gaTrackingID != null;
+        });
 
         this.trackEvent = (action, label) => {
             if (gaEnabled) {
@@ -19,19 +21,24 @@ class SizeMe {
                         hitType: "event",
                         eventCategory: window.location.hostname,
                         eventAction: a,
-                        eventLabel: l,
+                        eventLabel: l
                     });
                 };
                 this.trackEvent(action, label);
             }
         };
     }
-    
+
     set authToken (authToken) { this._authToken = authToken; }
 
-    isLoggedIn() {
+    isLoggedIn () {
         return this._authToken != null;
     }
 }
 
-export default SizeMe;
+export let sizeme;
+
+export const initSizeMe = (contextAddress, gaTrackingID, pluginVersion) => {
+    sizeme = new SizeMe(contextAddress, gaTrackingID, pluginVersion);
+    return sizeme;
+};

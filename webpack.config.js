@@ -8,7 +8,7 @@ const APP_DIR = path.resolve(__dirname, "src");
 
 module.exports = {
     entry: {
-        main: APP_DIR + "/SizeMeController.jsx"
+        main: APP_DIR + "/index.js"
     },
     output: {
         path: BUILD_DIR,
