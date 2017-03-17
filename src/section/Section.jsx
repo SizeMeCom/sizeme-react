@@ -1,39 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login } from "../actions/index";
 import LoggedIn from "./LoggedIn.jsx";
 import LoggedOut from "./LoggedOut.jsx";
 
-const SectionElem = ({ loggedIn, onLogin }) => {
+const SectionElem = ({ loggedIn }) => {
     if (loggedIn) {
         return <LoggedIn/>;
     } else {
-        return <LoggedOut onLogin={onLogin}/>;
+        return <LoggedOut/>;
     }
 };
 
 SectionElem.propTypes = {
-    loggedIn: React.PropTypes.bool.isRequired,
-    onLogin: React.PropTypes.func.isRequired
+    loggedIn: React.PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        loggedIn: state.loggedIn
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onLogin: () => {
-            dispatch(login());
-        }
+        loggedIn: state.authToken.loggedIn
     };
 };
 
 const Section = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(SectionElem);
 
 export default Section;

@@ -12,12 +12,17 @@ module.exports = {
     },
     output: {
         path: BUILD_DIR,
-        filename: "[name].js"
+        filename: "[name].js",
+        devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     },
+    devtool: "source-map",
     plugins: [
+        new webpack.SourceMapDevToolPlugin({
+            filename: "[file].map"
+        }),
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
-            minChunks: function(module){
+            minChunks: function (module) {
                 return module.context && module.context.indexOf("node_modules") !== -1;
             }
         }),
