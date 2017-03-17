@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
-import {
-    CHECK_TOKEN, FETCH_TOKEN, RESOLVE_TOKEN
-} from "./actions";
+import * as actions from "./actions";
+
+function shouldResolveToken (state) {
+    return !state.resolved && !state.fetchingToken;
+}
 
 function authToken (state = {
     loggedIn: false,
@@ -9,19 +11,25 @@ function authToken (state = {
     resolved: false
 }, action) {
     switch (action.type) {
-        case CHECK_TOKEN:
-            return {
-                loggedIn: false,
-                fetchingToken: false,
-                resolved: false
-            };
+        case actions.CHECK_TOKEN:
+            if (shouldResolveToken(state)) {
+                return {
+                    loggedIn: false,
+                    fetchingToken: false,
+                    resolved: false
+                };
+            }
+            return state;
 
-        case FETCH_TOKEN:
-            return Object.assign({}, state, {
-                fetchingToken: true
-            });
+        case actions.FETCH_TOKEN:
+            if (shouldResolveToken(state)) {
+                return Object.assign({}, state, {
+                    fetchingToken: true
+                });
+            }
+            return state;
 
-        case RESOLVE_TOKEN:
+        case actions.RESOLVE_TOKEN:
             return {
                 token: action.payload,
                 loggedIn: action.payload != null,
@@ -35,8 +43,29 @@ function authToken (state = {
     }
 }
 
+function profileList (state = {
+    profiles: [],
+    isFetching: false
+}, action) {
+    switch (action.type) {
+        case actions.REQUEST_PROFILELIST:
+            return Object.assign({}, state, { isFetching: true });
+
+        case actions.RECEIVE_PROFILELIST:
+            return Object.assign({}, state, {
+                profiles: action.payload,
+                error: action.error,
+                isFetching: false
+            });
+
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
-    authToken
+    authToken,
+    profileList
 });
 
 export default rootReducer;

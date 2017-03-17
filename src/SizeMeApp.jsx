@@ -2,13 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
-import { resolveAuthToken } from "./api/sizeme-api";
+import { resolveAuthToken, getProfiles } from "./api/sizeme-api";
 
 class SizeMeApp extends React.Component {
 
     componentDidMount () {
         const { dispatch } = this.props;
-        dispatch(resolveAuthToken());
+        dispatch(resolveAuthToken())
+            .then(() => dispatch(getProfiles()));
     }
 
     render () {

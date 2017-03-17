@@ -1,14 +1,14 @@
-import fetch from 'isomorphic-fetch';
-import "./ga.js";
-import {
-    CHECK_TOKEN, FETCH_TOKEN, RESOLVE_TOKEN
-} from "./actions";
+/* global sizeme_options */
+
+import "isomorphic-fetch";
+import { trackEvent, gaEnabled } from "./ga.js";
+import * as actions from "./actions";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import rootReducer from "./reducers";
 
 let contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
-let pluginVersion = sizeme_options.pluginVersion;
+let pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
 
 const sizemeStore = createStore(
     rootReducer,
@@ -21,77 +21,139 @@ const sizemeStore = createStore(
 
 function checkToken () {
     return {
-        type: CHECK_TOKEN
+        type: actions.CHECK_TOKEN
     };
 }
 
 function fetchToken () {
     return {
-        type: FETCH_TOKEN
+        type: actions.FETCH_TOKEN
     };
 }
 
 function resolveToken (token, error) {
     return {
-        type: RESOLVE_TOKEN,
+        type: actions.RESOLVE_TOKEN,
         payload: token,
+        error
+    };
+}
+
+function requestProfileList () {
+    return {
+        type: actions.REQUEST_PROFILELIST
+    };
+}
+
+function receiveProfileList (profiles, error) {
+    return {
+        type: actions.RECEIVE_PROFILELIST,
+        payload: profiles,
         error
     };
 }
 
 /*** Action creators end ***/
 
+function createRequest (method, token, withCredentials = false) {
+    let headers = new Headers({
+        "X-Sizeme-Pluginversion": pluginVersion
+    });
+
+    if (gaEnabled) {
+        headers.append("X-Analytics-Enabled", true);
+    }
+
+    if (token) {
+        headers.append("Authorization", "Bearer " + token);
+    }
+
+    let request = {
+        method,
+        headers,
+        mode: "cors"
+    };
+
+    if (withCredentials) {
+        request.credentials = "include";
+    }
+
+    return request;
+}
+
+function jsonResponse (response) {
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error(response.state + " - " + response.statusText);
+}
+
 function resolveAuthToken () {
-    return function (dispatch) {
-        dispatch(checkToken());
-
-        let tokenObj = sessionStorage.getItem("sizeme.authtoken");
-        let authToken;
-        if (tokenObj) {
-            let storedToken;
-            try {
-                storedToken = JSON.parse(tokenObj);
-                if (storedToken.token && storedToken.expires &&
-                    Date.parse(storedToken.expires) > new Date().getTime()) {
-                    authToken = resolveToken(storedToken.token);
-                }
-            } catch (e) {
-                // no action
+    return function (dispatch, getState) {
+        return new Promise((resolve) => {
+            if (getState().authToken.resolved) {
+                resolve();
+                return;
             }
-        }
 
-        if (authToken) {
-            dispatch(resolveToken(authToken));
-        } else {
-            dispatch(fetchToken());
-            let tokenRequest = {
-                method: "GET",
-                headers: {
-                    "X-Sizeme-Pluginversion": pluginVersion
-                },
-                mode: "cors",
-                credentials: "include"
-            };
+            dispatch(checkToken());
 
-            fetch(contextAddress + "/api/authToken", tokenRequest)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
+            let tokenObj = sessionStorage.getItem("sizeme.authtoken");
+            let authToken;
+            if (tokenObj) {
+                let storedToken;
+                try {
+                    storedToken = JSON.parse(tokenObj);
+                    if (storedToken.token && storedToken.expires &&
+                        Date.parse(storedToken.expires) > new Date().getTime()) {
+                        authToken = storedToken.token;
                     }
-                    throw new Error(response.state + " - " + response.statusText);
-                })
-                .then((tokenResp) => {
-                    sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
-                    dispatch(resolveToken(tokenResp.token));
-                })
-                .catch((reason) => {
-                    dispatch(resolveToken(null, reason));
-                });
+                } catch (e) {
+                    // no action
+                }
+            }
+
+            if (authToken) {
+                dispatch(resolveToken(authToken));
+                resolve();
+            } else {
+                dispatch(fetchToken());
+                resolve(fetch(contextAddress + "/api/authToken", createRequest("GET", null, true))
+                    .then(jsonResponse)
+                    .then((tokenResp) => {
+                        sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
+                        dispatch(resolveToken(tokenResp.token));
+                    })
+                    .catch((reason) => {
+                        dispatch(resolveToken(null, reason));
+                    })
+                );
+            }
+        });
+    };
+}
+
+function getProfiles () {
+    return function (dispatch, getState) {
+        if (!getState().authToken.loggedIn) {
+            return new Promise((resolve) => { resolve(); });
         }
+        dispatch(requestProfileList());
+        let token = getState().authToken.token;
+        return fetch(contextAddress + "/api/profiles", createRequest("GET", token))
+            .then(jsonResponse)
+            .then((profileList) => {
+                trackEvent("fetchProfiles", "API: fetchProfiles");
+                dispatch(receiveProfileList(profileList));
+            })
+            .catch((reason) => {
+                dispatch(receiveProfileList([], reason));
+            });
     };
 }
 
 export {
     sizemeStore,
-    resolveAuthToken
+    resolveAuthToken,
+    getProfiles
 };
