@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { handleActions } from "redux-actions";
+import { handleAction, handleActions } from "redux-actions";
 import * as actions from "./actions";
 
 function resolvePayload(action, payloadKey) {
@@ -59,10 +59,13 @@ const productInfo = handleActions({
     resolved: false
 });
 
+const selectedProfile = handleAction(actions.SELECT_PROFILE, (state, action) => action.payload, "");
+
 const rootReducer = combineReducers({
     authToken,
     profileList,
-    productInfo
+    productInfo,
+    selectedProfile
 });
 
 export default rootReducer;

@@ -4,6 +4,9 @@ import React from "react";
 import { trackEvent } from "../api/ga";
 
 class LoggedIn extends React.Component {
+    constructor (props) {
+        super(props);
+    }
 
     componentDidMount () {
         // TODO: fix sizeme_product, should be in props etc
@@ -11,9 +14,27 @@ class LoggedIn extends React.Component {
         trackEvent(eventLabel + "LoggedIn", "Store: Product page load, logged in");
     };
 
+    handleChange = (event) => {
+        this.props.onSelectProfile(event.target.value);
+    };
+
     render () {
-        return <div>Logged in content</div>;
+        return (
+            <div>
+                <select value={this.props.selectedProfile} onChange={this.handleChange}>
+                    {this.props.profiles.map((profile) => (
+                        <option key={profile.id} value={profile.id}>{profile.profileName}</option>
+                    ))}
+                </select>
+            </div>
+        );
     }
 }
+
+LoggedIn.propTypes = {
+    profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    selectedProfile: React.PropTypes.string,
+    onSelectProfile: React.PropTypes.func.isRequired
+};
 
 export default LoggedIn;

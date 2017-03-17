@@ -161,9 +161,30 @@ function getProduct () {
     };
 }
 
+function setSelectedProfile (profileId) {
+    return function (dispatch, getState) {
+        if (getState().selectedProfile === profileId) {
+            return;
+        }
+
+        let profileList = getState().profileList.profiles.map(p => p.id);
+        if (profileList.length === 0) {
+            return;
+        }
+
+        if (!profileId) {
+            profileId = sessionStorage.getItem("sizeme.selectedProfile") || profileList[0];
+        }
+
+        sessionStorage.setItem("sizeme.selectedProfile", profileId);
+        dispatch(actions.selectProfile(profileId));
+    };
+}
+
 export {
     sizemeStore,
     resolveAuthToken,
     getProfiles,
-    getProduct
+    getProduct,
+    setSelectedProfile
 };
