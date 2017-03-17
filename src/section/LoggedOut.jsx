@@ -1,5 +1,8 @@
+/* global sizeme_product */
+
 import React from "react";
 import cookie from "react-cookie";
+import { trackEvent } from "../api/ga";
 
 const maxAge = 90 * 24 * 60 * 60; // 90 days
 const cookieName = "sizeme_no_product_splash";
@@ -13,7 +16,18 @@ class LoggedOut extends React.Component {
         };
     }
 
+    componentDidMount () {
+        // TODO: fix sizeme_product, should be in props etc
+        let eventLabel = sizeme_product ? "productPage" : "productPageNonSM";
+        if (this.state.hidden) {
+            trackEvent(eventLabel + "NoSM", "Store: Product page load, SizeMe refused");
+        } else {
+            trackEvent(eventLabel + "LoggedOut", "Store: Product page load, logged out");
+        }
+    };
+
     hide = () => {
+        trackEvent("noThanks", "Store: SizeMe, no thanks");
         cookie.save(cookieName, "true", { path: "/", maxAge: maxAge });
         this.setState({ hidden: true });
     };

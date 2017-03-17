@@ -35,4 +35,4 @@ let trackEvent = (action, label) => {
     }
 };
 
-export { trackEvent };
+export { trackEvent, gaEnabled };
