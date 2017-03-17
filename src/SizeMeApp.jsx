@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
-import { resolveAuthToken, getProfiles } from "./api/sizeme-api";
+import { resolveAuthToken, getProfiles, getProduct } from "./api/sizeme-api";
 
 class SizeMeApp extends React.Component {
 
     componentDidMount () {
         const { dispatch } = this.props;
-        dispatch(resolveAuthToken())
-            .then(() => dispatch(getProfiles()));
+        dispatch(resolveAuthToken()).then(() => dispatch(getProfiles()));
+        dispatch(getProduct());
     }
 
     render () {
@@ -32,4 +32,4 @@ SizeMeApp.propTypes = {
 };
 
 
-export default connect(state => ({ resolved: state.authToken.resolved }))(SizeMeApp);
+export default connect(state => ({ resolved: state.authToken.resolved && state.productInfo.resolved }))(SizeMeApp);

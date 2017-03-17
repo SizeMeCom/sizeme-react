@@ -1,10 +1,11 @@
-/* global sizeme_options */
+/* global sizeme_options, sizeme_product */
 
 import "isomorphic-fetch";
 import { trackEvent, gaEnabled } from "./ga.js";
 import * as actions from "./actions";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
+import createLogger from "redux-logger";
 import rootReducer from "./reducers";
 
 let contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
@@ -13,45 +14,10 @@ let pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
 const sizemeStore = createStore(
     rootReducer,
     applyMiddleware(
-        thunkMiddleware
+        thunkMiddleware,
+        createLogger()
     )
 );
-
-/*** Action creators ***/
-
-function checkToken () {
-    return {
-        type: actions.CHECK_TOKEN
-    };
-}
-
-function fetchToken () {
-    return {
-        type: actions.FETCH_TOKEN
-    };
-}
-
-function resolveToken (token, error) {
-    return {
-        type: actions.RESOLVE_TOKEN,
-        payload: token,
-        error
-    };
-}
-
-function requestProfileList () {
-    return {
-        type: actions.REQUEST_PROFILELIST
-    };
-}
-
-function receiveProfileList (profiles, error) {
-    return {
-        type: actions.RECEIVE_PROFILELIST,
-        payload: profiles,
-        error
-    };
-}
 
 /*** Action creators end ***/
 
@@ -96,7 +62,7 @@ function resolveAuthToken () {
                 return;
             }
 
-            dispatch(checkToken());
+            dispatch(actions.checkToken());
 
             let tokenObj = sessionStorage.getItem("sizeme.authtoken");
             let authToken;
@@ -114,18 +80,18 @@ function resolveAuthToken () {
             }
 
             if (authToken) {
-                dispatch(resolveToken(authToken));
+                dispatch(actions.resolveToken(authToken));
                 resolve();
             } else {
-                dispatch(fetchToken());
+                dispatch(actions.fetchToken());
                 resolve(fetch(contextAddress + "/api/authToken", createRequest("GET", null, true))
                     .then(jsonResponse)
                     .then((tokenResp) => {
                         sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
-                        dispatch(resolveToken(tokenResp.token));
+                        dispatch(actions.resolveToken(tokenResp.token));
                     })
                     .catch((reason) => {
-                        dispatch(resolveToken(null, reason));
+                        dispatch(actions.resolveToken(new Error(reason)));
                     })
                 );
             }
@@ -138,22 +104,66 @@ function getProfiles () {
         if (!getState().authToken.loggedIn) {
             return new Promise((resolve) => { resolve(); });
         }
-        dispatch(requestProfileList());
+        dispatch(actions.requestProfileList());
         let token = getState().authToken.token;
         return fetch(contextAddress + "/api/profiles", createRequest("GET", token))
             .then(jsonResponse)
             .then((profileList) => {
                 trackEvent("fetchProfiles", "API: fetchProfiles");
-                dispatch(receiveProfileList(profileList));
+                dispatch(actions.receiveProfileList(profileList));
             })
             .catch((reason) => {
-                dispatch(receiveProfileList([], reason));
+                dispatch(actions.receiveProfileList(new Error(reason)));
             });
+    };
+}
+
+function getProduct () {
+    return function (dispatch, getState) {
+        return new Promise((resolve) => {
+            if (getState().productInfo.resolved) {
+                resolve();
+                return;
+            }
+
+            dispatch(actions.requestProductInfo());
+            let product = sizeme_product;
+            if (product) {
+                if (product.SKU) {
+                    resolve(
+                        fetch(
+                            contextAddress + "/api/products/" + encodeURIComponent(product.SKU),
+                            createRequest("GET")
+                        )
+                            .then(jsonResponse)
+                            .then((dbItem) => {
+                                let productItem = { ...dbItem, measurements: {} };
+                                for (let sku in dbItem.measurements) {
+                                    if (dbItem.measurements.hasOwnProperty(sku) && product.item[sku]) {
+                                        productItem.measurements[product.item[sku]] = dbItem.measurements[sku];
+                                    }
+                                }
+                                dispatch(actions.receiveProductInfo({ ...product, item: productItem }));
+                            })
+                            .catch((reason) => {
+                                dispatch(actions.receiveProductInfo(new Error(reason)));
+                            })
+                    );
+                } else {
+                    dispatch(actions.receiveProductInfo(product));
+                    resolve();
+                }
+            } else {
+                dispatch(actions.receiveProductInfo(new Error("no product")));
+                resolve();
+            }
+        });
     };
 }
 
 export {
     sizemeStore,
     resolveAuthToken,
-    getProfiles
+    getProfiles,
+    getProduct
 };

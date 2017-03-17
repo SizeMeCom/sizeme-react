@@ -1,71 +1,68 @@
 import { combineReducers } from "redux";
+import { handleActions } from "redux-actions";
 import * as actions from "./actions";
 
-function shouldResolveToken (state) {
-    return !state.resolved && !state.fetchingToken;
+function resolvePayload(action, payloadKey) {
+    return {
+        [payloadKey]: action.error ? null : action.payload,
+        error: action.error ? action.payload : null
+    };
 }
 
-function authToken (state = {
+const authToken = handleActions({
+    [actions.CHECK_TOKEN]: (state, action) => ({
+        loggedIn: false,
+        isFetching: false,
+        resolved: false
+    }),
+
+    [actions.FETCH_TOKEN]: (state, action) => ({ ...state, isFetching: true }),
+
+    [actions.RESOLVE_TOKEN]: (state, action) => ({
+        ...state,
+        isFetching: false,
+        resolved: true,
+        loggedIn: !action.error,
+        ...resolvePayload(action, "token")
+    })
+}, {
     loggedIn: false,
-    fetchingToken: false,
+    isFetching: false,
     resolved: false
-}, action) {
-    switch (action.type) {
-        case actions.CHECK_TOKEN:
-            if (shouldResolveToken(state)) {
-                return {
-                    loggedIn: false,
-                    fetchingToken: false,
-                    resolved: false
-                };
-            }
-            return state;
+});
 
-        case actions.FETCH_TOKEN:
-            if (shouldResolveToken(state)) {
-                return Object.assign({}, state, {
-                    fetchingToken: true
-                });
-            }
-            return state;
+const profileList = handleActions({
+    [actions.REQUEST_PROFILE_LIST]: (state, action) => ({ ...state, isFetching: true }),
 
-        case actions.RESOLVE_TOKEN:
-            return {
-                token: action.payload,
-                loggedIn: action.payload != null,
-                fetchingToken: false,
-                tokenErr: action.error,
-                resolved: true
-            };
-
-        default:
-            return state;
-    }
-}
-
-function profileList (state = {
+    [actions.RECEIVE_PROFILE_LIST]: (state, action) => ({
+        ...state,
+        isFetching: false,
+        ...resolvePayload(action, "profiles")
+    })
+}, {
     profiles: [],
     isFetching: false
-}, action) {
-    switch (action.type) {
-        case actions.REQUEST_PROFILELIST:
-            return Object.assign({}, state, { isFetching: true });
+});
 
-        case actions.RECEIVE_PROFILELIST:
-            return Object.assign({}, state, {
-                profiles: action.payload,
-                error: action.error,
-                isFetching: false
-            });
+const productInfo = handleActions({
+    [actions.REQUEST_PRODUCT_INFO]: (state, action) => ({ ...state, isFetching: true}),
 
-        default:
-            return state;
-    }
-}
+    [actions.RECEIVE_PRODUCT_INFO]: (state, action) => ({
+        ...state,
+        isFetching: false,
+        resolved: true,
+        ...resolvePayload(action, "product")
+    })
+}, {
+    product: null,
+    isFetching: false,
+    resolved: false
+});
 
 const rootReducer = combineReducers({
     authToken,
-    profileList
+    profileList,
+    productInfo
 });
 
 export default rootReducer;
