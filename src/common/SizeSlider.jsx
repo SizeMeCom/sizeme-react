@@ -30,18 +30,18 @@ class SizeSlider extends React.Component {
     }
 
     render () {
-        let percentWidth, self = this;
+        let percentWidth;
         return (
             <div className="sizeme_slider">
                 <div className="slider_container">
                     <div className="slider_bar"
-                         style={{width:self.sliderPos(this.state.fitValue)+"%", transition:"width 0.5s ease-in-out"}}
+                         style={{width:this.sliderPos(this.state.fitValue)+"%", transition:"width 0.5s ease-in-out"}}
                     ></div>
                     <div className="slider_area"></div>
                     <table className="slider_table">
                         <tbody>
                             <tr>
-                                {FIT_RANGES.map((fit) => {
+                                {FIT_RANGES.map(fit => {
                                     percentWidth = (fit.end - fit.start) * self.sliderScale;
                                     return (
                                         <td

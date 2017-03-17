@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
+import SizeForm from "./common/SizeForm.jsx";
 import { resolveAuthToken } from "./api/sizeme-api";
 
 class SizeMeApp extends React.Component {
@@ -16,7 +17,8 @@ class SizeMeApp extends React.Component {
         if (this.props.resolved) {
             return (
                 <div className="sizeme-content">
-                    <SizeSlider fitValue="" />
+                    <SizeSlider/>
+                    <SizeForm fields={['chest', 'front_height', 'sleeve']} />
                     <SizeGuide/>
                     <Section/>
                 </div>
