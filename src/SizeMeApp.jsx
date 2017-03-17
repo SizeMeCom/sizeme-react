@@ -1,14 +1,36 @@
 import React from "react";
+import { connect } from "react-redux";
 import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
+import { resolveAuthToken } from "./api/sizeme-api";
 
-const SizeMeApp = () => (
-    <div className="sizeme-content">
-        <SizeSlider fitValue="" />
-        <SizeGuide/>
-        <Section/>
-    </div>
-);
+class SizeMeApp extends React.Component {
 
-export default SizeMeApp;
+    componentDidMount () {
+        const { dispatch } = this.props;
+        dispatch(resolveAuthToken());
+    }
+
+    render () {
+        if (this.props.resolved) {
+            return (
+                <div className="sizeme-content">
+                    <SizeSlider fitValue="" />
+                    <SizeGuide/>
+                    <Section/>
+                </div>
+            );
+        } else {
+            return null;
+        }
+    }
+}
+
+SizeMeApp.propTypes = {
+    resolved: React.PropTypes.bool.isRequired,
+    dispatch: React.PropTypes.func.isRequired
+};
+
+
+export default connect(state => ({ resolved: state.authToken.resolved }))(SizeMeApp);

@@ -1,3 +1,4 @@
+/* global ga, sizeme_options */
 (function (i, s, o, g, r) {
     i["GoogleAnalyticsObject"] = r;
     i[r] = i[r] ||
@@ -12,3 +13,26 @@
     m.parentNode.insertBefore(a, m);
 })(window, document, "script", "//www.google-analytics.com/analytics.js", "ga");
 
+let gaTrackingId = sizeme_options.gaTrackingId;
+
+let gaEnabled = false;
+ga(function () {
+    gaEnabled = gaTrackingId != null;
+});
+
+let trackEvent = (action, label) => {
+    if (gaEnabled) {
+        ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
+        trackEvent = (a, l) => {
+            ga("sizemeTracker.send", {
+                hitType: "event",
+                eventCategory: window.location.hostname,
+                eventAction: a,
+                eventLabel: l
+            });
+        };
+        trackEvent(action, label);
+    }
+};
+
+export { trackEvent };
