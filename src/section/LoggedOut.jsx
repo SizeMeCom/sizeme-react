@@ -20,9 +20,9 @@ class LoggedOut extends React.Component {
         // TODO: fix sizeme_product, should be in props etc
         let eventLabel = sizeme_product ? "productPage" : "productPageNonSM";
         if (this.state.hidden) {
-            trackEvent(eventLabel + "NoSM", "Store: Product page load, SizeMe refused");
+            trackEvent(`${eventLabel}NoSM`, "Store: Product page load, SizeMe refused");
         } else {
-            trackEvent(eventLabel + "LoggedOut", "Store: Product page load, logged out");
+            trackEvent(`${eventLabel}LoggedOut`, "Store: Product page load, logged out");
         }
     };
 

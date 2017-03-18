@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { handleAction, handleActions } from "redux-actions";
 import * as actions from "./actions";
 
-function resolvePayload(action, payloadKey) {
+function resolvePayload (action, payloadKey) {
     return {
         [payloadKey]: action.error ? null : action.payload,
         error: action.error ? action.payload : null
@@ -45,7 +45,7 @@ const profileList = handleActions({
 });
 
 const productInfo = handleActions({
-    [actions.REQUEST_PRODUCT_INFO]: (state, action) => ({ ...state, isFetching: true}),
+    [actions.REQUEST_PRODUCT_INFO]: (state, action) => ({ ...state, isFetching: true }),
 
     [actions.RECEIVE_PRODUCT_INFO]: (state, action) => ({
         ...state,
@@ -59,13 +59,33 @@ const productInfo = handleActions({
     resolved: false
 });
 
-const selectedProfile = handleAction(actions.SELECT_PROFILE, (state, action) => action.payload, "");
+const selectedProfile = handleAction(actions.SELECT_PROFILE, (state, action) => action.payload, {
+    id: "",
+    profileName: null
+});
+
+const match = handleActions({
+    [actions.REQUEST_MATCH]: (state, action) => ({
+        matchResult: null,
+        isFetching: true
+    }),
+
+    [actions.RECEIVE_MATCH]: (state, action) => ({
+        ...state,
+        isFetching: false,
+        ...resolvePayload(action, "matchResult")
+    })
+}, {
+    matchResult: null,
+    isFetching: false
+});
 
 const rootReducer = combineReducers({
     authToken,
     profileList,
     productInfo,
-    selectedProfile
+    selectedProfile,
+    match
 });
 
 export default rootReducer;

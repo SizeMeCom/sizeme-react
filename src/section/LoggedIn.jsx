@@ -11,8 +11,8 @@ class LoggedIn extends React.Component {
     componentDidMount () {
         // TODO: fix sizeme_product, should be in props etc
         let eventLabel = sizeme_product ? "productPage" : "productPageNonSM";
-        trackEvent(eventLabel + "LoggedIn", "Store: Product page load, logged in");
-    };
+        trackEvent(`${eventLabel}LoggedIn`, "Store: Product page load, logged in");
+    }
 
     handleChange = (event) => {
         this.props.onSelectProfile(event.target.value);
@@ -21,7 +21,7 @@ class LoggedIn extends React.Component {
     render () {
         return (
             <div>
-                <select value={this.props.selectedProfile} onChange={this.handleChange}>
+                <select value={this.props.selectedProfile.id} onChange={this.handleChange}>
                     {this.props.profiles.map((profile) => (
                         <option key={profile.id} value={profile.id}>{profile.profileName}</option>
                     ))}
@@ -33,7 +33,7 @@ class LoggedIn extends React.Component {
 
 LoggedIn.propTypes = {
     profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedProfile: React.PropTypes.string,
+    selectedProfile: React.PropTypes.object.isRequired,
     onSelectProfile: React.PropTypes.func.isRequired
 };
 

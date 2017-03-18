@@ -16,7 +16,7 @@ const SectionElem = ({ loggedIn, profiles, selectedProfile, onSelectProfile }) =
 SectionElem.propTypes = {
     loggedIn: React.PropTypes.bool.isRequired,
     profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedProfile: React.PropTypes.string,
+    selectedProfile: React.PropTypes.object.isRequired,
     onSelectProfile: React.PropTypes.func.isRequired
 };
 

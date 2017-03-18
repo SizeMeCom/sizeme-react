@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import createLogger from "redux-logger";
 import rootReducer from "./reducers";
+import { FitRequest } from "./SizeMe";
 
 let contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
 let pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
@@ -51,133 +52,176 @@ function jsonResponse (response) {
     if (response.ok) {
         return response.json();
     }
-    throw new Error(response.state + " - " + response.statusText);
+    throw new Error(`${response.state} - ${response.statusText}`);
 }
 
 function resolveAuthToken () {
-    return function (dispatch, getState) {
-        return new Promise((resolve) => {
-            if (getState().authToken.resolved) {
-                resolve();
-                return;
-            }
+    return async (dispatch, getState) => {
+        if (getState().authToken.resolved) {
+            return undefined;
+        }
 
-            dispatch(actions.checkToken());
+        dispatch(actions.checkToken());
 
-            let tokenObj = sessionStorage.getItem("sizeme.authtoken");
-            let authToken;
-            if (tokenObj) {
-                let storedToken;
-                try {
-                    storedToken = JSON.parse(tokenObj);
-                    if (storedToken.token && storedToken.expires &&
-                        Date.parse(storedToken.expires) > new Date().getTime()) {
-                        authToken = storedToken.token;
-                    }
-                } catch (e) {
-                    // no action
+        let tokenObj = sessionStorage.getItem("sizeme.authtoken");
+        let authToken;
+        if (tokenObj) {
+            let storedToken;
+            try {
+                storedToken = JSON.parse(tokenObj);
+                if (storedToken.token && storedToken.expires &&
+                    Date.parse(storedToken.expires) > new Date().getTime()) {
+                    authToken = storedToken.token;
                 }
+            } catch (e) {
+                // no action
             }
+        }
 
-            if (authToken) {
-                dispatch(actions.resolveToken(authToken));
-                resolve();
-            } else {
-                dispatch(actions.fetchToken());
-                resolve(fetch(contextAddress + "/api/authToken", createRequest("GET", null, true))
-                    .then(jsonResponse)
-                    .then((tokenResp) => {
-                        sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
-                        dispatch(actions.resolveToken(tokenResp.token));
-                    })
-                    .catch((reason) => {
-                        dispatch(actions.resolveToken(new Error(reason)));
-                    })
-                );
+        if (authToken) {
+            dispatch(actions.resolveToken(authToken));
+        } else {
+            dispatch(actions.fetchToken());
+            try {
+                let tokenResp = await fetch(`${contextAddress}/api/authToken`, createRequest("GET", null, true))
+                    .then(jsonResponse);
+                sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
+                dispatch(actions.resolveToken(tokenResp.token));
+            } catch (reason) {
+                dispatch(actions.resolveToken(new Error(reason)));
             }
-        });
+        }
     };
 }
 
 function getProfiles () {
-    return function (dispatch, getState) {
+    return async (dispatch, getState) => {
         if (!getState().authToken.loggedIn) {
-            return new Promise((resolve) => { resolve(); });
+            return undefined;
         }
         dispatch(actions.requestProfileList());
         let token = getState().authToken.token;
-        return fetch(contextAddress + "/api/profiles", createRequest("GET", token))
-            .then(jsonResponse)
-            .then((profileList) => {
-                trackEvent("fetchProfiles", "API: fetchProfiles");
-                dispatch(actions.receiveProfileList(profileList));
-            })
-            .catch((reason) => {
-                dispatch(actions.receiveProfileList(new Error(reason)));
-            });
+        try {
+            let profileList = await fetch(`${contextAddress}/api/profiles`, createRequest("GET", token))
+                .then(jsonResponse);
+
+            trackEvent("fetchProfiles", "API: fetchProfiles");
+            dispatch(actions.receiveProfileList(profileList));
+        } catch (reason) {
+            dispatch(actions.receiveProfileList(new Error(reason)));
+        }
     };
 }
 
 function getProduct () {
-    return function (dispatch, getState) {
-        return new Promise((resolve) => {
-            if (getState().productInfo.resolved) {
-                resolve();
-                return;
-            }
+    return async (dispatch, getState) => {
+        if (getState().productInfo.resolved) {
+            return undefined;
+        }
 
-            dispatch(actions.requestProductInfo());
-            let product = sizeme_product;
-            if (product) {
-                if (product.SKU) {
-                    resolve(
-                        fetch(
-                            contextAddress + "/api/products/" + encodeURIComponent(product.SKU),
-                            createRequest("GET")
-                        )
-                            .then(jsonResponse)
-                            .then((dbItem) => {
-                                let productItem = { ...dbItem, measurements: {} };
-                                for (let sku in dbItem.measurements) {
-                                    if (dbItem.measurements.hasOwnProperty(sku) && product.item[sku]) {
-                                        productItem.measurements[product.item[sku]] = dbItem.measurements[sku];
-                                    }
-                                }
-                                dispatch(actions.receiveProductInfo({ ...product, item: productItem }));
-                            })
-                            .catch((reason) => {
-                                dispatch(actions.receiveProductInfo(new Error(reason)));
-                            })
-                    );
-                } else {
-                    dispatch(actions.receiveProductInfo(product));
-                    resolve();
+        dispatch(actions.requestProductInfo());
+
+        //noinspection Eslint
+        let product = sizeme_product;
+        if (!product) {
+            dispatch(actions.receiveProductInfo(new Error("no product")));
+            return undefined;
+        }
+
+        if (!product.SKU) {
+            dispatch(actions.receiveProductInfo(sizeme_product));
+            return undefined;
+        }
+
+        try {
+            let dbItem = await fetch(
+                `${contextAddress}/api/products/${encodeURIComponent(product.SKU)}`,
+                createRequest("GET")
+            ).then(jsonResponse);
+
+            let productItem = { ...dbItem, measurements: {} };
+            for (let sku in dbItem.measurements) {
+                if (dbItem.measurements.hasOwnProperty(sku) && product.item[sku]) {
+                    productItem.measurements[product.item[sku]] = dbItem.measurements[sku];
                 }
-            } else {
-                dispatch(actions.receiveProductInfo(new Error("no product")));
-                resolve();
             }
-        });
+            dispatch(actions.receiveProductInfo({ ...product, item: productItem }));
+        } catch (reason) {
+            dispatch(actions.receiveProductInfo(new Error(reason)));
+        }
     };
 }
 
 function setSelectedProfile (profileId) {
-    return function (dispatch, getState) {
+    return async (dispatch, getState) => {
         if (getState().selectedProfile === profileId) {
-            return;
+            return undefined;
         }
 
-        let profileList = getState().profileList.profiles.map(p => p.id);
+        let profileList = getState().profileList.profiles;
         if (profileList.length === 0) {
-            return;
+            return undefined;
         }
 
-        if (!profileId) {
-            profileId = sessionStorage.getItem("sizeme.selectedProfile") || profileList[0];
+        let profile;
+        profileId = profileId || sessionStorage.getItem("sizeme.selectedProfile");
+        if (profileId) {
+            profile = profileList.find(p => p.id === profileId);
         }
 
-        sessionStorage.setItem("sizeme.selectedProfile", profileId);
-        dispatch(actions.selectProfile(profileId));
+        if (!profile) {
+            profile = profileList[0];
+        }
+
+        sessionStorage.setItem("sizeme.selectedProfile", profile.id);
+        dispatch(actions.selectProfile(profile));
+        trackEvent("activeProfileChanged", "Store: Active profile changed");
+
+        await dispatch(match());
+    };
+}
+
+function doMatch (fitRequest, token) {
+    let request = createRequest("POST", token);
+    let { headers } = request;
+    headers.append("Content-Type", "application/json");
+    request.body = JSON.stringify(fitRequest);
+
+    let address;
+    if (token) {
+        address = `${contextAddress}/api/compareSizes`;
+    } else {
+        address = `${contextAddress}/api/compareSizesSansProfile`;
+    }
+
+    return fetch(address, request).then(jsonResponse);
+}
+
+function match () {
+    return async (dispatch, getState) => {
+        if (!getState().productInfo.resolved) {
+            return undefined;
+        }
+
+        // TODO: handle anonymous case
+        let token = getState().authToken.token;
+        if (!token) {
+            return undefined;
+        }
+
+        dispatch(actions.requestMatch());
+
+        let product = getState().productInfo.product;
+        try {
+            let matchResult = await doMatch(
+                new FitRequest(getState().selectedProfile.id, product.SKU || product.item),
+                token
+            );
+            trackEvent("match", "API: match");
+            dispatch(actions.receiveMatch(new Map(Object.entries(matchResult))));
+        } catch (reason) {
+            dispatch(actions.receiveMatch(new Error(reason)));
+        }
     };
 }
 
@@ -186,5 +230,6 @@ export {
     resolveAuthToken,
     getProfiles,
     getProduct,
-    setSelectedProfile
+    setSelectedProfile,
+    match
 };
