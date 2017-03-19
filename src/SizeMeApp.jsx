@@ -10,11 +10,10 @@ class SizeMeApp extends React.Component {
 
     componentDidMount () {
         const { dispatch } = this.props;
-        dispatch(resolveAuthToken())
-            .then(() => dispatch(getProfiles()))
-            .then(() => dispatch(setSelectedProfile()));
-
-        dispatch(getProduct());
+        Promise.all([
+            dispatch(resolveAuthToken()).then(() => dispatch(getProfiles())),
+            dispatch(getProduct())
+        ]).then(() => dispatch(setSelectedProfile()));
     }
 
     render () {

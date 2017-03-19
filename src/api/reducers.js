@@ -22,7 +22,7 @@ const authToken = handleActions({
         ...state,
         isFetching: false,
         resolved: true,
-        loggedIn: !action.error,
+        loggedIn: !action.error && !!action.payload,
         ...resolvePayload(action, "token")
     })
 }, {
@@ -61,7 +61,8 @@ const productInfo = handleActions({
 
 const selectedProfile = handleAction(actions.SELECT_PROFILE, (state, action) => action.payload, {
     id: "",
-    profileName: null
+    profileName: null,
+    measurements: {}
 });
 
 const match = handleActions({

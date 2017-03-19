@@ -52,7 +52,7 @@ function jsonResponse (response) {
     if (response.ok) {
         return response.json();
     }
-    throw new Error(`${response.state} - ${response.statusText}`);
+    throw new Error(`${response.status} - ${response.statusText || "N/A"}`);
 }
 
 function resolveAuthToken () {
@@ -88,7 +88,7 @@ function resolveAuthToken () {
                 sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
                 dispatch(actions.resolveToken(tokenResp.token));
             } catch (reason) {
-                dispatch(actions.resolveToken(new Error(reason)));
+                dispatch(actions.resolveToken(reason));
             }
         }
     };
@@ -108,7 +108,7 @@ function getProfiles () {
             trackEvent("fetchProfiles", "API: fetchProfiles");
             dispatch(actions.receiveProfileList(profileList));
         } catch (reason) {
-            dispatch(actions.receiveProfileList(new Error(reason)));
+            dispatch(actions.receiveProfileList(reason));
         }
     };
 }
@@ -147,7 +147,7 @@ function getProduct () {
             }
             dispatch(actions.receiveProductInfo({ ...product, item: productItem }));
         } catch (reason) {
-            dispatch(actions.receiveProductInfo(new Error(reason)));
+            dispatch(actions.receiveProductInfo(reason));
         }
     };
 }
@@ -155,6 +155,11 @@ function getProduct () {
 function setSelectedProfile (profileId) {
     return async (dispatch, getState) => {
         if (getState().selectedProfile === profileId) {
+            return undefined;
+        }
+
+        if (!getState().authToken.loggedIn) {
+            await dispatch(match());
             return undefined;
         }
 
@@ -203,24 +208,23 @@ function match () {
             return undefined;
         }
 
-        // TODO: handle anonymous case
+        let product = getState().productInfo.product;
+        let profile = getState().selectedProfile;
+
         let token = getState().authToken.token;
-        if (!token) {
-            return undefined;
-        }
+        let fitRequest = new FitRequest(
+            token ? profile.id : profile.measurements,
+            product.SKU || product.item
+        );
 
         dispatch(actions.requestMatch());
 
-        let product = getState().productInfo.product;
         try {
-            let matchResult = await doMatch(
-                new FitRequest(getState().selectedProfile.id, product.SKU || product.item),
-                token
-            );
+            let matchResult = await doMatch(fitRequest, token);
             trackEvent("match", "API: match");
             dispatch(actions.receiveMatch(new Map(Object.entries(matchResult))));
         } catch (reason) {
-            dispatch(actions.receiveMatch(new Error(reason)));
+            dispatch(actions.receiveMatch(reason));
         }
     };
 }
