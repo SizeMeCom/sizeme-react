@@ -4,14 +4,16 @@ import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
 import SizeForm from "./common/SizeForm.jsx";
-import { resolveAuthToken, getProfiles, getProduct } from "./api/sizeme-api";
+import { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } from "./api/sizeme-api";
 
 class SizeMeApp extends React.Component {
 
     componentDidMount () {
         const { dispatch } = this.props;
-        dispatch(resolveAuthToken()).then(() => dispatch(getProfiles()));
-        dispatch(getProduct());
+        Promise.all([
+            dispatch(resolveAuthToken()).then(() => dispatch(getProfiles())),
+            dispatch(getProduct())
+        ]).then(() => dispatch(setSelectedProfile()));
     }
 
     render () {

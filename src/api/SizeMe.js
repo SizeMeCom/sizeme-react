@@ -17,7 +17,7 @@ class ItemMap {
             this.addItem(item, items.shift());
         }
         return this;
-    };
+    }
 
     static fromObject (obj) {
         let map = new ItemMap();
@@ -30,27 +30,19 @@ class ItemMap {
     }
 }
 
-class SizeMeRequest {
-    constructor (item) {
+class FitRequest {
+    constructor (subject, item) {
+        if (typeof subject === "string") {
+            this.profileId = subject;
+        } else {
+            this.measurements = subject;
+        }
+
         if (typeof item === "string") {
             this.sku = item;
         } else {
             this.item = item;
         }
-    }
-}
-
-class FitRequest extends SizeMeRequest {
-    constructor (profileId, item) {
-        super(item);
-        this.profileId = profileId;
-    }
-}
-
-class AnonymousFitRequest extends SizeMeRequest {
-    constructor (item, measurements) {
-        super(item);
-        this.measurements = measurements;
     }
 }
 
@@ -98,6 +90,5 @@ class Item {
 export {
     ItemMap,
     FitRequest,
-    AnonymousFitRequest,
     Item
 };
