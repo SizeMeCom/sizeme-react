@@ -9,6 +9,8 @@ import createLogger from "redux-logger";
 import rootReducer from "./reducers";
 import { FitRequest } from "./SizeMe";
 
+const OPTIMAL_FIT = 1070;
+
 let contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
 let pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
 
@@ -20,10 +22,8 @@ const sizemeStore = createStore(
     )
 );
 
-/*** Action creators end ***/
-
 function createRequest (method, token, withCredentials = false) {
-    let headers = new Headers({
+    const headers = new Headers({
         "X-Sizeme-Pluginversion": pluginVersion
     });
 
@@ -35,7 +35,7 @@ function createRequest (method, token, withCredentials = false) {
         headers.append("Authorization", "Bearer " + token);
     }
 
-    let request = {
+    const request = {
         method,
         headers,
         mode: "cors"
@@ -63,7 +63,7 @@ function resolveAuthToken () {
 
         dispatch(actions.checkToken());
 
-        let tokenObj = sessionStorage.getItem("sizeme.authtoken");
+        const tokenObj = sessionStorage.getItem("sizeme.authtoken");
         let authToken;
         if (tokenObj) {
             let storedToken;
@@ -83,7 +83,7 @@ function resolveAuthToken () {
         } else {
             dispatch(actions.fetchToken());
             try {
-                let tokenResp = await fetch(`${contextAddress}/api/authToken`, createRequest("GET", null, true))
+                const tokenResp = await fetch(`${contextAddress}/api/authToken`, createRequest("GET", null, true))
                     .then(jsonResponse);
                 sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
                 dispatch(actions.resolveToken(tokenResp.token));
@@ -100,9 +100,9 @@ function getProfiles () {
             return undefined;
         }
         dispatch(actions.requestProfileList());
-        let token = getState().authToken.token;
+        const token = getState().authToken.token;
         try {
-            let profileList = await fetch(`${contextAddress}/api/profiles`, createRequest("GET", token))
+            const profileList = await fetch(`${contextAddress}/api/profiles`, createRequest("GET", token))
                 .then(jsonResponse);
 
             trackEvent("fetchProfiles", "API: fetchProfiles");
@@ -122,7 +122,7 @@ function getProduct () {
         dispatch(actions.requestProductInfo());
 
         //noinspection Eslint
-        let product = sizeme_product;
+        const product = sizeme_product;
         if (!product) {
             dispatch(actions.receiveProductInfo(new Error("no product")));
             return undefined;
@@ -134,18 +134,19 @@ function getProduct () {
         }
 
         try {
-            let dbItem = await fetch(
+            const dbItem = await fetch(
                 `${contextAddress}/api/products/${encodeURIComponent(product.SKU)}`,
                 createRequest("GET")
             ).then(jsonResponse);
 
-            let productItem = { ...dbItem, measurements: {} };
+            const skuMap = product.item;
+            const productItem = { ...dbItem, measurements: {} };
             for (let sku in dbItem.measurements) {
                 if (dbItem.measurements.hasOwnProperty(sku) && product.item[sku]) {
                     productItem.measurements[product.item[sku]] = dbItem.measurements[sku];
                 }
             }
-            dispatch(actions.receiveProductInfo({ ...product, item: productItem }));
+            dispatch(actions.receiveProductInfo({ ...product, item: productItem, skuMap }));
         } catch (reason) {
             dispatch(actions.receiveProductInfo(reason));
         }
@@ -163,7 +164,7 @@ function setSelectedProfile (profileId) {
             return undefined;
         }
 
-        let profileList = getState().profileList.profiles;
+        const profileList = getState().profileList.profiles;
         if (profileList.length === 0) {
             return undefined;
         }
@@ -187,8 +188,8 @@ function setSelectedProfile (profileId) {
 }
 
 function doMatch (fitRequest, token) {
-    let request = createRequest("POST", token);
-    let { headers } = request;
+    const request = createRequest("POST", token);
+    const { headers } = request;
     headers.append("Content-Type", "application/json");
     request.body = JSON.stringify(fitRequest);
 
@@ -202,17 +203,39 @@ function doMatch (fitRequest, token) {
     return fetch(address, request).then(jsonResponse);
 }
 
+const sizeSelector = new class {
+    constructor () {
+        this.el = null;
+    }
+
+    get selector () {
+        return this.el;
+    }
+
+    set selector (el) {
+        this.el = el;
+        this.el.addEventListener("change", (event) => {
+            console.log(`Size change: ${event.target.value}`);
+        });
+    }
+
+    setSelected = (val) => {
+        this.el.value = val;
+    };
+}();
+
+
 function match () {
     return async (dispatch, getState) => {
         if (!getState().productInfo.resolved) {
             return undefined;
         }
 
-        let product = getState().productInfo.product;
-        let profile = getState().selectedProfile;
+        const product = getState().productInfo.product;
+        const profile = getState().selectedProfile;
 
-        let token = getState().authToken.token;
-        let fitRequest = new FitRequest(
+        const token = getState().authToken.token;
+        const fitRequest = new FitRequest(
             token ? profile.id : profile.measurements,
             product.SKU || product.item
         );
@@ -220,9 +243,32 @@ function match () {
         dispatch(actions.requestMatch());
 
         try {
-            let matchResult = await doMatch(fitRequest, token);
+            const matchResult = await doMatch(fitRequest, token);
             trackEvent("match", "API: match");
-            dispatch(actions.receiveMatch(new Map(Object.entries(matchResult))));
+
+            let result = matchResult;
+            if (product.SKU) {
+                const skuMap = product.skuMap;
+                const responseMap = new Map(
+                    Object.entries(matchResult).filter(e => !!skuMap[e[0]])
+                );
+                result = {};
+                for (let [sku, res] of responseMap) {
+                    result[skuMap[sku]] = res;
+                }
+            }
+
+            dispatch(actions.receiveMatch(result));
+
+            const [bestMatch] = Object.entries(result).reduce(([accSize, fit], [size, res]) => {
+                const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
+                if (!accSize || newFit < fit) {
+                    return [size, newFit];
+                } else {
+                    return [accSize, fit];
+                }
+            }, [null, 0]);
+            sizeSelector.setSelected(bestMatch);
         } catch (reason) {
             dispatch(actions.receiveMatch(reason));
         }
@@ -235,5 +281,6 @@ export {
     getProfiles,
     getProduct,
     setSelectedProfile,
-    match
+    match,
+    sizeSelector
 };
