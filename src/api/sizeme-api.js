@@ -139,14 +139,15 @@ function getProduct () {
                 createRequest("GET")
             ).then(jsonResponse);
 
-            const skuMap = product.item;
-            const productItem = { ...dbItem, measurements: {} };
-            for (let sku in dbItem.measurements) {
-                if (dbItem.measurements.hasOwnProperty(sku) && product.item[sku]) {
-                    productItem.measurements[product.item[sku]] = dbItem.measurements[sku];
-                }
-            }
-            dispatch(actions.receiveProductInfo({ ...product, item: productItem, skuMap }));
+            const skuMap = new Map(Object.entries(product.item));
+            const measurements = Object.assign(
+                {},
+                ...Object.entries(dbItem.measurements)
+                    .filter(([sku]) => skuMap.has(sku))
+                    .map(([sku, val]) => ({ [skuMap.get(sku)]: val }))
+            );
+            const item = { ...dbItem, measurements };
+            dispatch(actions.receiveProductInfo({ ...product, item, skuMap }));
         } catch (reason) {
             dispatch(actions.receiveProductInfo(reason));
         }
@@ -208,6 +209,10 @@ const sizeSelector = new class {
         this.el = null;
     }
 
+    dispatchChange = (size) => {
+        sizemeStore.dispatch(actions.selectSize(size));
+    };
+
     get selector () {
         return this.el;
     }
@@ -215,13 +220,24 @@ const sizeSelector = new class {
     set selector (el) {
         this.el = el;
         this.el.addEventListener("change", (event) => {
-            console.log(`Size change: ${event.target.value}`);
+            this.dispatchChange(event.target.value);
         });
     }
 
     setSelected = (val) => {
-        this.el.value = val;
+        if (this.el) {
+            this.el.value = val;
+            this.dispatchChange(val);
+        }
     };
+
+    clone = () => {
+        if (this.el) {
+            return this.el.cloneNode(true);
+        } else {
+            return null;
+        }
+    }
 }();
 
 
@@ -249,13 +265,12 @@ function match () {
             let result = matchResult;
             if (product.SKU) {
                 const skuMap = product.skuMap;
-                const responseMap = new Map(
-                    Object.entries(matchResult).filter(e => !!skuMap[e[0]])
+                result = Object.assign(
+                    {},
+                    ...Object.entries(matchResult)
+                        .filter(([sku]) => skuMap.has(sku))
+                        .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
                 );
-                result = {};
-                for (let [sku, res] of responseMap) {
-                    result[skuMap[sku]] = res;
-                }
             }
 
             dispatch(actions.receiveMatch(result));

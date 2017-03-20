@@ -37,6 +37,12 @@
     ],
     "react/jsx-uses-vars": [
       2
+    ],
+    "no-trailing-spaces": [
+      0
+    ],
+    "eol-last": [
+      0
     ]
   }
 }

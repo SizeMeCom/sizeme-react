@@ -81,12 +81,15 @@ const match = handleActions({
     isFetching: false
 });
 
+const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => action.payload, "");
+
 const rootReducer = combineReducers({
     authToken,
     profileList,
     productInfo,
     selectedProfile,
-    match
+    match,
+    selectedSize
 });
 
 export default rootReducer;
