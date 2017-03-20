@@ -209,6 +209,10 @@ const sizeSelector = new class {
         this.el = null;
     }
 
+    dispatchChange = (size) => {
+        sizemeStore.dispatch(actions.selectSize(size));
+    };
+
     get selector () {
         return this.el;
     }
@@ -216,13 +220,24 @@ const sizeSelector = new class {
     set selector (el) {
         this.el = el;
         this.el.addEventListener("change", (event) => {
-            console.log(`Size change: ${event.target.value}`);
+            this.dispatchChange(event.target.value);
         });
     }
 
     setSelected = (val) => {
-        this.el.value = val;
+        if (this.el) {
+            this.el.value = val;
+            this.dispatchChange(val);
+        }
     };
+
+    clone = () => {
+        if (this.el) {
+            return this.el.cloneNode(true);
+        } else {
+            return null;
+        }
+    }
 }();
 
 
