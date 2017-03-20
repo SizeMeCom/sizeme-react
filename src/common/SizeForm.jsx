@@ -1,4 +1,5 @@
 import React from "react";
+import { requestMatch } from "../api/actions.js";
 
 class SizeForm extends React.Component {
 
@@ -23,8 +24,10 @@ class SizeForm extends React.Component {
         return values;
     }
 
-    triggerFitUpdate () {
-        console.log('Measurements', this.getIntValues());
+    dispatchMatchRequest () {
+        let measurements = this.getIntValues();
+        console.log('Measurements', measurements);
+        this.context.store.dispatch(requestMatch(measurements));
     }
 
     valueChanged (field, event) {
@@ -32,7 +35,7 @@ class SizeForm extends React.Component {
         if (this.timeoutId) clearTimeout(this.timeoutId);
         this.timeoutId = setTimeout(() => {
             this.timeoutId = null;
-            this.triggerFitUpdate();
+            this.dispatchMatchRequest();
         }, 1000);
     }
 
@@ -66,5 +69,13 @@ class SizeForm extends React.Component {
         )
     }
 }
+
+SizeForm.propTypes = {
+    fields: React.PropTypes.arrayOf(React.PropTypes.string)
+};
+
+SizeForm.contextTypes = {
+    store: React.PropTypes.object.isRequired
+};
 
 export default SizeForm;
