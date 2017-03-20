@@ -139,14 +139,15 @@ function getProduct () {
                 createRequest("GET")
             ).then(jsonResponse);
 
-            const skuMap = product.item;
-            const productItem = { ...dbItem, measurements: {} };
-            for (let sku in dbItem.measurements) {
-                if (dbItem.measurements.hasOwnProperty(sku) && product.item[sku]) {
-                    productItem.measurements[product.item[sku]] = dbItem.measurements[sku];
-                }
-            }
-            dispatch(actions.receiveProductInfo({ ...product, item: productItem, skuMap }));
+            const skuMap = new Map(Object.entries(product.item));
+            const measurements = Object.assign(
+                {},
+                ...Object.entries(dbItem.measurements)
+                    .filter(([sku]) => skuMap.has(sku))
+                    .map(([sku, val]) => ({ [skuMap.get(sku)]: val }))
+            );
+            const item = { ...dbItem, measurements };
+            dispatch(actions.receiveProductInfo({ ...product, item, skuMap }));
         } catch (reason) {
             dispatch(actions.receiveProductInfo(reason));
         }
@@ -249,13 +250,12 @@ function match () {
             let result = matchResult;
             if (product.SKU) {
                 const skuMap = product.skuMap;
-                const responseMap = new Map(
-                    Object.entries(matchResult).filter(e => !!skuMap[e[0]])
+                result = Object.assign(
+                    {},
+                    ...Object.entries(matchResult)
+                        .filter(([sku]) => skuMap.has(sku))
+                        .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
                 );
-                result = {};
-                for (let [sku, res] of responseMap) {
-                    result[skuMap[sku]] = res;
-                }
             }
 
             dispatch(actions.receiveMatch(result));
