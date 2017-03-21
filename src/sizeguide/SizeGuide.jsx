@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import FontAwesome from "react-fontawesome";
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -27,10 +28,21 @@ class SizeGuide extends React.Component {
                     isOpen={this.state.guideIsOpen}
                     onRequestClose={this.closeGuide}
                     contentLabel="Size Guide"
-                    className="size-guide-content"
+                    className="size-guide-modal"
                     overlayClassName="size-guide-overlay"
                 >
-                    <h2>Hello</h2>
+                    <div className="size-guide-titlebar">
+                        <span className="size-guide-title">Detailed view for <span
+                            className="item-name">T-SHIRT</span>
+                        </span>
+                        <a className="size-guide-close" role="button" onClick={this.closeGuide}>
+                            <FontAwesome name="times" title="Close"/>
+                        </a>
+                    </div>
+                    <div className="size-guide-content-container">
+                        <div className="size-guide-content"/>
+                    </div>
+                    <div className="size-guide-footer"/>
                 </Modal>
             </div>
         );
