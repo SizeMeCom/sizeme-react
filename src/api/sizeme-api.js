@@ -213,10 +213,6 @@ const sizeSelector = new class {
         sizemeStore.dispatch(actions.selectSize(size));
     };
 
-    get selector () {
-        return this.el;
-    }
-
     set selector (el) {
         this.el = el;
         this.el.addEventListener("change", (event) => {
@@ -228,6 +224,14 @@ const sizeSelector = new class {
         if (this.el) {
             this.el.value = val;
             this.dispatchChange(val);
+        }
+    };
+
+    getSelected = () => {
+        if (this.el) {
+            return this.el.value;
+        } else {
+            return "";
         }
     };
 
