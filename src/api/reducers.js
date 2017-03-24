@@ -59,9 +59,19 @@ const productInfo = handleActions({
     resolved: false
 });
 
-const selectedProfile = handleAction(actions.SELECT_PROFILE, (state, action) => action.payload, {
+const selectedProfile = handleActions({
+    [actions.SELECT_PROFILE]: (state, action) => ({
+        ...action.payload,
+        selectDone: false
+    }),
+    [actions.SELECT_PROFILE_DONE]: (state) => ({
+        ...state,
+        selectDone: true
+    })
+}, {
     id: "",
     profileName: null,
+    selectDone: false,
     measurements: {}
 });
 

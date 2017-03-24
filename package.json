@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack --config webpack.config.js -d",
-    "watch": "webpack-dev-server --config webpack.config.js",
+    "watch": "webpack-dev-server --config webpack.config.js -d",
     "build": "webpack --config webpack.config.js -p"
   },
   "dependencies": {

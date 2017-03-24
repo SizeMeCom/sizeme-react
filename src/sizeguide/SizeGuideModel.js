@@ -1,23 +1,11 @@
 import i18n from "../api/i18n";
 
-const arrowColorGreen = "#42AE49";
-const arrowColorBlack = "#000000";
-
-export default function loadArrows (isSizeGuide, itemType) {
-    // arrows first
-    let arrowColor = arrowColorGreen;
-    let arcStyle = "arc";
-
-    if (isSizeGuide) {
-        arrowColor = arrowColorBlack;
-        arcStyle = "line"; // size guide shows flat measurements (except neck opening)
-    }
-
+function init (itemType) {
     const itemTypeArr = Array.from(itemType)
         .filter(a => a !== ".")
         .map(a => parseInt(a, 10));
 
-    const measurementArrows = {};
+    const arrows = {};
     const itemDrawing = {};
     const fitOrder = [
         "chest",
@@ -45,28 +33,23 @@ export default function loadArrows (isSizeGuide, itemType) {
     ];
 
 
-    measurementArrows.chest = {
+    arrows.chest = {
         mirror: false,
         coords: [{ X: -250, Y: 399 }, { X: 250, Y: 399 }],
-        style: arcStyle,
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.waist = {
+    arrows.waist = {
         mirror: false,
         coords: [{ X: -250, Y: 635 }, { X: 250, Y: 635 }],
-        style: arcStyle,
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.front_height = {
+    arrows.front_height = {
         mirror: false,
         coords: [{ X: -174, Y: 0 }, { X: -174, Y: 978 }],
         style: "line",
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.neck_opening_width = {
+    arrows.neck_opening_width = {
         mirror: false,
         coords: [{ X: 0, Y: 47 }, { X: 174, Y: 0, cp1X: 65, cp1Y: 45, cp2X: 140, cp2Y: 23 }, {
             X: 0,
@@ -85,84 +68,68 @@ export default function loadArrows (isSizeGuide, itemType) {
                 cp2Y: 45
             }],
         style: "line",
-        lift: true,
-        color: arrowColor
+        lift: true
     };
 
-    measurementArrows.hood_height = {
+    arrows.hood_height = {
         mirror: false,
         coords: [{ X: 195, Y: -5 }, { X: 195, Y: -390 }],
         style: "line",
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.shoulder_width = {
+    arrows.shoulder_width = {
         mirror: false,
         coords: [{ X: -329, Y: 42 }, { X: -164, Y: -7 }],
         style: "line",
-        lift: true,
-        color: arrowColor
+        lift: true
     };
 
-    measurementArrows.pant_waist = {
+    arrows.pant_waist = {
         mirror: false,
         coords: [{ X: -232, Y: 0 }, { X: 222, Y: 0 }],
-        style: arcStyle,
-        lift: true,
-        color: arrowColor
+        lift: true
     };
-    measurementArrows.hips = {
+    arrows.hips = {
         mirror: false,
         coords: [{ X: -261, Y: 171 }, { X: 263, Y: 171 }],
-        style: arcStyle,
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.outseam = {
+    arrows.outseam = {
         mirror: false,
         coords: [{ X: 222, Y: 0 }, { X: 263, Y: 171 }, { X: 302, Y: 1071 }],
         style: "line",
-        lift: true,
-        color: arrowColor
+        lift: true
     };
-    measurementArrows.inseam = {
+    arrows.inseam = {
         mirror: false,
         coords: [{ X: 5, Y: 297 }, { X: 151, Y: 1084 }],
         style: "line",
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.thigh_width = {
+    arrows.thigh_width = {
         mirror: false,
         coords: [{ X: -266, Y: 274 }, { X: -17, Y: 297 }],
-        style: arcStyle,
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.knee_width = {
+    arrows.knee_width = {
         mirror: false,
         coords: [{ X: -286, Y: 727 }, { X: -93, Y: 744 }],
-        style: arcStyle,
-        lift: false,
-        color: arrowColor
+        lift: false
     };
-    measurementArrows.pant_sleeve_width = {
+    arrows.pant_sleeve_width = {
         mirror: false,
         coords: [{ X: -301, Y: 1071 }, { X: -152, Y: 1084 }],
-        style: arcStyle,
-        lift: false,
-        color: arrowColor
+        lift: false
     };
 
-    measurementArrows.shoe_inside_length = {
+    arrows.shoe_inside_length = {
         mirror: false,
         coords: [{ X: 169, Y: 984 }, { X: 132, Y: 18 }],
         style: "line",
-        lift: false,
-        color: arrowColor
+        lift: false
     };
 
-    measurementArrows.hat_width = {
+    arrows.hat_width = {
         mirror: false,
         coords: [{ X: 534, Y: 238 },
             { X: 539, Y: 265, cp1X: 559, cp1Y: 236, cp2X: 567, cp2Y: 252 },
@@ -170,8 +137,7 @@ export default function loadArrows (isSizeGuide, itemType) {
             { X: 77, Y: 242, cp1X: 38, cp1Y: 241, cp2X: 60, cp2Y: 234 }],
         midCircle: { X: 300, Y: 325 },
         style: "line",
-        lift: false,
-        color: arrowColor
+        lift: false
     };
 
     itemDrawing.mirror = true;
@@ -218,7 +184,7 @@ export default function loadArrows (isSizeGuide, itemType) {
                         ], noMirror: true
                     });	// non mirrored turnover collar left
                     itemDrawing.accents.push({ type: "circle", coords: [{ X: 0, Y: 100, R: 5 }] });
-                    measurementArrows.neck_opening_width = {
+                    arrows.neck_opening_width = {
                         mirror: false,
                         coords: [{ X: 0, Y: -47 }, { X: 100, Y: -35, cp1X: 64, cp1Y: -48, cp2X: 105, cp2Y: -47 },
                             { X: -5, Y: 59, cp1X: 66, cp1Y: 8, cp2X: 6, cp2Y: 40 }, {
@@ -232,22 +198,19 @@ export default function loadArrows (isSizeGuide, itemType) {
                             { X: 0, Y: -46, cp1X: -117, cp1Y: -48, cp2X: -52, cp2Y: -48 }],
                         style: "line",
                         lift: false,
-                        midCircle: { X: 0, Y: -47 },
-                        color: arrowColor
+                        midCircle: { X: 0, Y: -47 }
                     };
-                    measurementArrows.shoulder_width = {
+                    arrows.shoulder_width = {
                         mirror: false,
                         coords: [{ X: -329, Y: 49 }, { X: -129, Y: -5 }],
                         style: "line",
-                        lift: true,
-                        color: arrowColor
+                        lift: true
                     };
-                    measurementArrows.front_height = {
+                    arrows.front_height = {
                         mirror: false,
                         coords: [{ X: -167, Y: -4 }, { X: -167, Y: 978 }],
                         style: "line",
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
 
                     break;
@@ -275,12 +238,11 @@ export default function loadArrows (isSizeGuide, itemType) {
                             cp2Y: -20
                         }, { X: 0, Y: 100, cp1X: 140, cp1Y: 46, cp2X: 40, cp2Y: 92 }]
                     }); // hood area
-                    measurementArrows.shoulder_width = {
+                    arrows.shoulder_width = {
                         mirror: false,
                         coords: [{ X: -329, Y: 42 }, { X: -174, Y: -7 }],
                         style: "line",
-                        lift: true,
-                        color: arrowColor
+                        lift: true
                     };
                     break;
                 case 5:	// open high round
@@ -380,26 +342,23 @@ export default function loadArrows (isSizeGuide, itemType) {
                 case 1:	// very short (vest)
                     itemDrawing.coords.push({ X: 289, Y: 34 });
                     itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 285, cp1Y: 44, cp2X: 220, cp2Y: 389 });
-                    measurementArrows.shoulder_width = {
+                    arrows.shoulder_width = {
                         mirror: false,
                         coords: [{ X: -299, Y: 32 }, { X: -164, Y: -7 }],
                         style: "line",
-                        lift: true,
-                        color: arrowColor
+                        lift: true
                     };
-                    measurementArrows.sleeve_top_width = {
+                    arrows.sleeve_top_width = {
                         mirror: false,
                         coords: [{ X: 250, Y: 399 }, { X: 289, Y: 34 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
 
                     if (itemTypeArr[4] !== 0) {
                         // is it you, poncho?
                         itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 328, cp1Y: 44, cp2X: 250, cp2Y: 260 });
                         fitOrder.splice(13, 1);  // remove sleeve top
-                        measurementArrows.sleeve_top_width = false;
+                        arrows.sleeve_top_width = false;
                     }
                     break;
                 case 2:  // short
@@ -408,19 +367,15 @@ export default function loadArrows (isSizeGuide, itemType) {
                     itemDrawing.coords.push({ X: 482, Y: 460 }, { X: 324, Y: 529 });
                     itemDrawing.coords.push({ X: 250, Y: 399 });
 
-                    measurementArrows.sleeve_top_width = {
+                    arrows.sleeve_top_width = {
                         mirror: false,
                         coords: [{ X: 250, Y: 399 }, { X: 430, Y: 322 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
-                    measurementArrows.wrist_width = {
+                    arrows.wrist_width = {
                         mirror: false,
                         coords: [{ X: 324, Y: 529 }, { X: 482, Y: 460 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
 
                     i18n.MEASUREMENT.wrist_width = i18n.MEASUREMENT.sleeve_opening;
@@ -431,13 +386,12 @@ export default function loadArrows (isSizeGuide, itemType) {
                                 type: "line",
                                 coords: [{ X: 250, Y: 399 }, { X: 381, Y: 184 }]
                             });
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 174, Y: -16 }, { X: 329, Y: 27 }, { X: 482, Y: 460 }],
                                 style: "line",
                                 lift: true,
-                                midCircle: { X: 406, Y: 243 },
-                                color: arrowColor
+                                midCircle: { X: 406, Y: 243 }
                             };
                             break;
                         case 2:	// raglan line
@@ -452,22 +406,20 @@ export default function loadArrows (isSizeGuide, itemType) {
                                     cp2Y: 6
                                 }]
                             });
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 174, Y: -16 }, { X: 329, Y: 27 }, { X: 482, Y: 460 }],
                                 style: "line",
                                 lift: true,
-                                midCircle: { X: 406, Y: 243 },
-                                color: arrowColor
+                                midCircle: { X: 406, Y: 243 }
                             };
                             break;
                         case 1:	// normal shoulder line
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 329, Y: 44 }, { X: 482, Y: 460 }],
                                 style: "line",
-                                lift: true,
-                                color: arrowColor
+                                lift: true
                             };
                             itemDrawing.accents.push({
                                 type: "line",
@@ -489,19 +441,15 @@ export default function loadArrows (isSizeGuide, itemType) {
                     itemDrawing.coords.push({ X: 527, Y: 719 }, { X: 389, Y: 769 });
                     itemDrawing.coords.push({ X: 250, Y: 399 });
 
-                    measurementArrows.sleeve_top_width = {
+                    arrows.sleeve_top_width = {
                         mirror: false,
                         coords: [{ X: 250, Y: 399 }, { X: 419, Y: 340 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
-                    measurementArrows.wrist_width = {
+                    arrows.wrist_width = {
                         mirror: false,
                         coords: [{ X: 389, Y: 769 }, { X: 527, Y: 719 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
 
                     i18n.MEASUREMENT.wrist_width = i18n.MEASUREMENT.sleeve_opening;
@@ -512,13 +460,12 @@ export default function loadArrows (isSizeGuide, itemType) {
                                 type: "line",
                                 coords: [{ X: 250, Y: 399 }, { X: 369, Y: 196 }]
                             });
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 174, Y: -16 }, { X: 329, Y: 27 }, { X: 527, Y: 719 }],
                                 style: "line",
                                 lift: true,
-                                midCircle: { X: 450, Y: 444 },
-                                color: arrowColor
+                                midCircle: { X: 450, Y: 444 }
                             };
                             break;
                         case 2:	// raglan line
@@ -533,22 +480,20 @@ export default function loadArrows (isSizeGuide, itemType) {
                                     cp2Y: 6
                                 }]
                             });
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 174, Y: -16 }, { X: 329, Y: 27 }, { X: 527, Y: 719 }],
                                 style: "line",
                                 lift: true,
-                                midCircle: { X: 450, Y: 444 },
-                                color: arrowColor
+                                midCircle: { X: 450, Y: 444 }
                             };
                             break;
                         case 1:	// normal shoulder line
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 329, Y: 44 }, { X: 527, Y: 719 }],
                                 style: "line",
-                                lift: true,
-                                color: arrowColor
+                                lift: true
                             };
                             itemDrawing.accents.push({
                                 type: "line",
@@ -568,12 +513,10 @@ export default function loadArrows (isSizeGuide, itemType) {
                 case 7:  // very long
                 case 8:  // extra long
                     itemDrawing.coords.push({ X: 329, Y: 44 });
-                    measurementArrows.sleeve_top_width = {
+                    arrows.sleeve_top_width = {
                         mirror: false,
                         coords: [{ X: 250, Y: 399 }, { X: 410, Y: 348 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
 
                     if (itemTypeArr[4] === 1) {	// elastic
@@ -589,22 +532,18 @@ export default function loadArrows (isSizeGuide, itemType) {
                             { type: "line", coords: [{ X: 520, Y: 929 }, { X: 531, Y: 981 }] },
                             { type: "line", coords: [{ X: 531, Y: 926 }, { X: 542, Y: 978 }] });
                         itemDrawing.coords.push({ X: 250, Y: 399 });
-                        measurementArrows.wrist_width = {
+                        arrows.wrist_width = {
                             mirror: false,
                             coords: [{ X: 430, Y: 934 }, { X: 556, Y: 902 }],
-                            style: arcStyle,
-                            lift: false,
-                            color: arrowColor
+                            lift: false
                         };
                     } else {
                         itemDrawing.coords.push({ X: 571, Y: 978 }, { X: 454, Y: 1009 });
                         itemDrawing.coords.push({ X: 250, Y: 399 });
-                        measurementArrows.wrist_width = {
+                        arrows.wrist_width = {
                             mirror: false,
                             coords: [{ X: 571, Y: 978 }, { X: 454, Y: 1009 }],
-                            style: arcStyle,
-                            lift: false,
-                            color: arrowColor
+                            lift: false
                         };
                     }
 
@@ -614,13 +553,12 @@ export default function loadArrows (isSizeGuide, itemType) {
                                 type: "line",
                                 coords: [{ X: 250, Y: 399 }, { X: 369, Y: 196 }]
                             });
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 174, Y: -16 }, { X: 329, Y: 27 }, { X: 571, Y: 978 }],
                                 style: "line",
                                 lift: true,
-                                midCircle: { X: 437, Y: 444 },
-                                color: arrowColor
+                                midCircle: { X: 437, Y: 444 }
                             };
                             break;
                         case 2:	// raglan line
@@ -635,22 +573,20 @@ export default function loadArrows (isSizeGuide, itemType) {
                                     cp2Y: 6
                                 }]
                             });
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 174, Y: -16 }, { X: 329, Y: 27 }, { X: 571, Y: 978 }],
                                 style: "line",
                                 lift: true,
-                                midCircle: { X: 437, Y: 444 },
-                                color: arrowColor
+                                midCircle: { X: 437, Y: 444 }
                             };
                             break;
                         case 1:	// normal shoulder line
-                            measurementArrows.sleeve = {
+                            arrows.sleeve = {
                                 mirror: false,
                                 coords: [{ X: 329, Y: 44 }, { X: 569, Y: 975 }],
                                 style: "line",
-                                lift: true,
-                                color: arrowColor
+                                lift: true
                             };
                             itemDrawing.accents.push({
                                 type: "line",
@@ -672,20 +608,18 @@ export default function loadArrows (isSizeGuide, itemType) {
                 case 0:	// poncho dude
                     itemDrawing.coords.push({ X: 550, Y: 750, cp1X: 450, cp1Y: 70, cp2X: 450, cp2Y: 550 });
                     itemDrawing.coords.push({ X: 0, Y: 1038, cp1X: 450, cp1Y: 800, cp2X: 400, cp2Y: 1038 });
-                    measurementArrows.front_height = {
+                    arrows.front_height = {
                         mirror: false,
                         coords: [{ X: -174, Y: 5 }, { X: -174, Y: 1018 }],
                         style: "line",
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
-                    measurementArrows.sleeve = {
+                    arrows.sleeve = {
                         mirror: false,
                         coords: [{ X: 174, Y: 0 }, { X: 394, Y: 59 }, { X: 550, Y: 750 }],
                         style: "line",
                         lift: true,
-                        midCircle: { X: 480, Y: 444 },
-                        color: arrowColor
+                        midCircle: { X: 480, Y: 444 }
                     };
                     break;
                 case 3:	// pant waist
@@ -706,12 +640,10 @@ export default function loadArrows (isSizeGuide, itemType) {
                                 coords: [{ X: $x, Y: 918 }, { X: $x, Y: 978 }]
                             });
                         }
-                        measurementArrows.pant_waist = {
+                        arrows.pant_waist = {
                             mirror: false,
                             coords: [{ X: -250, Y: 908 }, { X: 250, Y: 908 }],
-                            style: arcStyle,
-                            lift: false,
-                            color: arrowColor
+                            lift: false
                         };
                     } else {
                         itemDrawing.coords.push({
@@ -722,12 +654,10 @@ export default function loadArrows (isSizeGuide, itemType) {
                             cp2X: 245,
                             cp2Y: 928
                         }, { X: 0, Y: 978 });
-                        measurementArrows.pant_waist = {
+                        arrows.pant_waist = {
                             mirror: false,
                             coords: [{ X: -250, Y: 978 }, { X: 250, Y: 978 }],
-                            style: arcStyle,
-                            lift: false,
-                            color: arrowColor
+                            lift: false
                         };
                     }
                     break;
@@ -757,13 +687,11 @@ export default function loadArrows (isSizeGuide, itemType) {
                                 coords: [{ X: $x, Y: ($baseY + 10) }, { X: $x, Y: ($baseY + 60) }]
                             });
                         }
-                        measurementArrows.front_height.coords[1].Y = ($baseY + 60);
-                        measurementArrows.hips = {
+                        arrows.front_height.coords[1].Y = ($baseY + 60);
+                        arrows.hips = {
                             mirror: false,
                             coords: [{ X: -250, Y: $baseY }, { X: 250, Y: $baseY }],
-                            style: arcStyle,
-                            lift: false,
-                            color: arrowColor
+                            lift: false
                         };
                     } else {
                         itemDrawing.coords.push({
@@ -774,22 +702,18 @@ export default function loadArrows (isSizeGuide, itemType) {
                             cp2X: 245,
                             cp2Y: $baseY
                         }, { X: 0, Y: ($baseY + 60) });
-                        measurementArrows.front_height.coords[1].Y = ($baseY + 60);
-                        measurementArrows.hips = {
+                        arrows.front_height.coords[1].Y = ($baseY + 60);
+                        arrows.hips = {
                             mirror: false,
                             coords: [{ X: -250, Y: ($baseY + 60) }, { X: 250, Y: ($baseY + 60) }],
-                            style: arcStyle,
-                            lift: false,
-                            color: arrowColor
+                            lift: false
                         };
                     }
                     // define just in case
-                    measurementArrows.pant_waist = {
+                    arrows.pant_waist = {
                         mirror: false,
                         coords: [{ X: -250, Y: 958 }, { X: 250, Y: 958 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
                 }
             }
@@ -829,36 +753,30 @@ export default function loadArrows (isSizeGuide, itemType) {
                 case 2:	// short
                 case 3:	// short-medium
                     itemDrawing.coords.push({ X: -38, Y: 474 }, { X: -278, Y: 449 });
-                    measurementArrows.outseam = {
+                    arrows.outseam = {
                         mirror: false,
                         coords: [{ X: 222, Y: 0 }, { X: 263, Y: 171 }, { X: 278, Y: 449 }],
                         style: "line",
-                        lift: true,
-                        color: arrowColor
+                        lift: true
                     };
-                    measurementArrows.knee_width = {
+                    arrows.knee_width = {
                         mirror: false,
                         coords: [{ X: -278, Y: 449 }, { X: -38, Y: 474 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
                     break;
                 case 4:	// medium
                     itemDrawing.coords.push({ X: -71, Y: 651 }, { X: -291, Y: 626 });
-                    measurementArrows.outseam = {
+                    arrows.outseam = {
                         mirror: false,
                         coords: [{ X: 222, Y: 0 }, { X: 263, Y: 171 }, { X: 291, Y: 626 }],
                         style: "line",
-                        lift: true,
-                        color: arrowColor
+                        lift: true
                     };
-                    measurementArrows.knee_width = {
+                    arrows.knee_width = {
                         mirror: false,
                         coords: [{ X: -291, Y: 626 }, { X: -71, Y: 651 }],
-                        style: arcStyle,
-                        lift: false,
-                        color: arrowColor
+                        lift: false
                     };
                     break;
                 case 5:  // semi-long
@@ -1031,7 +949,27 @@ export default function loadArrows (isSizeGuide, itemType) {
     }
 
     return {
-        measurementArrows,
-        itemDrawing
+        arrows,
+        itemDrawing,
+        fitOrder
     };
+}
+
+export default class {
+    constructor (item) {
+        const { arrows, itemDrawing, fitOrder } = init(item.itemType);
+
+        let i = 1;
+        const firstSize = Object.entries(item.measurements || {})[0];
+        if (firstSize && firstSize[1]) {
+            const measurements = firstSize[1];
+            for (const fit of fitOrder) {
+                if (measurements[fit] && arrows[fit]) {
+                    arrows[fit].num = (i++);
+                }
+            }
+        }
+        this.arrows = arrows;
+        this.itemDrawing = itemDrawing;
+    }
 }

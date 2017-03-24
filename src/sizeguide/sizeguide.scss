@@ -93,18 +93,22 @@
 .size-guide-content {
   @include display-flex;
   @include flex-direction(row);
+  @include flex-wrap(wrap);
   width: 100%;
 
   .size-guide-item {
     @include flex(1 1 auto);
+    box-sizing: border-box;
     width: 40%;
   }
 
   .size-guide-details {
     @include flex(1 1 auto);
     width: 60%;
+    box-sizing: border-box;
     text-align: left;
     padding-right: 10px;
+    min-width: 400px;
 
     .size-guide-details-section {
       margin-top: 10px;

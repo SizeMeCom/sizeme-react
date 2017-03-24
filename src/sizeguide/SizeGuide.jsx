@@ -12,7 +12,8 @@ class SizeGuide extends React.Component {
         super(props);
 
         this.state = {
-            guideIsOpen: false
+            guideIsOpen: false,
+            highlight: ""
         };
     }
 
@@ -25,6 +26,9 @@ class SizeGuide extends React.Component {
     };
 
     render () {
+        const selectedMatchResult = this.props.matchResult ? this.props.matchResult[this.props.selectedSize] : null;
+        const matchMap = selectedMatchResult ? selectedMatchResult.matchMap : null;
+        
         return (
             <div>
                 <a className="a_button sm_detailed_view size_guide" id="popup_opener"
@@ -48,11 +52,15 @@ class SizeGuide extends React.Component {
 
                         <div className="modal-body">
                             <div className="size-guide-content">
-                                <SizeGuideItem/>
+                                <SizeGuideItem product={this.props.product} selectedSize={this.props.selectedSize}
+                                               highlight={this.state.highlight} matchMap={matchMap}
+                                               selectedProfile={this.props.selectedProfile}
+                                />
                                 <SizeGuideDetails onSelectProfile={this.props.onSelectProfile}
                                                   selectedProfile={this.props.selectedProfile ?
                                                       this.props.selectedProfile.id : ""}
                                                   profiles={this.props.profiles}
+                                                  selectedSize={this.props.selectedSize}
                                 />
 
                             </div>
@@ -70,14 +78,17 @@ SizeGuide.propTypes = {
     product: PropTypes.object.isRequired,
     profiles: PropTypes.arrayOf(PropTypes.object),
     selectedProfile: PropTypes.object,
-    selectedSize: PropTypes.string
+    selectedSize: PropTypes.string,
+    onSelectProfile: React.PropTypes.func.isRequired,
+    matchResult: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
     product: state.productInfo.product,
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
-    selectedSize: state.selectedSize
+    selectedSize: state.selectedSize,
+    matchResult: state.match.matchResult
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

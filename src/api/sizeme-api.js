@@ -185,6 +185,7 @@ function setSelectedProfile (profileId) {
         trackEvent("activeProfileChanged", "Store: Active profile changed");
 
         await dispatch(match());
+        dispatch(actions.selectProfileDone());
     };
 }
 

@@ -18,18 +18,26 @@ DetailSection.propTypes = {
 class DetailsSizeSelector extends React.Component {
 
     componentDidMount () {
-        const select = sizeSelector.clone();
-        select.value = sizeSelector.getSelected();
-        select.addEventListener("change", (event) => {
+        this.select = sizeSelector.clone();
+        this.select.value = sizeSelector.getSelected();
+        this.select.addEventListener("change", (event) => {
             sizeSelector.setSelected(event.target.value);
         });
-        this.container.appendChild(select);
+        this.container.appendChild(this.select);
+    }
+
+    componentDidUpdate () {
+        this.select.value = this.props.selectedSize;
     }
 
     render () {
         return <div ref={(container) => { this.container = container; }} />;
     }
 }
+
+DetailsSizeSelector.propTypes = {
+    selectedSize: PropTypes.string.isRequired
+};
 
 class SizeGuideDetails extends React.Component {
 
@@ -43,7 +51,7 @@ class SizeGuideDetails extends React.Component {
                     />
                 </DetailSection>
                 <DetailSection title="Selected size">
-                    <DetailsSizeSelector/>
+                    <DetailsSizeSelector selectedSize={this.props.selectedSize}/>
                 </DetailSection>
                 <DetailSection title="Overall fit">
                     <SizeSlider/>
@@ -57,7 +65,8 @@ class SizeGuideDetails extends React.Component {
 SizeGuideDetails.propTypes = {
     onSelectProfile: React.PropTypes.func.isRequired,
     selectedProfile: PropTypes.string.isRequired,
-    profiles: PropTypes.arrayOf(PropTypes.object)
+    profiles: PropTypes.arrayOf(PropTypes.object),
+    selectedSize: PropTypes.string.isRequired
 };
 
 export default SizeGuideDetails;
