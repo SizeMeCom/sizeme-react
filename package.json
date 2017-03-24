@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack --config webpack.config.js -d",
-    "watch": "webpack --config webpack.config.js -d --watch",
+    "watch": "webpack-dev-server",
     "build": "webpack --config webpack.config.js -p"
   },
   "dependencies": {
@@ -45,7 +45,8 @@
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.3",
     "url-loader": "^0.5.8",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "resolutions": {
     "core-js": "2.4.1",
