@@ -19,6 +19,9 @@ module.exports = {
         devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     },
     devtool: "source-map",
+    devServer: {
+        publicPath: "/dist/"
+    },
     plugins: [
         new webpack.SourceMapDevToolPlugin({
             filename: "[file].map"
