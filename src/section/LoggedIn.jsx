@@ -2,6 +2,7 @@
 
 import React from "react";
 import { trackEvent } from "../api/ga";
+import ProfileSelect from "../common/ProfileSelect.jsx";
 
 class LoggedIn extends React.Component {
     constructor (props) {
@@ -14,18 +15,13 @@ class LoggedIn extends React.Component {
         trackEvent(`${eventLabel}LoggedIn`, "Store: Product page load, logged in");
     }
 
-    handleChange = (event) => {
-        this.props.onSelectProfile(event.target.value);
-    };
-
     render () {
         return (
             <div>
-                <select value={this.props.selectedProfile.id} onChange={this.handleChange}>
-                    {this.props.profiles.map((profile) => (
-                        <option key={profile.id} value={profile.id}>{profile.profileName}</option>
-                    ))}
-                </select>
+                <ProfileSelect onSelectProfile={this.props.onSelectProfile}
+                               selectedProfile={this.props.selectedProfile.id}
+                               profiles={this.props.profiles}
+                />
             </div>
         );
     }

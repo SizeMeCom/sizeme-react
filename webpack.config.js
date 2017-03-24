@@ -47,13 +47,16 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                include: SCSS_DIR,
                 loader: ExtractTextPlugin.extract(["css-loader", "sass-loader"])
             },
             {
                 test: /\.(png|jpg)$/,
                 include: path.join(APP_DIR, "images"),
                 loader: "url-loader?limit=10000"
+            },
+            {
+                test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                loader: "file-loader?name=fonts/[name].[ext]"
             }
         ]
     }

@@ -1,16 +1,8 @@
-.size-guide-content {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
-  border: 1px solid #ccc;
-  background: #fff;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 4px;
-  outline: none;
-  padding: 20px;
+@import "~compass-mixins/lib/compass/css3/flexbox";
+
+/* Remove scroll on the body when react-modal is open */
+.ReactModal__Body--open {
+  overflow: hidden;
 }
 
 .size-guide-overlay {
@@ -20,4 +12,116 @@
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.75);
+  z-index: 1000;
+}
+
+.size-guide-modal {
+  $bar-background-color: rgb(241, 241, 241);
+  $bar-border: 1px solid rgb(229, 229, 229);
+
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  right: auto;
+  bottom: 40px;
+  transform: translate(-50%, 0);
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  max-width: 942px;
+
+  .modal-wrapper {
+    @include display-flex;
+    @include flex-direction(column);
+    min-height: 100%;
+
+    .modal-header {
+      background-color: $bar-background-color;
+      border-bottom: $bar-border;
+      color: rgb(170, 170, 170);
+      font-size: 12px;
+      height: 30px;
+      width: 100%;
+      padding: 7px 12px 5px;
+      box-sizing: border-box;
+      text-transform: uppercase;
+
+      span.size-guide-title {
+        float: left;
+        margin: 0.1em 16px 0.1em 0;
+
+        .item-name {
+          color: #000;
+        }
+      }
+
+      .size-guide-close {
+        color: #aaa;
+        text-decoration: none;
+        float: right;
+        cursor: pointer;
+
+        &:hover {
+          color: #000;
+        }
+
+        span.fa {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .modal-body {
+      @include flex(1);
+      overflow: scroll;
+    }
+
+    .modal-footer {
+      height: 30px;
+      background-color: $bar-background-color;
+      border-top: $bar-border;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+}
+
+.size-guide-content {
+  @include display-flex;
+  @include flex-direction(row);
+  width: 100%;
+
+  .size-guide-item {
+    @include flex(1 1 auto);
+    width: 40%;
+  }
+
+  .size-guide-details {
+    @include flex(1 1 auto);
+    width: 60%;
+    text-align: left;
+    padding-right: 10px;
+
+    .size-guide-details-section {
+      margin-top: 10px;
+      padding-bottom: 5px;
+
+      h2 {
+        text-transform: uppercase;
+        background-color: #ccc;
+        padding: 3px 6px;
+        margin-bottom: 15px;
+        font-size: 12px;
+      }
+
+      .profile-select {
+        min-width: 50%;
+        max-width: 90%;
+      }
+    }
+  }
 }
