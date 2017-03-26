@@ -1,10 +1,6 @@
 import i18n from "../api/i18n";
 
-function init (itemType) {
-    const itemTypeArr = Array.from(itemType)
-        .filter(a => a !== ".")
-        .map(a => parseInt(a, 10));
-
+function init (itemTypeArr) {
     const arrows = {};
     const itemDrawing = {};
     const fitOrder = [
@@ -957,19 +953,27 @@ function init (itemType) {
 
 export default class {
     constructor (item) {
-        const { arrows, itemDrawing, fitOrder } = init(item.itemType);
+        const itemTypeArr = Array.from(item.itemType)
+            .filter(a => a !== ".")
+            .map(a => parseInt(a, 10));
+        const { arrows, itemDrawing, fitOrder } = init(itemTypeArr);
 
-        let i = 1;
+        this.measurementOrder = [];
+
         const firstSize = Object.entries(item.measurements || {})[0];
         if (firstSize && firstSize[1]) {
             const measurements = firstSize[1];
+            let i = 1;
             for (const fit of fitOrder) {
                 if (measurements[fit] && arrows[fit]) {
                     arrows[fit].num = (i++);
+                    this.measurementOrder.push(fit);
                 }
             }
         }
         this.arrows = arrows;
         this.itemDrawing = itemDrawing;
+
+        this.getItemTypeComponent = index => itemTypeArr[index];
     }
 }

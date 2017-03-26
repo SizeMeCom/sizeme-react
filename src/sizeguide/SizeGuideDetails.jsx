@@ -2,18 +2,7 @@ import React, { PropTypes } from "react";
 import ProfileSelect from "../common/ProfileSelect.jsx";
 import { sizeSelector } from "../api/sizeme-api";
 import SizeSlider from "../common/SizeSlider.jsx";
-
-const DetailSection = ({ title, children }) => (
-    <div className="size-guide-details-section">
-        <h2>{title}</h2>
-        {children}
-    </div>
-);
-
-DetailSection.propTypes = {
-    title: PropTypes.string,
-    children: PropTypes.node
-};
+import DetailSection from "./DetailSection.jsx";
 
 class DetailsSizeSelector extends React.Component {
 

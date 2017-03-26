@@ -208,6 +208,7 @@ function doMatch (fitRequest, token) {
 const sizeSelector = new class {
     constructor () {
         this.el = null;
+        this.sizeMapper = [];
     }
 
     dispatchChange = (size) => {
@@ -219,6 +220,14 @@ const sizeSelector = new class {
         this.el.addEventListener("change", (event) => {
             this.dispatchChange(event.target.value);
         });
+
+        this.sizeMapper = [];
+        this.el.querySelectorAll("option").forEach((option) => {
+            const value = option.getAttribute("value");
+            if (value) {
+                this.sizeMapper.push([value, option.textContent]);
+            }
+        }, this);
     }
 
     setSelected = (val) => {
@@ -302,5 +311,6 @@ export {
     getProduct,
     setSelectedProfile,
     match,
-    sizeSelector
+    sizeSelector,
+    contextAddress
 };

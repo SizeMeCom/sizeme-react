@@ -1,5 +1,8 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
+@import "~compass-mixins/lib/compass/css3/flexbox";
+@import "~compass-mixins/lib/compass/css3/_border-radius";
+
 @import "../sizeguide/sizeguide";
 @import "../common/sizeform";
 @import "../common/sizeslider";
