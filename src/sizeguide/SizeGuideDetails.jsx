@@ -32,7 +32,7 @@ class SizeGuideDetails extends React.Component {
 
     render () {
         return (
-            <div className="size-guide-details">
+            <div className="size-guide-data size-guide-details">
                 <DetailSection title="Shopping for">
                     <ProfileSelect onSelectProfile={this.props.onSelectProfile}
                                    selectedProfile={this.props.selectedProfile}

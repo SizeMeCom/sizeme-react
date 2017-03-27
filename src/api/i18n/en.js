@@ -99,12 +99,12 @@ export default {
     SPLASH: {
         detailed_text: "Take a few <b>measurements of yourself</b> and get personalized info on how this item would " +
         "<b>fit you</b>.<br />Create a free <b>SizeMe</b> profile and stop guessing!",
-        btn_sign_up_title: "Sign up",
-        btn_sign_up_label: "Yes, I'd like to create a free account",
-        btn_log_in_title: "Log in",
-        btn_log_in_label: "I already have an account",
-        btn_no_thanks_title: "No thanks",
-        btn_no_thanks_label: "Maybe later",
+        btn_sign_up_label: "Sign up",
+        btn_sign_up_title: "Yes, I'd like to create a free account",
+        btn_log_in_label: "Log in",
+        btn_log_in_title: "I already have an account",
+        btn_no_thanks_label: "No thanks",
+        btn_no_thanks_title: "Maybe later",
         product_page_splashes: ["Unsure about the right size? Try"],
         product_page_splash_title: "SizeMe is a free service to help you know how this item will fit _you_"
     }

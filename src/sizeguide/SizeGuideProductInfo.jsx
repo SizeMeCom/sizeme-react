@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import DetailSection from "./DetailSection.jsx";
-import { sizeSelector } from "../api/sizeme-api";
+import { sizeSelector, contextAddress } from "../api/sizeme-api";
 import i18n from "../api/i18n";
 import HoverContainer from "./HoverContainer.jsx";
 
@@ -23,7 +23,7 @@ class SizeGuideProductInfo extends React.Component {
         );
 
         return (
-            <div className="size-guide-details">
+            <div className="size-guide-data size-guide-product-info">
                 <DetailSection title={i18n.SIZE_GUIDE.table_title}>
                     <table className="product-info-table">
                         <thead>
@@ -62,6 +62,21 @@ class SizeGuideProductInfo extends React.Component {
                     }
 
                 </DetailSection>
+                <div className="size-guide-splash">
+                    <p dangerouslySetInnerHTML={{ __html: i18n.SPLASH.detailed_text }}/>
+                    <div className="splash-choices">
+                        <a href={`${contextAddress}?mode=signup`}
+                           target="_blank" className="sign-up link-btn"
+                           title={i18n.SPLASH.btn_sign_up_title}>{i18n.SPLASH.btn_sign_up_label}</a>
+
+                        <a href="#" className="log-in link-btn"
+                           title={i18n.SPLASH.btn_log_in_title}>{i18n.SPLASH.btn_log_in_label}</a>
+
+                        <a href="#" className="no-thanks link-btn"
+                           title={i18n.SPLASH.btn_no_thanks_title}>{i18n.SPLASH.btn_no_thanks_label}</a>
+                        
+                    </div>
+                </div>
             </div>
         );
     }

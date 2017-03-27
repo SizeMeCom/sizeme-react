@@ -31,6 +31,7 @@
   outline: none;
   width: 100%;
   max-width: 942px;
+  max-height: 560px;
 
   .modal-wrapper {
     @include display-flex;
@@ -122,13 +123,14 @@
     @include flex(1 1 auto);
     box-sizing: border-box;
     width: 40%;
+    height: calc(100% - 60px);
 
     canvas {
       max-width: 100%;
     }
   }
 
-  .size-guide-details {
+  .size-guide-data {
     @include flex(1 1 auto);
     width: 60%;
     box-sizing: border-box;
@@ -147,12 +149,16 @@
         margin-bottom: 15px;
         font-size: 12px;
       }
+    }
+  }
 
-      .profile-select {
-        min-width: 50%;
-        max-width: 90%;
-      }
+  .size-guide-product-info {
+    @include display-flex;
+    @include flex-direction(column);
 
+    .size-guide-details-section {
+      @include flex(1);
+      
       .product-info-table {
         border-collapse: separate;
         border-spacing: 3px;
@@ -171,7 +177,7 @@
             .num {
               background-color: #000;
               color: #fff;
-              font-weight: normal!important;
+              font-weight: normal !important;
               @include border-radius(50%);
               padding: 0;
               width: 14px;
@@ -211,6 +217,56 @@
       .sizeme-explanation {
         margin-top: 10px;
       }
+    }
+
+    .size-guide-splash {
+      padding: 5px 0;
+      @include border-radius(5px);
+      text-align: center;
+      background: #eee url(../images/sizeme_logo_plain_h32.png) no-repeat 20px 10px;
+      width: 100%;
+      margin-bottom: 10px;
+
+      p {
+        margin: 1px 10px 10px 150px;
+      }
+
+      .splash-choices {
+        @include display-flex;
+        @include flex-direction(row);
+        @include justify-content(space-between);
+        margin: 0 10px;
+
+        a.link-btn {
+          @include flex(1);
+          max-width: 140px;
+          padding: 5px 8px;
+        }
+
+        a.sign-up {
+          background-image: linear-gradient(to bottom left, #7DCC5D 0%, #48952A 100%);
+          border: 1px solid #76DC4C;
+          color: #fff!important;
+        }
+
+        a.log-in {
+          background-image: linear-gradient(to bottom left, #FFFFFF 0%, #CFCFCF 100%);
+        }
+
+        a.no-thanks {
+          background-image: linear-gradient(to bottom left, #888888 0%, #333333 100%);
+          border: 1px solid #888888;
+          color: #ccc!important;
+          padding: 3px 8px;
+        }
+      }
+    }
+  }
+
+  .size-guide-details {
+    .profile-select {
+      min-width: 50%;
+      max-width: 90%;
     }
   }
 }
