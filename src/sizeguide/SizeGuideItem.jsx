@@ -16,6 +16,7 @@ const arrowNumberFont = "10px sans-serif";
 const arrowNumberHighlightFont = "bold 14px sans-serif";
 const arrowColorGreen = "#42AE49";
 const arrowColorBlack = "#000000";
+const arrowColorInfo = "#666666";
 
 const fitRanges = new Map([
     [1, { label: "too_small", arrowColor: "#999999" }],
@@ -222,7 +223,8 @@ function plotItem (c, data, scale, offsetX, offsetY) {
         c.moveTo(
             pX(-lastCoord.X), pY(lastCoord.Y)
         );
-        for (const accCoord of accent.coords.reverse()) {
+        for (let i = accent.coords.length - 1; i >= 0; i--) {
+            const accCoord = accent.coords[i];
             const [lcp1, lcp2] = lcp;
             if (lcp1.X) {
                 c.bezierCurveTo(
@@ -276,7 +278,8 @@ function plotItem (c, data, scale, offsetX, offsetY) {
     if (data.mirror) {
         let lcp = [{ X: null, Y: null }, { X: null, Y: null }];
 
-        for (const coord of data.coords.reverse()) {
+        for (let i = data.coords.length - 1; i >= 0; i--) {
+            const coord = data.coords[i];
             const [lcp1, lcp2] = lcp;
             if (lcp1.X) {
                 c.bezierCurveTo(
@@ -288,7 +291,6 @@ function plotItem (c, data, scale, offsetX, offsetY) {
                     pX(-coord.X), pY(coord.Y)
                 );
             }
-
             if (typeof coord.cp1X !== "undefined") {
                 lcp1.X = -coord.cp2X;
                 lcp1.Y = coord.cp2Y;
@@ -326,7 +328,7 @@ function writeItemCanvas (canvas, options) {
         return;
     }
 
-    const { model, highlight, matchMap, product, selectedSize } = options;
+    const { model, highlight, matchMap, measurements, selectedSize, isGuide } = options;
     const measurementArrows = model.arrows;
     const itemDrawing = model.itemDrawing;
     
@@ -366,7 +368,7 @@ function writeItemCanvas (canvas, options) {
 
     const getFitColor = measurementResult => {
         if (!measurementResult) {
-            return arrowColorGreen;
+            return arrowColorInfo;
         }
         const { componentFit, importance } = measurementResult;
         const ranges = importance === 1 ? fitRanges : fitRangesLessImportance;
@@ -380,14 +382,11 @@ function writeItemCanvas (canvas, options) {
         return prev.arrowColor;
     };
 
-    const plotArrows = (selectedMeasurements, matchMap) => {
-        let i = 1;
-        const isGuide = !matchMap;
+    const plotArrows = (selectedMeasurements) => {
         for (const [measurement, value] of Object.entries(selectedMeasurements)) {
             const arrow = Object.assign({
-                num: (i++),
                 style: isGuide ? "line" : "arc",
-                color: isGuide ? arrowColorBlack : getFitColor(matchMap[measurement])
+                color: isGuide ? arrowColorInfo : getFitColor(matchMap.get(measurement))
             }, measurementArrows[measurement]);
             if (value > 0 && arrow) {
                 c.strokeStyle = c.fillStyle = arrow.color;
@@ -401,25 +400,13 @@ function writeItemCanvas (canvas, options) {
 
     // item
     plotItem(c, itemDrawing, scale, offsetX, offsetY);
-
     // arrows
-    if (matchMap) {
-        // Detailed, selectedSize is can't be null, otherwise there wouldn't be matchMap
-        plotArrows(product.item.measurements[selectedSize] || {}, matchMap);
-    } else if (!selectedSize) {
-        // Size Guide, plot first size
-        plotArrows((Object.entries(product.item.measurements)[0] || [, {}])[1]);
-    } else {
-        plotArrows(product.item.measurements[selectedSize] || {});
-    }
+    plotArrows(measurements.get(selectedSize) || measurements.values().next().value);
 }
 
 class SizeGuideItem extends React.Component {
     constructor (props) {
         super(props);
-        this.state = {
-            guideModel: new SizeGuideModel(this.props.product.item)
-        };
     }
 
     componentDidMount () {
@@ -427,22 +414,24 @@ class SizeGuideItem extends React.Component {
     }
 
     componentDidUpdate () {
-        if (this.props.selectedProfile.selectDone) {
-            if (this.props.selectedProfile.id !== this.state.profile || this.props.selectedSize !== this.state.size) {
-                this.draw();
-            }
+        if (this.props.highlight !== this.state.highlight ||
+            (this.props.selectedProfile.selectDone &&
+                (this.props.selectedProfile.id !== this.state.profile ||
+                        this.props.selectedSize !== this.state.size
+                )
+            )
+        ) {
+            this.draw();
         }
     }
 
     draw () {
         this.setState({
             profile: this.props.selectedProfile.id,
-            size: this.props.selectedSize
+            size: this.props.selectedSize,
+            highlight: this.props.highlight
         });
-        writeItemCanvas(this.canvas, {
-            ...this.props,
-            model: this.state.guideModel
-        });
+        writeItemCanvas(this.canvas, this.props);
     }
 
     render () {
@@ -459,10 +448,12 @@ class SizeGuideItem extends React.Component {
 
 SizeGuideItem.propTypes = {
     highlight: PropTypes.string,
-    matchMap: PropTypes.object,
-    product: PropTypes.object.isRequired,
+    matchMap: PropTypes.instanceOf(Map).isRequired,
+    measurements: PropTypes.instanceOf(Map).isRequired,
     selectedSize: PropTypes.string,
-    selectedProfile: PropTypes.object.isRequired
+    selectedProfile: PropTypes.object.isRequired,
+    model: PropTypes.instanceOf(SizeGuideModel).isRequired,
+    isGuide: PropTypes.bool.isRequired
 };
 
 export default SizeGuideItem;

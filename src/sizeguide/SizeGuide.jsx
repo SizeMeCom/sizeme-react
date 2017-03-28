@@ -5,7 +5,10 @@ import SizeGuideItem from "./SizeGuideItem.jsx";
 import SizeGuideDetails from "./SizeGuideDetails.jsx";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setSelectedProfile } from "../api/sizeme-api";
+import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
+import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
+import SizeGuideModel from "./SizeGuideModel";
+import i18n from "../api/i18n";
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -13,9 +16,23 @@ class SizeGuide extends React.Component {
 
         this.state = {
             guideIsOpen: false,
-            highlight: ""
+            highlight: "",
+            guideModel: new SizeGuideModel(this.props.product.item)
         };
     }
+
+    onHover = (measurement) => {
+        if (!measurement) {
+            this.removeTimeout = setTimeout(() => {
+                this.setState({ highlight: measurement });
+            }, 100);
+        } else {
+            this.setState({ highlight: measurement });
+            if (this.removeTimeout) {
+                clearTimeout(this.removeTimeout);
+            }
+        }
+    };
 
     openGuide = () => {
         this.setState({ guideIsOpen: true });
@@ -27,12 +44,34 @@ class SizeGuide extends React.Component {
 
     render () {
         const selectedMatchResult = this.props.matchResult ? this.props.matchResult[this.props.selectedSize] : null;
-        const matchMap = selectedMatchResult ? selectedMatchResult.matchMap : null;
+        const matchMap = selectedMatchResult ? new Map(Object.entries(selectedMatchResult.matchMap)) : new Map();
+        const measurements = new Map(Object.entries(this.props.product.item.measurements));
+        const button = this.props.loggedIn ? i18n.DETAILED.button_text : i18n.SIZE_GUIDE.button_text;
+
+        let detailSection;
+        if (this.props.loggedIn) {
+            detailSection = (
+                <SizeGuideDetails onSelectProfile={this.props.onSelectProfile}
+                                  selectedProfile={this.props.selectedProfile ?
+                                      this.props.selectedProfile.id : ""}
+                                  profiles={this.props.profiles}
+                                  selectedSize={this.props.selectedSize}
+                />
+            );
+        } else {
+            detailSection = (
+                <SizeGuideProductInfo measurements={this.props.product.item.measurements}
+                                      measurementOrder={this.state.guideModel.measurementOrder}
+                                      onHover={this.onHover}
+                                      getItemTypeComponent={this.state.guideModel.getItemTypeComponent}
+                />
+            );
+        }
         
         return (
             <div>
-                <a className="a_button sm_detailed_view size_guide" id="popup_opener"
-                   onClick={this.openGuide}>Size guide</a>
+                <a className="link-btn size-guide"
+                   onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
                 <Modal
                     isOpen={this.state.guideIsOpen}
                     onRequestClose={this.closeGuide}
@@ -42,31 +81,34 @@ class SizeGuide extends React.Component {
                 >
                     <div className="modal-wrapper">
                         <div className="modal-header">
-                            <span className="size-guide-title">Detailed view for <span
+                            <span className="size-guide-title">
+                                {this.props.loggedIn ? i18n.DETAILED.window_title : i18n.SIZE_GUIDE.window_title} <span
                                 className="item-name">{this.props.product.name}</span>
                             </span>
                             <a className="size-guide-close" role="button" onClick={this.closeGuide}>
-                                <FontAwesome name="times" title="Close"/>
+                                <FontAwesome name="times" title={i18n.COMMON.close_text}/>
                             </a>
                         </div>
 
                         <div className="modal-body">
                             <div className="size-guide-content">
-                                <SizeGuideItem product={this.props.product} selectedSize={this.props.selectedSize}
+                                <SizeGuideItem measurements={measurements} selectedSize={this.props.selectedSize}
                                                highlight={this.state.highlight} matchMap={matchMap}
                                                selectedProfile={this.props.selectedProfile}
+                                               model={this.state.guideModel} isGuide={!this.props.loggedIn}
                                 />
-                                <SizeGuideDetails onSelectProfile={this.props.onSelectProfile}
-                                                  selectedProfile={this.props.selectedProfile ?
-                                                      this.props.selectedProfile.id : ""}
-                                                  profiles={this.props.profiles}
-                                                  selectedSize={this.props.selectedSize}
-                                />
-
+                                {detailSection}
                             </div>
                         </div>
 
-                        <div className="modal-footer"/>
+                        <div className="modal-footer">
+                            {!this.props.loggedIn &&
+                            <span className="sizeme-advertisement">
+                                {i18n.SIZE_GUIDE.advertisement}
+                                <a id="sizeme_ad_link" href={contextAddress} target="_blank"/>
+                            </span>
+                            }
+                        </div>
                     </div>
                 </Modal>
             </div>
@@ -80,7 +122,8 @@ SizeGuide.propTypes = {
     selectedProfile: PropTypes.object,
     selectedSize: PropTypes.string,
     onSelectProfile: React.PropTypes.func.isRequired,
-    matchResult: PropTypes.object
+    matchResult: PropTypes.object,
+    loggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -88,7 +131,8 @@ const mapStateToProps = (state) => ({
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
     selectedSize: state.selectedSize,
-    matchResult: state.match.matchResult
+    matchResult: state.match.matchResult,
+    loggedIn: state.authToken.loggedIn
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

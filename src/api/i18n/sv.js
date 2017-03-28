@@ -98,12 +98,12 @@ export default {
     SPLASH: {
         detailed_text: "Tag några <b>mått av dig själv</b> och få personlig info hur denna artikel skulle " +
         "<b>passa dig</b>.<br />Gör en gratis <b>SizeMe</b> profil och sluta gissa!",
-        btn_sign_up_title: "Signera",
-        btn_sign_up_label: "Ja, jag vill skapa ett gratis konto",
-        btn_log_in_title: "Logga in",
-        btn_log_in_label: "Jag har redan ett konto",
-        btn_no_thanks_title: "Nej tack",
-        btn_no_thanks_label: "Kanske senare",
+        btn_sign_up_label: "Signera",
+        btn_sign_up_title: "Ja, jag vill skapa ett gratis konto",
+        btn_log_in_label: "Logga in",
+        btn_log_in_title: "Jag har redan ett konto",
+        btn_no_thanks_label: "Nej tack",
+        btn_no_thanks_title: "Kanske senare",
         product_page_splashes: ["Osäker om den rätta storleken? Pröva"],
         product_page_splash_title: "SizeMe är en gratis service för att hjälpa dig hur denna artikel passar dig"
     }

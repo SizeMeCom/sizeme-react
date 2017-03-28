@@ -98,12 +98,12 @@ export default {
     SPLASH: {
         detailed_text: "Ota <b>muutama mitta</b> itsestäsi ja näe miten tämä tuote <b>sopisi sinulle</b>.<br />" +
         "Luo oma <b>SizeMe</b>-tunnus ja lopeta arvailu!",
-        btn_sign_up_title: "Liityn mukaan",
-        btn_sign_up_label: "Jep, haluan luoda oman tunnuksen",
-        btn_log_in_title: "Kirjaudu",
-        btn_log_in_label: "Minulla on jo oma tunnus",
-        btn_no_thanks_title: "Ei kiitos",
-        btn_no_thanks_label: "Ehkä myöhemmin",
+        btn_sign_up_label: "Liityn mukaan",
+        btn_sign_up_title: "Jep, haluan luoda oman tunnuksen",
+        btn_log_in_label: "Kirjaudu",
+        btn_log_in_title: "Minulla on jo oma tunnus",
+        btn_no_thanks_label: "Ei kiitos",
+        btn_no_thanks_title: "Ehkä myöhemmin",
         product_page_splashes: ["Haluatko apua oikean koon valitsemisessa? Kokeile"],
         product_page_splash_title: "SizeMe-palvelu kertoo miten tämä tuote sopii juuri _sinulle_"
     }

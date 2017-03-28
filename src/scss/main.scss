@@ -1,5 +1,24 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
+@import "~compass-mixins/lib/compass/css3/_flexbox";
+@import "~compass-mixins/lib/compass/css3/_border-radius";
+@import "~compass-mixins/lib/compass/css3/_images";
+
+a.link-btn {
+  background-color: white;
+  color: #000!important;
+  padding: 4px 8px;
+  @include border-radius(5px);
+  border: 1px solid white;
+  margin-bottom: 5px;
+  min-width: 70px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@import "../section/section";
 @import "../sizeguide/sizeguide";
 @import "../common/sizeform";
 @import "../common/sizeslider";
