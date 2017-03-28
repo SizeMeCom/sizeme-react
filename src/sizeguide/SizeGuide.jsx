@@ -44,7 +44,9 @@ class SizeGuide extends React.Component {
 
     render () {
         const selectedMatchResult = this.props.matchResult ? this.props.matchResult[this.props.selectedSize] : null;
-        const matchMap = selectedMatchResult ? selectedMatchResult.matchMap : null;
+        const matchMap = selectedMatchResult ? new Map(Object.entries(selectedMatchResult.matchMap)) : new Map();
+        const measurements = new Map(Object.entries(this.props.product.item.measurements));
+        const button = this.props.loggedIn ? i18n.DETAILED.button_text : i18n.SIZE_GUIDE.button_text;
 
         let detailSection;
         if (this.props.loggedIn) {
@@ -68,8 +70,8 @@ class SizeGuide extends React.Component {
         
         return (
             <div>
-                <a className="a_button sm_detailed_view size_guide" id="popup_opener"
-                   onClick={this.openGuide}>Size guide</a>
+                <a className="link-btn size-guide"
+                   onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
                 <Modal
                     isOpen={this.state.guideIsOpen}
                     onRequestClose={this.closeGuide}
@@ -84,16 +86,16 @@ class SizeGuide extends React.Component {
                                 className="item-name">{this.props.product.name}</span>
                             </span>
                             <a className="size-guide-close" role="button" onClick={this.closeGuide}>
-                                <FontAwesome name="times" title="Close"/>
+                                <FontAwesome name="times" title={i18n.COMMON.close_text}/>
                             </a>
                         </div>
 
                         <div className="modal-body">
                             <div className="size-guide-content">
-                                <SizeGuideItem product={this.props.product} selectedSize={this.props.selectedSize}
+                                <SizeGuideItem measurements={measurements} selectedSize={this.props.selectedSize}
                                                highlight={this.state.highlight} matchMap={matchMap}
                                                selectedProfile={this.props.selectedProfile}
-                                               model={this.state.guideModel}
+                                               model={this.state.guideModel} isGuide={!this.props.loggedIn}
                                 />
                                 {detailSection}
                             </div>

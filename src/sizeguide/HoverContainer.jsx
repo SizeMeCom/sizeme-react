@@ -17,12 +17,9 @@ class HoverContainer extends React.Component {
     }
 
     render () {
-        const children = React.Children.map(this.props.children,
-            child => React.cloneElement(child, {
-                ref: (el) => { this.el = el; }
-            })
-        );
-        return children[0];
+        return React.cloneElement(React.Children.only(this.props.children), {
+            ref: (el) => { this.el = el; }
+        });
     }
 }
 

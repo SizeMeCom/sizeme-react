@@ -3,6 +3,7 @@ import ProfileSelect from "../common/ProfileSelect.jsx";
 import { sizeSelector } from "../api/sizeme-api";
 import SizeSlider from "../common/SizeSlider.jsx";
 import DetailSection from "./DetailSection.jsx";
+import i18n from "../api/i18n";
 
 class DetailsSizeSelector extends React.Component {
 
@@ -33,19 +34,19 @@ class SizeGuideDetails extends React.Component {
     render () {
         return (
             <div className="size-guide-data size-guide-details">
-                <DetailSection title="Shopping for">
+                <DetailSection title={i18n.COMMON.shopping_for}>
                     <ProfileSelect onSelectProfile={this.props.onSelectProfile}
                                    selectedProfile={this.props.selectedProfile}
                                    profiles={this.props.profiles}
                     />
                 </DetailSection>
-                <DetailSection title="Selected size">
+                <DetailSection title={i18n.COMMON.selected_size}>
                     <DetailsSizeSelector selectedSize={this.props.selectedSize}/>
                 </DetailSection>
-                <DetailSection title="Overall fit">
+                <DetailSection title={i18n.FIT_INFO.overall_fit}>
                     <SizeSlider/>
                 </DetailSection>
-                <DetailSection title="Detailed fit - overlaps"/>
+                <DetailSection title={i18n.DETAILED.table_title}/>
             </div>
         );
     }

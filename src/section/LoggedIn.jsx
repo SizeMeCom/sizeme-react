@@ -17,7 +17,7 @@ class LoggedIn extends React.Component {
 
     render () {
         return (
-            <div>
+            <div className="logged-in-content">
                 <ProfileSelect onSelectProfile={this.props.onSelectProfile}
                                selectedProfile={this.props.selectedProfile.id}
                                profiles={this.props.profiles}

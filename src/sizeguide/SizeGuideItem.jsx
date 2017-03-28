@@ -328,8 +328,7 @@ function writeItemCanvas (canvas, options) {
         return;
     }
 
-    const { model, highlight, matchMap, product, selectedSize } = options;
-    const isGuide = Object.keys(matchMap).length === 0;
+    const { model, highlight, matchMap, measurements, selectedSize, isGuide } = options;
     const measurementArrows = model.arrows;
     const itemDrawing = model.itemDrawing;
     
@@ -369,7 +368,7 @@ function writeItemCanvas (canvas, options) {
 
     const getFitColor = measurementResult => {
         if (!measurementResult) {
-            return arrowColorGreen;
+            return arrowColorInfo;
         }
         const { componentFit, importance } = measurementResult;
         const ranges = importance === 1 ? fitRanges : fitRangesLessImportance;
@@ -383,11 +382,11 @@ function writeItemCanvas (canvas, options) {
         return prev.arrowColor;
     };
 
-    const plotArrows = (selectedMeasurements, matchMap) => {
+    const plotArrows = (selectedMeasurements) => {
         for (const [measurement, value] of Object.entries(selectedMeasurements)) {
             const arrow = Object.assign({
                 style: isGuide ? "line" : "arc",
-                color: isGuide ? arrowColorInfo : getFitColor(matchMap[measurement])
+                color: isGuide ? arrowColorInfo : getFitColor(matchMap.get(measurement))
             }, measurementArrows[measurement]);
             if (value > 0 && arrow) {
                 c.strokeStyle = c.fillStyle = arrow.color;
@@ -401,17 +400,8 @@ function writeItemCanvas (canvas, options) {
 
     // item
     plotItem(c, itemDrawing, scale, offsetX, offsetY);
-
     // arrows
-    if (!isGuide) {
-        // Detailed, selectedSize is can't be null, otherwise there wouldn't be matchMap
-        plotArrows(product.item.measurements[selectedSize] || {}, matchMap);
-    } else if (!selectedSize) {
-        // Size Guide, plot first size
-        plotArrows((Object.entries(product.item.measurements)[0] || [, {}])[1]);
-    } else {
-        plotArrows(product.item.measurements[selectedSize] || {});
-    } 
+    plotArrows(measurements.get(selectedSize) || measurements.values().next().value);
 }
 
 class SizeGuideItem extends React.Component {
@@ -458,11 +448,12 @@ class SizeGuideItem extends React.Component {
 
 SizeGuideItem.propTypes = {
     highlight: PropTypes.string,
-    matchMap: PropTypes.object,
-    product: PropTypes.object.isRequired,
+    matchMap: PropTypes.instanceOf(Map).isRequired,
+    measurements: PropTypes.instanceOf(Map).isRequired,
     selectedSize: PropTypes.string,
     selectedProfile: PropTypes.object.isRequired,
-    model: PropTypes.instanceOf(SizeGuideModel).isRequired
+    model: PropTypes.instanceOf(SizeGuideModel).isRequired,
+    isGuide: PropTypes.bool.isRequired
 };
 
 export default SizeGuideItem;

@@ -1,7 +1,8 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
-@import "~compass-mixins/lib/compass/css3/flexbox";
+@import "~compass-mixins/lib/compass/css3/_flexbox";
 @import "~compass-mixins/lib/compass/css3/_border-radius";
+@import "~compass-mixins/lib/compass/css3/_images";
 
 a.link-btn {
   background-color: white;
@@ -14,8 +15,10 @@ a.link-btn {
   display: block;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
 }
 
+@import "../section/section";
 @import "../sizeguide/sizeguide";
 @import "../common/sizeform";
 @import "../common/sizeslider";
