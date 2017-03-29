@@ -56,6 +56,8 @@ class SizeGuide extends React.Component {
                                       this.props.selectedProfile.id : ""}
                                   profiles={this.props.profiles}
                                   selectedSize={this.props.selectedSize}
+                                  measurementOrder={this.state.guideModel.measurementOrder}
+                                  onHover={this.onHover}
                 />
             );
         } else {

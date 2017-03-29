@@ -33,7 +33,7 @@ class SizeGuideProductInfo extends React.Component {
                                 {this.props.measurementOrder.map((measurement, i) => (
                                     <HoverContainer measurement={measurement} key={measurement}
                                                     onHover={this.props.onHover}>
-                                        <th>
+                                        <th className="measurement-head">
                                             <span className="num">{i + 1}</span>{measurementName(measurement)}
                                         </th>
                                     </HoverContainer>
