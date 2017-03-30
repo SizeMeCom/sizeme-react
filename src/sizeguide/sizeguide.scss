@@ -316,9 +316,14 @@ a.link-btn.size-guide {
 
         .fit-label {
           color: white;
-          background-color: green;
           padding: 5px;
         }
+
+        .fit-label.too_small { background-color: $too_small; }
+        .fit-label.slim      { background-color: $slim; }
+        .fit-label.regular   { background-color: $regular; }
+        .fit-label.loose     { background-color: $loose; }
+        .fit-label.too_big   { background-color: $too_big; }
       }
     }
   }

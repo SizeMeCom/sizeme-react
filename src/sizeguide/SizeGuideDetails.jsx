@@ -34,7 +34,9 @@ DetailsSizeSelector.propTypes = {
 class SizeGuideDetails extends React.Component {
 
     render () {
-        const measurementName = measurement => i18n.MEASUREMENT[measurement];
+        const item = Object.assign({}, this.props.product.item, {
+            measurements: this.props.product.item.measurements[this.props.selectedSize]
+        });
 
         return (
             <div className="size-guide-data size-guide-details">
@@ -55,7 +57,11 @@ class SizeGuideDetails extends React.Component {
                         {this.props.measurementOrder.map((measurement, i) => (
                             <HoverContainer measurement={measurement} onHover={this.props.onHover} key={i}>
                                 <div className="fit-wrapper">
-                                    <DetailedFit measurementName={measurementName(measurement)} num={i + 1}/>
+                                    <DetailedFit measurement={measurement} num={i + 1}
+                                                 item={item}
+                                                 match={this.props.selectedSize &&
+                                                 this.props.matchResult[this.props.selectedSize]}
+                                    />
                                 </div>
                             </HoverContainer>
                         ))}

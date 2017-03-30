@@ -58,6 +58,8 @@ class SizeGuide extends React.Component {
                                   selectedSize={this.props.selectedSize}
                                   measurementOrder={this.state.guideModel.measurementOrder}
                                   onHover={this.onHover}
+                                  matchResult={this.props.matchResult}
+                                  product={this.props.product}
                 />
             );
         } else {

@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
 import SizeGuideModel from "./SizeGuideModel";
+import Optional from "optional-js";
 
 const realCanvasWidth = 350;
 const realCanvasHeight = 480;
@@ -14,27 +15,7 @@ const arrowEndRadius = 4;
 const arrowNumberRadius = 10;
 const arrowNumberFont = "10px sans-serif";
 const arrowNumberHighlightFont = "bold 14px sans-serif";
-const arrowColorGreen = "#42AE49";
-const arrowColorBlack = "#000000";
 const arrowColorInfo = "#666666";
-
-const fitRanges = new Map([
-    [1, { label: "too_small", arrowColor: "#999999" }],
-    [940, { label: "too_small", arrowColor: "#BB5555" }],
-    [1000, { label: "slim", arrowColor: "#457A4C" }],
-    [1055, { label: "regular", arrowColor: "#42AE49" }],
-    [1110, { label: "loose", arrowColor: "#87B98E" }],
-    [1165, { label: "too_big", arrowColor: "#BB5555" }],
-    [1225, { label: "too_big", arrowColor: "#BB5555" }]
-]);
-
-const fitRangesLessImportance = new Map([
-    [1, { label: "too_small", arrowColor: "#999999" }],
-    [940, { label: "too_small", arrowColor: "#BB5555" }],
-    [1000, { label: "slim", arrowColor: "#457A4C" }],
-    [1055, { label: "regular", arrowColor: "#42AE49" }],
-    [1110, { label: "loose", arrowColor: "#87B98E" }]
-]);
 
 const getMaxX = data => data.coords.reduce((max, val) => Math.max(max, val.X), 0);
 const getMaxY = data => data.coords.reduce((max, val) => Math.max(max, val.Y), 0);
@@ -366,27 +347,15 @@ function writeItemCanvas (canvas, options) {
     }
     const offsetY = (realCanvasHeight - ((getMaxY(itemDrawing) + getMinY(itemDrawing)) * scale)) / 2;
 
-    const getFitColor = measurementResult => {
-        if (!measurementResult) {
-            return arrowColorInfo;
-        }
-        const { componentFit, importance } = measurementResult;
-        const ranges = importance === 1 ? fitRanges : fitRangesLessImportance;
-        let prev = null;
-        for (const [singleFit, value] of ranges) {
-            if (componentFit < singleFit) {
-                return (prev || value).arrowColor;
-            }
-            prev = value;
-        }
-        return prev.arrowColor;
-    };
-
     const plotArrows = (selectedMeasurements) => {
         for (const [measurement, value] of Object.entries(selectedMeasurements)) {
             const arrow = Object.assign({
                 style: isGuide ? "line" : "arc",
-                color: isGuide ? arrowColorInfo : getFitColor(matchMap.get(measurement))
+                color: isGuide ? arrowColorInfo :
+                    Optional.ofNullable(SizeGuideModel.getFit(matchMap.get(measurement)))
+                        .map(fit => fit.arrowColor)
+                        .orElse(arrowColorInfo)
+
             }, measurementArrows[measurement]);
             if (value > 0 && arrow) {
                 c.strokeStyle = c.fillStyle = arrow.color;
