@@ -18,6 +18,12 @@ a.link-btn {
   cursor: pointer;
 }
 
+$too_small: #b55;
+$slim: #45a14c;
+$regular: #5fc153;
+$loose: #8cd98e;
+$too_big: #b55; 
+
 @import "../section/section";
 @import "../sizeguide/sizeguide";
 @import "../common/sizeform";

@@ -139,6 +139,27 @@ a.link-btn.size-guide {
   @include flex-wrap(wrap);
   width: 100%;
 
+  .measurement-head {
+    .num {
+      background-color: #000;
+      color: #fff;
+      font-weight: normal !important;
+      @include border-radius(50%);
+      padding: 0;
+      width: 14px;
+      height: 14px;
+      font-size: 12px;
+      display: block;
+      margin: 0 auto 3px;
+      line-height: 1.2em;
+    }
+
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
   .size-guide-item {
     @include flex(1 1 auto);
     box-sizing: border-box;
@@ -193,25 +214,6 @@ a.link-btn.size-guide {
         }
 
         thead {
-          th {
-            .num {
-              background-color: #000;
-              color: #fff;
-              font-weight: normal !important;
-              @include border-radius(50%);
-              padding: 0;
-              width: 14px;
-              height: 14px;
-              font-size: 12px;
-              display: block;
-              margin: 0 auto 3px;
-              line-height: 1.2em;
-            }
-
-            font-weight: bold;
-            text-transform: uppercase;
-          }
-
           th.size-col {
             vertical-align: bottom;
           }
@@ -287,6 +289,42 @@ a.link-btn.size-guide {
     .profile-select {
       min-width: 50%;
       max-width: 90%;
+    }
+
+    .fit-table {
+      @include display-flex;
+      @include flex-direction(row);
+
+      .fit-wrapper {
+        @include flex(1);
+      }
+
+      .detailed-fit {
+        text-align: center;
+        font-size: 90%;
+
+        .overlap, .fit-label, .measurement-head {
+          border: 1.5px solid #fff;
+          white-space: nowrap;
+        }
+
+        .overlap {
+          color: black;
+          background-color: #f1f1f1;
+          padding: 3px;
+        }
+
+        .fit-label {
+          color: white;
+          padding: 5px;
+        }
+
+        .fit-label.too_small { background-color: $too_small; }
+        .fit-label.slim      { background-color: $slim; }
+        .fit-label.regular   { background-color: $regular; }
+        .fit-label.loose     { background-color: $loose; }
+        .fit-label.too_big   { background-color: $too_big; }
+      }
     }
   }
 }

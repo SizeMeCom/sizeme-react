@@ -1,4 +1,22 @@
-import i18n from "../api/i18n";
+import i18n from "./i18n";
+
+const fitRanges = new Map([
+    [1, { label: "too_small", arrowColor: "#999999" }],
+    [940, { label: "too_small", arrowColor: "#BB5555" }],
+    [1000, { label: "slim", arrowColor: "#457A4C" }],
+    [1055, { label: "regular", arrowColor: "#42AE49" }],
+    [1110, { label: "loose", arrowColor: "#87B98E" }],
+    [1165, { label: "too_big", arrowColor: "#BB5555" }],
+    [1225, { label: "too_big", arrowColor: "#BB5555" }]
+]);
+
+const fitRangesLessImportance = new Map([
+    [1, { label: "too_small", arrowColor: "#999999" }],
+    [940, { label: "too_small", arrowColor: "#BB5555" }],
+    [1000, { label: "slim", arrowColor: "#457A4C" }],
+    [1055, { label: "regular", arrowColor: "#42AE49" }],
+    [1110, { label: "loose", arrowColor: "#87B98E" }]
+]);
 
 function init (itemTypeArr) {
     const arrows = {};
@@ -976,4 +994,20 @@ export default class {
 
         this.getItemTypeComponent = index => itemTypeArr[index];
     }
+
+    static getFit = measurementResult => {
+        if (!measurementResult) {
+            return null;
+        }
+        const { componentFit, importance } = measurementResult;
+        const ranges = importance === 1 ? fitRanges : fitRangesLessImportance;
+        let prev = null;
+        for (const [singleFit, value] of ranges) {
+            if (componentFit < singleFit) {
+                return (prev || value);
+            }
+            prev = value;
+        }
+        return prev;
+    };
 }

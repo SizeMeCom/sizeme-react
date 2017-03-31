@@ -3,7 +3,10 @@ import ProfileSelect from "../common/ProfileSelect.jsx";
 import { sizeSelector } from "../api/sizeme-api";
 import SizeSlider from "../common/SizeSlider.jsx";
 import DetailSection from "./DetailSection.jsx";
+import DetailedFit from "./DetailedFit.jsx";
 import i18n from "../api/i18n";
+import HoverContainer from "./HoverContainer.jsx";
+import Optional from "optional-js";
 
 class DetailsSizeSelector extends React.Component {
 
@@ -32,6 +35,14 @@ DetailsSizeSelector.propTypes = {
 class SizeGuideDetails extends React.Component {
 
     render () {
+        const item = Object.assign({}, this.props.product.item, {
+            measurements: this.props.product.item.measurements[this.props.selectedSize]
+        });
+        const match = Optional.ofNullable(this.props.selectedSize)
+            .flatMap(size => Optional.ofNullable(this.props.matchResult)
+                .map(r => r[size]))
+            .orElse(null);
+
         return (
             <div className="size-guide-data size-guide-details">
                 <DetailSection title={i18n.COMMON.shopping_for}>
@@ -46,7 +57,20 @@ class SizeGuideDetails extends React.Component {
                 <DetailSection title={i18n.FIT_INFO.overall_fit}>
                     <SizeSlider/>
                 </DetailSection>
-                <DetailSection title={i18n.DETAILED.table_title}/>
+                <DetailSection title={i18n.DETAILED.table_title}>
+                    <div className="fit-table">
+                        {this.props.measurementOrder.map((measurement, i) => (
+                            <HoverContainer measurement={measurement} onHover={this.props.onHover} key={i}>
+                                <div className="fit-wrapper">
+                                    <DetailedFit measurement={measurement} num={i + 1}
+                                                 item={item}
+                                                 match={match}
+                                    />
+                                </div>
+                            </HoverContainer>
+                        ))}
+                    </div>
+                </DetailSection>
             </div>
         );
     }
@@ -56,7 +80,11 @@ SizeGuideDetails.propTypes = {
     onSelectProfile: React.PropTypes.func.isRequired,
     selectedProfile: PropTypes.string.isRequired,
     profiles: PropTypes.arrayOf(PropTypes.object),
-    selectedSize: PropTypes.string.isRequired
-};
+    selectedSize: PropTypes.string.isRequired,
+    measurementOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onHover: PropTypes.func.isRequired,
+    matchResult: PropTypes.object,
+    product: PropTypes.object.isRequired
+};      
 
 export default SizeGuideDetails;
