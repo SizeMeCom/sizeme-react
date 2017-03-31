@@ -23,6 +23,16 @@ a.link-btn.size-guide {
   }
 }
 
+.fit-tooltip {
+  color: black !important;
+  background-color: #fff18f !important;
+  text-shadow: -1px -1px 0px rgba(255,255,255,0.2);
+  opacity: 1 !important;
+  z-index: 9999 !important;
+  @include border-radius(5px);
+}
+
+
 .size-guide-overlay {
   position: fixed;
   top: 0;

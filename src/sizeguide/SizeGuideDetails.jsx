@@ -7,6 +7,7 @@ import DetailedFit from "./DetailedFit.jsx";
 import i18n from "../api/i18n";
 import HoverContainer from "./HoverContainer.jsx";
 import Optional from "optional-js";
+import ReactTooltip from "react-tooltip";
 
 class DetailsSizeSelector extends React.Component {
 
@@ -33,6 +34,10 @@ DetailsSizeSelector.propTypes = {
 };
 
 class SizeGuideDetails extends React.Component {
+
+    componentDidMount () {
+        ReactTooltip.rebuild();
+    }
 
     render () {
         const item = Object.assign({}, this.props.product.item, {
@@ -65,6 +70,7 @@ class SizeGuideDetails extends React.Component {
                                     <DetailedFit measurement={measurement} num={i + 1}
                                                  item={item}
                                                  match={match}
+                                                 updateTooltip={this.props.updateTooltip}
                                     />
                                 </div>
                             </HoverContainer>
@@ -84,7 +90,8 @@ SizeGuideDetails.propTypes = {
     measurementOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
     onHover: PropTypes.func.isRequired,
     matchResult: PropTypes.object,
-    product: PropTypes.object.isRequired
+    product: PropTypes.object.isRequired,
+    updateTooltip: PropTypes.func.isRequired
 };      
 
 export default SizeGuideDetails;

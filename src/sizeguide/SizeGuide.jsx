@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
+import ReactTooltip from "react-tooltip";
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -15,7 +16,8 @@ class SizeGuide extends React.Component {
 
         this.state = {
             guideIsOpen: false,
-            highlight: ""
+            highlight: "",
+            tooltips: {}
         };
     }
 
@@ -30,6 +32,16 @@ class SizeGuide extends React.Component {
                 clearTimeout(this.removeTimeout);
             }
         }
+    };
+
+    updateTooltip = (measurement, tooltip) => {
+        console.log("update tooltip " + measurement);
+        console.log(tooltip);
+        this.setState({
+            tooltips: Object.assign(this.state.tooltips, {
+                [measurement]: tooltip
+            })
+        });
     };
 
     openGuide = () => {
@@ -58,6 +70,7 @@ class SizeGuide extends React.Component {
                                       onHover={this.onHover}
                                       matchResult={this.props.matchResult}
                                       product={this.props.product}
+                                      updateTooltip={this.updateTooltip}
                     />
                 );
             } else {
@@ -115,6 +128,11 @@ class SizeGuide extends React.Component {
                         </div>
                     </div>
                 </Modal>}
+                {this.props.product.model.measurementOrder.map(measurement => (
+                    <ReactTooltip key={measurement} id={measurement}
+                                  place="right" className="fit-tooltip"
+                                  getContent={() => this.state.tooltips[measurement]}/>
+                ))}
             </div>
         );
     }
