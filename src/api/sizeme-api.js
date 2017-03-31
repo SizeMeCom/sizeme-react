@@ -270,11 +270,9 @@ function match (selectBestFit = true) {
         const fitRequest = new FitRequest(
             token ? profile.id : Object.assign(
                 {},
-                {
-                    ...Object.entries(profile.measurements)
-                        .filter(([, p]) => !!p)
-                        .map(([k, v]) => ({ [k]: v }))
-                }
+                ...Object.entries(profile.measurements)
+                    .filter(([, p]) => !!p)
+                    .map(([k, v]) => ({ [k]: v }))
             ),
             product.SKU || product.item
         );
