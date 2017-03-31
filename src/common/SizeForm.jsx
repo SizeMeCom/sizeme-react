@@ -1,5 +1,5 @@
 import React from "react";
-import { requestMatch } from "../api/actions.js";
+import i18n from "../api/i18n";
 
 class SizeForm extends React.Component {
 
@@ -8,6 +8,10 @@ class SizeForm extends React.Component {
         this.state = {};
         (props.fields || []).map((field) => this.state[field] = null);
         this.timeoutId = null;
+    }
+
+    componentWillUnmount () {
+        clearTimeout(this.timeoutId);
     }
 
     getIntValue (value) {
@@ -24,10 +28,9 @@ class SizeForm extends React.Component {
         return values;
     }
 
-    dispatchMatchRequest () {
+    handleOnChange () {
         let measurements = this.getIntValues();
-        console.log('Measurements', measurements);
-        this.context.store.dispatch(requestMatch(measurements));
+        this.props.onChange(measurements);
     }
 
     valueChanged (field, event) {
@@ -35,7 +38,7 @@ class SizeForm extends React.Component {
         if (this.timeoutId) clearTimeout(this.timeoutId);
         this.timeoutId = setTimeout(() => {
             this.timeoutId = null;
-            this.dispatchMatchRequest();
+            this.handleOnChange();
         }, 1000);
     }
 
@@ -45,7 +48,7 @@ class SizeForm extends React.Component {
                 <tbody>
                     <tr className="labels">
                         {this.props.fields.map(field => {
-                            return <th key={field}>{field}</th>
+                            return <th key={field}>{i18n.MEASUREMENT[field]}</th>
                         })}
                     </tr>
                     <tr className="inputs">
@@ -71,11 +74,8 @@ class SizeForm extends React.Component {
 }
 
 SizeForm.propTypes = {
-    fields: React.PropTypes.arrayOf(React.PropTypes.string)
-};
-
-SizeForm.contextTypes = {
-    store: React.PropTypes.object.isRequired
+    fields: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    onChange: React.PropTypes.func.isRequired
 };
 
 export default SizeForm;

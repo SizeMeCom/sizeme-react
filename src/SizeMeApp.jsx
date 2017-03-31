@@ -20,8 +20,8 @@ class SizeMeApp extends React.Component {
         if (this.props.resolved) {
             return (
                 <div className="sizeme-content">
-                    <SizeSlider/>
-                    <SizeForm fields={['chest', 'front_height', 'sleeve']} />
+                    <SizeSlider match={{ totalFit: 1050 }} />
+                    <SizeForm fields={['chest', 'front_height', 'sleeve']} onChange={(data) => console.log(data)} />
                     <SizeGuide/>
                     <Section/>
                 </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import i18n from "../api/i18n";
 
 const FIT_RANGES = [
     { start: 940, end: 1000, label: "too_small", arrowColor: "#999999" },
@@ -12,39 +13,61 @@ class SizeSlider extends React.Component {
 
     constructor (props) {
         super(props);
-
         this.sliderPosXMin = 940;
         this.sliderPosXMax = 1225;
         this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
-
-        this.state = { fitValue: 1075 };
-
-        // Test
-        this.interval = setInterval(() => {
-            this.setState({ fitValue: Math.round(Math.random() * 200 + 1000) });
-        }, 2000);
     }
 
-    componentWillUnmount () {
-        clearInterval(this.interval);
+    getFitValue () {
+        return this.props.match ? this.props.match.totalFit : null;
     }
 
-    sliderPos (fitValue, offset = 0) {
-        return Math.max(0, (Math.min(fitValue, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale) + offset;
+    getFitRange () {
+        if (!this.props.match || !this.props.match.matchMap) return null;
+        let match, min = 9999, max = 0;
+        Object.keys(this.props.match.matchMap).forEach(function (key) {
+            match = this.props.match.matchMap[key];
+            if (match.componentFit > max) max = match.componentFit;
+            if (match.componentFit < min) min = match.componentFit;
+        });
+        return [min, max];
+    }
+
+    sliderPos (fitValue) {
+        return Math.max(0, (Math.min(fitValue, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
+    }
+
+    areaPos (fitRange) {
+        return Math.round((fitRange[0] - this.sliderPosXMin) * this.sliderScale);
+    }
+
+    areaWidth (fitRange) {
+        return Math.round((fitRange[1] - fitRange[0]) * this.sliderScale);
     }
 
     render () {
-        let percentWidth;
+        let percentWidth,
+            fitValue = this.getFitValue(),
+            fitRange = this.getFitRange();
         return (
             <div className="sizeme_slider">
                 <div className="slider_container">
-                    <div className="slider_bar"
-                         style={{
-                             width: this.sliderPos(this.state.fitValue) + "%",
-                             transition: "width 0.5s ease-in-out"
-                         }}
-                    />
-                    <div className="slider_area"/>
+                    {fitValue &&
+                        <div className="slider_bar"
+                             style={{
+                                 width: this.sliderPos(fitValue) + "%",
+                                 transition: "width 0.5s ease-in-out"
+                             }}
+                        />
+                    }
+                    {fitRange &&
+                        <div className="slider_area"
+                             style={{
+                                 width: this.areaWidth(fitRange) + "%", marginLeft: this.areaPos(fitRange) + "%",
+                                 transition: "width,margin-left 0.5s ease-in-out"
+                             }}
+                        ></div>
+                    }
                     <table className="slider_table">
                         <tbody>
                             <tr>
@@ -57,7 +80,7 @@ class SizeSlider extends React.Component {
                                                 width: percentWidth + "%",
                                                 minWidth: percentWidth + "%"
                                             }}
-                                        >{fit.label}</td>
+                                        >{i18n.FIT_VERDICT[fit.label]}</td>
                                     );
                                 })}
                             </tr>
@@ -68,5 +91,9 @@ class SizeSlider extends React.Component {
         );
     }
 }
+
+SizeSlider.propTypes = {
+    match: React.PropTypes.object.isRequired
+};
 
 export default SizeSlider;
