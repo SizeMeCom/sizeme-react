@@ -1,4 +1,4 @@
-import i18n from "../api/i18n";
+import i18n from "./i18n";
 
 const fitRanges = new Map([
     [1, { label: "too_small", arrowColor: "#999999" }],

@@ -8,6 +8,7 @@ import thunkMiddleware from "redux-thunk";
 import createLogger from "redux-logger";
 import rootReducer from "./reducers";
 import { FitRequest } from "./SizeMe";
+import SizeGuideModel from "./ProductModel";
 
 const OPTIMAL_FIT = 1070;
 
@@ -147,7 +148,8 @@ function getProduct () {
                     .map(([sku, val]) => ({ [skuMap.get(sku)]: val }))
             );
             const item = { ...dbItem, measurements };
-            dispatch(actions.receiveProductInfo({ ...product, item, skuMap }));
+            const model = new SizeGuideModel(item);
+            dispatch(actions.receiveProductInfo({ ...product, item, skuMap, model }));
         } catch (reason) {
             dispatch(actions.receiveProductInfo(reason));
         }

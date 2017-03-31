@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
-import SizeGuideModel from "./SizeGuideModel";
 import i18n from "../api/i18n";
 
 class SizeGuide extends React.Component {
@@ -16,8 +15,7 @@ class SizeGuide extends React.Component {
 
         this.state = {
             guideIsOpen: false,
-            highlight: "",
-            guideModel: new SizeGuideModel(this.props.product.item)
+            highlight: ""
         };
     }
 
@@ -48,34 +46,36 @@ class SizeGuide extends React.Component {
         const measurements = new Map(Object.entries(this.props.product.item.measurements));
         const button = this.props.loggedIn ? i18n.DETAILED.button_text : i18n.SIZE_GUIDE.button_text;
 
-        let detailSection;
-        if (this.props.loggedIn) {
-            detailSection = (
-                <SizeGuideDetails onSelectProfile={this.props.onSelectProfile}
-                                  selectedProfile={this.props.selectedProfile ?
-                                      this.props.selectedProfile.id : ""}
-                                  profiles={this.props.profiles}
-                                  selectedSize={this.props.selectedSize}
-                                  measurementOrder={this.state.guideModel.measurementOrder}
-                                  onHover={this.onHover}
-                                  matchResult={this.props.matchResult}
-                                  product={this.props.product}
-                />
-            );
-        } else {
-            detailSection = (
-                <SizeGuideProductInfo measurements={this.props.product.item.measurements}
-                                      measurementOrder={this.state.guideModel.measurementOrder}
+        const detailSection = () => {
+            if (this.props.loggedIn) {
+                return (
+                    <SizeGuideDetails onSelectProfile={this.props.onSelectProfile}
+                                      selectedProfile={this.props.selectedProfile ?
+                                          this.props.selectedProfile.id : ""}
+                                      profiles={this.props.profiles}
+                                      selectedSize={this.props.selectedSize}
+                                      measurementOrder={this.props.product.model.measurementOrder}
                                       onHover={this.onHover}
-                                      getItemTypeComponent={this.state.guideModel.getItemTypeComponent}
-                />
-            );
-        }
-        
+                                      matchResult={this.props.matchResult}
+                                      product={this.props.product}
+                    />
+                );
+            } else {
+                return (
+                    <SizeGuideProductInfo measurements={this.props.product.item.measurements}
+                                          measurementOrder={this.props.product.model.measurementOrder}
+                                          onHover={this.onHover}
+                                          getItemTypeComponent={this.props.product.getItemTypeComponent}
+                    />
+                );
+            }
+        };
+
         return (
             <div>
                 <a className="link-btn size-guide"
                    onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
+                {this.state.guideIsOpen &&
                 <Modal
                     isOpen={this.state.guideIsOpen}
                     onRequestClose={this.closeGuide}
@@ -99,9 +99,9 @@ class SizeGuide extends React.Component {
                                 <SizeGuideItem measurements={measurements} selectedSize={this.props.selectedSize}
                                                highlight={this.state.highlight} matchMap={matchMap}
                                                selectedProfile={this.props.selectedProfile}
-                                               model={this.state.guideModel} isGuide={!this.props.loggedIn}
+                                               model={this.props.product.model} isGuide={!this.props.loggedIn}
                                 />
-                                {detailSection}
+                                {detailSection()}
                             </div>
                         </div>
 
@@ -114,7 +114,7 @@ class SizeGuide extends React.Component {
                             }
                         </div>
                     </div>
-                </Modal>
+                </Modal>}
             </div>
         );
     }

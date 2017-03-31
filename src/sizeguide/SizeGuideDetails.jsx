@@ -6,6 +6,7 @@ import DetailSection from "./DetailSection.jsx";
 import DetailedFit from "./DetailedFit.jsx";
 import i18n from "../api/i18n";
 import HoverContainer from "./HoverContainer.jsx";
+import Optional from "optional-js";
 
 class DetailsSizeSelector extends React.Component {
 
@@ -37,6 +38,10 @@ class SizeGuideDetails extends React.Component {
         const item = Object.assign({}, this.props.product.item, {
             measurements: this.props.product.item.measurements[this.props.selectedSize]
         });
+        const match = Optional.ofNullable(this.props.selectedSize)
+            .flatMap(size => Optional.ofNullable(this.props.matchResult)
+                .map(r => r[size]))
+            .orElse(null);
 
         return (
             <div className="size-guide-data size-guide-details">
@@ -59,8 +64,7 @@ class SizeGuideDetails extends React.Component {
                                 <div className="fit-wrapper">
                                     <DetailedFit measurement={measurement} num={i + 1}
                                                  item={item}
-                                                 match={this.props.selectedSize &&
-                                                 this.props.matchResult[this.props.selectedSize]}
+                                                 match={match}
                                     />
                                 </div>
                             </HoverContainer>

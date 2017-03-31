@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import SizeGuideModel from "./SizeGuideModel";
+import SizeGuideModel from "../api/ProductModel";
 import Optional from "optional-js";
 
 const realCanvasWidth = 350;

@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import i18n from "../api/i18n";
-import SizeGuideModel from "./SizeGuideModel";
+import SizeGuideModel from "../api/ProductModel";
 import Optional from "optional-js";
 
 const measurementName = measurement => i18n.MEASUREMENT[measurement];
