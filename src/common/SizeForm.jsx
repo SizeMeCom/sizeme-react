@@ -9,7 +9,8 @@ class SizeForm extends React.Component {
     constructor (props) {
         super(props);
         this.state = {};
-        props.fields.splice(props.max).map((field) =>this.state[field] = null);
+        this.fields = props.fields.slice(0, props.max);
+        this.fields.map((field) => this.state[field] = null);
         this.timeoutId = null;
     }
 
@@ -25,8 +26,9 @@ class SizeForm extends React.Component {
 
     getIntValues () {
         let values = {};
-        this.props.fields.map(field => {
+        this.fields.map(field => {
            values[field] = this.getIntValue(this.state[field]);
+            if (values[field] !== null) values[field] = values[field] * 10; // cm -> mm
         });
         return values;
     }
@@ -50,17 +52,17 @@ class SizeForm extends React.Component {
             <table className="measurement_input_table">
                 <tbody>
                     <tr className="labels">
-                        {this.props.fields.map(field => {
+                        {this.fields.map(field => {
                             return <th key={field}>{i18n.MEASUREMENT[field]}</th>
                         })}
                     </tr>
                     <tr className="inputs">
-                        {this.props.fields.map(field => {
+                        {this.fields.map(field => {
                             return (
                                 <td key={field}>
                                     <div>
                                         <span>cm</span>
-                                        <input type="number" min="1" max="999" step="1" name={field}
+                                        <input type="number" min="1" max="10000" step="1" name={field}
                                             value={this.state[field] || ""} onChange={event => { this.valueChanged(field, event); }}
                                         />
                                     </div>

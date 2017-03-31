@@ -32,7 +32,7 @@ class SizeSlider extends React.Component {
             if (match.componentFit > max) max = match.componentFit;
             if (match.componentFit < min) min = match.componentFit;
         }
-        return [min, max];
+        return [Math.max(min, this.sliderPosXMin), Math.min(max, this.sliderPosXMax)];
     }
 
     sliderPos (fitValue) {
@@ -40,11 +40,14 @@ class SizeSlider extends React.Component {
     }
 
     areaPos (fitRange) {
-        return Math.round((fitRange[0] - this.sliderPosXMin) * this.sliderScale);
+        return Math.round(Math.min(this.sliderPosXMax, fitRange[0] - this.sliderPosXMin) * this.sliderScale);
     }
 
     areaWidth (fitRange) {
-        return Math.round((fitRange[1] - fitRange[0]) * this.sliderScale);
+        let start = Math.round(Math.min(this.sliderPosXMax, fitRange[0] - this.sliderPosXMin) * this.sliderScale),
+            end = Math.round(Math.min(this.sliderPosXMax, fitRange[1] - this.sliderPosXMin) * this.sliderScale);
+        return end - start;
+        //return Math.round(Math.min(this.sliderPosXMax, fitRange[1] - fitRange[0]) * this.sliderScale);
     }
 
     render () {
@@ -65,7 +68,8 @@ class SizeSlider extends React.Component {
                     {fitRange &&
                         <div className="slider_area"
                              style={{
-                                 width: this.areaWidth(fitRange) + "%", marginLeft: this.areaPos(fitRange) + "%",
+                                 width: this.areaWidth(fitRange) + "%",
+                                 marginLeft: this.areaPos(fitRange) + "%",
                                  transition: "width,margin-left 0.5s ease-in-out"
                              }}
                         ></div>
