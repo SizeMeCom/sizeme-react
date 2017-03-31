@@ -257,7 +257,7 @@ const sizeSelector = new class {
 }();
 
 
-function match () {
+function match (selectBestFit = true) {
     return async (dispatch, getState) => {
         if (!getState().productInfo.resolved) {
             return undefined;
@@ -268,7 +268,14 @@ function match () {
 
         const token = getState().authToken.token;
         const fitRequest = new FitRequest(
-            token ? profile.id : profile.measurements,
+            token ? profile.id : Object.assign(
+                {},
+                {
+                    ...Object.entries(profile.measurements)
+                        .filter(([, p]) => !!p)
+                        .map(([k, v]) => ({ [k]: v }))
+                }
+            ),
             product.SKU || product.item
         );
 
@@ -291,15 +298,17 @@ function match () {
 
             dispatch(actions.receiveMatch(result));
 
-            const [bestMatch] = Object.entries(result).reduce(([accSize, fit], [size, res]) => {
-                const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
-                if (!accSize || newFit < fit) {
-                    return [size, newFit];
-                } else {
-                    return [accSize, fit];
-                }
-            }, [null, 0]);
-            sizeSelector.setSelected(bestMatch);
+            if (selectBestFit) {
+                const [bestMatch] = Object.entries(result).reduce(([accSize, fit], [size, res]) => {
+                    const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
+                    if (!accSize || newFit < fit) {
+                        return [size, newFit];
+                    } else {
+                        return [accSize, fit];
+                    }
+                }, [null, 0]);
+                sizeSelector.setSelected(bestMatch);
+            }
         } catch (reason) {
             dispatch(actions.receiveMatch(reason));
         }
@@ -310,7 +319,7 @@ function setProfileMeasurements (measurements) {
     return async (dispatch) => {
         dispatch(actions.setMeasurements(measurements));
         if (Object.values(measurements).some(item => item)) {
-            await dispatch(match());
+            await dispatch(match(false));
         }
     };
 }
