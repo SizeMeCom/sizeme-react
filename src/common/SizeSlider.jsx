@@ -23,7 +23,9 @@ class SizeSlider extends React.Component {
     }
 
     getFitRange () {
-        if (!this.props.match || !this.props.match.matchMap) return null;
+        if (!this.props.match || !this.props.match.matchMap || Object.keys(this.props.match.matchMap).length == 0) {
+            return null;
+        }
         let match, min = 9999, max = 0;
         Object.keys(this.props.match.matchMap).forEach(function (key) {
             match = this.props.match.matchMap[key];
@@ -93,7 +95,7 @@ class SizeSlider extends React.Component {
 }
 
 SizeSlider.propTypes = {
-    match: React.PropTypes.object.isRequired
+    match: React.PropTypes.object
 };
 
 export default SizeSlider;

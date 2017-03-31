@@ -20,7 +20,7 @@ class SizeMeApp extends React.Component {
         if (this.props.resolved) {
             return (
                 <div className="sizeme-content">
-                    <SizeSlider match={{ totalFit: 1050 }} />
+                    <SizeSlider match={this.props.currentMatch} />
                     <SizeForm fields={['chest', 'front_height', 'sleeve']} onChange={(data) => console.log(data)} />
                     <SizeGuide/>
                     <Section/>
@@ -37,5 +37,9 @@ SizeMeApp.propTypes = {
     dispatch: React.PropTypes.func.isRequired
 };
 
+const mapStateToProps = (state) => ({
+    resolved: state.authToken.resolved && state.productInfo.resolved,
+    currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null
+});
 
-export default connect(state => ({ resolved: state.authToken.resolved && state.productInfo.resolved }))(SizeMeApp);
+export default connect(mapStateToProps)(SizeMeApp);
