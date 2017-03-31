@@ -306,6 +306,15 @@ function match () {
     };
 }
 
+function setProfileMeasurements (measurements) {
+    return async (dispatch) => {
+        dispatch(actions.setMeasurements(measurements));
+        if (Object.values(measurements).some(item => item)) {
+            await dispatch(match());
+        }
+    };
+}
+
 export {
     sizemeStore,
     resolveAuthToken,
@@ -313,6 +322,7 @@ export {
     getProduct,
     setSelectedProfile,
     match,
+    setProfileMeasurements,
     sizeSelector,
     contextAddress
 };

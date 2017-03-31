@@ -67,6 +67,10 @@ const selectedProfile = handleActions({
     [actions.SELECT_PROFILE_DONE]: (state) => ({
         ...state,
         selectDone: true
+    }),
+    [actions.SET_MEASUREMENTS]: (state, action) => ({
+        ...state,
+        ...resolvePayload(action, "measurements")
     })
 }, {
     id: "",
