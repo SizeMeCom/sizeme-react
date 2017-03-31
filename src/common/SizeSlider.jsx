@@ -70,7 +70,7 @@ class SizeSlider extends React.Component {
                              style={{
                                  width: this.areaWidth(fitRange) + "%",
                                  marginLeft: this.areaPos(fitRange) + "%",
-                                 transition: "width,margin-left 0.5s ease-in-out"
+                                 transition: "width 0.5s ease-in-out, margin-left 0.5s ease-in-out"
                              }}
                         ></div>
                     }
