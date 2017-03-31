@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setProfileMeasurements } from "../api/sizeme-api";
 import i18n from "../api/i18n";
 
 class SizeForm extends React.Component {
@@ -6,7 +9,7 @@ class SizeForm extends React.Component {
     constructor (props) {
         super(props);
         this.state = {};
-        (props.fields || []).map((field) => this.state[field] = null);
+        props.fields.splice(props.max).map((field) =>this.state[field] = null);
         this.timeoutId = null;
     }
 
@@ -75,7 +78,18 @@ class SizeForm extends React.Component {
 
 SizeForm.propTypes = {
     fields: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    max: React.PropTypes.number.isRequired,
     onChange: React.PropTypes.func.isRequired
 };
 
-export default SizeForm;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    onChange: setProfileMeasurements
+}, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SizeForm);
