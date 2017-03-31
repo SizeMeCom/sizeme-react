@@ -18,6 +18,23 @@ const fitRangesLessImportance = new Map([
     [1110, { label: "loose", arrowColor: "#87B98E" }]
 ]);
 
+const PINCHED_FITS = [
+    "chest",
+    "waist",
+    "underbust",
+    "pant_waist",
+    "hips",
+    "thigh_width",
+    "knee_width",
+    "calf_width",
+    "pant_sleeve_width",
+    "neck_opening_width",
+    "sleeve_top_width",
+    "sleeve_top_opening",
+    "wrist_width",
+    "hat_width"
+];
+
 function init (itemTypeArr) {
     const arrows = {};
     const itemDrawing = {};
@@ -1011,3 +1028,7 @@ export default class {
         return prev;
     };
 }
+
+export {
+    PINCHED_FITS
+};

@@ -65,7 +65,7 @@ class SizeGuide extends React.Component {
                     <SizeGuideProductInfo measurements={this.props.product.item.measurements}
                                           measurementOrder={this.props.product.model.measurementOrder}
                                           onHover={this.onHover}
-                                          getItemTypeComponent={this.props.product.getItemTypeComponent}
+                                          getItemTypeComponent={this.props.product.model.getItemTypeComponent}
                     />
                 );
             }
