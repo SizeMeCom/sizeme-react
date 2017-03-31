@@ -267,48 +267,56 @@ function match (selectBestFit = true) {
         const profile = getState().selectedProfile;
 
         const token = getState().authToken.token;
-        const fitRequest = new FitRequest(
-            token ? profile.id : Object.assign(
-                {},
-                ...Object.entries(profile.measurements)
-                    .filter(([, p]) => !!p)
-                    .map(([k, v]) => ({ [k]: v }))
-            ),
-            product.SKU || product.item
-        );
-
-        dispatch(actions.requestMatch());
-
-        try {
-            const matchResult = await doMatch(fitRequest, token);
-            trackEvent("match", "API: match");
-
-            let result = matchResult;
-            if (product.SKU) {
-                const skuMap = product.skuMap;
-                result = Object.assign(
-                    {},
-                    ...Object.entries(matchResult)
-                        .filter(([sku]) => skuMap.has(sku))
-                        .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
-                );
+        let subject;
+        if (token) {
+            subject = profile.id;
+        } else {
+            const localMeasurements = Object.entries(profile.measurements)
+                .filter(([, p]) => !!p)
+                .map(([k, v]) => ({ [k]: v }));
+            if (localMeasurements.length > 0) {
+                subject = Object.assign(...localMeasurements);
             }
+        }
 
-            dispatch(actions.receiveMatch(result));
+        if (subject) {
+            const fitRequest = new FitRequest(
+                subject, product.SKU || product.item
+            );
 
-            if (selectBestFit) {
-                const [bestMatch] = Object.entries(result).reduce(([accSize, fit], [size, res]) => {
-                    const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
-                    if (!accSize || newFit < fit) {
-                        return [size, newFit];
-                    } else {
-                        return [accSize, fit];
-                    }
-                }, [null, 0]);
-                sizeSelector.setSelected(bestMatch);
+            dispatch(actions.requestMatch());
+
+            try {
+                const matchResult = await doMatch(fitRequest, token);
+                trackEvent("match", "API: match");
+
+                let result = matchResult;
+                if (product.SKU) {
+                    const skuMap = product.skuMap;
+                    result = Object.assign(
+                        {},
+                        ...Object.entries(matchResult)
+                            .filter(([sku]) => skuMap.has(sku))
+                            .map(([sku, res]) => ({[skuMap.get(sku)]: res}))
+                    );
+                }
+
+                dispatch(actions.receiveMatch(result));
+
+                if (selectBestFit) {
+                    const [bestMatch] = Object.entries(result).reduce(([accSize, fit], [size, res]) => {
+                        const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
+                        if (!accSize || newFit < fit) {
+                            return [size, newFit];
+                        } else {
+                            return [accSize, fit];
+                        }
+                    }, [null, 0]);
+                    sizeSelector.setSelected(bestMatch);
+                }
+            } catch (reason) {
+                dispatch(actions.receiveMatch(reason));
             }
-        } catch (reason) {
-            dispatch(actions.receiveMatch(reason));
         }
     };
 }
