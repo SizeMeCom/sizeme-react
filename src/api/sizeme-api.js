@@ -297,7 +297,7 @@ function match (selectBestFit = true) {
                         {},
                         ...Object.entries(matchResult)
                             .filter(([sku]) => skuMap.has(sku))
-                            .map(([sku, res]) => ({[skuMap.get(sku)]: res}))
+                            .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
                     );
                 }
 

@@ -35,34 +35,42 @@ const PINCHED_FITS = [
     "hat_width"
 ];
 
+const LONG_FITS = [
+    "inseam",
+    "outseam",
+    "sleeve",
+    "front_height",
+    "shoe_inside_length"
+];
+
+const fitOrder = [
+    "chest",
+    "waist",
+    "underbust",
+    "pant_waist",
+    "hips",
+    "inseam",
+    "outseam",
+    "thigh_width",
+    "knee_width",
+    "calf_width",
+    "pant_sleeve_width",
+    "neck_opening_width",
+    "shoulder_width",
+    "sleeve_top_width",
+    "sleeve_top_opening",
+    "sleeve",
+    "wrist_width",
+    "front_height",
+    "shoe_inside_length",
+    "shoe_inside_width",
+    "hat_width",
+    "hood_height"
+];
+
 function init (itemTypeArr) {
     const arrows = {};
     const itemDrawing = {};
-    const fitOrder = [
-        "chest",
-        "waist",
-        "underbust",
-        "pant_waist",
-        "hips",
-        "inseam",
-        "outseam",
-        "thigh_width",
-        "knee_width",
-        "calf_width",
-        "pant_sleeve_width",
-        "neck_opening_width",
-        "shoulder_width",
-        "sleeve_top_width",
-        "sleeve_top_opening",
-        "sleeve",
-        "wrist_width",
-        "front_height",
-        "shoe_inside_length",
-        "shoe_inside_width",
-        "hat_width",
-        "hood_height"
-    ];
-
 
     arrows.chest = {
         mirror: false,
@@ -981,8 +989,7 @@ function init (itemTypeArr) {
 
     return {
         arrows,
-        itemDrawing,
-        fitOrder
+        itemDrawing
     };
 }
 
@@ -991,7 +998,7 @@ export default class {
         const itemTypeArr = Array.from(item.itemType)
             .filter(a => a !== ".")
             .map(a => parseInt(a, 10));
-        const { arrows, itemDrawing, fitOrder } = init(itemTypeArr);
+        const { arrows, itemDrawing } = init(itemTypeArr);
 
         this.measurementOrder = [];
 
@@ -1030,5 +1037,6 @@ export default class {
 }
 
 export {
-    PINCHED_FITS
+    PINCHED_FITS,
+    LONG_FITS
 };

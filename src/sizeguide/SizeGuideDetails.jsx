@@ -55,13 +55,13 @@ class SizeGuideDetails extends React.Component {
                     <DetailsSizeSelector selectedSize={this.props.selectedSize}/>
                 </DetailSection>
                 <DetailSection title={i18n.FIT_INFO.overall_fit}>
-                    <SizeSlider/>
+                    <SizeSlider match={match}/>
                 </DetailSection>
                 <DetailSection title={i18n.DETAILED.table_title}>
                     <div className="fit-table">
                         {this.props.measurementOrder.map((measurement, i) => (
                             <HoverContainer measurement={measurement} onHover={this.props.onHover} key={i}>
-                                <div className="fit-wrapper">
+                                <div className="fit-wrapper" data-tip data-for={measurement}>
                                     <DetailedFit measurement={measurement} num={i + 1}
                                                  item={item}
                                                  match={match}
