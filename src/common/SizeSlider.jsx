@@ -27,11 +27,11 @@ class SizeSlider extends React.Component {
             return null;
         }
         let match, min = 9999, max = 0;
-        Object.keys(this.props.match.matchMap).forEach(function (key) {
+        for (const key of Object.keys(this.props.match.matchMap)) {
             match = this.props.match.matchMap[key];
             if (match.componentFit > max) max = match.componentFit;
             if (match.componentFit < min) min = match.componentFit;
-        });
+        }
         return [min, max];
     }
 
