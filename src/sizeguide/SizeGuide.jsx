@@ -8,7 +8,8 @@ import { bindActionCreators } from "redux";
 import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
-import ReactTooltip from "react-tooltip";
+import FitTooltip from "./FitTooltip.jsx";
+import Optional from "optional-js";
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -17,7 +18,7 @@ class SizeGuide extends React.Component {
         this.state = {
             guideIsOpen: false,
             highlight: "",
-            tooltips: {}
+            tooltips: Object.assign(...this.props.product.model.measurementOrder.map(m => ({ [m]: {} })))
         };
     }
 
@@ -43,6 +44,7 @@ class SizeGuide extends React.Component {
             })
         });
     };
+
 
     openGuide = () => {
         this.setState({ guideIsOpen: true });
@@ -128,11 +130,10 @@ class SizeGuide extends React.Component {
                         </div>
                     </div>
                 </Modal>}
-                {this.props.product.model.measurementOrder.map(measurement => (
-                    <ReactTooltip key={measurement} id={measurement}
-                                  place="right" className="fit-tooltip"
-                                  getContent={() => this.state.tooltips[measurement]}/>
-                ))}
+                {this.props.product.model.measurementOrder.map(measurement => {
+                    return (<FitTooltip measurement={measurement} key={measurement}
+                                        fitData={this.state.tooltips[measurement]}/>);
+                })}
             </div>
         );
     }
