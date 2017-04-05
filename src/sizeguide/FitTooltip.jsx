@@ -2,6 +2,8 @@ import React, { PropTypes } from "react";
 import ReactTooltip from "react-tooltip";
 import i18n from "../api/i18n";
 
+const defaultFHHeight = 25;
+
 const specialTooltipOptions = {
     sleeve: {
         defaultHeight: 29,
@@ -15,14 +17,15 @@ const specialTooltipOptions = {
     },
 
     front_height: {
-        defaultHeight: 28,
-        left: -12,
+        defaultHeight: defaultFHHeight,
         baseHeightFn: percentage => Math.min(
             105, Math.max(
-                0, Math.round(25 + percentage * 9 / 0.05)
+                0, Math.round(defaultFHHeight + percentage * 9 / 0.05)
             )
         ),
-        measTopFn: height => height - 25 < 12 ? height + 23 : Math.round(((height - 25) / 2) + 25 - 9)
+        measTopFn: (height, arrows) => height - defaultFHHeight < 18 ?
+            Math.max(height, defaultFHHeight) + (arrows ? 23 : 0) :
+            Math.round(((height - defaultFHHeight) / 2) + defaultFHHeight - 9)
     }
 };
 
@@ -31,28 +34,22 @@ const addSpecialTooltip = (measurement, fitData) => {
     if (!matchItem || !specialTooltipOptions[measurement]) {
         return null;
     }
-    const { defaultHeight, baseHeightFn, measTopFn, left } = specialTooltipOptions[measurement];
+    const { defaultHeight, baseHeightFn, measTopFn } = specialTooltipOptions[measurement];
     const classes = [measurement];
     let height = baseHeightFn(matchItem.percentage);
-    let measDivStyle;
+    const measDivStyle = {};
+
     if (matchItem.overlap < 0) {
         classes.push("negative-overlap");
-        measDivStyle = {
-            top: "14px",
-            left: "-7px"
-        };
         if (matchItem.componentFit >= 1000) {
             height = defaultHeight;
         }
-    } else {
-        const measTop = measTopFn(height);
-        measDivStyle = {
-            top: `${measTop}px`
-        };
-        if (matchItem.overlap >= 100) {
-            measDivStyle.left = `${left}px`;
-        }
     }
+    measDivStyle.top = `${measTopFn(height, matchItem.overlap >= 0)}px`;
+    
+    console.log("percentage: " + matchItem.percentage + " - height: " + height);
+    console.log(height + " / " + measDivStyle.top);
+    console.log(measDivStyle);
 
     return (
         <div className={classes.join(" ")}>
@@ -110,8 +107,8 @@ const noOverlap = (fitData) => {
             return <span>{i18n.FIT_INFO.no_overlap} {getStretchedTxt(matchItem.componentStretch)}</span>;
         } else {
             return (
-                <span>{i18n.FIT_INFO.is_smaller} {fitText.replace("-", "")} {isPinched &&
-                (" " + i18n.FIT_INFO.when_pinched)}</span>
+                <span dangerouslySetInnerHTML={{ __html: `${i18n.FIT_INFO.is_smaller}
+                ${fitText.replace("-", "")}${isPinched ? (" " + i18n.FIT_INFO.when_pinched) : ""}.` }}/>
             );
         }
     } else {

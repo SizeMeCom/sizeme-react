@@ -24,12 +24,45 @@ a.link-btn.size-guide {
 }
 
 .fit-tooltip {
+  width: 300px !important;
   color: black !important;
   background-color: #fff18f !important;
-  text-shadow: -1px -1px 0px rgba(255,255,255,0.2);
   opacity: 1 !important;
   z-index: 9999 !important;
-  @include border-radius(5px);
+  padding: 10px 10px !important;
+  @include border-radius(5px !important);
+
+  .front_height {
+    float: right;
+    position: relative;
+    width: 165px;
+    height: 108px;
+    margin: 0 0 10px 10px;
+    padding: 0;
+    background: url(../images/sizeme_front_height_arrowed.png) no-repeat right top;
+
+    .meas {
+      position: relative;
+      color: black;
+      font-size: 12px;
+      width: 50px;
+      text-align: right;
+    }
+
+    .front_height-overlap {
+      position: relative;
+      top: -18px;
+      background: url(../images/sizeme_front_height_overlap_arrowed.png) no-repeat right bottom;
+    }
+  }
+
+  .front_height.negative-overlap {
+    background-image: url(../images/sizeme_front_height_no_arrow.png);
+
+    .front_height-overlap {
+      background-image: url(../images/sizeme_front_height_overlap_no_arrow.png);
+    }
+  }
 }
 
 

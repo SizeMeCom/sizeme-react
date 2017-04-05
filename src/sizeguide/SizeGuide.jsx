@@ -36,8 +36,6 @@ class SizeGuide extends React.Component {
     };
 
     updateTooltip = (measurement, tooltip) => {
-        console.log("update tooltip " + measurement);
-        console.log(tooltip);
         this.setState({
             tooltips: Object.assign(this.state.tooltips, {
                 [measurement]: tooltip
