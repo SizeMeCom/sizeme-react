@@ -24,7 +24,7 @@ a.link-btn.size-guide {
 }
 
 .fit-tooltip {
-  width: 300px !important;
+  max-width: 300px !important;
   color: black !important;
   background-color: #fff18f !important;
   opacity: 1 !important;
@@ -61,6 +61,20 @@ a.link-btn.size-guide {
 
     .front_height-overlap {
       background-image: url(../images/sizeme_front_height_overlap_no_arrow.png);
+    }
+  }
+
+  .pinched {
+    float: right;
+    position: relative;
+    width: 108px;
+    height: 114px;
+    padding: 0;
+    background: url(../images/sizeme_pinched.png) no-repeat 0 -25px;
+
+    .meas {
+      text-align: right;
+      width: 70px;
     }
   }
 }

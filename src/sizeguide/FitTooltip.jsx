@@ -79,7 +79,7 @@ const overlapAndPinched = (fitData) => {
     if (matchItem && matchItem.overlap > 0 && isPinched) {
         return (
             <div className="pinched">
-                <div className="meas">{fitText}</div>
+                <div className="meas">{fitText.replace("+", "")}</div>
             </div>
         );
     } else {
