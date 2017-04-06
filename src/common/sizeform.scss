@@ -1,60 +1,57 @@
 /* Measurement inputs */
-
-.measurement_input_table {
-  table-layout: fixed;
+.measurement-input-table {
   width: 100%;
   margin: 10px 0;
-}
+  @include display-flex;
+  @include flex-direction(row);
 
-.measurement_input_table tr th,
-.measurement_input_table tr td {
-  padding: 0 3px;
-}
+  div {
+    padding: 0 3px;
 
-.measurement_input_table tr th:last-child,
-.measurement_input_table tr td:last-child {
-  padding-right: 0;
-}
+    &:first-child {
+      padding-left: 0;
+    }
 
-.measurement_input_table tr th:first-child,
-.measurement_input_table tr td:first-child {
-  padding-left: 0;
-}
+    &:last-child {
+      padding-right: 0;
+    }
 
-.measurement_input_table .labels th {
-  font-size: 90%;
-  font-weight: 100;
-  //text-transform: uppercase;
-  text-align: center;
-  vertical-align: bottom;
-}
+    .label {
+      font-size: 90%;
+      font-weight: 100;
+      text-transform: uppercase;
+      text-align: center;
+      vertical-align: bottom;
+    }
 
-.measurement_input_table .inputs div {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-}
+    .input {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
 
-.measurement_input_table .inputs div input {
-  display: block;
-  border: none;
-  width: calc(100% - 24px);
-  padding-right: 0;
-  margin-right: 24px;
-  height: 22px;
-  line-height: 22px;
-  font-weight: bold;
-  text-align: right;
-  color: #333;
-  background-color: transparent;
-}
+      input {
+        display: block;
+        border: none;
+        width: calc(100% - 24px);
+        padding-right: 0;
+        margin-right: 24px;
+        height: 22px;
+        line-height: 22px;
+        font-weight: bold;
+        text-align: right;
+        color: #333;
+        background-color: transparent;
+      }
 
-.measurement_input_table .inputs div span {
-  display: block;
-  float: right;
-  width: 24px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  color: #999;
+      span {
+        display: block;
+        float: right;
+        width: 24px;
+        height: 22px;
+        line-height: 22px;
+        text-align: center;
+        color: #999;
+      }
+    }
+  }
 }

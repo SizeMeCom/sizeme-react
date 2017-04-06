@@ -21,7 +21,7 @@ class SizeMeApp extends React.Component {
             return (
                 <div className="sizeme-content">
                     <SizeSlider match={this.props.currentMatch} />
-                    <SizeForm fields={this.props.measurementInputs} max={4} onChange={(data) => console.log(data)} />
+                    <SizeForm fields={this.props.measurementInputs} max={4} />
                     <SizeGuide/>
                     <Section/>
                 </div>
@@ -34,7 +34,9 @@ class SizeMeApp extends React.Component {
 
 SizeMeApp.propTypes = {
     resolved: React.PropTypes.bool.isRequired,
-    dispatch: React.PropTypes.func.isRequired
+    dispatch: React.PropTypes.func.isRequired,
+    currentMatch: React.PropTypes.object,
+    measurementInputs: React.PropTypes.arrayOf(React.PropTypes.string)
 };
 
 const mapStateToProps = (state) => ({
