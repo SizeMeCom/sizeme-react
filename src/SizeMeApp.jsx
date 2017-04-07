@@ -21,7 +21,7 @@ class SizeMeApp extends React.Component {
             return (
                 <div className="sizeme-content">
                     <SizeSlider match={this.props.currentMatch} />
-                    <SizeForm fields={this.props.measurementInputs} max={4} />
+                    <SizeForm fields={this.props.measurementInputs} max={3} />
                     <SizeGuide/>
                     <Section/>
                 </div>

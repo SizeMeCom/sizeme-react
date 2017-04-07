@@ -68,6 +68,23 @@ const fitOrder = [
     "hood_height"
 ];
 
+const humanMeasurementMap = new Map([
+    ["sleeve", "sleeve"],
+    ["chest", "chest"],
+    ["waist", "shirtWaist"],
+    ["neck_opening_width", "neckCircumference"],
+    ["front_height", "frontHeight"],
+    ["pant_waist", "pantWaist"],
+    ["hips", "hips"],
+    ["outseam", "outSeam"],
+    ["thigh_width", "thighCircumference"],
+    ["knee_width", "kneeCircumference"],
+    ["calf_width", "calfCircumference"],
+    ["pant_sleeve_width", "ankleCircumference"],
+    ["shoe_inside_length", "footLength"],
+    ["hat_width", "headCircumference"]
+]);
+
 function init (itemTypeArr) {
     const arrows = {};
     const itemDrawing = {};
@@ -1038,5 +1055,6 @@ export default class {
 
 export {
     PINCHED_FITS,
-    LONG_FITS
+    LONG_FITS,
+    humanMeasurementMap
 };

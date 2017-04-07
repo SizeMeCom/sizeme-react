@@ -3,13 +3,18 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
 import i18n from "../api/i18n";
+import { humanMeasurementMap } from "../api/ProductModel";
+import MeasurementInput from "./MeasurementInput.jsx";
 
 class SizeForm extends React.Component {
 
     constructor (props) {
         super(props);
-        this.fields = props.fields.slice(0, props.max);
-        this.state = Object.assign(...this.fields.map(f => ({ [f]: null })));
+        this.fields = props.fields.slice(0, props.max).map(field => ({
+            field,
+            humanProperty: humanMeasurementMap.get(field)
+        }));
+        this.state = Object.assign(...this.fields.map(f => ({ [f.humanProperty]: null })));
         this.timeoutId = null;
     }
 
@@ -20,12 +25,12 @@ class SizeForm extends React.Component {
     getIntValue (value) {
         const intVal = parseInt(value, 10);
         if (isNaN(intVal)) return null;
-        return intVal > 0 && intVal < 1000 ? intVal : null;
+        return intVal > 0 && intVal < 1000 ? intVal * 10 : null;
     }
 
-    valueChanged (field) {
+    valueChanged (humanProperty) {
         return event => {
-            this.setState({ [field]: this.getIntValue(event.target.value) });
+            this.setState({ [humanProperty]: this.getIntValue(event.target.value) });
             if (this.timeoutId) {
                 clearTimeout(this.timeoutId);
             }
@@ -39,15 +44,17 @@ class SizeForm extends React.Component {
     render () {
         return (
             <div className="measurement-input-table">
-                {this.fields.map(field => (
+                {this.fields.map(({ field, humanProperty }) => (
                     <div key={field}>
-                        <div className="label">{i18n.MEASUREMENT[field]}</div>
+                        <div className="label">{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
                         <div className="input">
                             <span>cm</span>
-                            <input type="number" min="1" max="10000" step="1" name={field}
-                                   value={this.state[field] || ""}
-                                   onChange={this.valueChanged(field)}
-                            />
+                            <MeasurementInput onChange={() => {}} value={this.state[humanProperty]}/>
+
+                            {/*<input type="number" min="1" max="1000" step="1" name={humanProperty}
+                                   value={this.state[humanProperty] ? this.state[humanProperty] / 10.0 : ""}
+                                   onChange={this.valueChanged(humanProperty)}
+                            /> */}
                         </div>
                     </div>
                 ))}

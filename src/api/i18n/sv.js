@@ -45,6 +45,26 @@ export default {
         hem: "Fåll",
         sleeve_opening: "Ärm öppning"
     },
+    HUMAN_MEASUREMENTS: {
+        chest: "Chest",
+        shirtWaist: "Waist",
+        sleeve: "Arm length",
+        shoulderFull: "Shoulder width",
+        neckCircumference: "Neck circumference",
+        frontHeight: "Front height",
+        underbust: "Underbust",
+        pantWaist: "Pant waist",
+        hips: "Hips",
+        inSeam: "Inseam",
+        outSeam: "Outseam",
+        thighCircumference: "Thigh circumference",
+        kneeCircumference: "Knee circumference",
+        ankleCircumference: "Ankle circumference",
+        calfCircumference: "Calf circumference",
+        footLength: "Foot length",
+        footWidth: "Foot width",
+        headCircumference: "Head circumference"
+    },
     COMMON: {
         shopping_for: "Shoppa för",
         selected_size: "Vald storlek",
