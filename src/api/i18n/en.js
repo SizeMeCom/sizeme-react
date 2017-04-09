@@ -127,5 +127,8 @@ export default {
         btn_no_thanks_title: "Maybe later",
         product_page_splashes: ["Unsure about the right size? Try"],
         product_page_splash_title: "SizeMe is a free service to help you know how this item will fit _you_"
+    },
+    MENU: {
+        login: "Login/sign up to SizeMe"
     }
 };

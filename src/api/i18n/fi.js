@@ -126,5 +126,8 @@ export default {
         btn_no_thanks_title: "Ehkä myöhemmin",
         product_page_splashes: ["Haluatko apua oikean koon valitsemisessa? Kokeile"],
         product_page_splash_title: "SizeMe-palvelu kertoo miten tämä tuote sopii juuri _sinulle_"
+    },
+    MENU: {
+        login: "Kirjaudu/luo tunnus SizeMe:hen"
     }
 };

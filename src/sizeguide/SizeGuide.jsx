@@ -9,7 +9,6 @@ import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
 import FitTooltip from "./FitTooltip.jsx";
-import Optional from "optional-js";
 
 class SizeGuide extends React.Component {
     constructor (props) {

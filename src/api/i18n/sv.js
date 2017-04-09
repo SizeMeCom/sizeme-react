@@ -126,5 +126,8 @@ export default {
         btn_no_thanks_title: "Kanske senare",
         product_page_splashes: ["Osäker om den rätta storleken? Pröva"],
         product_page_splash_title: "SizeMe är en gratis service för att hjälpa dig hur denna artikel passar dig"
+    },
+    MENU: {
+        login: "Kirjaudu/luo tunnus SizeMe:hen"
     }
 };

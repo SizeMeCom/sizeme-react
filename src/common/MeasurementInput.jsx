@@ -73,7 +73,7 @@ class MeasurementInput extends React.Component {
             className += " measurement-input-error";
         }
         if (this.state.pending) {
-            className += "measurement-input-pending";
+            className += " measurement-input-pending";
         }
         return (
             <div className={className}>
