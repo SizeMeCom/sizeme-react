@@ -89,6 +89,11 @@ const match = handleActions({
         ...state,
         isFetching: false,
         ...resolvePayload(action, "matchResult")
+    }),
+
+    [actions.RESET_MATCH]: () => ({
+        matchResult: null,
+        isFetching: false
     })
 }, {
     matchResult: null,

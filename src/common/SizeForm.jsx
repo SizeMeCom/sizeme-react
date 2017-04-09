@@ -22,22 +22,11 @@ class SizeForm extends React.Component {
         clearTimeout(this.timeoutId);
     }
 
-    getIntValue (value) {
-        const intVal = parseInt(value, 10);
-        if (isNaN(intVal)) return null;
-        return intVal > 0 && intVal < 1000 ? intVal * 10 : null;
-    }
-
     valueChanged (humanProperty) {
-        return event => {
-            this.setState({ [humanProperty]: this.getIntValue(event.target.value) });
-            if (this.timeoutId) {
-                clearTimeout(this.timeoutId);
-            }
-            this.timeoutId = setTimeout(() => {
-                this.timeoutId = null;
+        return value => {
+            this.setState({ [humanProperty]: value }, () => {
                 this.props.onChange(this.state);
-            }, 1000);
+            });
         };
     }
 
@@ -47,15 +36,8 @@ class SizeForm extends React.Component {
                 {this.fields.map(({ field, humanProperty }) => (
                     <div key={field}>
                         <div className="label">{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
-                        <div className="input">
-                            <span>cm</span>
-                            <MeasurementInput onChange={() => {}} value={this.state[humanProperty]}/>
-
-                            {/*<input type="number" min="1" max="1000" step="1" name={humanProperty}
-                                   value={this.state[humanProperty] ? this.state[humanProperty] / 10.0 : ""}
-                                   onChange={this.valueChanged(humanProperty)}
-                            /> */}
-                        </div>
+                        <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
+                                              value={this.state[humanProperty]}/>
                     </div>
                 ))}
             </div>

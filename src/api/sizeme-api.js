@@ -326,6 +326,8 @@ function setProfileMeasurements (measurements) {
         dispatch(actions.setMeasurements(measurements));
         if (Object.values(measurements).some(item => item)) {
             await dispatch(match(false));
+        } else {
+            dispatch(actions.resetMatch());
         }
     };
 }

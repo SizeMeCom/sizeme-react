@@ -1,13 +1,44 @@
 import React, { PropTypes } from "react";
 
+const unitMarks = {
+    cm: "cm",
+    in: "in"
+};
+
+const unitFactors = {
+    cm: 10.0,
+    in: 25.4
+};
+
 class MeasurementInput extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
             error: false,
             pending: false,
-            value: this.props.value ? (this.props.value / 10.0).toFixed(1) : ""
+            value: ""
         };
+        this.viewValue(props);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const nextValue = this.viewValue(nextProps);
+        if (nextValue !== this.state.value) {
+            this.setState({ value: nextValue });
+        }
+    }
+
+    viewValue (props) {
+        return props.value ? (props.value / unitFactors[props.unit]).toFixed(1) : "";
+    }
+
+    modelValue () {
+        const value = this.state.value.replace(",", ".");
+        if (value.length > 0) {
+            return Math.floor(parseFloat(value) * unitFactors[this.props.unit]);
+        } else {
+            return null;
+        }
     }
 
     valueChanged = (event) => {
@@ -20,7 +51,7 @@ class MeasurementInput extends React.Component {
         const newState = {
             pending: true
         };
-        if (newValue.length > 0 && isNaN(parseFloat(newValue.replace(",", ".")))) {
+        if (isNaN(this.modelValue())) {
             newState.error = true;
         } else {
             newState.value = newValue;
@@ -29,8 +60,27 @@ class MeasurementInput extends React.Component {
         this.setState(newState);
     };
 
+    onBlur = () => {
+        if (!this.state.error) {
+            this.props.onChange(this.modelValue());
+            this.setState({ pending: false });
+        }
+    };
+
     render () {
-        return <input type="text" value={this.state.value} onChange={this.valueChanged}/>;
+        let className = "measurement-input";
+        if (this.state.error) {
+            className += " measurement-input-error";
+        }
+        if (this.state.pending) {
+            className += "measurement-input-pending";
+        }
+        return (
+            <div className={className}>
+                <span>{unitMarks[this.props.unit]}</span>
+                <input type="text" value={this.state.value} onChange={this.valueChanged} onBlur={this.onBlur}/>
+            </div>
+        );
     }
 }
 
