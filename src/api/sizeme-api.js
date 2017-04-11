@@ -130,7 +130,8 @@ function getProduct () {
         }
 
         if (!product.SKU) {
-            dispatch(actions.receiveProductInfo(sizeme_product));
+            const model = new SizeGuideModel(sizeme_product.item);
+            dispatch(actions.receiveProductInfo({ ...sizeme_product, model }));
             return undefined;
         }
 
