@@ -1,18 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
-import Section from "./section/Section.jsx";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
 import SizeForm from "./common/SizeForm.jsx";
 import { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } from "./api/sizeme-api";
 import FontAwesome from "react-fontawesome";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { hideMenu } from "react-contextmenu/modules/actions";
 import i18n from "./api/i18n";
+import ProfileSelect from "./common/ProfileSelect.jsx";
+import { bindActionCreators } from "redux";
+import LoginFrame, { openLoginFrame } from "./common/LoginFrame.jsx";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
         super(props);
         this.menuTrigger = null;
+        this.state = {
+            loginModalOpen: false
+        };
     }
 
     componentDidMount () {
@@ -29,6 +35,11 @@ class SizeMeApp extends React.Component {
         }
     };
 
+    selectProfile = profileId => {
+        hideMenu();
+        this.props.onSelectProfile(profileId);
+    };
+
     render () {
         if (this.props.resolved) {
             return (
@@ -39,12 +50,21 @@ class SizeMeApp extends React.Component {
                             <FontAwesome name="cog" onClick={this.toggleMenu}/>
                         </ContextMenuTrigger>
                         <ContextMenu id="sizeme-menu" className="sizeme-context-menu">
-                            <MenuItem onClick={console.log("click")}>{i18n.MENU.login}</MenuItem>
+                            {this.props.loggedIn ?
+                                <div className="menu-profile-select">
+                                    <span>Select profile</span>
+                                    <ProfileSelect onSelectProfile={this.selectProfile}
+                                                   selectedProfile={this.props.selectedProfile.id}
+                                                   profiles={this.props.profiles}
+                                    />
+                                </div> :
+                                <MenuItem onClick={() => openLoginFrame("menu-login")}>{i18n.MENU.login}</MenuItem>
+                            }
+                            <LoginFrame id="menu-login"/>
                         </ContextMenu>
                     </div>
                     <SizeForm fields={this.props.measurementInputs} max={3} />
                     <SizeGuide/>
-                    <Section/>
                 </div>
             );
         } else {
@@ -55,15 +75,30 @@ class SizeMeApp extends React.Component {
 
 SizeMeApp.propTypes = {
     resolved: React.PropTypes.bool.isRequired,
+    loggedIn: React.PropTypes.bool,
     dispatch: React.PropTypes.func.isRequired,
     currentMatch: React.PropTypes.object,
-    measurementInputs: React.PropTypes.arrayOf(React.PropTypes.string)
+    measurementInputs: React.PropTypes.arrayOf(React.PropTypes.string),
+    profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    selectedProfile: React.PropTypes.object.isRequired,
+    onSelectProfile: React.PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
+    loggedIn: state.authToken.loggedIn,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
-    measurementInputs: state.productInfo.product ? state.productInfo.product.model.measurementOrder : null
+    measurementInputs: state.productInfo.product ? state.productInfo.product.model.measurementOrder : null,
+    profiles: state.profileList.profiles,
+    selectedProfile: state.selectedProfile
 });
 
-export default connect(mapStateToProps)(SizeMeApp);
+const mapDispatchToProps = dispatch => ({
+    ...bindActionCreators(
+        {
+            onSelectProfile: setSelectedProfile
+        }, dispatch),
+    dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SizeMeApp);

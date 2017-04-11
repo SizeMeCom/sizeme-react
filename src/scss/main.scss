@@ -30,6 +30,7 @@ $default_blue: #34a6c6;
 @import "../sizeguide/sizeguide";
 @import "../common/sizeform";
 @import "../common/sizeslider";
+@import "../common/loginframe";
 
 .sizeme-content {
 
@@ -46,6 +47,10 @@ $default_blue: #34a6c6;
       margin-left: 5px;
       font-size: 130%;
       cursor: pointer;
+
+      &:hover {
+        color: $default_blue;
+      }
     }
   }
 
@@ -53,7 +58,7 @@ $default_blue: #34a6c6;
     background-color: white;
     border: 2px solid $default_blue;
     border-bottom-width: 24px;
-    padding: 10px 0;
+    padding: 0;
     position: relative;
     min-width: 160px;
     @include border-radius(4px);
@@ -66,6 +71,15 @@ $default_blue: #34a6c6;
       bottom: -23px;
       left: 0;
       background: url(../images/sizeme_logo_plain_h22.png) no-repeat left bottom;
+    }
+
+    .menu-profile-select {
+      max-width: 160px;
+      padding: 0 5px 5px;
+
+      .profile-select {
+        max-width: 150px;
+      }
     }
 
     .react-contextmenu-item {
@@ -82,9 +96,10 @@ $default_blue: #34a6c6;
 
     .react-contextmenu-item.react-contextmenu-item--active,
     .react-contextmenu-item:hover {
-      color: #fff;
+      /*color: #fff;
       background-color: $default_blue;
-      border-color: $default_blue;
+      border-color: $default_blue;*/
+      font-style: italic;
       text-decoration: none;
     }
   }
