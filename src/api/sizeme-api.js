@@ -12,8 +12,8 @@ import SizeGuideModel from "./ProductModel";
 
 const OPTIMAL_FIT = 1070;
 
-let contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
-let pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
+const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
+const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
 
 const sizemeStore = createStore(
     rootReducer,
@@ -130,7 +130,9 @@ function getProduct () {
         }
 
         if (!product.SKU) {
-            dispatch(actions.receiveProductInfo(sizeme_product));
+            const model = new SizeGuideModel(sizeme_product.item);
+            // eslint-disable-next-line camelcase
+            dispatch(actions.receiveProductInfo({ ...sizeme_product, model }));
             return undefined;
         }
 

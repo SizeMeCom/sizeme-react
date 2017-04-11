@@ -8,6 +8,7 @@ import FontAwesome from "react-fontawesome";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { hideMenu } from "react-contextmenu/modules/actions";
 import i18n from "./api/i18n";
+import Optional from "optional-js";
 import ProfileSelect from "./common/ProfileSelect.jsx";
 import { bindActionCreators } from "redux";
 import LoginFrame, { openLoginFrame } from "./common/LoginFrame.jsx";
@@ -63,7 +64,7 @@ class SizeMeApp extends React.Component {
                             <LoginFrame id="menu-login"/>
                         </ContextMenu>
                     </div>
-                    <SizeForm fields={this.props.measurementInputs} max={3} />
+                    {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} max={3} />}
                     <SizeGuide/>
                 </div>
             );
@@ -88,7 +89,8 @@ const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
     loggedIn: state.authToken.loggedIn,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
-    measurementInputs: state.productInfo.product ? state.productInfo.product.model.measurementOrder : null,
+    measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
+        .map(m => m.measurementOrder).orElse(null),
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile
 });
