@@ -6,6 +6,8 @@ import i18n from "../api/i18n";
 import { humanMeasurementMap } from "../api/ProductModel";
 import MeasurementInput from "./MeasurementInput.jsx";
 
+const STORE_KEY = "sizemeProvisionalMeasurements";
+
 class SizeForm extends React.Component {
 
     constructor (props) {
@@ -14,7 +16,12 @@ class SizeForm extends React.Component {
             field,
             humanProperty: humanMeasurementMap.get(field)
         }));
-        this.state = Object.assign(...this.fields.map(f => ({ [f.humanProperty]: null })));
+        const fromStore = localStorage.getItem(STORE_KEY);
+        const storedMeasurements = fromStore ? JSON.parse(fromStore) : {};
+        this.state = Object.assign(
+            ...this.fields.map(f => ({ [f.humanProperty]: null })),
+            storedMeasurements
+        );
         this.timeoutId = null;
     }
 
@@ -25,6 +32,7 @@ class SizeForm extends React.Component {
     valueChanged (humanProperty) {
         return value => {
             this.setState({ [humanProperty]: value }, () => {
+                localStorage.setItem(STORE_KEY, JSON.stringify(this.state));
                 this.props.onChange(this.state);
             });
         };

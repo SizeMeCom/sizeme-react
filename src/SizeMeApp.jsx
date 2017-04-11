@@ -84,7 +84,6 @@ class SizeMeApp extends React.Component {
 SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
-    dispatch: PropTypes.func.isRequired,
     currentMatch: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -105,15 +104,11 @@ const mapStateToProps = state => ({
     selectedProfile: state.selectedProfile
 });
 
-const mapDispatchToProps = dispatch => ({
-    ...bindActionCreators(
-        {
-            setSelectedProfile: actions.setSelectedProfile,
-            resolveAuthToken: actions.resolveAuthToken,
-            getProfiles: actions.getProfiles,
-            getProduct: actions.getProduct
-        }, dispatch),
-    dispatch: dispatch
-});
+const mapDispatchToProps = dispatch => bindActionCreators({
+    setSelectedProfile: actions.setSelectedProfile,
+    resolveAuthToken: actions.resolveAuthToken,
+    getProfiles: actions.getProfiles,
+    getProduct: actions.getProduct
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SizeMeApp);

@@ -16,9 +16,8 @@ class MeasurementInput extends React.Component {
         this.state = {
             error: false,
             pending: false,
-            value: ""
+            value: this.viewValue(props)
         };
-        this.viewValue(props);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -29,7 +28,7 @@ class MeasurementInput extends React.Component {
     }
 
     viewValue (props) {
-        return props.value ? (props.value / unitFactors[props.unit]).toFixed(1) : "";
+        return props.value ? (parseInt(props.value, 10) / unitFactors[props.unit]).toFixed(1) : "";
     }
 
     modelValue () {
