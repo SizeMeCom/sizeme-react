@@ -50,7 +50,7 @@ const productInfo = handleActions({
     [actions.RECEIVE_PRODUCT_INFO]: (state, action) => ({
         ...state,
         isFetching: false,
-        resolved: true,
+        resolved: !action.error,
         ...resolvePayload(action, "product")
     })
 }, {

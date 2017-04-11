@@ -1,9 +1,9 @@
-import React from "react";
+import React, { PropTypes } from "react";
 import { connect } from "react-redux";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
 import SizeForm from "./common/SizeForm.jsx";
-import { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } from "./api/sizeme-api";
+import * as actions from "./api/sizeme-api";
 import FontAwesome from "react-fontawesome";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import { hideMenu } from "react-contextmenu/modules/actions";
@@ -23,11 +23,11 @@ class SizeMeApp extends React.Component {
     }
 
     componentDidMount () {
-        const { dispatch } = this.props;
+        const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } = this.props;
         Promise.all([
-            dispatch(resolveAuthToken()).then(() => dispatch(getProfiles())),
-            dispatch(getProduct())
-        ]).then(() => dispatch(setSelectedProfile()));
+            resolveAuthToken().then(() => getProfiles()),
+            getProduct()
+        ]).then(() => setSelectedProfile());
     }
 
     toggleMenu = (e) => {
@@ -38,7 +38,14 @@ class SizeMeApp extends React.Component {
 
     selectProfile = profileId => {
         hideMenu();
-        this.props.onSelectProfile(profileId);
+        this.props.setSelectedProfile(profileId);
+    };
+
+    userLoggedIn = () => {
+        const { resolveAuthToken, getProfiles, setSelectedProfile } = this.props;
+        resolveAuthToken(true)
+            .then(() => getProfiles())
+            .then(() => setSelectedProfile());
     };
 
     render () {
@@ -61,11 +68,11 @@ class SizeMeApp extends React.Component {
                                 </div> :
                                 <MenuItem onClick={() => openLoginFrame("menu-login")}>{i18n.MENU.login}</MenuItem>
                             }
-                            <LoginFrame id="menu-login"/>
+                            <LoginFrame id="menu-login" userLoggedIn={this.userLoggedIn}/>
                         </ContextMenu>
                     </div>
                     {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} max={3} />}
-                    <SizeGuide/>
+                    {this.props.resolved && <SizeGuide/>}
                 </div>
             );
         } else {
@@ -75,14 +82,17 @@ class SizeMeApp extends React.Component {
 }
 
 SizeMeApp.propTypes = {
-    resolved: React.PropTypes.bool.isRequired,
-    loggedIn: React.PropTypes.bool,
-    dispatch: React.PropTypes.func.isRequired,
-    currentMatch: React.PropTypes.object,
-    measurementInputs: React.PropTypes.arrayOf(React.PropTypes.string),
-    profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedProfile: React.PropTypes.object.isRequired,
-    onSelectProfile: React.PropTypes.func.isRequired
+    resolved: PropTypes.bool.isRequired,
+    loggedIn: PropTypes.bool,
+    dispatch: PropTypes.func.isRequired,
+    currentMatch: PropTypes.object,
+    measurementInputs: PropTypes.arrayOf(PropTypes.string),
+    profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedProfile: PropTypes.object.isRequired,
+    setSelectedProfile: PropTypes.func.isRequired,
+    resolveAuthToken: PropTypes.func.isRequired,
+    getProfiles: PropTypes.func.isRequired,
+    getProduct: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -98,7 +108,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     ...bindActionCreators(
         {
-            onSelectProfile: setSelectedProfile
+            setSelectedProfile: actions.setSelectedProfile,
+            resolveAuthToken: actions.resolveAuthToken,
+            getProfiles: actions.getProfiles,
+            getProduct: actions.getProduct
         }, dispatch),
     dispatch: dispatch
 });

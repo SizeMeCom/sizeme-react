@@ -56,9 +56,9 @@ function jsonResponse (response) {
     throw new Error(`${response.status} - ${response.statusText || "N/A"}`);
 }
 
-function resolveAuthToken () {
+function resolveAuthToken (reset = false) {
     return async (dispatch, getState) => {
-        if (getState().authToken.resolved) {
+        if (!reset && getState().authToken.resolved) {
             return undefined;
         }
 

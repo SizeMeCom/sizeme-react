@@ -19,8 +19,26 @@ class LoginFrame extends React.Component {
         };
     }
 
-    openLoginModal = () => this.setState({ loginModalOpen: true });
-    closeLoginModal = () => this.setState({ loginModalOpen: false });
+    receiveMessage = (e) => {
+        const origin = e.origin || e.originalEvent.origin;
+        if (origin !== contextAddress) {
+            return;
+        }
+        if (e.data) {
+            this.props.userLoggedIn();
+        }
+        this.closeLoginModal();
+    };
+
+    openLoginModal = () => {
+        window.addEventListener("message", this.receiveMessage, false);
+        this.setState({ loginModalOpen: true });
+    };
+
+    closeLoginModal = () => {
+        this.setState({ loginModalOpen: false });
+        window.removeEventListener("message", this.receiveMessage, false);
+    };
 
     render () {
         return (
@@ -30,9 +48,9 @@ class LoginFrame extends React.Component {
                    overlayClassName="login-frame-overlay"
                    contentLabel="SizeMe Login Frame"
             >
-                <iframe src={`${contextAddress}/remote-login.html`}
+                <iframe src={`${contextAddress}/remote-login2.html`}
                         frameBorder="0"
-                        width="300"
+                        width="305"
                         height="348"
                 />
             </Modal>
@@ -41,7 +59,8 @@ class LoginFrame extends React.Component {
 }
 
 LoginFrame.propTypes = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    userLoggedIn: PropTypes.func.isRequired
 };
 
 export default LoginFrame;
