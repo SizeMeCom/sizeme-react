@@ -43,7 +43,7 @@ class SizeMeApp extends React.Component {
                             <MenuItem onClick={console.log("click")}>{i18n.MENU.login}</MenuItem>
                         </ContextMenu>
                     </div>
-                    <SizeForm fields={this.props.measurementInputs} max={3} />
+                    {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} max={3} />}
                     <SizeGuide/>
                     <Section/>
                 </div>
