@@ -8,6 +8,7 @@ import { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } from ".
 import FontAwesome from "react-fontawesome";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import i18n from "./api/i18n";
+import Optional from "optional-js";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -63,7 +64,8 @@ SizeMeApp.propTypes = {
 const mapStateToProps = (state) => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
-    measurementInputs: state.productInfo.product ? state.productInfo.product.model.measurementOrder : null
+    measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
+        .map(m => m.measurementOrder).orElse(null)
 });
 
 export default connect(mapStateToProps)(SizeMeApp);
