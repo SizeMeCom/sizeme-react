@@ -9,6 +9,7 @@ import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
 import FitTooltip from "./FitTooltip.jsx";
+import ReactTooltip from "react-tooltip";
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -48,7 +49,9 @@ class SizeGuide extends React.Component {
     };
 
     closeGuide = () => {
-        this.setState({ guideIsOpen: false });
+        this.setState({ guideIsOpen: false }, () => {
+            ReactTooltip.rebuild();
+        });
     };
 
     render () {

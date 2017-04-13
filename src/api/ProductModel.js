@@ -85,6 +85,38 @@ const humanMeasurementMap = new Map([
     ["hat_width", "headCircumference"]
 ]);
 
+function getEssentialMeasurements (itemTypeArr) {
+    const arr = [];
+    switch (itemTypeArr[0]) {
+        case 1:
+            arr.push("chest", "front_height");
+            if (itemTypeArr[3] >= 6) {
+                arr.push("sleeve");
+            }
+            break;
+
+        case 2:
+            arr.push("pant_waist", "hips");
+            if (itemTypeArr[3] >= 6) {
+                arr.push("outseam");
+            }
+            break;
+
+        case 3:
+            arr.push("shoe_inside_length");
+            if (itemTypeArr[3] < 6) {
+                arr.push("calf_width");
+            }
+            break;
+
+        case 4:
+            arr.push("hat_width");
+            break;
+    }
+
+    return arr;
+}
+
 function init (itemTypeArr) {
     const arrows = {};
     const itemDrawing = {};
@@ -1032,6 +1064,7 @@ export default class {
         }
         this.arrows = arrows;
         this.itemDrawing = itemDrawing;
+        this.essentialMeasurements = getEssentialMeasurements(itemTypeArr);
 
         this.getItemTypeComponent = index => itemTypeArr[index];
     }

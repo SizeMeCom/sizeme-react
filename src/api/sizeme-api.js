@@ -14,6 +14,7 @@ const OPTIMAL_FIT = 1070;
 
 const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
 const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
+const cdnLocation = "https://cdn.sizeme.com";
 
 const sizemeStore = createStore(
     rootReducer,
@@ -324,10 +325,10 @@ function match (selectBestFit = true) {
 }
 
 function setProfileMeasurements (measurements) {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         dispatch(actions.setMeasurements(measurements));
         if (Object.values(measurements).some(item => item)) {
-            await dispatch(match(false));
+            await dispatch(match(!getState().selectedSize));
         } else {
             dispatch(actions.resetMatch());
         }
@@ -343,5 +344,6 @@ export {
     match,
     setProfileMeasurements,
     sizeSelector,
-    contextAddress
+    contextAddress,
+    cdnLocation
 };

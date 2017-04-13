@@ -99,7 +99,7 @@ const mapStateToProps = state => ({
     loggedIn: state.authToken.loggedIn,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
-        .map(m => m.measurementOrder).orElse(null),
+        .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile
 });

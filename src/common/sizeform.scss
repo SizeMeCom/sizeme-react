@@ -5,7 +5,7 @@
   @include display-flex;
   @include flex-direction(row);
 
-  div {
+  .measurement-cell {
     @include flex(1);
     padding: 0 3px;
 
@@ -23,10 +23,20 @@
       text-transform: uppercase;
       text-align: center;
       vertical-align: bottom;
+      position: relative;
+
+      span.fa {
+        position: absolute;
+        bottom: 1px;
+        right: 10px;
+        font-size: 115%;
+        color: #6d6d6d;
+        cursor: pointer;
+      }
     }
 
     .measurement-input {
-      border: 1px solid #ccc;
+      border: 1px solid #079814;
       border-radius: 4px;
       background-color: #fff;
 
@@ -35,11 +45,11 @@
         border: none;
         width: calc(100% - 24px);
         padding-right: 0;
-        margin-right: 24px;
+        padding-left: 24px;
         height: 22px;
         line-height: 22px;
         font-weight: bold;
-        text-align: right;
+        text-align: center;
         color: #333;
         background-color: transparent;
       }
@@ -51,8 +61,63 @@
         height: 22px;
         line-height: 22px;
         text-align: center;
-        color: #999;
+      }
+    }
+
+    .measurement-input.measurement-input-ok {
+      background-color: #c7eace;
+    }
+  }
+
+  .__react_component_tooltip.measurement-tooltip {
+    background-color: $default_blue;
+    padding: 3px;
+    opacity: 1;
+
+    &:after {
+      border-right-color: $default_blue !important;
+    }
+
+    ul {
+      background-color: white;
+      color: black;
+      padding: 5px 5px 5px 20px;
+      max-width: 170px;
+      list-style-type: disc;
+    }
+
+    .measurement-guide-link {
+      padding: 3px 0 0 2px;
+
+      a {
+        color: white;
+        pointer-events: all;
+        cursor: pointer;
+        text-decoration: underline !important;
       }
     }
   }
+}
+
+.measurement-guide-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+}
+
+.measurement-guide-modal {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, 0);
+  border: none;
+  background-color: white;
+  -webkit-overflow-scrolling: touch;
+  width: 300px;
+  height: 348px;
 }

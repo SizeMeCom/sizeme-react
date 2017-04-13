@@ -70,6 +70,8 @@ class MeasurementInput extends React.Component {
         let className = "measurement-input";
         if (this.state.error) {
             className += " measurement-input-error";
+        } else if (this.props.value) {
+            className += " measurement-input-ok";
         }
         if (this.state.pending) {
             className += " measurement-input-pending";

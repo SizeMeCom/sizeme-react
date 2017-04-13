@@ -130,5 +130,43 @@ export default {
     },
     MENU: {
         login: "Login/sign up to SizeMe"
+    },
+    MEASUREMENT_TOOLTIPS: {
+        link_to_guide: {
+            start: "Click",
+            link: "here",
+            end: "for guide"
+        },
+        chest: [
+            "Around your body under your arms at fullest part of chest",
+            "Breathe out fully"
+        ],
+        front_height: [
+            "From where your neck meets your shoulder directly down to your waistband"
+        ],
+        sleeve: [
+            "From your shoulder down to your wrist",
+            "Keep your arm straight and pointing down"
+        ],
+        pant_waist: [
+            "Around your body from where you normally keep your pants",
+            "Pull your stomach in like you are fitting on a pair of tight pants"
+        ],
+        hips: [
+            "Around your body at the widest part of your hips"
+        ],
+        outseam: [
+            "The outside of your leg starting from the top of your waistband",
+            "Measure down to your ankle bone"
+        ],
+        shoe_inside_length: [
+            "Place a measuring tape next to a wall and stand on the tape"
+        ],
+        calf_width: [
+            "Measure around widest part of calf"
+        ],
+        hat_width: [
+            "Measure the biggest circumference of head at just above top of ears"
+        ]
     }
 };
