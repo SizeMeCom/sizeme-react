@@ -20,24 +20,29 @@ class LoginFrame extends React.Component {
     }
 
     receiveMessage = (e) => {
+        if (!this.state.loginModalOpen) {
+            return;
+        } 
         const origin = e.origin || e.originalEvent.origin;
         if (origin !== contextAddress) {
             return;
         }
+        this.closeLoginModal();
         if (e.data) {
             this.props.userLoggedIn();
         }
-        this.closeLoginModal();
     };
 
     openLoginModal = () => {
-        window.addEventListener("message", this.receiveMessage, false);
-        this.setState({ loginModalOpen: true });
+        this.setState({ loginModalOpen: true }, () => {
+            window.addEventListener("message", this.receiveMessage, false);
+        });
     };
 
     closeLoginModal = () => {
-        this.setState({ loginModalOpen: false });
-        window.removeEventListener("message", this.receiveMessage, false);
+        this.setState({ loginModalOpen: false }, () => {
+            window.removeEventListener("message", this.receiveMessage, false);
+        });
     };
 
     render () {

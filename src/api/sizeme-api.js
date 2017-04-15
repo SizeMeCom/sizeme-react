@@ -50,11 +50,20 @@ function createRequest (method, token, withCredentials = false) {
     return request;
 }
 
+class ApiError extends Error {
+    constructor (response) {
+        super(`${response.status} - ${response.statusText || "N/A"}`);
+        this.response = response;
+    }
+
+    isUnauthorized = () => this.response.status === 401 || this.response.status === 403;
+}
+
 function jsonResponse (response) {
     if (response.ok) {
         return response.json();
     }
-    throw new Error(`${response.status} - ${response.statusText || "N/A"}`);
+    throw new ApiError(response);
 }
 
 function resolveAuthToken (reset = false) {
@@ -110,6 +119,8 @@ function getProfiles () {
             trackEvent("fetchProfiles", "API: fetchProfiles");
             dispatch(actions.receiveProfileList(profileList));
         } catch (reason) {
+            sessionStorage.removeItem("sizeme.authtoken");
+            dispatch(actions.clearToken());
             dispatch(actions.receiveProfileList(reason));
         }
     };

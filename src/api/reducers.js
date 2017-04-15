@@ -2,9 +2,9 @@ import { combineReducers } from "redux";
 import { handleAction, handleActions } from "redux-actions";
 import * as actions from "./actions";
 
-function resolvePayload (action, payloadKey) {
+function resolvePayload (action, payloadKey, errorPayload = null) {
     return {
-        [payloadKey]: action.error ? null : action.payload,
+        [payloadKey]: action.error ? errorPayload : action.payload,
         error: action.error ? action.payload : null
     };
 }
@@ -24,6 +24,12 @@ const authToken = handleActions({
         resolved: true,
         loggedIn: !action.error && !!action.payload,
         ...resolvePayload(action, "token")
+    }),
+
+    [actions.CLEAR_TOKEN]: () => ({
+        loggedIn: false,
+        isFetching: false,
+        resolved: true
     })
 }, {
     loggedIn: false,
@@ -37,7 +43,7 @@ const profileList = handleActions({
     [actions.RECEIVE_PROFILE_LIST]: (state, action) => ({
         ...state,
         isFetching: false,
-        ...resolvePayload(action, "profiles")
+        ...resolvePayload(action, "profiles", [])
     })
 }, {
     profiles: [],

@@ -168,5 +168,25 @@ export default {
         hat_width: [
             "Measure the biggest circumference of head at just above top of ears"
         ]
+    },
+    MEASUREMENT_GUIDE: {
+        title: "How to measure your",
+        chest: `Measure around your body under your arms at <b>fullest part</b> of 
+                chest<span class='female'> while wearing bra</span>.
+                <br/><br/><b>Breathe out fully</b> while taking this measurement.`,
+        front_height: `Measure down from where your neck meets your shoulder directly down to your waistband 
+                       (where you normally keep your pants).`,
+        sleeve: `Measure from your shoulder (where your shirt's seam usually is) down to your wrist 
+                (to the end of the radius bone to be exact). 
+                Keep your arm straight and pointing down while measuring.`,
+        pant_waist: `Measure around your body from where you normally keep your pants, about 6 cm down from 
+                    belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair 
+                    of tight pants.`,
+        outseam: `Measure the outside of your leg starting from the top of your waistband 
+                 (where you normally keep your pants) and measure down to your ankle bone
+                 (lateral malleolus to be exact).`,
+        shoe_inside_length: "Place a measuring tape next to a wall and stand on the tape.",
+        calf_width: "Measure around widest part of calf.",
+        hat_width: "Measure the biggest circumference of head at just above top of ears."
     }
 };

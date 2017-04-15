@@ -9,6 +9,7 @@ import FontAwesome from "react-fontawesome";
 import ReactTooltip from "react-tooltip";
 import Modal from "react-modal";
 import VideoGuide from "./VideoGuide.jsx";
+import Optional from "optional-js";
 
 const STORE_KEY = "sizemeProvisionalMeasurements";
 
@@ -67,9 +68,39 @@ class SizeForm extends React.Component {
         );
     };
 
+    modalContent = () => {
+        if (!this.activeTooltip) {
+            return null;
+        }
+        const humanMeasurement = humanMeasurementMap.get(this.activeTooltip);
+        const humanMeasurementName = i18n.HUMAN_MEASUREMENTS[humanMeasurement];
+        return (
+            <div>
+                <div className="measurement-instruction-box">
+                    <FontAwesome name="times" onClick={this.closeGuideModal}/>
+                    <h2 className="instruction-title">
+                        {i18n.MEASUREMENT_GUIDE.title} {humanMeasurementName.toLowerCase()}
+                    </h2>
+                    <div className={`instruction-content gender-${this.props.gender}`}
+                         dangerouslySetInnerHTML={{ __html: i18n.MEASUREMENT_GUIDE[this.activeTooltip] }}/>
+                </div>
+                <VideoGuide measurement={humanMeasurement} gender={this.props.gender}/>
+            </div>
+        );
+    };
+
+    getLeftPosition = () => {
+        if (!this.elem) {
+            return "50%";
+        } else {
+            const left = Math.max(0, this.elem.getBoundingClientRect().left - 300);
+            return `${left}px`;
+        }
+    };
+
     render () {
         return (
-            <div className="measurement-input-table">
+            <div className="measurement-input-table" ref={el => { this.elem = el; }}>
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field}>
                         <div className="label">
@@ -92,9 +123,13 @@ class SizeForm extends React.Component {
                        className="measurement-guide-modal"
                        overlayClassName="measurement-guide-overlay"
                        contentLabel="SizeMe Measurement Guide"
+                       style={{
+                           content: {
+                               left: this.getLeftPosition()
+                           }
+                       }}
                 >
-                    {this.activeTooltip &&
-                    <VideoGuide measurement={humanMeasurementMap.get(this.activeTooltip)}/>}
+                    {this.modalContent()}
                 </Modal>
             </div>
         );
@@ -104,7 +139,8 @@ class SizeForm extends React.Component {
 SizeForm.propTypes = {
     fields: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     max: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    gender: React.PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -112,6 +148,11 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
 export default connect(
-    () => ({}),
+    state => ({
+        gender: Optional.ofNullable(state.selectedProfile)
+            .flatMap(p => Optional.ofNullable(p.gender))
+            .map(g => g.toLowerCase())
+            .orElse("female")
+    }),
     mapDispatchToProps
 )(SizeForm);

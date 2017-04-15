@@ -36,7 +36,7 @@ const VideoGuide = (props) => {
     if (availableVideos.includes(props.measurement)) {
         const video = `${videoUrl}/${gender}_${props.measurement}`;
         return (
-            <Video autoPlay={autoplay} poster={defaultPoster(gender)} width="323" height="456"
+            <Video autoPlay={autoplay} poster={defaultPoster(gender)} width="250"
                    controls={[]}>
                 {Object.keys(videoTypes).map(ext =>
                     <source key={ext} src={`${video}.${ext}`}
@@ -51,7 +51,7 @@ const VideoGuide = (props) => {
         } else {
             poster = defaultPoster(gender);
         }
-        return <img src={poster} width="323" height="456"/>;
+        return <img src={poster} width="250"/>;
     }
 };
 
