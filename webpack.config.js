@@ -28,6 +28,7 @@ const commonConfig = merge([
         }
     },
     parts.loadFonts({
+        include: /.*fonts.*/,
         options: {
             name: "[name].[hash].[ext]"
         }
@@ -90,6 +91,7 @@ const productionConfig = merge([
     parts.clean(PATHS.build),
     parts.extractCSS({ filename: "sizeme-styles.css" }),
     parts.loadImages({
+        include: PATHS.images,
         options: {
             limit: 15000,
             name: "[name].[hash:8].[ext]"

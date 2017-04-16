@@ -119,7 +119,7 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
     module: {
         rules: [
             {
-                test: /\.(png|jpg)$/,
+                test: /\.(png|jpg|svg)$/,
                 include,
                 exclude,
 
