@@ -6,11 +6,10 @@
 a.link-btn.size-guide {
   margin: 0 0 0 0;
   padding: 5px 8px;
-  @include background-image(linear-gradient(to bottom, #ffffff 0%, #dddddd 100%));
   border: 1px solid #666;
   font-weight: bold;
-  @include border-radius(4px);
-  background-color: #fff;
+  border-radius: 4px;
+  background: #fff linear-gradient(to bottom, #ffffff 0%, #dddddd 100%);
   width: 50%;
   color: #666;
   display: inline-block;
@@ -30,7 +29,7 @@ a.link-btn.size-guide {
   opacity: 1 !important;
   z-index: 9999 !important;
   padding: 10px 10px !important;
-  @include border-radius(5px !important);
+  border-radius: 5px !important;
 
   .front_height {
     float: right;
@@ -111,8 +110,8 @@ a.link-btn.size-guide {
   max-height: 560px;
 
   .modal-wrapper {
-    @include display-flex;
-    @include flex-direction(column);
+    display: flex;
+    flex-direction: column;
     min-height: 100%;
 
     .modal-header {
@@ -152,7 +151,7 @@ a.link-btn.size-guide {
     }
 
     .modal-body {
-      @include flex(1);
+      flex: 1;
       overflow: scroll;
     }
 
@@ -163,9 +162,9 @@ a.link-btn.size-guide {
       width: 100%;
       box-sizing: border-box;
       padding-right: 30px;
-      @include display-flex;
-      @include justify-content(flex-end);
-      @include align-items(center);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
 
       .sizeme-advertisement {
         color: #999;
@@ -178,9 +177,7 @@ a.link-btn.size-guide {
           position: relative;
           top: -1px;
           left: 5px;
-          background-image: url(../images/sizeme_logo_plain_h22.png);
-          background-position: 0px 0px;
-          background-repeat: no-repeat;
+          background: url(../images/sizeme_logo_plain_h22.png) no-repeat 0 0;
           width: 77px;
           height: 22px;
           vertical-align: top;
@@ -191,9 +188,9 @@ a.link-btn.size-guide {
 }
 
 .size-guide-content {
-  @include display-flex;
-  @include flex-direction(row);
-  @include flex-wrap(wrap);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
 
   .measurement-head {
@@ -201,7 +198,7 @@ a.link-btn.size-guide {
       background-color: #000;
       color: #fff;
       font-weight: normal !important;
-      @include border-radius(50%);
+      border-radius: 50%;
       padding: 0;
       width: 14px;
       height: 14px;
@@ -218,7 +215,7 @@ a.link-btn.size-guide {
   }
 
   .size-guide-item {
-    @include flex(1 1 auto);
+    flex: 1 1 auto;
     box-sizing: border-box;
     width: 40%;
     height: calc(100% - 60px);
@@ -229,7 +226,7 @@ a.link-btn.size-guide {
   }
 
   .size-guide-data {
-    @include flex(1 1 auto);
+    flex: 1 1 auto;
     width: 60%;
     box-sizing: border-box;
     text-align: left;
@@ -251,11 +248,11 @@ a.link-btn.size-guide {
   }
 
   .size-guide-product-info {
-    @include display-flex;
-    @include flex-direction(column);
+    display: flex;
+    flex-direction: column;
 
     .size-guide-details-section {
-      @include flex(1);
+      flex: 1;
       
       .product-info-table {
         border-collapse: separate;
@@ -300,7 +297,7 @@ a.link-btn.size-guide {
 
     .size-guide-splash {
       padding: 5px 0;
-      @include border-radius(5px);
+      border-radius: 5px;
       text-align: center;
       background: #eee url(../images/sizeme_logo_plain_h32.png) no-repeat 20px 10px;
       width: 100%;
@@ -311,13 +308,13 @@ a.link-btn.size-guide {
       }
 
       .splash-choices {
-        @include display-flex;
-        @include flex-direction(row);
-        @include justify-content(space-between);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         margin: 0 10px;
 
         a.link-btn {
-          @include flex(1);
+          flex: 1;
           max-width: 140px;
           padding: 5px 8px;
         }
@@ -349,11 +346,11 @@ a.link-btn.size-guide {
     }
 
     .fit-table {
-      @include display-flex;
-      @include flex-direction(row);
+      display: flex;
+      flex-direction: row;
 
       .fit-wrapper {
-        @include flex(1);
+        flex: 1;
       }
 
       .detailed-fit {

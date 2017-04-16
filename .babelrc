@@ -7,7 +7,7 @@
           "> 5%",
           "last 2 versions"
         ],
-        "uglify": true,
+        "uglify": false,
         "loose": true,
         "useBuiltIns": true,
         "modules": false,

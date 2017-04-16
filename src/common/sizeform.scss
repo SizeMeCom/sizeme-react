@@ -2,11 +2,11 @@
 .measurement-input-table {
   width: 100%;
   margin: 10px 0;
-  @include display-flex;
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
 
   .measurement-cell {
-    @include flex(1);
+    flex: 1;
     padding: 0 3px;
 
     &:first-child {

@@ -1,66 +1,122 @@
-/* global require, module, __dirname */
+/* global require, module, __dirname, process */
 
 const path = require("path");
 const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const merge = require("webpack-merge");
+const parts = require("./webpack.parts");
+const glob = require("glob");
 
-const BUILD_DIR = path.resolve(__dirname, "dist");
-const APP_DIR = path.resolve(__dirname, "src");
-const SCSS_DIR = path.join(APP_DIR, "scss");
+const PATHS = {
+    app: path.resolve(__dirname, "src"),
+    build: path.resolve(__dirname, "dist"),
+    images: path.resolve(__dirname, "src/images")
+};
 
-module.exports = {
-    entry: {
-        "sizeme": `${APP_DIR}/index.js`,
-        "sizeme-styles": `${SCSS_DIR}/main.scss`
+process.traceDeprecation = true;
+
+const commonConfig = merge([
+    {
+        entry: {
+            sizeme: PATHS.app
+        },
+        resolve: {
+            extensions: [".js", ".jsx"]
+        },
+        output: {
+            path: PATHS.build,
+            filename: "[name].js"
+        }
     },
-    output: {
-        path: BUILD_DIR,
-        filename: "[name].js",
-        devtoolModuleFilenameTemplate: "[absolute-resource-path]"
-    },
-    devtool: "source-map",
-    devServer: {
-        publicPath: "/dist/"
-    },
-    plugins: [
-        new webpack.SourceMapDevToolPlugin({
-            filename: "[file].map"
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
+    parts.loadFonts({
+        options: {
+            name: "[name].[hash].[ext]"
+        }
+    }),
+    parts.loadJavaScript({ include: PATHS.app }),
+    parts.extractBundles([
+        {
             name: "sizeme-vendor",
-            minChunks: function (module) {
-                return module.context && module.context.indexOf("node_modules") !== -1;
-            }
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
+            minChunks: ({ resource }) => (
+                resource &&
+                resource.indexOf("node_modules") >= 0 &&
+                resource.match(/\.js$/)
+            )
+        },
+        {
             name: "sizeme-manifest",
             minChunks: Infinity
-        }),
-        new ExtractTextPlugin({
-            filename: "[name].css",
-            allChunks: true
-        })
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.jsx?/,
-                include: APP_DIR,
-                use: "babel-loader"
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(["css-loader", "sass-loader"])
-            },
-            {
-                test: /\.(png|jpg)$/,
-                include: path.join(APP_DIR, "images"),
-                loader: "url-loader?limit=10000"
-            },
-            {
-                test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-                loader: "file-loader?name=fonts/[name].[ext]"
+        }
+    ])
+]);
+
+const developmentConfig = merge([
+    {
+        output: {
+            devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]",
+        }
+    },
+    parts.generateSourceMaps({ type: "source-map" }),
+    parts.devServer({
+        // Customize host/port here if needed
+        host: process.env.HOST,
+        port: process.env.PORT,
+        publicPath: "/dist/"
+    }),
+    parts.loadCSS(),
+    parts.loadImages({
+        include: PATHS.images,
+        options: {
+            limit: 10000
+        }
+    })
+]);
+
+const productionConfig = merge([
+    {
+        performance: {
+            hints: false, // 'error' or false are valid too
+            maxEntrypointSize: 100000, // in bytes
+            maxAssetSize: 450000 // in bytes
+        },
+        output: {
+            chunkFilename: "[name].[chunkhash:8].js",
+            filename: "[name].js" //"[name].[chunkhash:8].js"
+        },
+        plugins: [
+            new webpack.HashedModuleIdsPlugin()
+        ]/*,
+        recordsPath: path.join(__dirname, "records.json")*/
+    },
+    parts.clean(PATHS.build),
+    parts.extractCSS({ filename: "sizeme-styles.css" }),
+    parts.loadImages({
+        options: {
+            limit: 15000,
+            name: "[name].[hash:8].[ext]"
+        }
+    }),
+    parts.minifyJavaScript(),
+    parts.minifyCSS({
+        options: {
+            discardComments: {
+                removeAll: true,
+                // Run cssnano in safe mode to avoid
+                // potentially unsafe transformations.
+                safe: true
             }
-        ]
-    }
+        }
+    }),
+    parts.purifyCSS({
+        paths: glob.sync(`${PATHS.app}/**/*`, { nodir: true })
+    })
+]);
+
+module.exports = (env) => {
+    console.log(env);
+
+    const config = env === "production" ?
+        productionConfig :
+        developmentConfig;
+
+    return merge([commonConfig, config]);
 };

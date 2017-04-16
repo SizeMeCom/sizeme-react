@@ -56,11 +56,13 @@
     td.huge { background-color: #555; }
 
     td.too_small {
-      @include border-left-radius(6px);
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
     }
 
     td.too_big {
-      @include border-right-radius(6px);
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
     }
   }
 

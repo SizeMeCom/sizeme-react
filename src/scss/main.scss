@@ -1,14 +1,11 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
-@import "~compass-mixins/lib/compass/css3/_flexbox";
-@import "~compass-mixins/lib/compass/css3/_border-radius";
-@import "~compass-mixins/lib/compass/css3/_images";
 
 a.link-btn {
   background-color: white;
   color: #000!important;
   padding: 4px 8px;
-  @include border-radius(5px);
+  border-radius: 5px;
   border: 1px solid white;
   margin-bottom: 5px;
   min-width: 70px;
@@ -35,12 +32,12 @@ $default_blue: #34a6c6;
 .sizeme-content {
 
   .sizeme-slider-row {
-    @include display-flex;
-    @include flex-direction(row);
-    @include align-items(center);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     .sizeme_slider {
-      @include flex(1);
+      flex: 1;
     }
 
     span.fa {
@@ -61,7 +58,7 @@ $default_blue: #34a6c6;
     padding: 0;
     position: relative;
     min-width: 160px;
-    @include border-radius(4px);
+    border-radius: 4px;
 
     &:after {
       content: "";
