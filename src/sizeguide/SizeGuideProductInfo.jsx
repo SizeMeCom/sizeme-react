@@ -4,6 +4,7 @@ import { sizeSelector, contextAddress } from "../api/sizeme-api";
 import i18n from "../api/i18n";
 import HoverContainer from "./HoverContainer.jsx";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
+import { openLoginFrame } from "../common/LoginFrame";
 
 class SizeGuideProductInfo extends React.Component {
 
@@ -13,6 +14,8 @@ class SizeGuideProductInfo extends React.Component {
         const zero = this.props.getItemTypeComponent(0);
         return zero === 3 || zero === 4;
     };
+
+    loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
 
     render () {
         const measurementName = measurement => i18n.MEASUREMENT[measurement];
@@ -68,11 +71,10 @@ class SizeGuideProductInfo extends React.Component {
                     <div className="size-guide-splash">
                         <p dangerouslySetInnerHTML={{ __html: i18n.SPLASH.detailed_text }}/>
                         <div className="splash-choices">
-                            <a href={`${contextAddress}?mode=signup`}
-                               target="_blank" className="sign-up link-btn"
+                            <a onClick={this.loginFrameOpener("signup")} className="sign-up link-btn"
                                title={i18n.SPLASH.btn_sign_up_title}>{i18n.SPLASH.btn_sign_up_label}</a>
 
-                            <a href="#" className="log-in link-btn"
+                            <a onClick={this.loginFrameOpener("login")} className="log-in link-btn"
                                title={i18n.SPLASH.btn_log_in_title}>{i18n.SPLASH.btn_log_in_label}</a>
 
                             <a href="#" className="no-thanks link-btn" onClick={hideSizeMe}

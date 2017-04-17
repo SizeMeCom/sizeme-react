@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack --config webpack.config.js -d",
-    "watch": "webpack-dev-server --config webpack.config.js -d --env development",
-    "build": "webpack --config webpack.config.js -p --env production"
+    "watch": "webpack-dev-server -d --env development",
+    "build": "webpack -p --env production",
+    "stats": "webpack --env production --profile --json > stats.json"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",

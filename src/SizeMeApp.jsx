@@ -66,13 +66,13 @@ class SizeMeApp extends React.Component {
                                                    profiles={this.props.profiles}
                                     />
                                 </div> :
-                                <MenuItem onClick={() => openLoginFrame("menu-login")}>{i18n.MENU.login}</MenuItem>
+                                <MenuItem onClick={() => openLoginFrame("login-frame")}>{i18n.MENU.login}</MenuItem>
                             }
-                            <LoginFrame id="menu-login" userLoggedIn={this.userLoggedIn}/>
                         </ContextMenu>
                     </div>
                     {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} max={3} />}
                     {this.props.resolved && <SizeGuide/>}
+                    <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                 </div>
             );
         } else {

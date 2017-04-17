@@ -4,9 +4,9 @@ import Modal from "react-modal";
 
 const instances = {};
 
-const openLoginFrame = id => {
+const openLoginFrame = (id, mode = "login") => {
     if (instances[id]) {
-        instances[id].openLoginModal();
+        instances[id].openLoginModal(mode);
     }
 };
 
@@ -15,7 +15,8 @@ class LoginFrame extends React.Component {
         super(props);
         instances[this.props.id] = this;
         this.state = {
-            loginModalOpen: false
+            loginModalOpen: false,
+            mode: "login"
         };
     }
 
@@ -29,12 +30,15 @@ class LoginFrame extends React.Component {
         }
         this.closeLoginModal();
         if (e.data) {
-            this.props.userLoggedIn();
+            this.props.onLogin();
         }
     };
 
-    openLoginModal = () => {
-        this.setState({ loginModalOpen: true }, () => {
+    openLoginModal = (mode) => {
+        this.setState({
+            loginModalOpen: true,
+            mode: mode
+        }, () => {
             window.addEventListener("message", this.receiveMessage, false);
         });
     };
@@ -53,7 +57,7 @@ class LoginFrame extends React.Component {
                    overlayClassName="login-frame-overlay"
                    contentLabel="SizeMe Login Frame"
             >
-                <iframe src={`${contextAddress}/remote-login2.html`}
+                <iframe src={`${contextAddress}/remote-login2.html?mode=${this.state.mode}`}
                         frameBorder="0"
                         width="305"
                         height="348"
@@ -65,7 +69,7 @@ class LoginFrame extends React.Component {
 
 LoginFrame.propTypes = {
     id: PropTypes.string.isRequired,
-    userLoggedIn: PropTypes.func.isRequired
+    onLogin: PropTypes.func.isRequired
 };
 
 export default LoginFrame;
