@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/BA-Group/sizeme-react.svg?branch=master)](https://travis-ci.org/BA-Group/sizeme-react)
+
 # SizeMe React
 
 A [React](https://facebook.github.io/react/)-app, build and packaged with [yarn](https://yarnpkg.com) and [webpack](https://webpack.js.org/) (or npm, that should work also):
