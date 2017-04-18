@@ -33,27 +33,13 @@ const commonConfig = merge([
             name: "[name].[hash].[ext]"
         }
     }),
-    parts.loadJavaScript({ include: PATHS.app }),
-    parts.extractBundles([
-        {
-            name: "sizeme-vendor",
-            minChunks: ({ resource }) => (
-                resource &&
-                resource.indexOf("node_modules") >= 0 &&
-                resource.match(/\.js$/)
-            )
-        },
-        {
-            name: "sizeme-manifest",
-            minChunks: Infinity
-        }
-    ])
+    parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 const developmentConfig = merge([
     {
         output: {
-            devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]",
+            devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]"
         }
     },
     parts.generateSourceMaps({ type: "source-map" }),
@@ -69,7 +55,8 @@ const developmentConfig = merge([
         options: {
             limit: 10000
         }
-    })
+    }),
+    parts.page({ template: "index.html" })
 ]);
 
 const productionConfig = merge([
@@ -90,6 +77,20 @@ const productionConfig = merge([
     },
     parts.clean(PATHS.build),
     parts.extractCSS({ filename: "sizeme-styles.css" }),
+    parts.extractBundles([
+        {
+            name: "sizeme-vendor",
+            minChunks: ({ resource }) => (
+                resource &&
+                resource.indexOf("node_modules") >= 0 &&
+                resource.match(/\.js$/)
+            )
+        },
+        {
+            name: "sizeme-manifest",
+            minChunks: Infinity
+        }
+    ]),
     parts.loadImages({
         include: PATHS.images,
         options: {
@@ -114,8 +115,6 @@ const productionConfig = merge([
 ]);
 
 module.exports = (env) => {
-    console.log(env);
-
     const config = env === "production" ?
         productionConfig :
         developmentConfig;

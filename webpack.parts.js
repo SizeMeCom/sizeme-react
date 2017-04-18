@@ -8,7 +8,8 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const BabiliPlugin = require("babili-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
-//const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 exports.devServer = ({ host, port, publicPath } = {}) => ({
     devServer: {
@@ -223,7 +224,7 @@ exports.minifyCSS = ({ options }) => ({
     };
 };*/
 
-/*exports.page = (
+exports.page = (
     {
         path = "",
         template = require.resolve(
@@ -231,7 +232,8 @@ exports.minifyCSS = ({ options }) => ({
         ),
         title,
         entry,
-        chunks
+        chunks,
+        inject = "head"
     } = {}
 ) => (
     {
@@ -241,8 +243,12 @@ exports.minifyCSS = ({ options }) => ({
                 chunks,
                 filename: `${path && path + "/"}index.html`,
                 template,
-                title
+                title,
+                inject
+            }),
+            new ScriptExtHtmlWebpackPlugin({
+                defaultAttribute: "defer"
             })
         ]
     }
-);*/
+);
