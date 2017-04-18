@@ -20,7 +20,8 @@ exports.devServer = ({ host, port, publicPath } = {}) => ({
         overlay: {
             errors: true,
             warnings: true
-        }
+        },
+        compress: true
     }
 });
 
@@ -28,7 +29,7 @@ exports.lintJavaScript = ({ include, exclude, options }) => ({
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 include,
                 exclude,
                 enforce: "pre",

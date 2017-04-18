@@ -134,7 +134,7 @@ function getProduct () {
 
         dispatch(actions.requestProductInfo());
 
-        //noinspection Eslint
+        // eslint-disable-next-line camelcase
         const product = sizeme_product;
         if (!product) {
             dispatch(actions.receiveProductInfo(new Error("no product")));

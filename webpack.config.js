@@ -33,6 +33,7 @@ const commonConfig = merge([
             name: "[name].[hash].[ext]"
         }
     }),
+    parts.lintJavaScript({ include: PATHS.app }),
     parts.loadJavaScript({ include: PATHS.app })
 ]);
 

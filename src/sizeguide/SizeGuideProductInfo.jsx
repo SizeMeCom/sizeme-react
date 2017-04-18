@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import DetailSection from "./DetailSection.jsx";
-import { sizeSelector, contextAddress } from "../api/sizeme-api";
+import { sizeSelector } from "../api/sizeme-api";
 import i18n from "../api/i18n";
 import HoverContainer from "./HoverContainer.jsx";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
