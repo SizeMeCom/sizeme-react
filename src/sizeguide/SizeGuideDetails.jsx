@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import ProfileSelect from "../common/ProfileSelect.jsx";
 import { sizeSelector } from "../api/sizeme-api";
 import SizeSlider from "../common/SizeSlider.jsx";
@@ -83,7 +84,7 @@ class SizeGuideDetails extends React.Component {
 }
 
 SizeGuideDetails.propTypes = {
-    onSelectProfile: React.PropTypes.func.isRequired,
+    onSelectProfile: PropTypes.func.isRequired,
     selectedProfile: PropTypes.string.isRequired,
     profiles: PropTypes.arrayOf(PropTypes.object),
     selectedSize: PropTypes.string.isRequired,

@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import i18n from "../api/i18n";
 import SizeGuideModel, { PINCHED_FITS, LONG_FITS } from "../api/ProductModel";
 import Optional from "optional-js";

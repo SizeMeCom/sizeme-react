@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
@@ -139,10 +140,10 @@ class SizeForm extends React.Component {
 }
 
 SizeForm.propTypes = {
-    fields: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    max: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    gender: React.PropTypes.string.isRequired
+    fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+    max: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
+    gender: PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

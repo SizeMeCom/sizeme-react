@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 class ProfileSelect extends React.Component {
 
@@ -27,7 +28,7 @@ class ProfileSelect extends React.Component {
 ProfileSelect.propTypes = {
     selectedProfile: PropTypes.string,
     profiles: PropTypes.arrayOf(PropTypes.object),
-    onSelectProfile: React.PropTypes.func.isRequired
+    onSelectProfile: PropTypes.func.isRequired
 };
 
 export default ProfileSelect;

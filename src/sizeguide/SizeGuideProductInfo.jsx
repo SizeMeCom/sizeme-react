@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import DetailSection from "./DetailSection.jsx";
 import { sizeSelector } from "../api/sizeme-api";
 import i18n from "../api/i18n";

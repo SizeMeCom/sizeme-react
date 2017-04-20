@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { contextAddress } from "../api/sizeme-api";
 import Modal from "react-modal";
 

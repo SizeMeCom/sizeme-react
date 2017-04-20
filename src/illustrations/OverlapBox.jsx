@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 const sleeve = (overlap) => {
     const cmFactor = 6.3;
@@ -44,7 +45,7 @@ const illustration = (measurement, overlap) => {
 const OverlapBox = (props) => (
     <div className="overlap-box">
         <div className="overlap-svg">
-            {illustration("sleeve", 3)}
+            {illustration("sleeve", props.overlap)}
         </div>
         <div className="overlap-text">
             <div>{props.overlap.toFixed(1)} cm</div>

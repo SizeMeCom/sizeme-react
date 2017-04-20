@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import LoggedIn from "./LoggedIn.jsx";
@@ -14,10 +15,10 @@ const SectionElem = ({ loggedIn, profiles, selectedProfile, onSelectProfile }) =
 };
 
 SectionElem.propTypes = {
-    loggedIn: React.PropTypes.bool.isRequired,
-    profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedProfile: React.PropTypes.object.isRequired,
-    onSelectProfile: React.PropTypes.func.isRequired
+    loggedIn: PropTypes.bool.isRequired,
+    profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedProfile: PropTypes.object.isRequired,
+    onSelectProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {

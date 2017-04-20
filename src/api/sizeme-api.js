@@ -5,7 +5,7 @@ import { trackEvent, gaEnabled } from "./ga.js";
 import * as actions from "./actions";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
-import createLogger from "redux-logger";
+import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
 import { FitRequest } from "./SizeMe";
 import SizeGuideModel from "./ProductModel";

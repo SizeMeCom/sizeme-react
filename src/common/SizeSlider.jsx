@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import i18n from "../api/i18n";
 
 const FIT_RANGES = [
@@ -99,7 +100,7 @@ class SizeSlider extends React.Component {
 }
 
 SizeSlider.propTypes = {
-    match: React.PropTypes.object
+    match: PropTypes.object
 };
 
 export default SizeSlider;

@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Modal from "react-modal";
 import FontAwesome from "react-fontawesome";
 import SizeGuideItem from "./SizeGuideItem.jsx";
@@ -144,7 +145,7 @@ SizeGuide.propTypes = {
     profiles: PropTypes.arrayOf(PropTypes.object),
     selectedProfile: PropTypes.object,
     selectedSize: PropTypes.string,
-    onSelectProfile: React.PropTypes.func.isRequired,
+    onSelectProfile: PropTypes.func.isRequired,
     matchResult: PropTypes.object,
     loggedIn: PropTypes.bool.isRequired
 };

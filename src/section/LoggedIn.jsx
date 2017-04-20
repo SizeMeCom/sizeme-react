@@ -1,6 +1,7 @@
 /* global sizeme_product */
 
 import React from "react";
+import PropTypes from "prop-types";
 import { trackEvent } from "../api/ga";
 import ProfileSelect from "../common/ProfileSelect.jsx";
 
@@ -28,9 +29,9 @@ class LoggedIn extends React.Component {
 }
 
 LoggedIn.propTypes = {
-    profiles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedProfile: React.PropTypes.object.isRequired,
-    onSelectProfile: React.PropTypes.func.isRequired
+    profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedProfile: PropTypes.object.isRequired,
+    onSelectProfile: PropTypes.func.isRequired
 };
 
 export default LoggedIn;
