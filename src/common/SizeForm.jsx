@@ -10,6 +10,7 @@ import ReactTooltip from "react-tooltip";
 import Modal from "react-modal";
 import VideoGuide from "./VideoGuide.jsx";
 import Optional from "optional-js";
+import OverlapBox from "../illustrations/OverlapBox";
 
 const STORE_KEY = "sizemeProvisionalMeasurements";
 
@@ -114,6 +115,7 @@ class SizeForm extends React.Component {
                         </div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
                                               value={this.state[humanProperty]}/>
+                        <OverlapBox overlap={-4}/>
                     </div>
                 ))}
                 <ReactTooltip id="input-tooltip" globalEventOff="click"

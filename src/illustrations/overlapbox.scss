@@ -1,0 +1,27 @@
+.overlap-box {
+  border: 1px solid $default_blue;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  .overlap-svg {
+    width: 55%;
+  }
+
+  .overlap-text {
+    background-color: $default_blue;
+    color: white;
+    width: 45%;
+    text-align: center;
+    position: relative;
+
+    div {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+  }
+
+}
