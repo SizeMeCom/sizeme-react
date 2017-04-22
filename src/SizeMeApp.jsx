@@ -71,7 +71,7 @@ class SizeMeApp extends React.Component {
                             }
                         </ContextMenu>
                     </div>
-                    {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} max={3} />}
+                    {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} />}
                     {this.props.resolved && <SizeGuide/>}
                     <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                 </div>

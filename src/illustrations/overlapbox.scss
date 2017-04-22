@@ -6,13 +6,17 @@
   align-items: stretch;
 
   .overlap-svg {
-    width: 55%;
+    width: 50%;
+
+    svg {
+      max-height: 70px;
+    }
   }
 
   .overlap-text {
     background-color: $default_blue;
     color: white;
-    width: 45%;
+    width: 50%;
     text-align: center;
     position: relative;
 

@@ -19,7 +19,7 @@ class SizeForm extends React.Component {
 
     constructor (props) {
         super(props);
-        this.fields = props.fields.slice(0, props.max).map(field => ({
+        this.fields = props.fields.map(field => ({
             field,
             humanProperty: humanMeasurementMap.get(field)
         }));
@@ -116,7 +116,7 @@ class SizeForm extends React.Component {
                         </div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
                                               value={this.state[humanProperty]}/>
-                        <OverlapBox overlap={-4}/>
+                        <OverlapBox overlap={0} humanProperty={humanProperty}/>
                     </div>
                 ))}
                 <ReactTooltip id="input-tooltip" globalEventOff="click"
@@ -141,7 +141,6 @@ class SizeForm extends React.Component {
 
 SizeForm.propTypes = {
     fields: PropTypes.arrayOf(PropTypes.string).isRequired,
-    max: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     gender: PropTypes.string.isRequired
 };
