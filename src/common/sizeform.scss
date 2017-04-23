@@ -25,10 +25,14 @@
       vertical-align: bottom;
       position: relative;
 
+      div {
+        margin: 0 12px;
+      }
+
       span.fa {
         position: absolute;
         bottom: 1px;
-        right: 10px;
+        right: 0;
         font-size: 115%;
         color: #6d6d6d;
         cursor: pointer;
@@ -65,7 +69,27 @@
     }
 
     .measurement-input.measurement-input-ok {
-      background-color: #c7eace;
+      /*background-color: #c7eace;*/
+    }
+
+    .measurement-input.too_small {
+      background-color: $too_small;
+    }
+
+    .measurement-input.slim {
+      background-color: $slim;
+    }
+
+    .measurement-input.regular {
+      background-color: $regular;
+    }
+
+    .measurement-input.loose {
+      background-color: $loose;
+    }
+
+    .measurement-input.too_big {
+      background-color: $too_big;
     }
 
     .overlap-box {

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
 import i18n from "../api/i18n";
-import { humanMeasurementMap } from "../api/ProductModel";
+import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
 import MeasurementInput from "./MeasurementInput.jsx";
 import FontAwesome from "react-fontawesome";
 import ReactTooltip from "react-tooltip";
@@ -24,19 +24,25 @@ class SizeForm extends React.Component {
             humanProperty: humanMeasurementMap.get(field)
         }));
         const fromStore = localStorage.getItem(STORE_KEY);
-        const storedMeasurements = fromStore ? JSON.parse(fromStore) : {};
-        this.state = Object.assign({ guideModalOpen: false },
-            ...this.fields.map(f => ({ [f.humanProperty]: null })),
-            storedMeasurements
+        const measurements = Object.assign(...this.fields.map(f => ({ [f.humanProperty]: null })),
+            fromStore ? JSON.parse(fromStore) : {}
         );
+        this.state = { guideModalOpen: false, measurements };
         this.activeTooltip = null;
+    }
+
+    componentDidMount () {
+        this.props.onChange(this.state.measurements);
     }
 
     valueChanged (humanProperty) {
         return value => {
-            this.setState({ [humanProperty]: value }, () => {
-                localStorage.setItem(STORE_KEY, JSON.stringify(this.state));
-                this.props.onChange(this.state);
+            const measurements = Object.assign(this.state.measurements,
+                { [humanProperty]: value }
+            );
+            this.setState({ measurements }, () => {
+                localStorage.setItem(STORE_KEY, JSON.stringify(this.state.measurements));
+                this.props.onChange(this.state.measurements);
             });
         };
     }
@@ -101,12 +107,16 @@ class SizeForm extends React.Component {
     };
 
     render () {
+        const getFit = field => this.props.matchResult && this.props.matchResult.matchMap[field];
+        const fitRange = field => Optional.ofNullable(getFit(field))
+            .map(res => ProductModel.getFit(res).label)
+            .orElse(null);
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field}>
                         <div className="label">
-                            {i18n.HUMAN_MEASUREMENTS[humanProperty]}
+                            <div>{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
                             <FontAwesome data-for="input-tooltip" data-tip
                                          data-event="click" name="question-circle"
                                          data-place="right" data-class="measurement-tooltip"
@@ -115,8 +125,12 @@ class SizeForm extends React.Component {
                             />
                         </div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
-                                              value={this.state[humanProperty]}/>
-                        <OverlapBox overlap={0} humanProperty={humanProperty}/>
+                                          value={this.state.measurements[humanProperty]}
+                                          fitRange={fitRange(field)}
+                        />
+                        {Optional.ofNullable(getFit(field)).map(f =>
+                            <OverlapBox fit={f} humanProperty={humanProperty}/>
+                        ).orElse(null)}
                     </div>
                 ))}
                 <ReactTooltip id="input-tooltip" globalEventOff="click"
@@ -142,7 +156,8 @@ class SizeForm extends React.Component {
 SizeForm.propTypes = {
     fields: PropTypes.arrayOf(PropTypes.string).isRequired,
     onChange: PropTypes.func.isRequired,
-    gender: PropTypes.string.isRequired
+    gender: PropTypes.string.isRequired,
+    matchResult: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -154,7 +169,9 @@ export default connect(
         gender: Optional.ofNullable(state.selectedProfile)
             .flatMap(p => Optional.ofNullable(p.gender))
             .map(g => g.toLowerCase())
-            .orElse("female")
+            .orElse("female"),
+        matchResult: state.selectedSize && state.match.matchResult ?
+            state.match.matchResult[state.selectedSize] : null
     }),
     mapDispatchToProps
 )(SizeForm);

@@ -19,16 +19,19 @@ class SizeSlider extends React.Component {
         this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
     }
 
+    doShowFit () {
+        return this.props.match && this.props.match.accuracy > 0;
+    }
+
     getFitValue () {
-        return this.props.match ? this.props.match.totalFit : null;
+        return this.doShowFit() ? this.props.match.totalFit : null;
     }
 
     getFitRange () {
-        if (!this.props.match || !this.props.match.matchMap || Object.keys(this.props.match.matchMap).length === 0) {
+        if (!this.doShowFit() || !this.props.match.matchMap || Object.keys(this.props.match.matchMap).length === 0) {
             return null;
         }
 
-        console.log(Object.values(this.props.match.matchMap));
         const [min, max] = Object.values(this.props.match.matchMap).reduce(([min, max], match) => (
             [Math.min(min, match.componentFit), Math.max(max, match.componentFit)]
         ), [9999, 0]);

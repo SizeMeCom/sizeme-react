@@ -77,6 +77,9 @@ class MeasurementInput extends React.Component {
         if (this.state.pending) {
             className += " measurement-input-pending";
         }
+        if (this.props.fitRange) {
+            className += ` ${this.props.fitRange}`;
+        }
         return (
             <div className={className}>
                 <span>{unitMarks[this.props.unit]}</span>
@@ -89,7 +92,8 @@ class MeasurementInput extends React.Component {
 MeasurementInput.propTypes = {
     value: PropTypes.number,
     onChange: PropTypes.func.isRequired,
-    unit: PropTypes.string
+    unit: PropTypes.string,
+    fitRange: PropTypes.string
 };
 
 MeasurementInput.defaultProps = {

@@ -25,24 +25,23 @@ const illustration = (measurement, overlap) => {
 };
 
 
-const OverlapBox = (props) => (
-    <div className="overlap-box">
-        <div className="overlap-svg">
-            {illustration(props.humanProperty, props.overlap)}
+const OverlapBox = (props) => {
+    const overlap = props.fit.overlap / 10;
+    return (
+        <div className="overlap-box">
+            <div className="overlap-svg">
+                {illustration(props.humanProperty, overlap)}
+            </div>
+            <div className="overlap-text">
+                <div>{overlap.toFixed(1)} cm</div>
+            </div>
         </div>
-        <div className="overlap-text">
-            <div>{props.overlap.toFixed(1)} cm</div>
-        </div>
-    </div>
-);
-
-OverlapBox.propTypes = {
-    overlap: PropTypes.number,
-    humanProperty: PropTypes.string.isRequired
+    );
 };
 
-OverlapBox.defaultProps = {
-    overlap: 0
+OverlapBox.propTypes = {
+    fit: PropTypes.object.isRequired,
+    humanProperty: PropTypes.string.isRequired
 };
 
 export default OverlapBox;

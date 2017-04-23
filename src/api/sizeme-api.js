@@ -177,7 +177,6 @@ function setSelectedProfile (profileId) {
         }
 
         if (!getState().authToken.loggedIn) {
-            await dispatch(match());
             return undefined;
         }
 
@@ -248,7 +247,7 @@ const sizeSelector = new class {
 
     setSelected = (val) => {
         if (this.el) {
-            this.el.value = val;
+            this.el.value = val || "";
             this.dispatchChange(val);
         }
     };
@@ -270,8 +269,22 @@ const sizeSelector = new class {
     }
 }();
 
+function selectBestFit (result) {
+    const fitResults = Object.entries(result).filter(([, res]) => res.accuracy > 0);
+    const [bestMatch] = fitResults.reduce(([accSize, fit], [size, res]) => {
+        const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
+        if (!accSize || newFit < fit) {
+            return [size, newFit];
+        } else {
+            return [accSize, fit];
+        }
+    }, [null, 0]);
+    if (bestMatch) {
+        sizeSelector.setSelected(bestMatch);
+    }
+}
 
-function match (selectBestFit = true) {
+function match (doSelectBestFit = true) {
     return async (dispatch, getState) => {
         if (!getState().productInfo.resolved) {
             return undefined;
@@ -317,16 +330,8 @@ function match (selectBestFit = true) {
 
                 dispatch(actions.receiveMatch(result));
 
-                if (selectBestFit) {
-                    const [bestMatch] = Object.entries(result).reduce(([accSize, fit], [size, res]) => {
-                        const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
-                        if (!accSize || newFit < fit) {
-                            return [size, newFit];
-                        } else {
-                            return [accSize, fit];
-                        }
-                    }, [null, 0]);
-                    sizeSelector.setSelected(bestMatch);
+                if (doSelectBestFit) {
+                    selectBestFit(result);
                 }
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));

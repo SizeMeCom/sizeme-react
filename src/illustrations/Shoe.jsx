@@ -8,7 +8,7 @@ const baseTrans = -24;
 const Shoe = (props) => {
     const yTrans = Math.min(96, Math.max(-50, props.overlap * cmFactor + baseTrans));
     return (
-        <svg viewBox="-50 100 210 168" preserveAspectRatio="xMidYMin meet">
+        <svg viewBox="-50 100 210 168" preserveAspectRatio="xMinYMin meet">
             <g transform="rotate(90, 130.906, 113.741)">
                 <line fill="none" stroke="#69A4C3" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
                       strokeDasharray="3.285,6.57" x1="130.906" y1="113.741" x2="276.731" y2="113.741"/>
