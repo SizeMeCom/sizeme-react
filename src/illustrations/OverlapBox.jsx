@@ -24,9 +24,10 @@ const illustration = (measurement, overlap) => {
     }
 };
 
+const isPinch = (measurement) => measurement === "chest";
 
 const OverlapBox = (props) => {
-    const overlap = props.fit.overlap / 10;
+    const overlap = props.fit.overlap / (isPinch(props.humanProperty) ? 20 : 10);
     return (
         <div className="overlap-box">
             <div className="overlap-svg">
