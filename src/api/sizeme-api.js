@@ -16,13 +16,13 @@ const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com"
 const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
 const cdnLocation = "https://cdn.sizeme.com";
 
-const sizemeStore = createStore(
-    rootReducer,
-    applyMiddleware(
-        thunkMiddleware,
-        createLogger()
-    )
-);
+const sizemeStore = createStore(rootReducer, applyMiddleware(
+    thunkMiddleware,
+    createLogger({
+        predicate: sizeme_options.debugState,
+        duration: true
+    })
+));
 
 function createRequest (method, token, withCredentials = false) {
     const headers = new Headers({
