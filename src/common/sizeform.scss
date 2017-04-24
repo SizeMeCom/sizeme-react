@@ -1,7 +1,7 @@
 /* Measurement inputs */
 .measurement-input-table {
   width: 100%;
-  margin: 10px 0;
+  margin: 0 0 10px;
   display: flex;
   flex-direction: row;
 
@@ -22,11 +22,14 @@
       font-weight: 100;
       text-transform: uppercase;
       text-align: center;
-      vertical-align: bottom;
       position: relative;
+      display: flex;
+      align-items: flex-end;
+      height: 32px;
 
       div {
         margin: 0 12px;
+        flex: 1;
       }
 
       span.fa {

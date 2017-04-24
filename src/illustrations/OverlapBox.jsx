@@ -20,7 +20,7 @@ const illustration = (measurement, overlap) => {
             return <Shoe overlap={overlap}/>;
 
         default:
-            return <Shoe overlap={overlap}/>;
+            return null;
     }
 };
 

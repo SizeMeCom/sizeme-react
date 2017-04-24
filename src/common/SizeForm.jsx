@@ -107,12 +107,15 @@ class SizeForm extends React.Component {
     };
 
     render () {
-        const getFit = field => this.props.matchResult && this.props.matchResult.matchMap[field];
-        const fitRange = field => Optional.ofNullable(getFit(field))
+        const getFit = field => Optional.ofNullable(this.props.matchResult)
+            .flatMap(r => Optional.ofNullable(r.matchMap[field]));
+        const fitRange = field => getFit(field)
             .map(res => ProductModel.getFit(res).label)
             .orElse(null);
+
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
+                
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field}>
                         <div className="label">
@@ -128,7 +131,7 @@ class SizeForm extends React.Component {
                                           value={this.state.measurements[humanProperty]}
                                           fitRange={fitRange(field)}
                         />
-                        {Optional.ofNullable(getFit(field)).map(f =>
+                        {getFit(field).map(f =>
                             <OverlapBox fit={f} humanProperty={humanProperty}/>
                         ).orElse(null)}
                     </div>
