@@ -57,7 +57,8 @@ const developmentConfig = merge([
             limit: 10000
         }
     }),
-    parts.page({ template: "index.html" })
+    parts.page({ template: "index.html" }),
+    parts.page({ template: "index2.html", filename: "index2.html" })
 ]);
 
 const productionConfig = merge([

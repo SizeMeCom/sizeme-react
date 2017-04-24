@@ -269,8 +269,7 @@ const sizeSelector = new class {
     }
 }();
 
-function selectBestFit (result) {
-    const fitResults = Object.entries(result).filter(([, res]) => res.accuracy > 0);
+function selectBestFit (fitResults) {
     const [bestMatch] = fitResults.reduce(([accSize, fit], [size, res]) => {
         const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
         if (!accSize || newFit < fit) {
@@ -331,7 +330,10 @@ function match (doSelectBestFit = true) {
                 dispatch(actions.receiveMatch(result));
 
                 if (doSelectBestFit) {
-                    selectBestFit(result);
+                    const fitResults = Object.entries(result);
+                    // if user is logged in, don't care about the accuracy. If not,
+                    // filter out results where accuracy is 0
+                    selectBestFit(token ? fitResults : fitResults.filter(([, res]) => res.accuracy > 0));
                 }
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));

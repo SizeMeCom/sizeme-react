@@ -227,7 +227,7 @@ exports.minifyCSS = ({ options }) => ({
 
 exports.page = (
     {
-        path = "",
+        filename = "index.html",
         template = require.resolve(
             "html-webpack-plugin/default_index.ejs"
         ),
@@ -242,7 +242,7 @@ exports.page = (
         plugins: [
             new HtmlWebpackPlugin({
                 chunks,
-                filename: `${path && path + "/"}index.html`,
+                filename,
                 template,
                 title,
                 inject

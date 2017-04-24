@@ -34,7 +34,7 @@ const OverlapBox = (props) => {
                 {illustration(props.humanProperty, overlap)}
             </div>
             <div className="overlap-text">
-                <div>{overlap.toFixed(1)} cm</div>
+                <div>{overlap > 0 && "+"}{overlap.toFixed(1)} cm</div>
             </div>
         </div>
     );
