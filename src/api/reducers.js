@@ -87,7 +87,7 @@ const selectedProfile = handleActions({
 
 const match = handleActions({
     [actions.REQUEST_MATCH]: (state, action) => ({
-        matchResult: null,
+        ...state,
         isFetching: true
     }),
 
