@@ -67,6 +67,12 @@ class MeasurementInput extends React.Component {
         }
     };
 
+    onKeyDown = e => {
+        if (e.keyCode === 13) {
+            this.input.blur();
+        }
+    };
+
     render () {
         let className = "measurement-input";
         if (this.state.error) {
@@ -83,7 +89,8 @@ class MeasurementInput extends React.Component {
         return (
             <div className={className}>
                 <span>{unitMarks[this.props.unit]}</span>
-                <input type="text" value={this.state.value} onChange={this.valueChanged} onBlur={this.onBlur}/>
+                <input type="text" value={this.state.value} onChange={this.valueChanged}
+                       onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => { this.input = el; }}/>
             </div>
         );
     }
