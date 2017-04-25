@@ -237,6 +237,7 @@ const sizeSelector = new class {
         });
 
         this.sizeMapper = [];
+        // TODO: fix forEach, which doesn't work with olders browsers?
         this.el.querySelectorAll("option").forEach((option) => {
             const value = option.getAttribute("value");
             if (value) {
