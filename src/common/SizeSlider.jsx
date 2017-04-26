@@ -28,7 +28,7 @@ class SizeSlider extends React.Component {
     }
 
     getFitRange () {
-        if (!this.doShowFit() || !this.props.match.matchMap || Object.keys(this.props.match.matchMap).length === 0) {
+        if (!this.doShowFit() || !this.props.match.matchMap || Object.keys(this.props.match.matchMap).length <= 1) {
             return null;
         }
 
