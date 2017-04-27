@@ -112,12 +112,13 @@ class SizeForm extends React.Component {
         const fitRange = field => getFit(field)
             .map(res => ProductModel.getFit(res).label)
             .orElse(null);
+        const measurementCellWidth = (100 / this.fields.length) + "%";
 
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
                 
                 {this.fields.map(({ field, humanProperty }) => (
-                    <div className="measurement-cell" key={field}>
+                    <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
                         <div className="label">{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
                                           value={this.state.measurements[humanProperty]}

@@ -237,13 +237,14 @@ const sizeSelector = new class {
         });
 
         this.sizeMapper = [];
-        // TODO: fix forEach, which doesn't work with olders browsers?
-        this.el.querySelectorAll("option").forEach((option) => {
+        const options = this.el.querySelectorAll("option");
+        for (let i = 0; i < options.length; i++) {
+            const option = options.item(i);
             const value = option.getAttribute("value");
             if (value) {
                 this.sizeMapper.push([value, option.textContent]);
             }
-        }, this);
+        }
     }
 
     setSelected = (val) => {

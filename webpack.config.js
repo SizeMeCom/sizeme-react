@@ -46,7 +46,7 @@ const developmentConfig = merge([
     parts.generateSourceMaps({ type: "source-map" }),
     parts.devServer({
         // Customize host/port here if needed
-        host: process.env.HOST,
+        host: process.env.HOST || "0.0.0.0",
         port: process.env.PORT,
         publicPath: "/dist/"
     }),

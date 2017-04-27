@@ -99,6 +99,7 @@
     background-color: $default_blue;
     padding: 3px;
     opacity: 1;
+    pointer-events: all;
 
     &:after {
       border-bottom-color: $default_blue !important;
@@ -139,7 +140,7 @@
   position: absolute;
   top: 5%;
   right: auto;
-  overflow: scroll;
+  overflow: auto;
   max-height: 85%;
   /*transform: translate(-105%, 0);*/
   background-color: white;

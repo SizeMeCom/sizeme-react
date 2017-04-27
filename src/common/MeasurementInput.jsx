@@ -112,7 +112,7 @@ class MeasurementInput extends React.Component {
                 />
                 <input type="text" value={this.state.value} onChange={this.valueChanged}
                        onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input = el;}}
-                       onFocus={this.onFocus}
+                       onFocus={this.onFocus} autoComplete="off"
                 />
             </div>
         );
