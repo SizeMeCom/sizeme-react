@@ -66,6 +66,10 @@
       /*background-color: #c7eace;*/
     }
 
+    .measurement-input.measurement-input-pending input {
+      font-style: italic;
+    }
+
     .measurement-input.too_small {
       background-color: $too_small;
     }

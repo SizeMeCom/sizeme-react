@@ -43,6 +43,11 @@ class MeasurementInput extends React.Component {
     }
 
     valueChanged = (event) => {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+            this.timeout = null;
+        }
+
         const newValue = event.target.value;
         if (newValue === this.state.value) {
             return;
@@ -59,14 +64,20 @@ class MeasurementInput extends React.Component {
         }
 
         this.setState(newState);
+
+        this.timeout = setTimeout(this.dispatchChange, 1000);
     };
 
-    onBlur = () => {
-        ReactTooltip.hide(this.tooltip);
+    dispatchChange = () => {
         if (!this.state.error) {
             this.props.onChange(this.modelValue());
             this.setState({ pending: false });
         }
+    };
+
+    onBlur = () => {
+        ReactTooltip.hide(this.tooltip);
+        this.dispatchChange();
     };
 
     onFocus = () => {
