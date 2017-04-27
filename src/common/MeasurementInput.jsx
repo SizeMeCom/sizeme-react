@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ReactTooltip from "react-tooltip";
 
 const unitMarks = {
     cm: "cm",
@@ -61,10 +62,16 @@ class MeasurementInput extends React.Component {
     };
 
     onBlur = () => {
+        ReactTooltip.hide(this.tooltip);
         if (!this.state.error) {
             this.props.onChange(this.modelValue());
             this.setState({ pending: false });
         }
+    };
+
+    onFocus = () => {
+        this.props.onFocus();
+        ReactTooltip.show(this.tooltip);
     };
 
     onKeyDown = e => {
@@ -88,9 +95,14 @@ class MeasurementInput extends React.Component {
         }
         return (
             <div className={className}>
-                <span>{unitMarks[this.props.unit]}</span>
+                <span className="units">{unitMarks[this.props.unit]}</span>
+                <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
+                   data-place="bottom" data-class="measurement-tooltip" data-effect="solid"
+                />
                 <input type="text" value={this.state.value} onChange={this.valueChanged}
-                       onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => { this.input = el; }}/>
+                       onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input = el;}}
+                       onFocus={this.onFocus}
+                />
             </div>
         );
     }
@@ -99,6 +111,7 @@ class MeasurementInput extends React.Component {
 MeasurementInput.propTypes = {
     value: PropTypes.number,
     onChange: PropTypes.func.isRequired,
+    onFocus: PropTypes.func.isRequired,
     unit: PropTypes.string,
     fitRange: PropTypes.string
 };

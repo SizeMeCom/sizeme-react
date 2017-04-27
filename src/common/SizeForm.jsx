@@ -69,7 +69,7 @@ class SizeForm extends React.Component {
                     ))}
                 </ul>
                 <div className="measurement-guide-link">
-                    {linkTexts.start} <a onClick={this.openGuideModal}>
+                    {linkTexts.start} <a onClick={this.openGuideModal} onMouseDown={e => {e.preventDefault();}}>
                     {linkTexts.link}</a> {linkTexts.end} <FontAwesome name="play-circle" inverse/>
                 </div>
             </div>
@@ -118,26 +118,17 @@ class SizeForm extends React.Component {
                 
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field}>
-                        <div className="label">
-                            <div>{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
-                            <FontAwesome data-for="input-tooltip" data-tip
-                                         data-event="click" name="question-circle"
-                                         data-place="right" data-class="measurement-tooltip"
-                                         data-effect="solid"
-                                         onMouseEnter={() => {this.setActiveTooltip(field);}}
-                            />
-                        </div>
+                        <div className="label">{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
                                           value={this.state.measurements[humanProperty]}
-                                          fitRange={fitRange(field)}
+                                          fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
                         />
                         {getFit(field).map(f =>
                             <OverlapBox fit={f} humanProperty={humanProperty}/>
                         ).orElse(null)}
                     </div>
                 ))}
-                <ReactTooltip id="input-tooltip" globalEventOff="click"
-                              getContent={this.tooltipContent}/>
+                <ReactTooltip id="input-tooltip" getContent={this.tooltipContent}/>
                 <Modal isOpen={this.state.guideModalOpen}
                        onRequestClose={this.closeGuideModal}
                        className="measurement-guide-modal"

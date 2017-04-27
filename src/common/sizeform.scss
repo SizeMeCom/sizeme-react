@@ -23,29 +23,13 @@
       text-transform: uppercase;
       text-align: center;
       position: relative;
-      display: flex;
-      align-items: flex-end;
-      height: 32px;
-
-      div {
-        margin: 0 12px;
-        flex: 1;
-      }
-
-      span.fa {
-        position: absolute;
-        bottom: 1px;
-        right: 0;
-        font-size: 115%;
-        color: #6d6d6d;
-        cursor: pointer;
-      }
     }
 
     .measurement-input {
       border: 1px solid #079814;
       border-radius: 4px;
       background-color: #fff;
+      position: relative;
 
       input {
         display: block;
@@ -62,13 +46,19 @@
         box-sizing: border-box;
       }
 
-      span {
+      .units {
         display: block;
         float: right;
         width: 24px;
         height: 22px;
         line-height: 22px;
         text-align: center;
+      }
+
+      .tooltip-trigger {
+        position: absolute;
+        left: 40%;
+        bottom: 4px;
       }
     }
 
@@ -107,7 +97,7 @@
     opacity: 1;
 
     &:after {
-      border-right-color: $default_blue !important;
+      border-bottom-color: $default_blue !important;
     }
 
     ul {
