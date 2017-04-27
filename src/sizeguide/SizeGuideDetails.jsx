@@ -61,7 +61,7 @@ class SizeGuideDetails extends React.Component {
                     <DetailsSizeSelector selectedSize={this.props.selectedSize}/>
                 </DetailSection>
                 <DetailSection title={i18n.FIT_INFO.overall_fit}>
-                    <SizeSlider match={match}/>
+                    <SizeSlider match={match} fitRangeVisible/>
                 </DetailSection>
                 <DetailSection title={i18n.DETAILED.table_title}>
                     <div className="fit-table">

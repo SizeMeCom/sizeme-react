@@ -20,7 +20,7 @@ class SizeSlider extends React.Component {
     }
 
     doShowFit () {
-        return this.props.match && this.props.match.accuracy > 0;
+        return this.props.match && this.props.match.matchMap && this.props.match.accuracy > 0;
     }
 
     getFitValue () {
@@ -28,7 +28,7 @@ class SizeSlider extends React.Component {
     }
 
     getFitRange () {
-        if (!this.doShowFit() || !this.props.match.matchMap || Object.keys(this.props.match.matchMap).length <= 1) {
+        if (!this.doShowFit() || !this.props.fitRangeVisible || Object.keys(this.props.match.matchMap).length <= 1) {
             return null;
         }
 
@@ -103,7 +103,12 @@ class SizeSlider extends React.Component {
 }
 
 SizeSlider.propTypes = {
-    match: PropTypes.object
+    match: PropTypes.object,
+    fitRangeVisible: PropTypes.bool
+};
+
+SizeSlider.defaultProps = {
+    fitRangeVisible: false
 };
 
 export default SizeSlider;
