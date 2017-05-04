@@ -103,4 +103,15 @@ $default_blue: #34a6c6;
     }
   }
 
+  .sizeme-login-link {
+    text-align: right;
+    font-style: italic;
+
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      color: #4c4c4c;
+    }
+  }
+
 }

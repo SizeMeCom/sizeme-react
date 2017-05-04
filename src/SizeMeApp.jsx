@@ -6,9 +6,8 @@ import SizeSlider from "./common/SizeSlider.jsx";
 import SizeForm from "./common/SizeForm.jsx";
 import * as actions from "./api/sizeme-api";
 import FontAwesome from "react-fontawesome";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
 import { hideMenu } from "react-contextmenu/modules/actions";
-import i18n from "./api/i18n";
 import Optional from "optional-js";
 import ProfileSelect from "./common/ProfileSelect.jsx";
 import { bindActionCreators } from "redux";
@@ -55,25 +54,27 @@ class SizeMeApp extends React.Component {
                 <div className="sizeme-content">
                     <div className="sizeme-slider-row">                        
                         <SizeSlider match={this.props.currentMatch} />
-                        <ContextMenuTrigger id="sizeme-menu" ref={c => { this.menuTrigger = c; }}>
-                            <FontAwesome name="cog" onClick={this.toggleMenu}/>
-                        </ContextMenuTrigger>
-                        <ContextMenu id="sizeme-menu" className="sizeme-context-menu">
-                            {this.props.loggedIn ?
+                        {this.props.loggedIn && <div>
+                            <ContextMenuTrigger id="sizeme-menu" ref={c => { this.menuTrigger = c; }}>
+                                <FontAwesome name="cog" onClick={this.toggleMenu}/>
+                            </ContextMenuTrigger>
+                            <ContextMenu id="sizeme-menu" className="sizeme-context-menu">
                                 <div className="menu-profile-select">
                                     <span>Select profile</span>
                                     <ProfileSelect onSelectProfile={this.selectProfile}
                                                    selectedProfile={this.props.selectedProfile.id}
                                                    profiles={this.props.profiles}
                                     />
-                                </div> :
-                                <MenuItem onClick={() => openLoginFrame("login-frame")}>{i18n.MENU.login}</MenuItem>
-                            }
-                        </ContextMenu>
+                                </div>
+                            </ContextMenu>
+                        </div>}
                     </div>
                     {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} />}
+                    {!this.props.loggedIn && <div className="sizeme-login-link">
+                        <a onClick={() => openLoginFrame("login-frame")}>Already a SizeMe user? »</a>
+                        <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
+                    </div>}
                     {this.props.resolved && <SizeGuide/>}
-                    <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                 </div>
             );
         } else {
