@@ -198,7 +198,8 @@ function setSelectedProfile (profileId) {
         }
 
         let profile;
-        profileId = profileId || sessionStorage.getItem("sizeme.selectedProfile");
+        const storedProfileId = sessionStorage.getItem("sizeme.selectedProfile");
+        profileId = profileId || storedProfileId;
         if (profileId) {
             profile = profileList.find(p => p.id === profileId);
         }
@@ -210,6 +211,12 @@ function setSelectedProfile (profileId) {
         sessionStorage.setItem("sizeme.selectedProfile", profile.id);
         dispatch(actions.selectProfile(profile));
         trackEvent("activeProfileChanged", "Store: Active profile changed");
+
+        if (storedProfileId === profile.id && Object.keys(storedMeasurements).length) {
+            dispatch(actions.setMeasurements(Object.assign({}, profile.measurements, storedMeasurements)));
+        } else {
+            localStorage.removeItem(storeMeasurementsKey);
+        }
 
         await dispatch(match());
         dispatch(actions.selectProfileDone());

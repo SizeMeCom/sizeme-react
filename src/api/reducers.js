@@ -69,7 +69,8 @@ const selectedProfile = handleActions({
     [actions.SELECT_PROFILE]: (state, action) => ({
         ...state,
         ...action.payload,
-        selectDone: false
+        selectDone: false,
+        dirty: false
     }),
     [actions.SELECT_PROFILE_DONE]: (state) => ({
         ...state,
@@ -77,13 +78,15 @@ const selectedProfile = handleActions({
     }),
     [actions.SET_MEASUREMENTS]: (state, action) => ({
         ...state,
-        ...resolvePayload(action, "measurements")
+        ...resolvePayload(action, "measurements"),
+        dirty: true
     })
 }, {
     id: "",
     profileName: null,
     selectDone: false,
-    measurements: {}
+    measurements: {},
+    dirty: false
 });
 
 const match = handleActions({
