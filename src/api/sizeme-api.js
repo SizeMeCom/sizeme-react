@@ -9,12 +9,14 @@ import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
 import { FitRequest } from "./SizeMe";
 import SizeGuideModel from "./ProductModel";
+import Optional from "optional-js";
 
 const OPTIMAL_FIT = 1070;
 
 const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
 const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
 const cdnLocation = "https://cdn.sizeme.com";
+const storeMeasurementsKey = "sizemeMeasurements";
 
 const sizemeStore = createStore(rootReducer, applyMiddleware(
     thunkMiddleware,
@@ -176,7 +178,17 @@ function setSelectedProfile (profileId) {
             return undefined;
         }
 
+        const storedMeasurements = Optional.ofNullable(localStorage.getItem(storeMeasurementsKey))
+            .map(i => JSON.parse(i))
+            .orElse({});
+
         if (!getState().authToken.loggedIn) {
+            dispatch(actions.selectProfile({
+                gender: "Female",
+                profileName: "New profile"
+            }));
+            dispatch(actions.selectProfileDone());
+            dispatch(setProfileMeasurements(storedMeasurements));
             return undefined;
         }
 
@@ -346,6 +358,7 @@ function match (doSelectBestFit = true) {
 
 function setProfileMeasurements (measurements) {
     return async (dispatch, getState) => {
+        localStorage.setItem(storeMeasurementsKey, JSON.stringify(measurements));
         dispatch(actions.setMeasurements(measurements));
         if (Object.values(measurements).some(item => item)) {
             await dispatch(match(!getState().selectedSize));

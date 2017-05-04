@@ -15,10 +15,12 @@ const unitFactors = {
 class MeasurementInput extends React.Component {
     constructor (props) {
         super(props);
+        const currValue = this.viewValue(props);
         this.state = {
             error: false,
             pending: false,
-            value: this.viewValue(props)
+            value: currValue,
+            modelValue: this.modelValue(currValue)
         };
     }
 
@@ -33,8 +35,8 @@ class MeasurementInput extends React.Component {
         return props.value ? (parseInt(props.value, 10) / unitFactors[props.unit]).toFixed(1) : "";
     }
 
-    modelValue () {
-        const value = this.state.value.replace(",", ".");
+    modelValue (value) {
+        //const value = this.state.value.replace(",", ".");
         if (value.length > 0) {
             return Math.floor(parseFloat(value) * unitFactors[this.props.unit]);
         } else {
@@ -57,7 +59,7 @@ class MeasurementInput extends React.Component {
         const newState = {
             pending: true
         };
-        if (isNaN(this.modelValue())) {
+        if (isNaN(this.modelValue(newValue))) {
             newState.error = true;
         } else {
             newState.value = newValue;
@@ -70,8 +72,11 @@ class MeasurementInput extends React.Component {
 
     dispatchChange = () => {
         if (!this.state.error) {
-            this.props.onChange(this.modelValue());
-            this.setState({ pending: false });
+            const value = this.modelValue(this.state.value);
+            if (value !== this.state.modelValue) {
+                this.props.onChange(value);
+            }
+            this.setState({ pending: false, modelValue: value });
         }
     };
 

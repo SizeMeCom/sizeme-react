@@ -13,8 +13,6 @@ import VideoGuide from "./VideoGuide.jsx";
 import Optional from "optional-js";
 import OverlapBox from "../illustrations/OverlapBox";
 
-const STORE_KEY = "sizemeProvisionalMeasurements";
-
 class SizeForm extends React.Component {
 
     constructor (props) {
@@ -23,16 +21,17 @@ class SizeForm extends React.Component {
             field,
             humanProperty: humanMeasurementMap.get(field)
         }));
-        const fromStore = localStorage.getItem(STORE_KEY);
-        const measurements = Object.assign(...this.fields.map(f => ({ [f.humanProperty]: null })),
-            fromStore ? JSON.parse(fromStore) : {}
+        const measurements = Object.assign(
+            ...this.fields.map(f => ({ [f.humanProperty]: null })),
+            props.measurements
         );
         this.state = { guideModalOpen: false, measurements };
         this.activeTooltip = null;
     }
 
-    componentDidMount () {
-        this.props.onChange(this.state.measurements);
+    componentWillReceiveProps (nextProps) {
+        const measurements = Object.assign({}, this.state.measurements, nextProps.measurements);
+        this.setState({ measurements });
     }
 
     valueChanged (humanProperty) {
@@ -41,7 +40,6 @@ class SizeForm extends React.Component {
                 { [humanProperty]: value }
             );
             this.setState({ measurements }, () => {
-                localStorage.setItem(STORE_KEY, JSON.stringify(this.state.measurements));
                 this.props.onChange(this.state.measurements);
             });
         };
@@ -152,7 +150,8 @@ SizeForm.propTypes = {
     fields: PropTypes.arrayOf(PropTypes.string).isRequired,
     onChange: PropTypes.func.isRequired,
     gender: PropTypes.string.isRequired,
-    matchResult: PropTypes.object
+    matchResult: PropTypes.object,
+    measurements: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -166,7 +165,10 @@ export default connect(
             .map(g => g.toLowerCase())
             .orElse("female"),
         matchResult: state.selectedSize && state.match.matchResult ?
-            state.match.matchResult[state.selectedSize] : null
+            state.match.matchResult[state.selectedSize] : null,
+        measurements: Optional.ofNullable(state.selectedProfile)
+            .map(p => p.measurements)
+            .orElse({})
     }),
     mapDispatchToProps
 )(SizeForm);

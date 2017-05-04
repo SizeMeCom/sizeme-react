@@ -67,6 +67,7 @@ const productInfo = handleActions({
 
 const selectedProfile = handleActions({
     [actions.SELECT_PROFILE]: (state, action) => ({
+        ...state,
         ...action.payload,
         selectDone: false
     }),

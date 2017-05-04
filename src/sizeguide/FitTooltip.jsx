@@ -48,10 +48,6 @@ const addSpecialTooltip = (measurement, fitData) => {
     }
     measDivStyle.top = `${measTopFn(height, matchItem.overlap >= 0)}px`;
     
-    console.log("percentage: " + matchItem.percentage + " - height: " + height);
-    console.log(height + " / " + measDivStyle.top);
-    console.log(measDivStyle);
-
     return (
         <div className={classes.join(" ")}>
             <div className="meas" style={measDivStyle}>{fitText}</div>
