@@ -223,14 +223,14 @@ function setSelectedProfile (profileId) {
     };
 }
 
-function doMatch (fitRequest, token) {
+function doMatch (fitRequest, token, useProfile) {
     const request = createRequest("POST", token);
     const { headers } = request;
     headers.append("Content-Type", "application/json");
     request.body = JSON.stringify(fitRequest);
 
     let address;
-    if (token) {
+    if (useProfile) {
         address = `${contextAddress}/api/compareSizes`;
     } else {
         address = `${contextAddress}/api/compareSizesSansProfile`;
@@ -314,8 +314,9 @@ function match (doSelectBestFit = true) {
         const profile = getState().selectedProfile;
 
         const token = getState().authToken.token;
+        const useProfile = token && !profile.dirty;
         let subject;
-        if (token) {
+        if (useProfile) {
             subject = profile.id;
         } else {
             const localMeasurements = Object.entries(profile.measurements)
@@ -334,7 +335,7 @@ function match (doSelectBestFit = true) {
             dispatch(actions.requestMatch());
 
             try {
-                const matchResult = await doMatch(fitRequest, token);
+                const matchResult = await doMatch(fitRequest, token, useProfile);
                 trackEvent("match", "API: match");
 
                 let result = matchResult;
@@ -364,11 +365,11 @@ function match (doSelectBestFit = true) {
 }
 
 function setProfileMeasurements (measurements) {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         localStorage.setItem(storeMeasurementsKey, JSON.stringify(measurements));
         dispatch(actions.setMeasurements(measurements));
         if (Object.values(measurements).some(item => item)) {
-            await dispatch(match(!getState().selectedSize));
+            await dispatch(match());
         } else {
             dispatch(actions.resetMatch());
         }
