@@ -37,6 +37,19 @@ const authToken = handleActions({
     resolved: false
 });
 
+const signupStatus = handleActions({
+    [actions.SIGNUP]: (state, action) => ({ error: null, inProgress: true }),
+
+    [actions.SIGNUP_DONE]: (state, action) => ({
+        ...state,
+        inProgress: false,
+        error: action.error ? action.payload.message : null
+    })
+}, {
+    inProgress: false,
+    error: null
+});
+
 const profileList = handleActions({
     [actions.REQUEST_PROFILE_LIST]: (state, action) => ({ ...state, isFetching: true }),
 
@@ -114,6 +127,7 @@ const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => action
 
 const rootReducer = combineReducers({
     authToken,
+    signupStatus,
     profileList,
     productInfo,
     selectedProfile,

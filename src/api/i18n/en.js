@@ -128,6 +128,11 @@ export default {
         product_page_splashes: ["Unsure about the right size? Try"],
         product_page_splash_title: "SizeMe is a free service to help you know how this item will fit _you_"
     },
+    SIGNUP_BOX: {
+        message: "Save your measurements, so you don't have to remember them ever again.",
+        signup_prompt: "Save with email",
+        duplicate_user: "An account with this email already exists. Try to log in?"
+    },
     MENU: {
         login: "Login/sign up to SizeMe"
     },

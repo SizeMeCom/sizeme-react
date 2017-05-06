@@ -26,7 +26,7 @@ const sizemeStore = createStore(rootReducer, applyMiddleware(
     })
 ));
 
-function createRequest (method, token, withCredentials = false) {
+function createRequest (method, { token, withCredentials, body } = {}) {
     const headers = new Headers({
         "X-Sizeme-Pluginversion": pluginVersion
     });
@@ -45,6 +45,11 @@ function createRequest (method, token, withCredentials = false) {
         mode: "cors"
     };
 
+    if (body) {
+        headers.append("Content-Type", "application/json");
+        request.body = JSON.stringify(body);
+    }
+
     if (withCredentials) {
         request.credentials = "include";
     }
@@ -53,8 +58,8 @@ function createRequest (method, token, withCredentials = false) {
 }
 
 class ApiError extends Error {
-    constructor (response) {
-        super(`${response.status} - ${response.statusText || "N/A"}`);
+    constructor (message, response) {
+        super(message);
         this.response = response;
     }
 
@@ -62,10 +67,18 @@ class ApiError extends Error {
 }
 
 function jsonResponse (response) {
-    if (response.ok) {
-        return response.json();
-    }
-    throw new ApiError(response);
+    return response.json()
+        .then(js => {
+            if (response.ok) {
+                return js;
+            }
+
+            if (js.message) {
+                throw new ApiError(js.message, response);
+            } else {
+                throw new ApiError(`${response.status} - ${response.statusText || "N/A"}`, response);
+            }
+        });
 }
 
 function resolveAuthToken (reset = false) {
@@ -96,13 +109,45 @@ function resolveAuthToken (reset = false) {
         } else {
             dispatch(actions.fetchToken());
             try {
-                const tokenResp = await fetch(`${contextAddress}/api/authToken`, createRequest("GET", null, true))
+                const tokenResp = await fetch(`${contextAddress}/api/authToken`,
+                    createRequest("GET", { withCredentials: true }))
                     .then(jsonResponse);
                 sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
                 dispatch(actions.resolveToken(tokenResp.token));
             } catch (reason) {
                 dispatch(actions.resolveToken(reason));
             }
+        }
+    };
+}
+
+function signup (email) {
+    return async (dispatch, getState) => {
+        let token;
+        dispatch(actions.signup());
+        try {
+            const signupResp = await fetch(`${contextAddress}/api/createAccount`,
+                createRequest("POST", {
+                    withCredentials: true,
+                    body: { email }
+                }))
+                .then(jsonResponse);
+            token = signupResp.token;
+            if (token) {
+                dispatch(actions.resolveToken(token));
+            } else {
+                dispatch(actions.signupDone(new Error("Token was empty")));
+                return;
+            }
+
+            const profile = getState().selectedProfile;
+            profile.id = await fetch(`${contextAddress}/api/createProfile`,
+                createRequest("POST", { token, body: profile })).then(jsonResponse);
+            dispatch(actions.receiveProfileList([profile]));
+            dispatch(setSelectedProfile(profile.id));
+            dispatch(actions.signupDone());
+        } catch (reason) {
+            dispatch(actions.signupDone(reason));
         }
     };
 }
@@ -115,7 +160,7 @@ function getProfiles () {
         dispatch(actions.requestProfileList());
         const token = getState().authToken.token;
         try {
-            const profileList = await fetch(`${contextAddress}/api/profiles`, createRequest("GET", token))
+            const profileList = await fetch(`${contextAddress}/api/profiles`, createRequest("GET", { token }))
                 .then(jsonResponse);
 
             trackEvent("fetchProfiles", "API: fetchProfiles");
@@ -185,7 +230,7 @@ function setSelectedProfile (profileId) {
         if (!getState().authToken.loggedIn) {
             dispatch(actions.selectProfile({
                 gender: "Female",
-                profileName: "New profile"
+                profileName: "My profile"
             }));
             dispatch(actions.selectProfileDone());
             dispatch(setProfileMeasurements(storedMeasurements));
@@ -224,7 +269,7 @@ function setSelectedProfile (profileId) {
 }
 
 function doMatch (fitRequest, token, useProfile) {
-    const request = createRequest("POST", token);
+    const request = createRequest("POST", { token });
     const { headers } = request;
     headers.append("Content-Type", "application/json");
     request.body = JSON.stringify(fitRequest);
@@ -379,6 +424,7 @@ function setProfileMeasurements (measurements) {
 export {
     sizemeStore,
     resolveAuthToken,
+    signup,
     getProfiles,
     getProduct,
     setSelectedProfile,
