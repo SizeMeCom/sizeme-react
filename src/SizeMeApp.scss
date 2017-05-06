@@ -1,5 +1,4 @@
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome.scss";
+@import "./scss/variables";
 
 a.link-btn {
   background-color: white;
@@ -14,21 +13,6 @@ a.link-btn {
   text-decoration: none;
   cursor: pointer;
 }
-
-$too_small: #b55;
-$slim: #45a14c;
-$regular: #5fc153;
-$loose: #8cd98e;
-$too_big: #b55;
-
-$default_blue: #34a6c6;
-
-@import "../section/section";
-@import "../sizeguide/sizeguide";
-@import "../common/sizeform";
-@import "../common/sizeslider";
-@import "../common/loginframe";
-@import "../illustrations/overlapbox";
 
 .sizeme-content {
 
@@ -69,7 +53,7 @@ $default_blue: #34a6c6;
       position: absolute;
       bottom: -23px;
       left: 0;
-      background: url(../images/sizeme_logo_plain_h22.png) no-repeat left bottom;
+      background: url(./images/sizeme_logo_plain_h22.png) no-repeat left bottom;
     }
 
     .menu-profile-select {
@@ -102,16 +86,4 @@ $default_blue: #34a6c6;
       text-decoration: none;
     }
   }
-
-  .sizeme-login-link {
-    text-align: right;
-    font-style: italic;
-
-    a {
-      cursor: pointer;
-      text-decoration: none;
-      color: #4c4c4c;
-    }
-  }
-
 }

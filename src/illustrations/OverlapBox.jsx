@@ -4,6 +4,7 @@ import Sleeve from "./Sleeve";
 import Pinch from "./Pinch";
 import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
+import "./OverlapBox.scss";
 
 const illustration = (measurement, overlap) => {
     switch (measurement) {

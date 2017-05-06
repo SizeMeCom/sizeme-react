@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { sizemeStore, sizeSelector } from "./api/sizeme-api";
 import SizeMeApp from "./SizeMeApp";
 import uiOptions from "./api/uiOptions";
-import "./scss/main.scss";
 
 const section = document.createElement("div");
 section.setAttribute("class", `sizeme-content-${uiOptions.shopType}`);

@@ -11,6 +11,7 @@ import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
 import FitTooltip from "./FitTooltip.jsx";
 import ReactTooltip from "react-tooltip";
+import "./SizeGuide.scss";
 
 class SizeGuide extends React.Component {
     constructor (props) {

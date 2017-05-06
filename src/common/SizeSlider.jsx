@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import i18n from "../api/i18n";
+import "./SizeSlider.scss";
 
 const FIT_RANGES = [
     { start: 940, end: 1000, label: "too_small" },

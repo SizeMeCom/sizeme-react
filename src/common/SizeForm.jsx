@@ -12,6 +12,7 @@ import Modal from "react-modal";
 import VideoGuide from "./VideoGuide.jsx";
 import Optional from "optional-js";
 import OverlapBox from "../illustrations/OverlapBox";
+import "./SizeForm.scss";
 
 class SizeForm extends React.Component {
 

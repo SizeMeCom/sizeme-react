@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { contextAddress } from "../api/sizeme-api";
 import Modal from "react-modal";
+import "./LoginFrame.scss";
 
 const instances = {};
 
