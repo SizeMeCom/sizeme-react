@@ -11,7 +11,7 @@ import { hideMenu } from "react-contextmenu/modules/actions";
 import Optional from "optional-js";
 import ProfileSelect from "./common/ProfileSelect.jsx";
 import { bindActionCreators } from "redux";
-import SignupBox from "./common/SignupBox";
+import LoginFrame, { openLoginFrame } from "./common/LoginFrame.jsx";
 import "./SizeMeApp.scss";
 
 class SizeMeApp extends React.Component {
@@ -71,8 +71,10 @@ class SizeMeApp extends React.Component {
                         </div>}
                     </div>
                     {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} />}
-                    {!this.props.loggedIn && <SignupBox onLogin={this.userLoggedIn}
-                                                        onSignup={() => console.log("signup")}/>}
+                    {!this.props.loggedIn && <div className="sizeme-login-link">
+                        <a onClick={() => openLoginFrame("login-frame")}>Already a SizeMe user? »</a>
+                        <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
+                    </div>}
                     {this.props.resolved && <SizeGuide/>}
                 </div>
             );
