@@ -108,7 +108,8 @@ const productionConfig = merge([
                 // Run cssnano in safe mode to avoid
                 // potentially unsafe transformations.
                 safe: true
-            }
+            },
+            zindex: false
         }
     }),
     parts.purifyCSS({
