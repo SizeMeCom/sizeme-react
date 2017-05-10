@@ -1,10 +1,12 @@
 /* global sizeme_options */
 
+const general = {
+    disableSizeGuide: false
+};
+
 const shops = {
     magento: {
-        shopType: "magento",
         appendContentTo: ".product-options",
-        appendSplashTo: ".product-options",
         sizeSelectionElement: "select.sizeme-magento-size-selector",
         invokeElement: "select.super-attribute-select",
         invokeEvent: "change",
@@ -14,4 +16,4 @@ const shops = {
     }
 };
 
-export default shops[sizeme_options.shopType];
+export default Object.assign({}, general, shops[sizeme_options.shopType], sizeme_options.uiOptions);

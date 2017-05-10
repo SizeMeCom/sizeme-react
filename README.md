@@ -47,3 +47,4 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [sizeSelectionElement] (_String_): DOM-element indicating currently chosen size.
   - [invokeElement] (_String_): DOM-element that handles size changes
   - [invokeEvent] (_String_): DOM-event that is dispatched when size changes
+  - [disableSizeGuide] (_Boolean_): disable SizeGuide

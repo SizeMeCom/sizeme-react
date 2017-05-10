@@ -13,6 +13,7 @@ import ProfileSelect from "./common/ProfileSelect.jsx";
 import { bindActionCreators } from "redux";
 import SignupBox from "./common/SignupBox";
 import "./SizeMeApp.scss";
+import uiOptions from "./api/uiOptions";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -74,7 +75,7 @@ class SizeMeApp extends React.Component {
                     {!this.props.loggedIn && <SignupBox onLogin={this.userLoggedIn}
                                                         onSignup={this.props.onSignup}
                                                         signupStatus={this.props.signupStatus}/>}
-                    {this.props.resolved && <SizeGuide/>}
+                    {this.props.resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
                 </div>
             );
         } else {
