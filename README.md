@@ -41,7 +41,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 
 * [debugState] (_Boolean_): write debugging info to console. Default: false
 
-* [uiOptions] (_Object_): Optionally override default UI options. Defaults per shopType are specified in [`uiOptions.js`](blob/master/src/api/uiOptions.js)
+* [uiOptions] (_Object_): Optionally override default UI options. Defaults per shopType are specified in [`uiOptions.js`](src/api/uiOptions.js)
   - [appendContentTo] (_String_):  DOM-element where SizeMe is injected.
   - [appendContentTo] (_String_):  DOM-element where SizeMe is injected.
   - [sizeSelectionElement] (_String_): DOM-element indicating currently chosen size.
