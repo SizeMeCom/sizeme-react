@@ -2,14 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import i18n from "../api/i18n";
 import "./SizeSlider.scss";
-
-const FIT_RANGES = [
-    { start: 940, end: 1000, label: "too_small" },
-    { start: 1000, end: 1055, label: "slim" },
-    { start: 1055, end: 1110, label: "regular" },
-    { start: 1110, end: 1165, label: "loose" },
-    { start: 1165, end: 1225, label: "too_big" }
-];
+import { fitRanges } from "../api/ProductModel";
 
 class SizeSlider extends React.Component {
 
@@ -82,7 +75,7 @@ class SizeSlider extends React.Component {
                     <table className="slider_table">
                         <tbody>
                             <tr>
-                                {FIT_RANGES.map(fit => {
+                                {fitRanges.map(fit => {
                                     percentWidth = (fit.end - fit.start) * this.sliderScale;
                                     return (
                                         <td

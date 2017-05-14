@@ -7,7 +7,6 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import { FitRequest } from "./SizeMe";
 import SizeGuideModel from "./ProductModel";
 import Optional from "optional-js";
 
@@ -25,6 +24,22 @@ const sizemeStore = createStore(rootReducer, applyMiddleware(
         duration: true
     })
 ));
+
+class FitRequest {
+    constructor (subject, item) {
+        if (typeof subject === "string") {
+            this.profileId = subject;
+        } else {
+            this.measurements = subject;
+        }
+
+        if (typeof item === "string") {
+            this.sku = item;
+        } else {
+            this.item = item;
+        }
+    }
+}
 
 function createRequest (method, { token, withCredentials, body } = {}) {
     const headers = new Headers({

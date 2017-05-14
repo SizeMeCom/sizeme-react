@@ -1,22 +1,37 @@
 import i18n from "./i18n";
 
-const fitRanges = new Map([
-    [1, { label: "too_small", arrowColor: "#999999" }],
-    [940, { label: "too_small", arrowColor: "#BB5555" }],
-    [1000, { label: "slim", arrowColor: "#457A4C" }],
-    [1055, { label: "regular", arrowColor: "#42AE49" }],
-    [1110, { label: "loose", arrowColor: "#87B98E" }],
-    [1165, { label: "too_big", arrowColor: "#BB5555" }],
-    [1225, { label: "too_big", arrowColor: "#BB5555" }]
-]);
+const fitStep = 55;
+const norm = 1000;
 
-const fitRangesLessImportance = new Map([
-    [1, { label: "too_small", arrowColor: "#999999" }],
-    [940, { label: "too_small", arrowColor: "#BB5555" }],
-    [1000, { label: "slim", arrowColor: "#457A4C" }],
-    [1055, { label: "regular", arrowColor: "#42AE49" }],
-    [1110, { label: "loose", arrowColor: "#87B98E" }]
-]);
+const fitLabelsAndColors = [
+    { label: "too_small", arrowColor: "#BB5555" },
+    { label: "slim", arrowColor: "#457A4C" },
+    { label: "regular", arrowColor: "#42AE49" },
+    { label: "loose", arrowColor: "#87B98E" },
+    { label: "too_big", arrowColor: "#BB5555" }
+];
+
+class FitRange {
+    constructor (label, start, end, arrowColor) {
+        this.label = label;
+        this.start = start;
+        this.end = end;
+        this.arrowColor = arrowColor;
+    }
+
+    matches (value) {
+        return value >= this.start && (!this.end || value < this.end);
+    }
+}
+
+const fitRanges = fitLabelsAndColors.map((l, i) => {
+    const start = (i - 1) * fitStep + norm;
+    const end = start + fitStep;
+    return new FitRange(l.label, start, end, l.arrowColor);
+});
+
+const subRange = new FitRange("too_small", null, fitRanges[0].start, "#999999");
+const superRange = new FitRange("too_big", fitRanges.slice(-1).end, null, "#BB5555");
 
 const PINCHED_FITS = [
     "chest",
@@ -1069,25 +1084,25 @@ export default class {
         this.getItemTypeComponent = index => itemTypeArr[index];
     }
 
-    static getFit = measurementResult => {
+    static getFit = (measurementResult, overflowFits = true) => {
         if (!measurementResult) {
             return null;
         }
         const { componentFit, importance } = measurementResult;
-        const ranges = importance === 1 ? fitRanges : fitRangesLessImportance;
-        let prev = null;
-        for (const [singleFit, value] of ranges) {
-            if (componentFit < singleFit) {
-                return (prev || value);
-            }
-            prev = value;
+        let fitRange = fitRanges.find(fr => fr.matches(componentFit));
+        if (!fitRange && overflowFits) {
+            fitRange = componentFit < norm ? subRange : superRange;
         }
-        return prev;
+        if (importance !== 1 && fitRange.label === "too_big") {
+            fitRange = fitRanges.find(fr => fr.label === "loose");
+        }
+        return fitRange;
     };
 }
 
 export {
     PINCHED_FITS,
     LONG_FITS,
-    humanMeasurementMap
+    humanMeasurementMap,
+    fitRanges
 };
