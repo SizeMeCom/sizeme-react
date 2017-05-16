@@ -27,7 +27,10 @@ class MeasurementInput extends React.Component {
     componentWillReceiveProps (nextProps) {
         const nextValue = this.viewValue(nextProps);
         if (nextValue !== this.state.value) {
-            this.setState({ value: nextValue });
+            this.setState({
+                value: nextValue,
+                modelValue: this.modelValue(nextValue)
+            });
         }
     }
 
@@ -71,6 +74,10 @@ class MeasurementInput extends React.Component {
     };
 
     dispatchChange = () => {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+            this.timeout = null;
+        }
         if (!this.state.error) {
             const value = this.modelValue(this.state.value);
             if (value !== this.state.modelValue) {

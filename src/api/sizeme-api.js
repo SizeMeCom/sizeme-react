@@ -350,7 +350,7 @@ const sizeSelector = new class {
     }
 }();
 
-function selectBestFit (fitResults) {
+function getRecommendedFit (fitResults) {
     const [bestMatch] = fitResults.reduce(([accSize, fit], [size, res]) => {
         const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
         if (!accSize || newFit < fit) {
@@ -359,9 +359,7 @@ function selectBestFit (fitResults) {
             return [accSize, fit];
         }
     }, [null, 0]);
-    if (bestMatch) {
-        sizeSelector.setSelected(bestMatch);
-    }
+    return bestMatch;
 }
 
 function match (doSelectBestFit = true) {
@@ -408,14 +406,15 @@ function match (doSelectBestFit = true) {
                             .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
                     );
                 }
+                const fitResults = Object.entries(result);
+                // if user is logged in, don't care about the accuracy. If not,
+                // filter out results where accuracy is 0
+                const recommendedFit = getRecommendedFit(token ? fitResults : fitResults
+                    .filter(([, res]) => res.accuracy > 0));
+                dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
 
-                dispatch(actions.receiveMatch(result));
-
-                if (doSelectBestFit) {
-                    const fitResults = Object.entries(result);
-                    // if user is logged in, don't care about the accuracy. If not,
-                    // filter out results where accuracy is 0
-                    selectBestFit(token ? fitResults : fitResults.filter(([, res]) => res.accuracy > 0));
+                if (doSelectBestFit && recommendedFit) {
+                    sizeSelector.setSelected(recommendedFit);
                 }
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));

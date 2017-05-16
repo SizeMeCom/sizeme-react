@@ -31,7 +31,10 @@ class SizeForm extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const measurements = Object.assign({}, this.state.measurements, nextProps.measurements);
+        const measurements = Object.assign(
+            ...this.fields.map(f => ({ [f.humanProperty]: null })),
+            nextProps.measurements
+        );
         this.setState({ measurements });
     }
 

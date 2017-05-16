@@ -55,7 +55,7 @@ class SizeMeApp extends React.Component {
             return (
                 <div className="sizeme-content">
                     <div className="sizeme-slider-row">                        
-                        <SizeSlider match={this.props.currentMatch} />
+                        <SizeSlider match={this.props.currentMatch} recommendedMatch={this.props.recommendedMatch}/>
                         {this.props.loggedIn && <div>
                             <ContextMenuTrigger id="sizeme-menu" ref={c => { this.menuTrigger = c; }}>
                                 <FontAwesome name="cog" onClick={this.toggleMenu}/>
@@ -88,6 +88,7 @@ SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
     currentMatch: PropTypes.object,
+    recommendedMatch: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
@@ -103,6 +104,8 @@ const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
     loggedIn: state.authToken.loggedIn,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
+    recommendedMatch: Optional.ofNullable(state.match.matchResult)
+        .map(res => res.recommendedFit ? res[res.recommendedFit] : null).orElse(null),
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,

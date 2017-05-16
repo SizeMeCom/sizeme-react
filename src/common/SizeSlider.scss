@@ -185,3 +185,66 @@
   border-left: 1px solid #666;
   border-right: 1px solid #666;
 }
+
+.sizeme-slider {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex: 1;
+  align-items: flex-end;
+  background: url(../images/slider_bg_black_grid.svg) no-repeat bottom center;
+  background-size: contain;
+  font-size: smaller;
+  margin: 5px 0;
+  position: relative;
+
+  .fit-area {
+    text-align: center;
+    flex: 1;
+    white-space: nowrap;
+    height: 26px;
+  }
+
+  svg {
+    position: absolute;
+    height: 16px;
+    bottom: -5px;
+    transition: left 0.5s ease-in-out;
+  }
+
+  svg.indicator {
+    polygon {
+      fill: #ff0000;
+      fill-opacity: 1;
+      stroke-width: 0;
+    }
+
+    polygon.too_small {
+      fill: $too_small;
+    }
+
+    polygon.slim {
+      fill: $slim;
+    }
+
+    polygon.regular {
+      fill: $regular;
+    }
+
+    polygon.loose {
+      fill: $loose;
+    }
+
+    polygon.too_big {
+      fill: $too_big;
+    }
+  }
+
+  svg.recommendation {
+    path {
+      fill: #333333;
+      fill-opacity: 1;
+      fill-rule: evenodd;
+    }
+  }
+}

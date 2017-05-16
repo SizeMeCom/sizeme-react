@@ -2,14 +2,41 @@ import React from "react";
 import PropTypes from "prop-types";
 import i18n from "../api/i18n";
 import "./SizeSlider.scss";
-import { fitRanges } from "../api/ProductModel";
+import ProductModel, { fitRanges } from "../api/ProductModel";
+
+const FitIndicator = (props) => {
+    const left = `calc(${props.value}% - 8px`;
+    return (
+        <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+            <polygon className={props.fitRange.label} points="5,0 10,10 0,10 5,0" />
+        </svg>
+    );
+};
+
+FitIndicator.propTypes = {
+    value: PropTypes.number.isRequired,
+    fitRange: PropTypes.object.isRequired
+};
+
+const RecommendationIndicator = (props) => {
+    const left = `calc(${props.value}% - 8px`;
+    return (
+        <svg className="recommendation" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+            <path d="M5 0 L10 10 L0 10 Z M5 2.2 L8.4 9.1 L1.6 9.1 Z" />
+        </svg>
+    );
+};
+
+RecommendationIndicator.propTypes = {
+    value: PropTypes.number.isRequired
+};
 
 class SizeSlider extends React.Component {
 
     constructor (props) {
         super(props);
-        this.sliderPosXMin = 940;
-        this.sliderPosXMax = 1225;
+        this.sliderPosXMin = fitRanges[0].start;
+        this.sliderPosXMax = fitRanges.slice(-1)[0].end;
         this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
     }
 
@@ -17,80 +44,27 @@ class SizeSlider extends React.Component {
         return this.props.match && this.props.match.matchMap && this.props.match.accuracy > 0;
     }
 
-    getFitValue () {
-        return this.doShowFit() ? this.props.match.totalFit : null;
+    getFitPosition (value) {
+        return Math.max(0,
+            (Math.min(value, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
     }
 
     getFitRange () {
-        if (!this.doShowFit() || !this.props.fitRangeVisible || Object.keys(this.props.match.matchMap).length <= 1) {
-            return null;
-        }
-
-        const [min, max] = Object.values(this.props.match.matchMap).reduce(([min, max], match) => (
-            [Math.min(min, match.componentFit), Math.max(max, match.componentFit)]
-        ), [9999, 0]);
-
-        return [Math.max(min, this.sliderPosXMin), Math.min(max, this.sliderPosXMax)];
-    }
-
-    sliderPos (fitValue) {
-        return Math.max(0, (Math.min(fitValue, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
-    }
-
-    areaPos (fitRange) {
-        return Math.round(Math.min(this.sliderPosXMax, fitRange[0] - this.sliderPosXMin) * this.sliderScale);
-    }
-
-    areaWidth (fitRange) {
-        const start = Math.round(Math.min(this.sliderPosXMax, fitRange[0] - this.sliderPosXMin) * this.sliderScale);
-        const end = Math.round(Math.min(this.sliderPosXMax, fitRange[1] - this.sliderPosXMin) * this.sliderScale);
-        return end - start;
-        //return Math.round(Math.min(this.sliderPosXMax, fitRange[1] - fitRange[0]) * this.sliderScale);
+        return ProductModel.getFit({ componentFit: this.props.match.totalFit, importance: 1 }, true);
     }
 
     render () {
-        let percentWidth;
-        const fitValue = this.getFitValue();
-        const fitRange = this.getFitRange();
         return (
-            <div className="sizeme_slider">
-                <div className="slider_container">
-                    {fitValue &&
-                        <div className="slider_bar"
-                             style={{
-                                 width: this.sliderPos(fitValue) + "%",
-                                 transition: "width 0.5s ease-in-out"
-                             }}
-                        />
-                    }
-                    {fitRange &&
-                        <div className="slider_area"
-                             style={{
-                                 width: this.areaWidth(fitRange) + "%",
-                                 marginLeft: this.areaPos(fitRange) + "%",
-                                 transition: "width 0.5s ease-in-out, margin-left 0.5s ease-in-out"
-                             }}
-                        />
-                    }
-                    <table className="slider_table">
-                        <tbody>
-                            <tr>
-                                {fitRanges.map(fit => {
-                                    percentWidth = (fit.end - fit.start) * this.sliderScale;
-                                    return (
-                                        <td
-                                            key={fit.label} className={fit.label}
-                                            style={{
-                                                width: percentWidth + "%",
-                                                minWidth: percentWidth + "%"
-                                            }}
-                                        >{i18n.FIT_VERDICT[fit.label]}</td>
-                                    );
-                                })}
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div className="sizeme-slider">
+                {fitRanges.map(fit => (
+                    <div className={fit.label + " fit-area"} key={fit.label}>
+                        {i18n.FIT_VERDICT[fit.label]}
+                    </div>
+                ))}
+                {this.doShowFit() && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
+                                                   fitRange={this.getFitRange()}/>}
+                {this.doShowFit() && this.props.recommendedMatch && <RecommendationIndicator
+                    value={this.getFitPosition(this.props.recommendedMatch.totalFit)}/>}
             </div>
         );
     }
@@ -98,11 +72,7 @@ class SizeSlider extends React.Component {
 
 SizeSlider.propTypes = {
     match: PropTypes.object,
-    fitRangeVisible: PropTypes.bool
-};
-
-SizeSlider.defaultProps = {
-    fitRangeVisible: false
+    recommendedMatch: PropTypes.object
 };
 
 export default SizeSlider;
