@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
 import SizeForm from "./common/SizeForm.jsx";
-import * as actions from "./api/sizeme-api";
+import * as api from "./api/sizeme-api";
 import FontAwesome from "react-fontawesome";
 import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
 import { hideMenu } from "react-contextmenu/modules/actions";
@@ -29,7 +29,9 @@ class SizeMeApp extends React.Component {
         Promise.all([
             resolveAuthToken().then(() => getProfiles()),
             getProduct()
-        ]).then(() => setSelectedProfile());
+        ]).then(() => {
+            setSelectedProfile();
+        });
     }
 
     toggleMenu = (e) => {
@@ -114,11 +116,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    setSelectedProfile: actions.setSelectedProfile,
-    resolveAuthToken: actions.resolveAuthToken,
-    getProfiles: actions.getProfiles,
-    getProduct: actions.getProduct,
-    onSignup: actions.signup
+    setSelectedProfile: api.setSelectedProfile,
+    resolveAuthToken: api.resolveAuthToken,
+    getProfiles: api.getProfiles,
+    getProduct: api.getProduct,
+    onSignup: api.signup
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SizeMeApp);

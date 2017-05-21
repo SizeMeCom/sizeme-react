@@ -12,8 +12,10 @@ const shops = {
         invokeEvent: "change",
         addToCartElement: "form#product_addtocart_form a.liftup-button, form#product_addtocart_form button",
         addToCartEvent: "click",
-        firstRecommendation: true
+        firstRecommendation: true,
+        sizeSelectorType: "default"
     }
 };
 
-export default Object.assign({}, general, shops[sizeme_options.shopType], sizeme_options.uiOptions);
+export default Object.assign({ shopType: sizeme_options.shopType }, general,
+    shops[sizeme_options.shopType], sizeme_options.uiOptions);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DetailSection from "./DetailSection.jsx";
-import { sizeSelector } from "../api/sizeme-api";
+import SizeSelector from "../api/SizeSelector";
 import i18n from "../api/i18n";
 import HoverContainer from "./HoverContainer.jsx";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
@@ -45,7 +45,7 @@ class SizeGuideProductInfo extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                                {sizeSelector.sizeMapper.map(([size, sizeName]) => (
+                                {SizeSelector.sizeMapper.map(([size, sizeName]) => (
                                     <tr key={sizeName}>
                                         <td className="size-col">{sizeName}</td>
                                         {this.props.measurementOrder

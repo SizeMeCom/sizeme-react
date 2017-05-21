@@ -9,6 +9,7 @@ import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
 import SizeGuideModel from "./ProductModel";
 import Optional from "optional-js";
+import SizeSelector from "./SizeSelector";
 
 const OPTIMAL_FIT = 1070;
 
@@ -299,57 +300,6 @@ function doMatch (fitRequest, token, useProfile) {
     return fetch(address, request).then(jsonResponse);
 }
 
-const sizeSelector = new class {
-    constructor () {
-        this.el = null;
-        this.sizeMapper = [];
-    }
-
-    dispatchChange = (size) => {
-        sizemeStore.dispatch(actions.selectSize(size));
-    };
-
-    set selector (el) {
-        this.el = el;
-        this.el.addEventListener("change", (event) => {
-            this.dispatchChange(event.target.value);
-        });
-
-        this.sizeMapper = [];
-        const options = this.el.querySelectorAll("option");
-        for (let i = 0; i < options.length; i++) {
-            const option = options.item(i);
-            const value = option.getAttribute("value");
-            if (value) {
-                this.sizeMapper.push([value, option.textContent]);
-            }
-        }
-    }
-
-    setSelected = (val) => {
-        if (this.el) {
-            this.el.value = val || "";
-            this.dispatchChange(val);
-        }
-    };
-
-    getSelected = () => {
-        if (this.el) {
-            return this.el.value;
-        } else {
-            return "";
-        }
-    };
-
-    clone = () => {
-        if (this.el) {
-            return this.el.cloneNode(true);
-        } else {
-            return null;
-        }
-    }
-}();
-
 function getRecommendedFit (fitResults) {
     const [bestMatch] = fitResults.reduce(([accSize, fit], [size, res]) => {
         const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
@@ -414,7 +364,7 @@ function match (doSelectBestFit = true) {
                 dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
 
                 if (doSelectBestFit && recommendedFit) {
-                    sizeSelector.setSelected(recommendedFit);
+                    SizeSelector.setSelectedSize(recommendedFit);
                 }
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));
@@ -444,7 +394,6 @@ export {
     setSelectedProfile,
     match,
     setProfileMeasurements,
-    sizeSelector,
     contextAddress,
     cdnLocation
 };

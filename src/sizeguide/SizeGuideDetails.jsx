@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ProfileSelect from "../common/ProfileSelect.jsx";
-import { sizeSelector } from "../api/sizeme-api";
 import SizeSlider from "../common/SizeSlider.jsx";
+import SizeSelector from "../api/SizeSelector";
 import DetailSection from "./DetailSection.jsx";
 import DetailedFit from "./DetailedFit.jsx";
 import i18n from "../api/i18n";
@@ -13,11 +13,7 @@ import ReactTooltip from "react-tooltip";
 class DetailsSizeSelector extends React.Component {
 
     componentDidMount () {
-        this.select = sizeSelector.clone();
-        this.select.value = sizeSelector.getSelected();
-        this.select.addEventListener("change", (event) => {
-            sizeSelector.setSelected(event.target.value);
-        });
+        this.select = SizeSelector.getClone();
         this.container.appendChild(this.select);
     }
 
