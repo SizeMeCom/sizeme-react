@@ -46,6 +46,5 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [appendContentTo] (_String_):  DOM-element where SizeMe is injected.
   - [sizeSelectionElement] (_String_): DOM-element indicating currently chosen size.
   - [invokeElement] (_String_): DOM-element that handles size changes
-  - [invokeEvent] (_String_): DOM-event that is dispatched when size changes
   - [disableSizeGuide] (_Boolean_): disable SizeGuide
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches",
