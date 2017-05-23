@@ -24,16 +24,6 @@ a.link-btn {
     .sizeme_slider {
       flex: 1;
     }
-
-    span.fa {
-      margin-left: 5px;
-      font-size: 130%;
-      cursor: pointer;
-
-      &:hover {
-        color: $default_blue;
-      }
-    }
   }
 
   .sizeme-context-menu {

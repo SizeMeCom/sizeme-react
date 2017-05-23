@@ -5,15 +5,12 @@ import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizeSlider from "./common/SizeSlider.jsx";
 import SizeForm from "./common/SizeForm.jsx";
 import * as api from "./api/sizeme-api";
-import FontAwesome from "react-fontawesome";
-import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
-import { hideMenu } from "react-contextmenu/modules/actions";
 import Optional from "optional-js";
-import ProfileSelect from "./common/ProfileSelect.jsx";
 import { bindActionCreators } from "redux";
 import SignupBox from "./common/SignupBox";
 import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
+import ProfileMenu from "./common/ProfileMenu";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -34,14 +31,7 @@ class SizeMeApp extends React.Component {
         });
     }
 
-    toggleMenu = (e) => {
-        if (this.menuTrigger) {
-            this.menuTrigger.handleContextClick(e);
-        }
-    };
-
     selectProfile = profileId => {
-        hideMenu();
         this.props.setSelectedProfile(profileId);
     };
 
@@ -58,20 +48,9 @@ class SizeMeApp extends React.Component {
                 <div className="sizeme-content">
                     <div className="sizeme-slider-row">                        
                         <SizeSlider match={this.props.currentMatch} recommendedMatch={this.props.recommendedMatch}/>
-                        {this.props.loggedIn && <div>
-                            <ContextMenuTrigger id="sizeme-menu" ref={c => { this.menuTrigger = c; }}>
-                                <FontAwesome name="cog" onClick={this.toggleMenu}/>
-                            </ContextMenuTrigger>
-                            <ContextMenu id="sizeme-menu" className="sizeme-context-menu">
-                                <div className="menu-profile-select">
-                                    <span>Select profile</span>
-                                    <ProfileSelect onSelectProfile={this.selectProfile}
-                                                   selectedProfile={this.props.selectedProfile.id}
-                                                   profiles={this.props.profiles}
-                                    />
-                                </div>
-                            </ContextMenu>
-                        </div>}
+                        {this.props.loggedIn && <ProfileMenu profiles={this.props.profiles}
+                                                             selectedProfile={this.props.selectedProfile.id}
+                                                             setSelectedProfile={this.props.setSelectedProfile}/>}
                     </div>
                     {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} />}
                     {!this.props.loggedIn && <SignupBox onLogin={this.userLoggedIn}
