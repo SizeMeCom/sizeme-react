@@ -60,7 +60,8 @@ const developmentConfig = merge([
     parts.page({ template: "index.html" }),
     parts.page({ template: "index2.html", filename: "index2.html" }),
     parts.page({ template: "index3.html", filename: "index3.html" }),
-    parts.page({ template: "index4.html", filename: "index4.html" })
+    parts.page({ template: "index4.html", filename: "index4.html" }),
+    parts.page({ template: "kookenka.html", filename: "kookenka.html" })
 ]);
 
 const productionConfig = merge([

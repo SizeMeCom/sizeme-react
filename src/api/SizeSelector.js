@@ -95,17 +95,50 @@ class SwatchesSelect {
             return document.createElement("div");
         }
     };
+}
 
+class KooKenkaSwatchesSelect {
+    constructor (element) {
+        const options = element.querySelectorAll("li");
+        this.selectors = {};
+        const getId = li => li.id.replace(/li-(\d+)-.*/, "$1");
+
+        for (let i = 0; i < options.length; i++) {
+            const option = options.item(i);
+            this.selectors[getId(option)] = () => option.click();
+        }
+
+        element.addEventListener("click", e => {
+            selectSize(getId(e.target));
+        }, true);
+    }
+
+    setSelected = val => {
+        this.selectors[val]();
+    };
 }
 
 const initSizeSelector = selectSizeFn => {
     selectSize = selectSizeFn;
-    const element = document.querySelector(uiOptions.invokeElement);
-    if (element) {
-        selector = uiOptions.sizeSelectorType === "swatches" ? new SwatchesSelect(element) :
-            new DefaultSelect(element);
-    } else {
-        console.warn("Couldn't find selection element " + uiOptions.invokeElement);
+    const getInstance = (constructor) => {
+        const element = document.querySelector(uiOptions.invokeElement);
+        if (element) {
+            return new constructor(element);
+        } else {
+            console.warn("Couldn't find selection element " + uiOptions.invokeElement);
+        }
+    };
+    switch (uiOptions.sizeSelectorType) {
+        case "swatches":
+            selector = getInstance(SwatchesSelect);
+            break;
+
+        case "swatches-koo":
+            selector = getInstance(KooKenkaSwatchesSelect);
+            break;
+
+        default:
+            selector = getInstance(DefaultSelect);
     }
 };
 
