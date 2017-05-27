@@ -4,30 +4,42 @@ const sizeMapper = [];
 let selector;
 let selectSize = size => {};
 
-class DefaultSelect {
+class AbstractSelect {
+    constructor (element, { event, useCapture = false }) {
+        this.el = element;
+        this.selectors = {};
+
+        element.addEventListener(event, e => selectSize(this.getSize(e)), useCapture);
+    }
+
+    setSelected = val => {
+        if (this.selectors[val]) {
+            this.selectors[val]();
+        }
+    };
+}
+
+class DefaultSelect extends AbstractSelect {
     constructor (element) {
-        element.addEventListener("change", (event) => {
-            selectSize(event.target.value);
-        });
+        super(element, { event: "change" });
+
+        this.getSize = e => e.target.value;
 
         const options = element.querySelectorAll("option");
+        const getSelectFn = (value) => () => {
+            this.el.value = value || "";
+            selectSize(value);
+        };
+
         for (let i = 0; i < options.length; i++) {
             const option = options.item(i);
             const value = option.getAttribute("value");
             if (value) {
                 sizeMapper.push([value, option.textContent]);
+                this.selectors[value] = getSelectFn(value);
             }
         }
-
-        this.el = element;
     }
-
-    setSelected = (val) => {
-        if (this.el) {
-            this.el.value = val || "";
-            selectSize(val);
-        }
-    };
 
     clone = () => {
         if (this.el) {
@@ -43,36 +55,25 @@ class DefaultSelect {
     }
 }
 
-class SwatchesSelect {
+class SwatchesSelect extends AbstractSelect {
     constructor (element) {
+        super(element, { event: "click", useCapture: true });
+
+        const getId = li => li.id.replace("option", "");
+
+        this.getSize = e => getId(e.target.parentNode.parentNode);
+
         const options = element.querySelectorAll("li");
-        this.selectors = {};
         for (let i = 0; i < options.length; i++) {
             const option = options.item(i);
-            const sizeValue = option.id.replace("option", "");
+            const sizeValue = getId(option);
             const textSpan = option.querySelector("span.swatch-label");
             if (textSpan) {
-                this.selectors[sizeValue] = textSpan;
+                this.selectors[sizeValue] = () => textSpan.click();
                 sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
             }
         }
-
-        element.addEventListener("click",
-            e => {
-                const selected = e.target.parentNode.parentNode;
-                selectSize(selected.id.replace("option", ""));
-            },
-            true
-        );
-
-        this.el = element;
     }
-
-    setSelected = val => {
-        if (this.selectors[val]) {
-            this.selectors[val].click();
-        }
-    };
 
     clone = () => {
         if (this.el) {
@@ -97,25 +98,19 @@ class SwatchesSelect {
     };
 }
 
-class KooKenkaSwatchesSelect {
+class KooKenkaSwatchesSelect extends AbstractSelect {
     constructor (element) {
-        const options = element.querySelectorAll("li");
-        this.selectors = {};
-        const getId = li => li.id.replace(/li-(\d+)-.*/, "$1");
+        super(element, { event: "click", useCapture: true });
 
+        const getId = li => li.id.replace(/li-(\d+)-.*/, "$1");
+        this.getSize = e => getId(e.target);
+
+        const options = element.querySelectorAll("li");
         for (let i = 0; i < options.length; i++) {
             const option = options.item(i);
             this.selectors[getId(option)] = () => option.click();
         }
-
-        element.addEventListener("click", e => {
-            selectSize(getId(e.target));
-        }, true);
     }
-
-    setSelected = val => {
-        this.selectors[val]();
-    };
 }
 
 const initSizeSelector = selectSizeFn => {
