@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ReactTooltip from "react-tooltip";
 import Sleeve from "./Sleeve";
 import Pinch from "./Pinch";
 import Shoe from "./Shoe";
@@ -27,23 +28,34 @@ const illustration = (measurement, overlap) => {
 
 const isPinch = (measurement) => measurement === "chest";
 
-const OverlapBox = (props) => {
-    const overlap = props.fit.overlap / (isPinch(props.humanProperty) ? 20 : 10);
-    return (
-        <div className="overlap-box">
-            <div className="overlap-svg">
-                {illustration(props.humanProperty, overlap)}
+class OverlapBox extends React.Component {
+    constructor (props) {
+        super(props);
+    }
+
+    componentDidMount () {
+        ReactTooltip.rebuild();
+    }
+
+    render () {
+        const overlap = this.props.fit.overlap / (isPinch(this.props.humanProperty) ? 20 : 10);
+        return (
+            <div className="overlap-box" data-tip data-for="overlap-tooltip" onMouseEnter={this.props.hover}>
+                <div className="overlap-svg">
+                    {illustration(this.props.humanProperty, overlap)}
+                </div>
+                <div className="overlap-text">
+                    <div>{overlap > 0 && "+"}{overlap.toFixed(1)} cm</div>
+                </div>
             </div>
-            <div className="overlap-text">
-                <div>{overlap > 0 && "+"}{overlap.toFixed(1)} cm</div>
-            </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
 OverlapBox.propTypes = {
     fit: PropTypes.object.isRequired,
-    humanProperty: PropTypes.string.isRequired
+    humanProperty: PropTypes.string.isRequired,
+    hover: PropTypes.func.isRequired
 };
 
 export default OverlapBox;

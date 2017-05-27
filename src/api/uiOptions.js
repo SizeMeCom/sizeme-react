@@ -1,7 +1,8 @@
 /* global sizeme_options */
 
 const general = {
-    disableSizeGuide: false
+    disableSizeGuide: false,
+    lang: "en"
 };
 
 const shops = {

@@ -113,7 +113,7 @@ export default {
         arm_sleeve_straight: "när din arm och artikelns ärm är <u<helt raka</u>",
         sm_considers_fit: "SizeMe anser det speciellt lagom",
         overall_fit: "Överallt lagom",
-        overall_fit_for_size: "Överallt lagom av <b>storlek",
+        overall_fit_for_size: "Överallt lagom av <b>storlek"
     },
     SPLASH: {
         detailed_text: "Tag några <b>mått av dig själv</b> och få personlig info hur denna artikel skulle " +

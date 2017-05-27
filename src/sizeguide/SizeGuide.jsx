@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
-import FitTooltip from "./FitTooltip.jsx";
+import FitTooltip from "../common/FitTooltip.jsx";
 import ReactTooltip from "react-tooltip";
 import "./SizeGuide.scss";
 
@@ -133,6 +133,7 @@ class SizeGuide extends React.Component {
                     </div>
                 </Modal>}
                 {this.props.product.model.measurementOrder.map(measurement => {
+                    // TODO: change this to use FitTooltip2, which doesn't need multiple ReactTooltip-components
                     return (<FitTooltip measurement={measurement} key={measurement}
                                         fitData={this.state.tooltips[measurement]}/>);
                 })}

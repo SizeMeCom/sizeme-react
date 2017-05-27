@@ -1,4 +1,5 @@
 import i18n from "./i18n";
+import Optional from "optional-js";
 
 const fitStep = 55;
 const norm = 1000;
@@ -33,7 +34,7 @@ const fitRanges = fitLabelsAndColors.map((l, i) => {
 const subRange = new FitRange("too_small", null, fitRanges[0].start, "#999999");
 const superRange = new FitRange("too_big", fitRanges.slice(-1).end, null, "#BB5555");
 
-const PINCHED_FITS = [
+const pinchedFits = [
     "chest",
     "waist",
     "underbust",
@@ -50,7 +51,7 @@ const PINCHED_FITS = [
     "hat_width"
 ];
 
-const LONG_FITS = [
+const longFits = [
     "inseam",
     "outseam",
     "sleeve",
@@ -1057,7 +1058,7 @@ function init (itemTypeArr) {
     };
 }
 
-export default class {
+export default class ProductModel {
     constructor (item) {
         const itemTypeArr = Array.from(item.itemType)
             .filter(a => a !== ".")
@@ -1100,9 +1101,43 @@ export default class {
     };
 }
 
+const getResult = (measurement, value, matchItem) => {
+    let fitValue;
+    let fit;
+    let addPlus = false;
+    const pinched = pinchedFits.includes(measurement);
+    if (matchItem && matchItem.componentFit > 0) {
+        if (matchItem.overlap <= 0 && matchItem.componentFit >= 1000) {
+            fitValue = 0;
+        } else if (pinched) {
+            fitValue = matchItem.overlap / 20.0;
+        } else {
+            fitValue = matchItem.overlap / 10.0;
+        }
+        addPlus = matchItem.overlap > 0;
+        fit = ProductModel.getFit(matchItem);
+    } else if (value > 0) {
+        fitValue = value / 10.0;
+    }
+    let fitText = Optional.ofNullable(fitValue)
+        .map(v => v.toFixed(1) + " cm")
+        .orElse("");
+
+    if (addPlus) {
+        fitText = "+" + fitText;
+    }
+
+    return {
+        fitValue,
+        fitText,
+        fit,
+        isPinched: pinched,
+        isLongFit: longFits.includes(measurement)
+    };
+};
+
 export {
-    PINCHED_FITS,
-    LONG_FITS,
     humanMeasurementMap,
-    fitRanges
+    fitRanges,
+    getResult
 };

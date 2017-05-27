@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
 import i18n from "../api/i18n";
-import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
+import ProductModel, { humanMeasurementMap, getResult } from "../api/ProductModel";
 import MeasurementInput from "./MeasurementInput.jsx";
 import FontAwesome from "react-fontawesome";
 import ReactTooltip from "react-tooltip";
@@ -12,6 +12,7 @@ import Modal from "react-modal";
 import VideoGuide from "./VideoGuide.jsx";
 import Optional from "optional-js";
 import OverlapBox from "../illustrations/OverlapBox";
+import FitTooltip2 from "./FitTooltip2";
 import "./SizeForm.scss";
 
 class SizeForm extends React.Component {
@@ -26,7 +27,10 @@ class SizeForm extends React.Component {
             ...this.fields.map(f => ({ [f.humanProperty]: null })),
             props.measurements
         );
-        this.state = { guideModalOpen: false, measurements };
+        this.state = { guideModalOpen: false, measurements, fitTooltip: {
+            measurement: null,
+            fitData: null
+        } };
         this.activeTooltip = null;
     }
 
@@ -108,6 +112,20 @@ class SizeForm extends React.Component {
         }
     };
 
+    // TODO: this is copy-pasted from DetailedFit, try to move somewhere general
+    overlapHover = (measurement) => {
+        const { product, selectedSize, matchResult } = this.props;
+        const item = Object.assign({}, product.item, {
+            measurements: product.item.measurements[selectedSize]
+        });
+        const matchItem = matchResult.matchMap[measurement];
+        const missingMeasurement = matchResult.missingMeasurements
+                .findIndex(([meas]) => meas === measurement) >= 0;
+        const fitData = { matchItem, missingMeasurement,
+            ...getResult(measurement, item.measurements[measurement], matchItem) };
+        this.setState({ fitTooltip: { measurement, fitData } });
+    };
+
     render () {
         const getFit = field => Optional.ofNullable(this.props.matchResult)
             .flatMap(r => Optional.ofNullable(r.matchMap[field]));
@@ -115,6 +133,7 @@ class SizeForm extends React.Component {
             .map(res => ProductModel.getFit(res).label)
             .orElse(null);
         const measurementCellWidth = (100 / this.fields.length) + "%";
+        const { fitTooltip } = this.state;
 
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
@@ -127,10 +146,11 @@ class SizeForm extends React.Component {
                                           fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
                         />
                         {getFit(field).map(f =>
-                            <OverlapBox fit={f} humanProperty={humanProperty}/>
+                            <OverlapBox fit={f} humanProperty={humanProperty} hover={() => this.overlapHover(field)}/>
                         ).orElse(null)}
                     </div>
                 ))}
+                <FitTooltip2 id="overlap-tooltip" measurement={fitTooltip.measurement} fitData={fitTooltip.fitData}/>
                 <ReactTooltip id="input-tooltip" getContent={this.tooltipContent}/>
                 <Modal isOpen={this.state.guideModalOpen}
                        onRequestClose={this.closeGuideModal}
@@ -155,7 +175,9 @@ SizeForm.propTypes = {
     onChange: PropTypes.func.isRequired,
     gender: PropTypes.string.isRequired,
     matchResult: PropTypes.object,
-    measurements: PropTypes.object
+    measurements: PropTypes.object,
+    product: PropTypes.object,
+    selectedSize: PropTypes.string
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -172,7 +194,9 @@ export default connect(
             state.match.matchResult[state.selectedSize] : null,
         measurements: Optional.ofNullable(state.selectedProfile)
             .map(p => p.measurements)
-            .orElse({})
+            .orElse({}),
+        product: state.productInfo.product,
+        selectedSize: state.selectedSize
     }),
     mapDispatchToProps
 )(SizeForm);

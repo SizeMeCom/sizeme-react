@@ -1,7 +1,7 @@
 import uiOptions from "./uiOptions";
 import en from "./i18n/en";
-import fi from "./i18n/en";
-import sv from "./i18n/en";
+import fi from "./i18n/fi";
+import sv from "./i18n/sv";
 
 const defaultLang = "en";
 const sizemeLang = uiOptions.lang || document.documentElement.lang || "en";

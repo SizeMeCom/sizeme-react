@@ -1,0 +1,188 @@
+{
+  "fitVerdict": {
+    "not_fitted": "Too small",
+    "too_small": "Too small",
+    "slim": "Slim",
+    "regular": "Regular",
+    "loose": "Loose",
+    "very_loose": "Very loose",
+    "huge": "Huge",
+    "too_big": "Too big"
+  },
+  "fitVerdictLong": {
+    "not_fitted": "Too short",
+    "too_small": "Too short",
+    "slim": "Short",
+    "regular": "Regular",
+    "loose": "Long",
+    "very_loose": "Very long",
+    "huge": "Huge",
+    "too_big": "Too long"
+  },
+  "measurement": {
+    "chest": "Chest",
+    "waist": "Waist",
+    "sleeve": "Sleeve",
+    "sleeve_top_width": "Sleeve top",
+    "sleeve_top_opening": "Sleeve top opening",
+    "wrist_width": "Wrist",
+    "underbust": "Underbust",
+    "neck_opening_width": "Collar",
+    "shoulder_width": "Shoulder",
+    "front_height": "Front height",
+    "pant_waist": "Pant waist",
+    "hips": "Hips",
+    "inseam": "Inseam",
+    "outseam": "Outseam",
+    "thigh_width": "Thigh",
+    "knee_width": "Knee",
+    "calf_width": "Calf",
+    "pant_sleeve_width": "Leg opening",
+    "shoe_inside_length": "Shoe length",
+    "shoe_inside_width": "Shoe width",
+    "hat_width": "Hat circumference",
+    "hood_height": "Hood height",
+    "hem": "Hem",
+    "sleeve_opening": "Sleeve opening"
+  },
+  "humanMeasurements": {
+    "chest": "Chest",
+    "shirtWaist": "Waist",
+    "sleeve": "Arm length",
+    "shoulderFull": "Shoulder width",
+    "neckCircumference": "Neck circumference",
+    "frontHeight": "Front height",
+    "underbust": "Underbust",
+    "pantWaist": "Pant waist",
+    "hips": "Hips",
+    "inSeam": "Inseam",
+    "outSeam": "Outseam",
+    "thighCircumference": "Thigh circumference",
+    "kneeCircumference": "Knee circumference",
+    "ankleCircumference": "Ankle circumference",
+    "calfCircumference": "Calf circumference",
+    "footLength": "Foot length",
+    "footWidth": "Foot width",
+    "headCircumference": "Head circumference"
+  },
+  "common": {
+    "shoppingFor": "Shopping for",
+    "selectedSize": "Selected size",
+    "is": "is",
+    "addToProfile": "Add to profile",
+    "size": "Size",
+    "fetchingProfiles": "Fetching profiles...",
+    "closeText": "Close",
+    "goTo": "Go to",
+    "myProfiles": "My Profiles",
+    "andCreateOne": "and create one."
+  },
+  "message": {
+    "addProfiles": "Add profiles to your account for a size recommendation.",
+    "missingMeasurements": "Add more measurements to your profile for increased accuracy",
+    "noMeasurements": "Add measurements to your profile for a size recommendation.",
+    "addThisMeasurement": "Add this measurement to your profile to include it in the fit calculation.",
+    "noProfiles": "You have no profiles on your account.",
+    "noTopButton": "The shirt's top button for this size won't close."
+  },
+  "detailed": {
+    "windowTitle": "Detailed View for",
+    "buttonText": "Detailed view of fit",
+    "tableTitle": "Detailed fit - overlaps"
+  },
+  "sizeGuide": {
+    "windowTitle": "Size Guide for",
+    "buttonText": "Size guide",
+    "tableTitle": "Actual item measurements",
+    "measurementDisclaimer": "These measurements are measured <u>flat across the outside of the item</u>.",
+    "measurementDisclaimerCollar": "Except for the collar measurement, which is measured around the inside of the collar.",
+    "measurementDisclaimerInside": "These measurements are measured <u>inside the item</u>.",
+    "advertisement": "This size guide is brought to you by"
+  },
+  "fitInfo": {
+    "tooltipDefaultText": "The item's {{measurement, lowercase}} measurement ",
+    "whenPinched": " when pinched",
+    "noMatchItem": "is {{value}}. {{add}}",
+    "stretchedLittle": "The item is stretched a little.",
+    "stretchedSomewhat": "The item is stretched.",
+    "stretchedMuch": "The item is stretched a lot.",
+    "stretchedMax": "The item is stretched to the max.",
+    "theItem": "The item's",
+    "theMeasurement": "measurement",
+    "noOverlap": "is directly on you with no overlap.",
+    "isSmaller": "is <u>smaller</u> than your matching measurement by {{value}}{{whenPinched}}",
+    "overlapsYou": "overlaps you by",
+    "armSleeveStraight": "when your arm and the item's sleeve are <u>completely straight</u>",
+    "smConsidersFit": "SizeMe considers this particular fit",
+    "overallFit": "Overall fit",
+    "overallFitForSize": "The overall fit for <b>size"
+  },
+  "splash": {
+    "detailedText": "Take a few <b>measurements of yourself</b> and get personalized info on how this item would <b>fit you</b>.<br />Create a free <b>SizeMe</b> profile and stop guessing!",
+    "btnSignUpLabel": "Sign up",
+    "btnSignUpTitle": "Yes, I'd like to create a free account",
+    "btnLogInLabel": "Log in",
+    "btnLogInTitle": "I already have an account",
+    "btnNoThanksLabel": "No thanks",
+    "btnNoThanksTitle": "Maybe later",
+    "productPageSplashes": ["Unsure about the right size? Try"],
+    "productPageSplashTitle": "SizeMe is a free service to help you know how this item will fit You"
+  },
+  "signupBox": {
+    "message": "Save your measurements, so you don't have to remember them ever again.",
+    "signupPrompt": "Save with email",
+    "duplicateUser": "An account with this email already exists. Try to log in?"
+  },
+  "menu": {
+    "login": "Login/sign up to SizeMe"
+  },
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "Click",
+      "link": "here",
+      "end": "for guide"
+    },
+    "chest": [
+      "Around your body under your arms at fullest part of chest",
+      "Breathe out fully"
+    ],
+    "frontHeight": [
+      "From where your neck meets your shoulder directly down to your waistband"
+    ],
+    "sleeve": [
+      "From your shoulder down to your wrist",
+      "Keep your arm straight and pointing down"
+    ],
+    "pantWaist": [
+      "Around your body from where you normally keep your pants",
+      "Pull your stomach in like you are fitting on a pair of tight pants"
+    ],
+    "hips": [
+      "Around your body at the widest part of your hips"
+    ],
+    "outseam": [
+      "The outside of your leg starting from the top of your waistband",
+      "Measure down to your ankle bone"
+    ],
+    "shoeInsideLength": [
+      "Place a measuring tape next to a wall and stand on the tape"
+    ],
+    "calfWidth": [
+      "Measure around widest part of calf"
+    ],
+    "hatWidth": [
+      "Measure the biggest circumference of head at just above top of ears"
+    ]
+  },
+  "measurementGuide": {
+    "title": "How to measure your",
+    "chest": "Measure around your body under your arms at <b>fullest part</b> of chest<span class='female'> while wearing bra</span>.<br/><br/><b>Breathe out fully</b> while taking this measurement.",
+    "frontHeight": "Measure down from where your neck meets your shoulder directly down to your waistband (where you normally keep your pants).",
+    "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
+    "pantWaist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
+    "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
+    "shoeInsideLength": "Place a measuring tape next to a wall and stand on the tape.",
+    "calfWidth": "Measure around widest part of calf.",
+    "hatWidth": "Measure the biggest circumference of head at just above top of ears."
+  }
+}
