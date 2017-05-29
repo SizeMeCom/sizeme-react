@@ -23,4 +23,4 @@ deploy:
     script: rsync -r --delete-after --checksum --quiet $TRAVIS_BUILD_DIR/dist/ ubuntu@ssh.sizeme.com:/opt/sizeme/instances/sizeme.js/prod/3.0
     on:
       tags: true
-      condition: "$TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+.*$"
+      condition: "$TRAVIS_TAG =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+.*$"
