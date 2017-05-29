@@ -34,7 +34,8 @@ const commonConfig = merge([
         }
     }),
     parts.lintJavaScript({ include: PATHS.app }),
-    parts.loadJavaScript({ include: PATHS.app })
+    parts.loadJavaScript({ include: PATHS.app }),
+    parts.attachRevision()
 ]);
 
 const developmentConfig = merge([
@@ -124,6 +125,6 @@ module.exports = (env) => {
     const config = env === "production" ?
         productionConfig :
         developmentConfig;
-
+    
     return merge([commonConfig, config]);
 };

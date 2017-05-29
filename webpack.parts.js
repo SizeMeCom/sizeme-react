@@ -4,7 +4,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-//const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const BabiliPlugin = require("babili-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
@@ -190,13 +190,19 @@ exports.clean = (path) => ({
     ]
 });
 
-/*exports.attachRevision = () => ({
-    plugins: [
-        new webpack.BannerPlugin({
-            banner: new GitRevisionPlugin().version(),
-        }),
-    ],
-});*/
+exports.attachRevision = () => {
+    const gitRevisionPlugin = new GitRevisionPlugin({
+        versionCommand: "describe --always --tags --dirty"
+    });
+    return {
+        plugins: [
+            new webpack.DefinePlugin({
+                VERSION: JSON.stringify(gitRevisionPlugin.version()),
+                BUILD_DATE: JSON.stringify(new Date().toJSON())
+            })
+        ]
+    };
+};
 
 exports.minifyJavaScript = () => ({
     plugins: [
