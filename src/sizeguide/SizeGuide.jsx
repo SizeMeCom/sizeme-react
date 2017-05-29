@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
-import i18n from "../api/i18n";
 import FitTooltip from "../common/FitTooltip.jsx";
 import ReactTooltip from "react-tooltip";
 import { trackEvent } from "../api/ga";
+import { translate } from "react-i18next";
 import "./SizeGuide.scss";
 
 class SizeGuide extends React.Component {
@@ -64,32 +64,35 @@ class SizeGuide extends React.Component {
     };
 
     render () {
-        const selectedMatchResult = this.props.matchResult ? this.props.matchResult[this.props.selectedSize] : null;
+        const {
+            t, onSelectProfile, selectedProfile, profiles, selectedSize, product, matchResult, loggedIn
+        } = this.props;
+        const { guideIsOpen, highlight, tooltips } = this.state;
+        const selectedMatchResult = matchResult ? matchResult[selectedSize] : null;
         const matchMap = selectedMatchResult ? new Map(Object.entries(selectedMatchResult.matchMap)) : new Map();
-        const measurements = new Map(Object.entries(this.props.product.item.measurements));
-        const button = this.props.loggedIn ? i18n.DETAILED.button_text : i18n.SIZE_GUIDE.button_text;
+        const measurements = new Map(Object.entries(product.item.measurements));
+        const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
 
         const detailSection = () => {
-            if (this.props.loggedIn) {
+            if (loggedIn) {
                 return (
-                    <SizeGuideDetails onSelectProfile={this.props.onSelectProfile}
-                                      selectedProfile={this.props.selectedProfile ?
-                                          this.props.selectedProfile.id : ""}
-                                      profiles={this.props.profiles}
-                                      selectedSize={this.props.selectedSize}
-                                      measurementOrder={this.props.product.model.measurementOrder}
+                    <SizeGuideDetails onSelectProfile={onSelectProfile}
+                                      selectedProfile={selectedProfile ? selectedProfile.id : ""}
+                                      profiles={profiles}
+                                      selectedSize={selectedSize}
+                                      measurementOrder={product.model.measurementOrder}
                                       onHover={this.onHover}
-                                      matchResult={this.props.matchResult}
-                                      product={this.props.product}
+                                      matchResult={matchResult}
+                                      product={product}
                                       updateTooltip={this.updateTooltip}
                     />
                 );
             } else {
                 return (
-                    <SizeGuideProductInfo measurements={this.props.product.item.measurements}
-                                          measurementOrder={this.props.product.model.measurementOrder}
+                    <SizeGuideProductInfo measurements={product.item.measurements}
+                                          measurementOrder={product.model.measurementOrder}
                                           onHover={this.onHover}
-                                          getItemTypeComponent={this.props.product.model.getItemTypeComponent}
+                                          getItemTypeComponent={product.model.getItemTypeComponent}
                     />
                 );
             }
@@ -99,9 +102,9 @@ class SizeGuide extends React.Component {
             <div>
                 <a className="link-btn size-guide"
                    onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
-                {this.state.guideIsOpen &&
+                {guideIsOpen &&
                 <Modal
-                    isOpen={this.state.guideIsOpen}
+                    isOpen={guideIsOpen}
                     onRequestClose={this.closeGuide}
                     contentLabel="Size Guide"
                     className="size-guide-modal"
@@ -110,39 +113,39 @@ class SizeGuide extends React.Component {
                     <div className="modal-wrapper">
                         <div className="modal-header">
                             <span className="size-guide-title">
-                                {this.props.loggedIn ? i18n.DETAILED.window_title : i18n.SIZE_GUIDE.window_title} <span
-                                className="item-name">{this.props.product.name}</span>
+                                {loggedIn ? t("detailed.windowTitle") : t("sizeGuide.windowTitle")} <span
+                                className="item-name">{product.name}</span>
                             </span>
                             <a className="size-guide-close" role="button" onClick={this.closeGuide}>
-                                <FontAwesome name="times" title={i18n.COMMON.close_text}/>
+                                <FontAwesome name="times" title={t("common.closeText")}/>
                             </a>
                         </div>
 
                         <div className="modal-body">
                             <div className="size-guide-content">
-                                <SizeGuideItem measurements={measurements} selectedSize={this.props.selectedSize}
-                                               highlight={this.state.highlight} matchMap={matchMap}
-                                               selectedProfile={this.props.selectedProfile}
-                                               model={this.props.product.model} isGuide={!this.props.loggedIn}
+                                <SizeGuideItem measurements={measurements} selectedSize={selectedSize}
+                                               highlight={highlight} matchMap={matchMap}
+                                               selectedProfile={selectedProfile}
+                                               model={product.model} isGuide={!loggedIn}
                                 />
                                 {detailSection()}
                             </div>
                         </div>
 
                         <div className="modal-footer">
-                            {!this.props.loggedIn &&
+                            {!loggedIn &&
                             <span className="sizeme-advertisement">
-                                {i18n.SIZE_GUIDE.advertisement}
+                                {t("sizeGuide.advertisement")}
                                 <a id="sizeme_ad_link" href={contextAddress} target="_blank"/>
                             </span>
                             }
                         </div>
                     </div>
                 </Modal>}
-                {this.props.product.model.measurementOrder.map(measurement => {
+                {product.model.measurementOrder.map(measurement => {
                     // TODO: change this to use FitTooltip2, which doesn't need multiple ReactTooltip-components
                     return (<FitTooltip measurement={measurement} key={measurement}
-                                        fitData={this.state.tooltips[measurement]}/>);
+                                        fitData={tooltips[measurement]}/>);
                 })}
             </div>
         );
@@ -156,7 +159,8 @@ SizeGuide.propTypes = {
     selectedSize: PropTypes.string,
     onSelectProfile: PropTypes.func.isRequired,
     matchResult: PropTypes.object,
-    loggedIn: PropTypes.bool.isRequired
+    loggedIn: PropTypes.bool.isRequired,
+    t: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -172,7 +176,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     onSelectProfile: setSelectedProfile
 }, dispatch);
 
-export default connect(
+export default translate()(connect(
     mapStateToProps,
     mapDispatchToProps
-)(SizeGuide);
+)(SizeGuide));
