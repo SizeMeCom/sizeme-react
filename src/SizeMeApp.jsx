@@ -90,6 +90,7 @@ SizeMeApp.propTypes = {
 const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
     loggedIn: state.authToken.loggedIn,
+    sizemeProductPage: state.productInfo.product !== null,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
     recommendedMatch: Optional.ofNullable(state.match.matchResult)
         .map(res => res.recommendedFit ? res[res.recommendedFit] : null).orElse(null),
