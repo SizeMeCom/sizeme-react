@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { contextAddress } from "../api/sizeme-api";
 import Modal from "react-modal";
+import { trackEvent } from "../api/ga";
 import "./LoginFrame.scss";
 
 const instances = {};
@@ -42,6 +43,8 @@ class LoginFrame extends React.Component {
             mode: mode
         }, () => {
             window.addEventListener("message", this.receiveMessage, false);
+            trackEvent("clickLogin", "Store: Login clicked");
+            trackEvent("loginFrame", "API: loginFrame");
         });
     };
 

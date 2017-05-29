@@ -1,4 +1,5 @@
 import uiOptions from "./uiOptions";
+import { trackEvent } from "./ga";
 
 const sizeMapper = [];
 let selector;
@@ -114,7 +115,10 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
 }
 
 const initSizeSelector = selectSizeFn => {
-    selectSize = selectSizeFn;
+    selectSize = size => {
+        selectSizeFn(size);
+        trackEvent("sizeChanged", "Store: Product size changed");
+    };
     const getInstance = (constructor) => {
         const element = document.querySelector(uiOptions.invokeElement);
         if (element) {

@@ -11,6 +11,7 @@ import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import i18n from "../api/i18n";
 import FitTooltip from "../common/FitTooltip.jsx";
 import ReactTooltip from "react-tooltip";
+import { trackEvent } from "../api/ga";
 import "./SizeGuide.scss";
 
 class SizeGuide extends React.Component {
@@ -47,7 +48,13 @@ class SizeGuide extends React.Component {
 
 
     openGuide = () => {
-        this.setState({ guideIsOpen: true });
+        this.setState({ guideIsOpen: true }, () => {
+            if (this.props.loggedIn) {
+                trackEvent("detailedViewOpened", "Store: Detailed view opened");
+            } else {
+                trackEvent("sizeGuideOpened", "Store: Size guide opened");
+            }
+        });
     };
 
     closeGuide = () => {

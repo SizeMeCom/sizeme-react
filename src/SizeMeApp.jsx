@@ -11,11 +11,11 @@ import SignupBox from "./common/SignupBox";
 import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
+import { trackEvent } from "./api/ga";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
         super(props);
-        this.menuTrigger = null;
         this.state = {
             loginModalOpen: false
         };
@@ -24,19 +24,25 @@ class SizeMeApp extends React.Component {
     componentDidMount () {
         const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } = this.props;
         Promise.all([
-            resolveAuthToken().then(() => getProfiles()),
+            resolveAuthToken().then(resolved => getProfiles().then(() => resolved)),
             getProduct()
-        ]).then(() => {
+        ]).then(([tokenResolved, productResolved]) => {
+            if (tokenResolved && productResolved) {
+                trackEvent("productPageLoggedIn", "Store: Product page load, logged in");
+            } else if (tokenResolved && !productResolved) {
+                trackEvent("productPageNonSMLoggedIn", "Store: Product page load, logged in");
+            } else if (!tokenResolved && productResolved) {
+                trackEvent("productPageLoggedOut", "Store: Product page load, logged out");
+            } else {
+                trackEvent("productPageNonSMLoggedOut", "Store: Product page load, logged out");
+            }
             setSelectedProfile();
         });
     }
 
-    selectProfile = profileId => {
-        this.props.setSelectedProfile(profileId);
-    };
-
     userLoggedIn = () => {
         const { resolveAuthToken, getProfiles, setSelectedProfile } = this.props;
+        trackEvent("apiLogin", "API: login");
         resolveAuthToken(true)
             .then(() => getProfiles())
             .then(() => setSelectedProfile());

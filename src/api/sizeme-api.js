@@ -100,7 +100,7 @@ function jsonResponse (response) {
 function resolveAuthToken (reset = false) {
     return async (dispatch, getState) => {
         if (!reset && getState().authToken.resolved) {
-            return undefined;
+            return true;
         }
 
         dispatch(actions.checkToken());
@@ -122,6 +122,7 @@ function resolveAuthToken (reset = false) {
 
         if (authToken) {
             dispatch(actions.resolveToken(authToken));
+            return true;
         } else {
             dispatch(actions.fetchToken());
             try {
@@ -130,8 +131,10 @@ function resolveAuthToken (reset = false) {
                     .then(jsonResponse);
                 sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
                 dispatch(actions.resolveToken(tokenResp.token));
+                return tokenResp.token !== null;
             } catch (reason) {
                 dispatch(actions.resolveToken(reason));
+                return false;
             }
         }
     };
@@ -141,6 +144,7 @@ function signup (email) {
     return async (dispatch, getState) => {
         let token;
         dispatch(actions.signup());
+        trackEvent("clickSignUp", "Store: Sign up clicked");
         try {
             const signupResp = await fetch(`${contextAddress}/api/createAccount`,
                 createRequest("POST", {
@@ -192,7 +196,7 @@ function getProfiles () {
 function getProduct () {
     return async (dispatch, getState) => {
         if (getState().productInfo.resolved) {
-            return undefined;
+            return true;
         }
 
         dispatch(actions.requestProductInfo());
@@ -201,14 +205,14 @@ function getProduct () {
         const product = sizeme_product;
         if (!product) {
             dispatch(actions.receiveProductInfo(new Error("no product")));
-            return undefined;
+            return false;
         }
 
         if (!product.SKU) {
             const model = new SizeGuideModel(sizeme_product.item);
             // eslint-disable-next-line camelcase
             dispatch(actions.receiveProductInfo({ ...sizeme_product, model }));
-            return undefined;
+            return true;
         }
 
         try {
@@ -227,8 +231,10 @@ function getProduct () {
             const item = { ...dbItem, measurements };
             const model = new SizeGuideModel(item);
             dispatch(actions.receiveProductInfo({ ...product, item, skuMap, model }));
+            return true;
         } catch (reason) {
             dispatch(actions.receiveProductInfo(reason));
+            return false;
         }
     };
 }

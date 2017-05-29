@@ -17,7 +17,7 @@ let gaTrackingId = sizeme_options.gaTrackingId;
 
 let gaEnabled = false;
 ga(function () {
-    gaEnabled = gaTrackingId != null;
+    gaEnabled = gaTrackingId !== null;
 });
 
 let trackEvent = (action, label) => {
@@ -28,7 +28,7 @@ let trackEvent = (action, label) => {
                 hitType: "event",
                 eventCategory: window.location.hostname,
                 eventAction: a,
-                eventLabel: l
+                eventLabel: l + " (v3)"
             });
         };
         trackEvent(action, label);
