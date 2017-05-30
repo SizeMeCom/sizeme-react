@@ -40,6 +40,23 @@ class SizeSlider extends React.Component {
         this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
     }
 
+    componentDidMount () {
+        this.calculatePlaceholderSize();
+    }
+
+    componentDidUpdate () {
+        this.calculatePlaceholderSize();
+    }
+
+    calculatePlaceholderSize () {
+        if (!this.doShowFit() && this.placeholder) {
+            const containerWidth = this.placeholder.parentNode.offsetWidth - 10;
+            this.placeholder.style.transform = "scale(1)";
+            const placeholderWidth = this.placeholder.offsetWidth;
+            this.placeholder.style.transform = `scale(${containerWidth / placeholderWidth})`;
+        }
+    }
+
     doShowFit () {
         return this.props.match && this.props.match.matchMap && this.props.match.accuracy > 0;
     }
@@ -54,16 +71,22 @@ class SizeSlider extends React.Component {
     }
 
     render () {
+        const doShowFit = this.doShowFit();
         return (
-            <div className="sizeme-slider">
+            <div className={`sizeme-slider${doShowFit ? "" : " no-fit"}`}>
+                <div className="slider-placeholder">
+                    <span ref={ref => { this.placeholder = ref; }}>
+                        Enter your measurements to find the right size.
+                    </span>
+                </div>
                 {fitRanges.map(fit => (
                     <div className={fit.label + " fit-area"} key={fit.label}>
                         {i18n.FIT_VERDICT[fit.label]}
                     </div>
                 ))}
-                {this.doShowFit() && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
+                {doShowFit && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
                                                    fitRange={this.getFitRange()}/>}
-                {this.doShowFit() && this.props.recommendedMatch && <RecommendationIndicator
+                {doShowFit && this.props.recommendedMatch && <RecommendationIndicator
                     value={this.getFitPosition(this.props.recommendedMatch.totalFit)}/>}
             </div>
         );
