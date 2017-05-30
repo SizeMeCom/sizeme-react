@@ -1085,6 +1085,22 @@ export default class ProductModel {
         this.getItemTypeComponent = index => itemTypeArr[index];
     }
 
+    measurementName (measurement) {
+        if (this.getItemTypeComponent(0) === 1) {
+            if (measurement === "hips" || measurement === "pantWaist") {
+                return i18n.t("measurement.hem");
+            }
+
+            const sleeveLength = this.getItemTypeComponent(3);
+            if (measurement === "wrist_width" &&
+                (sleeveLength === 3 || sleeveLength === 5)) {
+                return i18n.t("measurement.sleeve_opening");
+            }
+        }
+
+        return i18n.t(`measurement.${measurement}`);
+    }
+
     static getFit = (measurementResult, overflowFits = true) => {
         if (!measurementResult) {
             return null;
