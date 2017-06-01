@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import i18n from "../api/i18n";
+import { translate } from "react-i18next";
+import { getResult } from "../api/ProductModel";
+import { connect } from "react-redux";
 
 const defaultFHHeight = 25;
 
@@ -56,16 +58,16 @@ const addSpecialTooltip = (measurement, fitData) => {
     );
 };
 
-function getStretchedTxt (stretchValue) {
+function getStretchedTxt (stretchValue, t) {
     if (stretchValue > 0) {
         if (stretchValue < 25) {
-            return i18n.FIT_INFO.stretched_little;
+            return t("fitInfo.stretchedLittle");
         } else if (stretchValue < 75) {
-            return i18n.FIT_INFO.stretched_somewhat;
+            return t("fitInfo.stretchedSomewhat");
         } else if (stretchValue < 95) {
-            return i18n.FIT_INFO.stretched_much;
+            return t("fitInfo.stretchedMuch");
         } else {
-            return i18n.FIT_INFO.stretched_max;
+            return t("fitInfo.stretchedMax");
         }
     }
     return "";
@@ -84,12 +86,12 @@ const overlapAndPinched = (fitData) => {
     }
 };
 
-const overlap = (fitData) => {
+const overlap = (fitData, t) => {
     const { matchItem, fitText, isPinched } = fitData;
     if (matchItem && matchItem.overlap > 0) {
         return (
-            <span>{i18n.FIT_INFO.overlaps_you}
-                <strong> {fitText}</strong>{isPinched && i18n.FIT_INFO.when_pinched}.
+            <span>{t("fitInfo.overlapsYou")}
+                <strong> {fitText}</strong>{isPinched && t("fitInfo.whenPinched")}.
             </span>
         );
     } else {
@@ -97,15 +99,17 @@ const overlap = (fitData) => {
     }
 };
 
-const noOverlap = (fitData) => {
+const noOverlap = (fitData, t) => {
     const { matchItem, fitText, isPinched } = fitData;
     if (matchItem && matchItem.overlap <= 0) {
         if (matchItem.componentFit >= 1000) {
-            return <span>{i18n.FIT_INFO.no_overlap} {getStretchedTxt(matchItem.componentStretch)}</span>;
+            return <span>{t("fitInfo.noOverlap")} {getStretchedTxt(matchItem.componentStretch)}</span>;
         } else {
             return (
-                <span dangerouslySetInnerHTML={{ __html: `${i18n.FIT_INFO.is_smaller}
-                ${fitText.replace("-", "")}${isPinched ? (" " + i18n.FIT_INFO.when_pinched) : ""}.` }}/>
+                <span dangerouslySetInnerHTML={{ __html: t("fitInfo.isSmaller", {
+                    value: fitText.replace("-", ""),
+                    whenPinched: isPinched ? t("fitInfo.whenPinched") : " "
+                }) + "." }}/>
             );
         }
     } else {
@@ -113,54 +117,90 @@ const noOverlap = (fitData) => {
     }
 };
 
-const noMatchItem = (fitData) => {
+const noMatchItem = (fitData, t) => {
     const { missingMeasurement, fitText, matchItem } = fitData;
     if (!matchItem) {
-        return <span>{i18n.COMMON.is} {fitText}. {missingMeasurement ? i18n.MESSAGE.add_this_measurement : ""}</span>;
+        return (<span>{t("fitInfo.noMatchItem", {
+            value: fitText,
+            add: (missingMeasurement ? t("message.addThisMeasurement") : " ")
+        })}</span>);
     } else {
         return null;
     }
 };
 
-const verdict = (fitData) => {
+const verdict = (fitData, t) => {
     const { matchItem, fit, isLongFit } = fitData;
     if (matchItem && matchItem.componentFit > 0) {
-        const fitVerdict = isLongFit ? i18n.FIT_VERDICT_LONG[fit.label] : i18n.FIT_VERDICT[fit.label];
-        return <span> {i18n.FIT_INFO.sm_considers_fit} <strong>{fitVerdict.toLowerCase()}</strong>.</span>;
+        const fitVerdict = isLongFit ? t(`fitVerdictLong.${fit.label}`) : t(`fitVerdict.${fit.label}`);
+        return <span> {t("fitInfo.smConsidersFit")} <strong>{fitVerdict.toLowerCase()}</strong>.</span>;
     } else {
         return null;
     }
 };
 
-class FitTooltip extends React.Component {
-
+class FitTooltip2 extends React.Component {
     constructor (props) {
         super(props);
-        this.defaultText = `${i18n.FIT_INFO.the_item} 
-        ${i18n.MEASUREMENT[this.props.measurement].toLowerCase()} 
-        ${i18n.FIT_INFO.the_measurement} `;
+        this.state = { fitData: null };
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { product, selectedSize, matchResult, measurement } = nextProps;
+        if (matchResult) {
+            const item = Object.assign({}, product.item, {
+                measurements: product.item.measurements[selectedSize]
+            });
+            const matchItem = matchResult.matchMap[measurement];
+            const missingMeasurement = matchResult.missingMeasurements
+                    .findIndex(([meas]) => meas === measurement) >= 0;
+            const fitData = {
+                matchItem, missingMeasurement,
+                ...getResult(measurement, item.measurements[measurement], matchItem)
+            };
+            this.setState({ fitData });
+        } else {
+            this.setState({ fitData: null });
+        }
     }
 
     render () {
-        const fitData = this.props.fitData;
-        return (
-            <ReactTooltip id={this.props.measurement}
-                          place="right" className={`fit-tooltip ${this.props.measurement}`}>
-                {overlapAndPinched(fitData)}
-                {addSpecialTooltip(this.props.measurement, fitData)}
-                {this.defaultText}
-                {overlap(fitData)}
-                {noOverlap(fitData)}
-                {verdict(fitData)}
-                {noMatchItem(fitData)}
-            </ReactTooltip>
-        );
+        const { t, measurement, product } = this.props;
+        const { measurementName } = product.model;
+        const { fitData } = this.state;
+        if (!fitData || !measurement) {
+            return <ReactTooltip id="fit-tooltip" place="right" className="fit-tooltip"/>;
+        } else {
+            return (
+                <ReactTooltip id="fit-tooltip"
+                              place="right" className={`fit-tooltip ${measurement}`}>
+                    {overlapAndPinched(fitData)}
+                    {addSpecialTooltip(measurement, fitData)}
+                    {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
+                    {overlap(fitData, t)}
+                    {noOverlap(fitData, t)}
+                    {verdict(fitData, t)}
+                    {noMatchItem(fitData, t)}
+                </ReactTooltip>
+            );
+        }
     }
 }
 
-FitTooltip.propTypes = {
-    measurement: PropTypes.string.isRequired,
-    fitData: PropTypes.object.isRequired
+FitTooltip2.propTypes = {
+    measurement: PropTypes.string,
+    product: PropTypes.object,
+    selectedSize: PropTypes.string,
+    matchResult: PropTypes.object,
+    t: PropTypes.func.isRequired
 };
 
-export default FitTooltip;
+const mapStateToProps = state => ({
+    measurement: state.tooltip,
+    product: state.productInfo.product,
+    selectedSize: state.selectedSize,
+    matchResult: state.selectedSize && state.match.matchResult ?
+        state.match.matchResult[state.selectedSize] : null
+});
+
+export default translate()(connect(mapStateToProps)(FitTooltip2));

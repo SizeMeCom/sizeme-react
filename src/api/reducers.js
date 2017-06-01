@@ -123,6 +123,8 @@ const match = handleActions({
     isFetching: false
 });
 
+const tooltip = handleAction(actions.SET_TOOLTIP, (state, action) => action.payload, null);
+
 const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => action.payload, "");
 
 const rootReducer = combineReducers({
@@ -132,7 +134,8 @@ const rootReducer = combineReducers({
     productInfo,
     selectedProfile,
     match,
-    selectedSize
+    selectedSize,
+    tooltip
 });
 
 export default rootReducer;

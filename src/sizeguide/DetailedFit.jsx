@@ -25,17 +25,11 @@ class DetailedFit extends React.Component {
             .map(m => m.matchMap[props.measurement])
             .orElse(null);
 
-        const missingMeasurement = matchOpt
-            .map(m => m.missingMeasurements.findIndex(([meas]) => meas === props.measurement) >= 0)
-            .orElse(false);
-
         const result = getResult(
             props.measurement,
             props.item.measurements[props.measurement],
             matchItem
         );
-
-        props.updateTooltip(props.measurement, { matchItem, missingMeasurement, ...result });
 
         this.setState({
             result
@@ -69,7 +63,6 @@ DetailedFit.propTypes = {
     measurement: PropTypes.string.isRequired,
     match: PropTypes.object,
     item: PropTypes.object.isRequired,
-    updateTooltip: PropTypes.func.isRequired,
     t: PropTypes.func,
     measurementName: PropTypes.func.isRequired
 };

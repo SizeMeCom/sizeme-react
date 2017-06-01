@@ -40,7 +40,7 @@ class OverlapBox extends React.Component {
     render () {
         const overlap = this.props.fit.overlap / (isPinch(this.props.humanProperty) ? 20 : 10);
         return (
-            <div className="overlap-box" data-tip data-for="overlap-tooltip" onMouseEnter={this.props.hover}>
+            <div className="overlap-box" data-tip data-for="fit-tooltip" onMouseEnter={this.props.hover}>
                 <div className="overlap-svg">
                     {illustration(this.props.humanProperty, overlap)}
                 </div>

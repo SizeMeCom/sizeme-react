@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
-import FitTooltip from "../common/FitTooltip.jsx";
 import ReactTooltip from "react-tooltip";
 import { trackEvent } from "../api/ga";
 import { translate } from "react-i18next";
 import "./SizeGuide.scss";
+import { setTooltip } from "../api/actions";
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -20,8 +20,7 @@ class SizeGuide extends React.Component {
 
         this.state = {
             guideIsOpen: false,
-            highlight: "",
-            tooltips: Object.assign(...this.props.product.model.measurementOrder.map(m => ({ [m]: {} })))
+            highlight: ""
         };
     }
 
@@ -31,22 +30,14 @@ class SizeGuide extends React.Component {
                 this.setState({ highlight: measurement });
             }, 100);
         } else {
+            this.props.onFitHover(measurement);
             this.setState({ highlight: measurement });
             if (this.removeTimeout) {
                 clearTimeout(this.removeTimeout);
             }
         }
     };
-
-    updateTooltip = (measurement, tooltip) => {
-        this.setState({
-            tooltips: Object.assign(this.state.tooltips, {
-                [measurement]: tooltip
-            })
-        });
-    };
-
-
+        
     openGuide = () => {
         this.setState({ guideIsOpen: true }, () => {
             if (this.props.loggedIn) {
@@ -67,7 +58,7 @@ class SizeGuide extends React.Component {
         const {
             t, onSelectProfile, selectedProfile, profiles, selectedSize, product, matchResult, loggedIn
         } = this.props;
-        const { guideIsOpen, highlight, tooltips } = this.state;
+        const { guideIsOpen, highlight } = this.state;
         const selectedMatchResult = matchResult ? matchResult[selectedSize] : null;
         const matchMap = selectedMatchResult ? new Map(Object.entries(selectedMatchResult.matchMap)) : new Map();
         const measurements = new Map(Object.entries(product.item.measurements));
@@ -80,11 +71,9 @@ class SizeGuide extends React.Component {
                                       selectedProfile={selectedProfile ? selectedProfile.id : ""}
                                       profiles={profiles}
                                       selectedSize={selectedSize}
-                                      measurementOrder={product.model.measurementOrder}
                                       onHover={this.onHover}
                                       matchResult={matchResult}
                                       product={product}
-                                      updateTooltip={this.updateTooltip}
                     />
                 );
             } else {
@@ -141,11 +130,6 @@ class SizeGuide extends React.Component {
                         </div>
                     </div>
                 </Modal>}
-                {product.model.measurementOrder.map(measurement => {
-                    // TODO: change this to use FitTooltip2, which doesn't need multiple ReactTooltip-components
-                    return (<FitTooltip measurement={measurement} key={measurement} fitData={tooltips[measurement]}
-                                        measurementName={product.model.measurementName}/>);
-                })}
             </div>
         );
     }
@@ -157,6 +141,7 @@ SizeGuide.propTypes = {
     selectedProfile: PropTypes.object,
     selectedSize: PropTypes.string,
     onSelectProfile: PropTypes.func.isRequired,
+    onFitHover: PropTypes.func,
     matchResult: PropTypes.object,
     loggedIn: PropTypes.bool.isRequired,
     t: PropTypes.func
@@ -172,7 +157,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onSelectProfile: setSelectedProfile
+    onSelectProfile: setSelectedProfile,
+    onFitHover: setTooltip
 }, dispatch);
 
 export default translate()(connect(
