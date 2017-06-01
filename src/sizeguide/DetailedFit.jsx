@@ -44,11 +44,11 @@ class DetailedFit extends React.Component {
 
     render () {
         const { fit, fitText, isLongFit } = this.state.result;
-        const { t, measurement, num } = this.props;
+        const { t, measurement, num, measurementName } = this.props;
         return (
             <div className="detailed-fit">
                 <div className="measurement-head">
-                    <span className="num">{num}</span>{t(`measurement.${measurement}`)}
+                    <span className="num">{num}</span>{measurementName(measurement)}
                 </div>
 
                 <div className="overlap">{fitText}</div>
@@ -70,7 +70,8 @@ DetailedFit.propTypes = {
     match: PropTypes.object,
     item: PropTypes.object.isRequired,
     updateTooltip: PropTypes.func.isRequired,
-    t: PropTypes.func
+    t: PropTypes.func,
+    measurementName: PropTypes.func.isRequired
 };
 
 export default translate()(DetailedFit);

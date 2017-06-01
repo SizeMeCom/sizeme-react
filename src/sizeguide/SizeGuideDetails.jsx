@@ -65,7 +65,7 @@ class SizeGuideDetails extends React.Component {
                             <HoverContainer measurement={measurement} onHover={this.props.onHover} key={i}>
                                 <div className="fit-wrapper" data-tip data-for={measurement}>
                                     <DetailedFit measurement={measurement} num={i + 1}
-                                                 item={item}
+                                                 item={item} measurementName={this.props.product.model.measurementName}
                                                  match={match}
                                                  updateTooltip={this.props.updateTooltip}
                                     />

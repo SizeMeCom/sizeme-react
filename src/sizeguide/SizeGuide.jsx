@@ -90,9 +90,8 @@ class SizeGuide extends React.Component {
             } else {
                 return (
                     <SizeGuideProductInfo measurements={product.item.measurements}
-                                          measurementOrder={product.model.measurementOrder}
+                                          productModel={product.model}
                                           onHover={this.onHover}
-                                          getItemTypeComponent={product.model.getItemTypeComponent}
                     />
                 );
             }
@@ -144,8 +143,8 @@ class SizeGuide extends React.Component {
                 </Modal>}
                 {product.model.measurementOrder.map(measurement => {
                     // TODO: change this to use FitTooltip2, which doesn't need multiple ReactTooltip-components
-                    return (<FitTooltip measurement={measurement} key={measurement}
-                                        fitData={tooltips[measurement]}/>);
+                    return (<FitTooltip measurement={measurement} key={measurement} fitData={tooltips[measurement]}
+                                        measurementName={product.model.measurementName}/>);
                 })}
             </div>
         );

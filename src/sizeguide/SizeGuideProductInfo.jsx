@@ -9,18 +9,18 @@ import { openLoginFrame } from "../common/LoginFrame";
 
 class SizeGuideProductInfo extends React.Component {
 
-    hasNeckOpening = () => this.props.measurementOrder.includes("neck_opening_width");
+    hasNeckOpening = () => this.props.productModel.measurementOrder.includes("neck_opening_width");
 
     isInside = () => {
-        const zero = this.props.getItemTypeComponent(0);
+        const zero = this.props.productModel.getItemTypeComponent(0);
         return zero === 3 || zero === 4;
     };
 
     loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
 
     render () {
-        const { t, measurements, measurementOrder, onHover } = this.props;
-        const measurementName = measurement => t(`measurement.${measurement}`);
+        const { t, measurements, onHover, productModel } = this.props;
+        const { measurementOrder, measurementName } = productModel;
 
         const measurementCell = (size, measurement) => (
             <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
@@ -91,9 +91,8 @@ class SizeGuideProductInfo extends React.Component {
 
 SizeGuideProductInfo.propTypes = {
     measurements: PropTypes.objectOf(PropTypes.object),
-    measurementOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
+    productModel: PropTypes.object.isRequired,
     onHover: PropTypes.func.isRequired,
-    getItemTypeComponent: PropTypes.func.isRequired,
     t: PropTypes.func
 };
 

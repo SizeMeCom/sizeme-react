@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
-import i18n from "../api/i18n";
 import ProductModel, { humanMeasurementMap, getResult } from "../api/ProductModel";
 import MeasurementInput from "./MeasurementInput.jsx";
 import FontAwesome from "react-fontawesome";
@@ -14,6 +13,7 @@ import Optional from "optional-js";
 import OverlapBox from "../illustrations/OverlapBox";
 import FitTooltip2 from "./FitTooltip2";
 import "./SizeForm.scss";
+import { translate } from "react-i18next";
 
 class SizeForm extends React.Component {
 
@@ -65,12 +65,14 @@ class SizeForm extends React.Component {
         this.setState({ guideModalOpen: false });
     };
 
-    tooltipContent = () => {
-        const linkTexts = i18n.MEASUREMENT_TOOLTIPS.link_to_guide;
+    tooltipContent = t => () => {
+        const linkTexts = t("measurementTooltips.linkToGuide");
+        const tooltips = this.activeTooltip ?
+            t(`measurementTooltips.${this.activeTooltip}`, { returnObjects: true }) : [];
         return (
             <div>
                 <ul>
-                    {(i18n.MEASUREMENT_TOOLTIPS[this.activeTooltip] || []).map((text, i) => (
+                    {tooltips.map((text, i) => (
                         <li key={i}>{text}</li>
                     ))}
                 </ul>
@@ -82,21 +84,21 @@ class SizeForm extends React.Component {
         );
     };
 
-    modalContent = () => {
+    modalContent = (t) => {
         if (!this.activeTooltip) {
             return null;
         }
         const humanMeasurement = humanMeasurementMap.get(this.activeTooltip);
-        const humanMeasurementName = i18n.HUMAN_MEASUREMENTS[humanMeasurement];
+        const humanMeasurementName = t(`humanMeasurements.${humanMeasurement}`);
         return (
             <div>
                 <div className="measurement-instruction-box">
                     <FontAwesome name="times" onClick={this.closeGuideModal}/>
                     <h2 className="instruction-title">
-                        {i18n.MEASUREMENT_GUIDE.title} {humanMeasurementName.toLowerCase()}
+                        {t("measurementGuide.title")} {humanMeasurementName.toLowerCase()}
                     </h2>
                     <div className={`instruction-content gender-${this.props.gender}`}
-                         dangerouslySetInnerHTML={{ __html: i18n.MEASUREMENT_GUIDE[this.activeTooltip] }}/>
+                         dangerouslySetInnerHTML={{ __html: t(`measurementGuide.${this.activeTooltip}`) }}/>
                 </div>
                 <VideoGuide measurement={humanMeasurement} gender={this.props.gender}/>
             </div>
@@ -134,13 +136,14 @@ class SizeForm extends React.Component {
             .orElse(null);
         const measurementCellWidth = (100 / this.fields.length) + "%";
         const { fitTooltip } = this.state;
+        const { t } = this.props;
 
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
                 
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
-                        <div className="label">{i18n.HUMAN_MEASUREMENTS[humanProperty]}</div>
+                        <div className="label">{t(`humanMeasurements.${humanProperty}`)}</div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
                                           value={this.state.measurements[humanProperty]}
                                           fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
@@ -150,8 +153,9 @@ class SizeForm extends React.Component {
                         ).orElse(null)}
                     </div>
                 ))}
-                <FitTooltip2 id="overlap-tooltip" measurement={fitTooltip.measurement} fitData={fitTooltip.fitData}/>
-                <ReactTooltip id="input-tooltip" getContent={this.tooltipContent}/>
+                <FitTooltip2 id="overlap-tooltip" measurement={fitTooltip.measurement} fitData={fitTooltip.fitData}
+                             measurementName={this.props.product.model.measurementName}/>
+                <ReactTooltip id="input-tooltip" getContent={this.tooltipContent(t)}/>
                 <Modal isOpen={this.state.guideModalOpen}
                        onRequestClose={this.closeGuideModal}
                        className="measurement-guide-modal"
@@ -163,7 +167,7 @@ class SizeForm extends React.Component {
                            }
                        }}
                 >
-                    {this.modalContent()}
+                    {this.modalContent(t)}
                 </Modal>
             </div>
         );
@@ -177,14 +181,15 @@ SizeForm.propTypes = {
     matchResult: PropTypes.object,
     measurements: PropTypes.object,
     product: PropTypes.object,
-    selectedSize: PropTypes.string
+    selectedSize: PropTypes.string,
+    t: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onChange: setProfileMeasurements
 }, dispatch);
 
-export default connect(
+export default translate()(connect(
     state => ({
         gender: Optional.ofNullable(state.selectedProfile)
             .flatMap(p => Optional.ofNullable(p.gender))
@@ -199,4 +204,4 @@ export default connect(
         selectedSize: state.selectedSize
     }),
     mapDispatchToProps
-)(SizeForm);
+)(SizeForm));
