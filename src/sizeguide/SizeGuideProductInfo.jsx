@@ -2,41 +2,42 @@ import React from "react";
 import PropTypes from "prop-types";
 import DetailSection from "./DetailSection.jsx";
 import SizeSelector from "../api/SizeSelector";
-import i18n from "../api/i18n";
+import { translate } from "react-i18next";
 import HoverContainer from "./HoverContainer.jsx";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
 import { openLoginFrame } from "../common/LoginFrame";
 
 class SizeGuideProductInfo extends React.Component {
 
-    hasNeckOpening = () => this.props.measurementOrder.includes("neck_opening_width");
+    hasNeckOpening = () => this.props.productModel.measurementOrder.includes("neck_opening_width");
 
     isInside = () => {
-        const zero = this.props.getItemTypeComponent(0);
+        const zero = this.props.productModel.getItemTypeComponent(0);
         return zero === 3 || zero === 4;
     };
 
     loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
 
     render () {
-        const measurementName = measurement => i18n.MEASUREMENT[measurement];
+        const { t, measurements, onHover, productModel } = this.props;
+        const { measurementOrder, measurementName } = productModel;
 
         const measurementCell = (size, measurement) => (
-            <HoverContainer measurement={measurement} key={measurement} onHover={this.props.onHover}>
-                <td>{(this.props.measurements[size][measurement] / 10.0).toFixed(1)} cm</td>
+            <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
+                <td>{(measurements[size][measurement] / 10.0).toFixed(1)} cm</td>
             </HoverContainer>
         );
 
         return (
             <div className="size-guide-data size-guide-product-info">
-                <DetailSection title={i18n.SIZE_GUIDE.table_title}>
+                <DetailSection title={t("sizeGuide.tableTitle")}>
                     <table className="product-info-table">
                         <thead>
                             <tr>
                                 <th className="size-col">size</th>
-                                {this.props.measurementOrder.map((measurement, i) => (
+                                {measurementOrder.map((measurement, i) => (
                                     <HoverContainer measurement={measurement} key={measurement}
-                                                    onHover={this.props.onHover}>
+                                                    onHover={onHover}>
                                         <th className="measurement-head">
                                             <span className="num">{i + 1}</span>{measurementName(measurement)}
                                         </th>
@@ -48,20 +49,19 @@ class SizeGuideProductInfo extends React.Component {
                                 {SizeSelector.sizeMapper.map(([size, sizeName]) => (
                                     <tr key={sizeName}>
                                         <td className="size-col">{sizeName}</td>
-                                        {this.props.measurementOrder
-                                            .map(measurement => measurementCell(size, measurement))}
+                                        {measurementOrder.map(measurement => measurementCell(size, measurement))}
                                     </tr>
                                 ))}
                         </tbody>
                     </table>
                     {this.isInside() ?
                         <div className="sizeme-explanation">
-                            <div dangerouslySetInnerHTML={{ __html: i18n.SIZE_GUIDE.measurement_disclaimer_inside }}/>
+                            <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerInside") }}/>
                         </div> :
                         <div className="sizeme-explanation">
-                            <div dangerouslySetInnerHTML={{ __html: i18n.SIZE_GUIDE.measurement_disclaimer }}/>
+                            <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimer") }}/>
                             {this.hasNeckOpening() &&
-                            <div dangerouslySetInnerHTML={{ __html: i18n.SIZE_GUIDE.measurement_disclaimer_collar }}/>
+                            <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerCollar") }}/>
                             }
                         </div>
                     }
@@ -70,16 +70,16 @@ class SizeGuideProductInfo extends React.Component {
 
                 <CookieHideWrapper>
                     <div className="size-guide-splash">
-                        <p dangerouslySetInnerHTML={{ __html: i18n.SPLASH.detailed_text }}/>
+                        <p dangerouslySetInnerHTML={{ __html: t("splash.detailedText") }}/>
                         <div className="splash-choices">
                             <a onClick={this.loginFrameOpener("signup")} className="sign-up link-btn"
-                               title={i18n.SPLASH.btn_sign_up_title}>{i18n.SPLASH.btn_sign_up_label}</a>
+                               title={t("splash.btnSignUpTitle")}>{t("splash.btnSignUpLabel")}</a>
 
                             <a onClick={this.loginFrameOpener("login")} className="log-in link-btn"
-                               title={i18n.SPLASH.btn_log_in_title}>{i18n.SPLASH.btn_log_in_label}</a>
+                               title={t("splash.btnLogInTitle")}>{t("splash.btnLogInLabel")}</a>
 
                             <a href="#" className="no-thanks link-btn" onClick={hideSizeMe}
-                               title={i18n.SPLASH.btn_no_thanks_title}>{i18n.SPLASH.btn_no_thanks_label}</a>
+                               title={t("splash.btnNoThanksTitle")}>{t("splash.btnNoThanksLabel")}</a>
 
                         </div>
                     </div>
@@ -91,9 +91,9 @@ class SizeGuideProductInfo extends React.Component {
 
 SizeGuideProductInfo.propTypes = {
     measurements: PropTypes.objectOf(PropTypes.object),
-    measurementOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
+    productModel: PropTypes.object.isRequired,
     onHover: PropTypes.func.isRequired,
-    getItemTypeComponent: PropTypes.func.isRequired
+    t: PropTypes.func
 };
 
-export default SizeGuideProductInfo;
+export default translate()(SizeGuideProductInfo);

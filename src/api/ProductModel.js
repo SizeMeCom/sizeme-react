@@ -1,4 +1,4 @@
-import i18n from "./i18n";
+import i18n from "i18next";
 import Optional from "optional-js";
 
 const fitStep = 55;
@@ -251,9 +251,6 @@ function init (itemTypeArr) {
     switch (itemTypeArr[0]) {
 
         case 1:	// shirts/coats
-            i18n.MEASUREMENT.hips = i18n.MEASUREMENT.hem;
-            i18n.MEASUREMENT.pantWaist = i18n.MEASUREMENT.hem;
-
             switch (itemTypeArr[1]) { // collar
                 case 2:	// tight (turnover)
                     itemDrawing.coords.push({ X: 0, Y: -60 }, {
@@ -482,8 +479,6 @@ function init (itemTypeArr) {
                         lift: false
                     };
 
-                    i18n.MEASUREMENT.wrist_width = i18n.MEASUREMENT.sleeve_opening;
-
                     switch (itemTypeArr[2]) { // shoulder types
                         case 3:	// dropped
                             itemDrawing.accents.push({
@@ -555,8 +550,6 @@ function init (itemTypeArr) {
                         coords: [{ X: 389, Y: 769 }, { X: 527, Y: 719 }],
                         lift: false
                     };
-
-                    i18n.MEASUREMENT.wrist_width = i18n.MEASUREMENT.sleeve_opening;
 
                     switch (itemTypeArr[2]) { // shoulder types
                         case 3:	// dropped
@@ -1084,6 +1077,22 @@ export default class ProductModel {
 
         this.getItemTypeComponent = index => itemTypeArr[index];
     }
+
+    measurementName = (measurement) => {
+        if (this.getItemTypeComponent(0) === 1) {
+            if (measurement === "hips" || measurement === "pantWaist") {
+                return i18n.t("measurement.hem");
+            }
+
+            const sleeveLength = this.getItemTypeComponent(3);
+            if (measurement === "wrist_width" &&
+                sleeveLength >= 2 && sleeveLength <= 5) {
+                return i18n.t("measurement.sleeve_opening");
+            }
+        }
+
+        return i18n.t(`measurement.${measurement}`);
+    };
 
     static getFit = (measurementResult, overflowFits = true) => {
         if (!measurementResult) {

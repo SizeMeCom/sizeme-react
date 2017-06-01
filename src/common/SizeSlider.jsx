@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import i18n from "../api/i18n";
+import { translate, Interpolate } from "react-i18next";
 import "./SizeSlider.scss";
 import ProductModel, { fitRanges } from "../api/ProductModel";
 
@@ -81,7 +81,7 @@ class SizeSlider extends React.Component {
                 </div>
                 {fitRanges.map(fit => (
                     <div className={fit.label + " fit-area"} key={fit.label}>
-                        {i18n.FIT_VERDICT[fit.label]}
+                        <Interpolate i18nKey={`fitVerdict.${fit.label}`}/>
                     </div>
                 ))}
                 {doShowFit && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
@@ -98,4 +98,4 @@ SizeSlider.propTypes = {
     recommendedMatch: PropTypes.object
 };
 
-export default SizeSlider;
+export default translate()(SizeSlider);

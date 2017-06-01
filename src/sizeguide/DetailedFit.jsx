@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import i18n from "../api/i18n";
 import { getResult } from "../api/ProductModel";
 import Optional from "optional-js";
-
-const measurementName = measurement => i18n.MEASUREMENT[measurement];
+import { translate } from "react-i18next";
 
 class DetailedFit extends React.Component {
     constructor (props) {
@@ -27,17 +25,11 @@ class DetailedFit extends React.Component {
             .map(m => m.matchMap[props.measurement])
             .orElse(null);
 
-        const missingMeasurement = matchOpt
-            .map(m => m.missingMeasurements.findIndex(([meas]) => meas === props.measurement) >= 0)
-            .orElse(false);
-
         const result = getResult(
             props.measurement,
             props.item.measurements[props.measurement],
             matchItem
         );
-
-        props.updateTooltip(props.measurement, { matchItem, missingMeasurement, ...result });
 
         this.setState({
             result
@@ -46,7 +38,7 @@ class DetailedFit extends React.Component {
 
     render () {
         const { fit, fitText, isLongFit } = this.state.result;
-        const { measurement, num } = this.props;
+        const { t, measurement, num, measurementName } = this.props;
         return (
             <div className="detailed-fit">
                 <div className="measurement-head">
@@ -58,7 +50,7 @@ class DetailedFit extends React.Component {
                 {fit ? (
                     <div className={`fit-label ${fit.label}`}>
                         {isLongFit ?
-                            i18n.FIT_VERDICT_LONG[fit.label] : i18n.FIT_VERDICT[fit.label]}
+                            t(`fitVerdictLong.${fit.label}`) : t(`fitVerdict.${fit.label}`)}
                     </div>
                 ) : <div className="fit-label"/>}
             </div>
@@ -71,7 +63,8 @@ DetailedFit.propTypes = {
     measurement: PropTypes.string.isRequired,
     match: PropTypes.object,
     item: PropTypes.object.isRequired,
-    updateTooltip: PropTypes.func.isRequired
+    t: PropTypes.func,
+    measurementName: PropTypes.func.isRequired
 };
 
-export default DetailedFit;
+export default translate()(DetailedFit);
