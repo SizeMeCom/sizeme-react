@@ -1,4 +1,28 @@
 {
+  "common": {
+    "closeText": "Sulje",
+    "selectedSize": "Valittu koko", 
+    "shoppingFor": "Aktiivinen profiili"
+  },
+  "detailed": {
+    "windowTitle": "Sopivuustiedot tuotteelle",
+    "buttonText": "Sopivuustiedot",
+    "tableTitle": "Sopivuustiedot"
+  },
+  "fitInfo": {
+    "isSmaller": "on {{value}} sinun omaa mittaasi <u>pienempi</u>{{whenPinched}}",
+    "noMatchItem": "on {{value}}. {{add}}",
+    "noOverlap": "on suoraan sinua vasten.",
+    "overallFit": "Sopivuus",
+    "overlapsYou": "ylittää mittasi",
+    "smConsidersFit": "SizeMe:n mielestä tämä sopivuus on",
+    "stretchedLittle": "Tuote venyy vähän.",
+    "stretchedMax": "Tuote venyy huolella.",
+    "stretchedMuch": "Tuote venyy kunnolla.",
+    "stretchedSomewhat": "Tuote venyy.",
+    "tooltipDefaultText": "Tuotteen {{measurement, lowercase}}-mitta ",
+    "whenPinched": " nipistettynä sormien väliin"
+  },
   "fitVerdict": {
     "not_fitted": "Pieni",
     "too_small": "Pieni",
@@ -19,6 +43,26 @@
     "huge": "Valtava",
     "too_big": "Liian pitkä"
   },
+  "humanMeasurements": {
+    "chest": "Rinnan ympärys",
+    "shirtWaist": "Vyötärö",
+    "sleeve": "Käden pituus",
+    "shoulderFull": "Hartia",
+    "neckCircumference": "Kaulan ympärys",
+    "frontHeight": "Etupituus",
+    "underbust": "Rinnan alta",
+    "pantWaist": "Housun vyötärö",
+    "hips": "Lantio",
+    "inSeam": "Sisäsauma",
+    "outSeam": "Ulkosauma",
+    "thighCircumference": "Reiden ympärys",
+    "kneeCircumference": "Polven ympärys",
+    "ankleCircumference": "Nilkan ympärys",
+    "calfCircumference": "Pohkeen ympärys",
+    "footLength": "Jalan pituus",
+    "footWidth": "Jalan leveys",
+    "headCircumference": "Pään ympärys"
+  },  
   "measurement": {
     "chest": "Rinta",
     "waist": "Vyötärö",
@@ -45,37 +89,55 @@
     "hem": "Helma",
     "sleeve_opening": "Hihan suu"
   },
-  "humanMeasurements": {
-    "chest": "Rinnan ympärys",
-    "shirtWaist": "Vyötärö",
-    "sleeve": "Käden pituus",
-    "shoulderFull": "Hartia",
-    "neckCircumference": "Kaulan ympärys",
-    "frontHeight": "Etupituus",
-    "underbust": "Rinnan alta",
-    "pantWaist": "Housun vyötärö",
-    "hips": "Lantio",
-    "inSeam": "Sisäsauma",
-    "outSeam": "Ulkosauma",
-    "thighCircumference": "Reiden ympärys",
-    "kneeCircumference": "Polven ympärys",
-    "ankleCircumference": "Nilkan ympärys",
-    "calfCircumference": "Pohkeen ympärys",
-    "footLength": "Jalan pituus",
-    "footWidth": "Jalan leveys",
-    "headCircumference": "Pään ympärys"
+  "measurementGuide": {
+    "title": "How to measure your",
+    "chest": "Measure around your body under your arms at <b>fullest part</b> of chest<span class='female'> while wearing bra</span>.<br/><br/><b>Breathe out fully</b> while taking this measurement.",
+    "front_height": "Measure down from where your neck meets your shoulder directly down to your waistband (where you normally keep your pants).",
+    "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
+    "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
+    "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
+    "shoe_inside_length": "Place a measuring tape next to a wall and stand on the tape. Use thin socks or no socks at all.",
+    "calf_width": "Measure around widest part of calf.",
+    "hat_width": "Measure the biggest circumference of head at just above top of ears."
   },
-  "common": {
-    "shoppingFor": "Aktiivinen profiili",
-    "selectedSize": "Valittu koko",
-    "is": "on",
-    "addToProfile": "Lisää profiiliin",
-    "size": "Koko",
-    "fetchingProfiles": "Haetaan profiileja...",
-    "closeText": "Sulje",
-    "goTo": "Mene",
-    "myProfiles": "Profiili-sivulleni",
-    "andCreateOne": "ja luo profiili."
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "Click",
+      "link": "here",
+      "end": "for guide"
+    },
+    "chest": [
+      "Around your body under your arms at fullest part of chest",
+      "Breathe out fully"
+    ],
+    "front_height": [
+      "From where your neck meets your shoulder directly down to your waistband"
+    ],
+    "sleeve": [
+      "From your shoulder down to your wrist",
+      "Keep your arm straight and pointing down"
+    ],
+    "pant_waist": [
+      "Around your body from where you normally keep your pants",
+      "Pull your stomach in like you are fitting on a pair of tight pants"
+    ],
+    "hips": [
+      "Around your body at the widest part of your hips"
+    ],
+    "outseam": [
+      "The outside of your leg starting from the top of your waistband",
+      "Measure down to your ankle bone"
+    ],
+    "shoe_inside_length": [
+      "Place a measuring tape next to a wall and stand on the tape",
+      "Use thin socks or no socks at all"
+    ],
+    "calf_width": [
+      "Measure around widest part of calf"
+    ],
+    "hat_width": [
+      "Measure the biggest circumference of head at just above top of ears"
+    ]
   },
   "message": {
     "addProfiles": "Lisää mittaprofiili kokosuositusta varten.",
@@ -85,50 +147,27 @@
     "noProfiles": "Tililläsi ei ole yhtään mittaprofiilia.",
     "noTopButton": "Paidan ylin nappi ei tässä koossa mene kiinni."
   },
-  "detailed": {
-    "windowTitle": "Sopivuustiedot tuotteelle",
-    "buttonText": "Sopivuustiedot",
-    "tableTitle": "Sopivuustiedot"
+  "signupBox": {
+    "message": "Save your measurements, so you don't have to remember them ever again.",
+    "signupPrompt": "Save with email",
+    "duplicateUser": "An account with this email already exists. Try to log in?"
   },
   "sizeGuide": {
-    "windowTitle": "Kokotaulukko tuotteelle",
+    "advertisement": "Tämän kokotaulukon toimittaa",
     "buttonText": "Kokotaulukko",
-    "tableTitle": "Tuotteen mitat",
     "measurementDisclaimer": "Nämä mitat on otettu <u>tuotteen päältä tasaisella alustalla</u>.",
     "measurementDisclaimerCollar": "Paitsi kaulus, joka on ympärysmitta kauluksen sisäpuolelta.",
     "measurementDisclaimerInside": "Nämä mitat on otettu <u>tuotteen sisältä</u>.",
-    "advertisement": "Tämän kokotaulukon toimittaa"
-  },
-  "fitInfo": {
-    "tooltipDefaultText": "Tuotteen {{measurement, lowercase}}-mitta ",
-    "whenPinched": " nipistettynä sormien väliin",
-    "noMatchItem": "on {{value}}. {{add}}",
-    "stretchedLittle": "Tuote venyy vähän.",
-    "stretchedSomewhat": "Tuote venyy.",
-    "stretchedMuch": "Tuote venyy kunnolla.",
-    "stretchedMax": "Tuote venyy huolella.",
-    "theItem": "Tuotteen",
-    "theMeasurement": "-mitta",
-    "noOverlap": "on suoraan sinua vasten.",
-    "isSmaller": "on {{value}} sinun omaa mittaasi <u>pienempi</u>{{whenPinched}}",
-    "overlapsYou": "ylittää mittasi",
-    "armSleeveStraight": "kun kätesi ja tuotteen hiha on <u>suoraan alaspäin</u>",
-    "smConsidersFit": "SizeMe:n mielestä tämä sopivuus on",
-    "overallFit": "Sopivuus",
-    "overallFitForSize": "Sopivuus <b>koolle"
+    "tableTitle": "Tuotteen mitat",
+    "windowTitle": "Kokotaulukko tuotteelle"
   },
   "splash": {
-    "detailedText": "Ota <b>muutama mitta</b> itsestäsi ja näe miten tämä tuote <b>sopisi sinulle</b>.<br />Luo oma <b>SizeMe</b>-tunnus ja lopeta arvailu!",
-    "btnSignUpLabel": "Liityn mukaan",
-    "btnSignUpTitle": "Jep, haluan luoda oman tunnuksen",
     "btnLogInLabel": "Kirjaudu",
     "btnLogInTitle": "Minulla on jo oma tunnus",
     "btnNoThanksLabel": "Ei kiitos",
     "btnNoThanksTitle": "Ehkä myöhemmin",
-    "productPageSplashes": ["Haluatko apua oikean koon valitsemisessa? Kokeile"],
-    "productPageSplashTitle": "SizeMe-palvelu kertoo miten tämä tuote sopii juuri Sinulle"
-  },
-  "menu": {
-    "login": "Kirjaudu/luo tunnus SizeMe:hen"
+    "btnSignUpLabel": "Liityn mukaan",
+    "btnSignUpTitle": "Jep, haluan luoda oman tunnuksen",
+    "detailedText": "Ota <b>muutama mitta</b> itsestäsi ja näe miten tämä tuote <b>sopisi sinulle</b>.<br />Luo oma <b>SizeMe</b>-tunnus ja lopeta arvailu!"
   }
 }
