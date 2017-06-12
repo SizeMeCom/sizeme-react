@@ -2,7 +2,7 @@
   "common": {
     "closeText": "Stäng",
     "selectedSize": "Vald storlek",
-    "shoppingFor": "Shoppa för",
+    "shoppingFor": "Shoppa för"
   },
   "detailed": {
     "windowTitle": "Detaljerad Bild för",
@@ -21,7 +21,7 @@
     "stretchedMuch": "Artikeln är töjd mycket.",
     "stretchedSomewhat": "Artikeln är töjd.",
     "tooltipDefaultText": "Artikelns {{measurement, lowercase}} mått ",
-    "whenPinched": " när utdragen",
+    "whenPinched": " när utdragen"
   },
   "fitVerdict": {
     "not_fitted": "För liten",

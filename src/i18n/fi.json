@@ -1,8 +1,8 @@
 {
   "common": {
     "closeText": "Sulje",
-    "selectedSize": "Valittu koko",	
-    "shoppingFor": "Aktiivinen profiili",
+    "selectedSize": "Valittu koko", 
+    "shoppingFor": "Aktiivinen profiili"
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",
@@ -21,7 +21,7 @@
     "stretchedMuch": "Tuote venyy kunnolla.",
     "stretchedSomewhat": "Tuote venyy.",
     "tooltipDefaultText": "Tuotteen {{measurement, lowercase}}-mitta ",
-    "whenPinched": " nipistettynä sormien väliin",
+    "whenPinched": " nipistettynä sormien väliin"
   },
   "fitVerdict": {
     "not_fitted": "Pieni",
@@ -130,7 +130,7 @@
     ],
     "shoe_inside_length": [
       "Place a measuring tape next to a wall and stand on the tape",
-      "Use thin socks or no socks at all",
+      "Use thin socks or no socks at all"
     ],
     "calf_width": [
       "Measure around widest part of calf"
