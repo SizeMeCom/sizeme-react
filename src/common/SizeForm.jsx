@@ -78,7 +78,7 @@ class SizeForm extends React.Component {
                 </ul>
                 <div className="measurement-guide-link">
                     {linkTexts.start} <a onClick={this.openGuideModal} onMouseDown={e => {e.preventDefault();}}>
-                    {linkTexts.link}</a> {linkTexts.end} <FontAwesome name="play-circle" inverse/>
+                    {linkTexts.link}</a> {linkTexts.end} <FontAwesome name="play-circle" />
                 </div>
             </div>
         );

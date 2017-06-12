@@ -28,7 +28,7 @@
     }
 
     .measurement-input {
-      border: 2px solid $default_color;
+      border: 1px solid $default_color;
       border-radius: 4px;
       background-color: #fff;
       position: relative;
@@ -99,7 +99,7 @@
 
   .__react_component_tooltip.measurement-tooltip {
     background-color: $default_color;
-    padding: 3px;
+    padding: 1px;
     opacity: 1;
     pointer-events: all;
 
@@ -116,12 +116,14 @@
     }
 
     .measurement-guide-link {
-      padding: 3px 0 0 2px;
+      padding: 4px 0 4px 8px;
+	  color: black;
+	  background-color: $light_bg_color;
 
       a {
-        color: white;
         pointer-events: all;
         cursor: pointer;
+		color: black;
         text-decoration: underline !important;
       }
     }

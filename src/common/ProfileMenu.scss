@@ -13,7 +13,7 @@
 }
 
 .__react_component_tooltip.profile-menu {
-  border: 1px solid #666666;
+  border: 1px solid $default_color;
   opacity: 1.0 !important;
   padding: 0;
   width: 200px;
@@ -25,7 +25,7 @@
       content: "";
       position: relative;
       display: block;
-      background: #e2e2e2 url(../images/sizeme_logo_plain_h22.png) no-repeat 97% center;
+      background: $light_bg_color url(../images/sizeme_logo_plain_h22.png) no-repeat 97% center;
       width: 100%;
       height: 30px;
     }
@@ -57,6 +57,14 @@
 
       .profile-name.selected {
         font-weight: bold;
+
+        &::after {
+          content: "";
+        }
+      }
+
+      .profile-name.add-new {
+        font-style: italic;
       }
 
       a {
@@ -69,7 +77,7 @@
       }
 
       &:hover {
-        background-color: #caefc6 !important;
+        background-color: $loose !important;
       }
     }
   }
@@ -77,7 +85,7 @@
 
 .__react_component_tooltip.place-right.profile-menu {
   &::before {
-    border-right: 6px solid #666666;
+    border-right: 6px solid $default_color;
     left: -6px;
   }
 
@@ -94,7 +102,7 @@
   }
 
   &::before {
-    border-left: 6px solid #666666;
+    border-left: 6px solid $default_color;
     right: -6px;
   }
 }

@@ -6,7 +6,7 @@ const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 
 const FrontHeight = (props) => {
     const shirtHeight = Math.min(260, Math.max(115, props.overlap * cmFactor + baseHeight));
-    const helmLine = /* shirt rect Y */ 162.204 + shirtHeight;
+    const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
              viewBox="108 220 337.5 270" preserveAspectRatio="xMidYMin meet">
@@ -34,7 +34,7 @@ const FrontHeight = (props) => {
             <rect x="185.552" y="162.204" fill="#FFFFFF" stroke="#69A4C3" strokeWidth="4" strokeLinecap="round"
                   strokeLinejoin="round" strokeMiterlimit="10" width="183.446" height={shirtHeight}/>
             <line fill="none" stroke="#69A4C3" strokeWidth="3.146" strokeLinecap="round" strokeLinejoin="round"
-                  strokeDasharray="3.3258,6.6527" x1="156.889" y1={helmLine} x2="397.66" y2={helmLine}/>
+                  strokeDasharray="3.3258,6.6527" x1="156.889" y1={hemLine} x2="397.66" y2={hemLine}/>
         </svg>
     );
 };
