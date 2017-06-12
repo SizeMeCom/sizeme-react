@@ -7,7 +7,7 @@
     cursor: pointer;
 
     &:hover {
-      color: $default_blue;
+      color: $default_color;
     }
   }
 }
@@ -64,7 +64,7 @@
         text-decoration: none;
 
         &:hover {
-          color: $default_blue;
+          color: $default_color;
         }
       }
 

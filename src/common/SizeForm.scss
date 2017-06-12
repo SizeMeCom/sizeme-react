@@ -28,7 +28,7 @@
     }
 
     .measurement-input {
-      border: 1px solid #079814;
+      border: 2px solid $default_color;
       border-radius: 4px;
       background-color: #fff;
       position: relative;
@@ -73,23 +73,23 @@
     }
 
     .measurement-input.too_small {
-      background-color: $too_small;
+      border-color: $too_small;
     }
 
     .measurement-input.slim {
-      background-color: $slim;
+      border-color: $slim;
     }
 
     .measurement-input.regular {
-      background-color: $regular;
+      border-color: $regular;
     }
 
     .measurement-input.loose {
-      background-color: $loose;
+      border-color: $loose;
     }
 
     .measurement-input.too_big {
-      background-color: $too_big;
+      border-color: $too_big;
     }
 
     .overlap-box {
@@ -98,13 +98,13 @@
   }
 
   .__react_component_tooltip.measurement-tooltip {
-    background-color: $default_blue;
+    background-color: $default_color;
     padding: 3px;
     opacity: 1;
     pointer-events: all;
 
     &:after {
-      border-bottom-color: $default_blue !important;
+      border-bottom-color: $default_color !important;
     }
 
     ul {

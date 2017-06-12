@@ -1,7 +1,7 @@
 @import "../scss/variables";
 
 .overlap-box {
-  border: 1px solid $default_blue;
+  border: 1px solid $default_color;
   border-radius: 4px;
   display: flex;
   flex-direction: row;
@@ -16,7 +16,7 @@
   }
 
   .overlap-text {
-    background-color: $default_blue;
+    background-color: $default_color;
     color: white;
     width: 50%;
     text-align: center;
