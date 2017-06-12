@@ -1,4 +1,28 @@
 {
+  "common": {
+    "closeText": "Stäng",
+    "selectedSize": "Vald storlek",
+    "shoppingFor": "Shoppa för",
+  },
+  "detailed": {
+    "windowTitle": "Detaljerad Bild för",
+    "buttonText": "Detaljerad Bild",
+    "tableTitle": "Detaljerade lämpliga delar"
+  },
+  "fitInfo": {
+    "isSmaller": "är {{value}} <u>mindre</u> än ditt passande mått{{whenPinched}}",
+    "noMatchItem": "är {{value}}. {{add}}",
+    "noOverlap": "är direkt mot dig.",
+    "overallFit": "Överallt lagom",
+    "overlapsYou": "är större än dig",
+    "smConsidersFit": "SizeMe anser det speciellt lagom",
+    "stretchedLittle": "Artikeln är töjd litet.",
+    "stretchedMax": "Artikeln är töjd till maximum.",
+    "stretchedMuch": "Artikeln är töjd mycket.",
+    "stretchedSomewhat": "Artikeln är töjd.",
+    "tooltipDefaultText": "Artikelns {{measurement, lowercase}} mått ",
+    "whenPinched": " när utdragen",
+  },
   "fitVerdict": {
     "not_fitted": "För liten",
     "too_small": "För liten",
@@ -19,6 +43,26 @@
     "huge": "3XL",
     "too_big": "För lång"
   },
+  "humanMeasurements": {
+    "chest": "Chest",
+    "shirtWaist": "Waist",
+    "sleeve": "Arm length",
+    "shoulderFull": "Shoulder width",
+    "neckCircumference": "Neck circumference",
+    "frontHeight": "Front height",
+    "underbust": "Underbust",
+    "pantWaist": "Pant waist",
+    "hips": "Hips",
+    "inSeam": "Inseam",
+    "outSeam": "Outseam",
+    "thighCircumference": "Thigh circumference",
+    "kneeCircumference": "Knee circumference",
+    "ankleCircumference": "Ankle circumference",
+    "calfCircumference": "Calf circumference",
+    "footLength": "Foot length",
+    "footWidth": "Foot width",
+    "headCircumference": "Head circumference"
+  },  
   "measurement": {
     "chest": "Bröst",
     "waist": "Midja",
@@ -45,38 +89,56 @@
     "hem": "Fåll",
     "sleeve_opening": "Ärm öppning"
   },
-  "humanMeasurements": {
-    "chest": "Chest",
-    "shirtWaist": "Waist",
-    "sleeve": "Arm length",
-    "shoulderFull": "Shoulder width",
-    "neckCircumference": "Neck circumference",
-    "frontHeight": "Front height",
-    "underbust": "Underbust",
-    "pantWaist": "Pant waist",
-    "hips": "Hips",
-    "inSeam": "Inseam",
-    "outSeam": "Outseam",
-    "thighCircumference": "Thigh circumference",
-    "kneeCircumference": "Knee circumference",
-    "ankleCircumference": "Ankle circumference",
-    "calfCircumference": "Calf circumference",
-    "footLength": "Foot length",
-    "footWidth": "Foot width",
-    "headCircumference": "Head circumference"
-  },
-  "common": {
-    "shoppingFor": "Shoppa för",
-    "selectedSize": "Vald storlek",
-    "is": "är",  
-    "addToProfile": "Lägg till profilen",
-    "size": "Storlek",
-    "fetchingProfiles": "Hämta profiler...",
-    "closeText": "Stäng",
-    "goTo": "Gå till",
-    "myProfiles": "Mina Profiler",
-    "andCreateOne": "och skapa en."	
-  },
+  "measurementGuide": {
+    "title": "How to measure your",
+    "chest": "Measure around your body under your arms at <b>fullest part</b> of chest<span class='female'> while wearing bra</span>.<br/><br/><b>Breathe out fully</b> while taking this measurement.",
+    "front_height": "Measure down from where your neck meets your shoulder directly down to your waistband (where you normally keep your pants).",
+    "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
+    "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
+    "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
+    "shoe_inside_length": "Place a measuring tape next to a wall and stand on the tape. Use thin socks or no socks at all.",
+    "calf_width": "Measure around widest part of calf.",
+    "hat_width": "Measure the biggest circumference of head at just above top of ears."
+  },  
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "Click",
+      "link": "here",
+      "end": "for guide"
+    },
+    "chest": [
+      "Around your body under your arms at fullest part of chest",
+      "Breathe out fully"
+    ],
+    "front_height": [
+      "From where your neck meets your shoulder directly down to your waistband"
+    ],
+    "sleeve": [
+      "From your shoulder down to your wrist",
+      "Keep your arm straight and pointing down"
+    ],
+    "pant_waist": [
+      "Around your body from where you normally keep your pants",
+      "Pull your stomach in like you are fitting on a pair of tight pants"
+    ],
+    "hips": [
+      "Around your body at the widest part of your hips"
+    ],
+    "outseam": [
+      "The outside of your leg starting from the top of your waistband",
+      "Measure down to your ankle bone"
+    ],
+    "shoe_inside_length": [
+      "Place a measuring tape next to a wall and stand on the tape",
+	  "Use thin socks or no socks at all"
+    ],
+    "calf_width": [
+      "Measure around widest part of calf"
+    ],
+    "hat_width": [
+      "Measure the biggest circumference of head at just above top of ears"
+    ]
+  },  
   "message": {
     "addProfiles": "Lägg profiler till ditt konto för storleks rekommendation.",
     "missingMeasurements": "Lägg flera mått till din profil för ökad noggrannhet",
@@ -85,50 +147,27 @@
     "noProfiles": "Du har ingen profil på ditt konto.",
     "noTopButton": "Översta knappen skjorta kan inte stängas i denna storlek."
   },
-  "detailed": {
-    "windowTitle": "Detaljerad Bild för",
-    "buttonText": "Detaljerad Bild",
-    "tableTitle": "Detaljerade lämpliga delar"
+  "signupBox": {
+    "message": "Save your measurements, so you don't have to remember them ever again.",
+    "signupPrompt": "Save with email",
+    "duplicateUser": "An account with this email already exists. Try to log in?"
   },
   "sizeGuide": {
-    "windowTitle": "Storleks Guide för",
+    "advertisement": "Denna storleksguide har gjorts för dig av",
     "buttonText": "Storleks guide",
-    "tableTitle": "Aktuella artikel mått",
     "measurementDisclaimer": "Dessa mått är uppmätta <u>på jämnt underlag på artikelns utsida</u>.",
     "measurementDisclaimerCollar": "Med undantag av kragmåttet, som är uppmätt på kragens insida.",
     "measurementDisclaimerInside": "Dessa mått är uppmätta <u>på insidan av artikeln</u>.",
-    "advertisement": "Denna storleksguide har gjorts för dig av"
-  },
-  "fitInfo": {
-    "tooltipDefaultText": "Artikelns {{measurement, lowercase}} mått ",
-    "whenPinched": " när utdragen",
-    "noMatchItem": "är {{value}}. {{add}}",
-    "stretchedLittle": "Artikeln är töjd litet.",
-    "stretchedSomewhat": "Artikeln är töjd.",
-    "stretchedMuch": "Artikeln är töjd mycket.",
-    "stretchedMax": "Artikeln är töjd till maximum.",
-    "theItem": "Artikelns",
-    "theMeasurement": "Mått",
-    "noOverlap": "är direkt mot dig.",
-    "isSmaller": "är {{value}} <u>mindre</u> än ditt passande mått{{whenPinched}}",
-    "overlapsYou": "är större än dig",
-    "armSleeveStraight": "när din arm och artikelns ärm är <u<helt raka</u>",
-    "smConsidersFit": "SizeMe anser det speciellt lagom",
-    "overallFit": "Överallt lagom",
-    "overallFitForSize": "Överallt lagom av <b>storlek"
+    "tableTitle": "Aktuella artikel mått",
+    "windowTitle": "Storleks Guide för"
   },
   "splash": {
-    "detailedText": "Tag några <b>mått av dig själv</b> och få personlig info hur denna artikel skulle <b>passa dig</b>.<br />Gör en gratis <b>SizeMe</b> profil och sluta gissa!",
-    "btnSignUpLabel": "Signera",
-    "btnSignUpTitle": "Ja, jag vill skapa ett gratis konto",
     "btnLogInLabel": "Logga in",
     "btnLogInTitle": "Jag har redan ett konto",
     "btnNoThanksLabel": "Nej tack",
     "btnNoThanksTitle": "Kanske senare",
-    "productPageSplashes": ["Osäker om den rätta storleken? Pröva"],
-    "productPageSplashTitle": "SizeMe är en gratis service för att hjälpa dig hur denna artikel passar dig"
-  },
-  "menu": {
-    "login": "Kirjaudu/luo tunnus SizeMe:hen"
+    "btnSignUpLabel": "Signera",
+    "btnSignUpTitle": "Ja, jag vill skapa ett gratis konto",
+    "detailedText": "Tag några <b>mått av dig själv</b> och få personlig info hur denna artikel skulle <b>passa dig</b>.<br />Gör en gratis <b>SizeMe</b> profil och sluta gissa!"
   }
 }
