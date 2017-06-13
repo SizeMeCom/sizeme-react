@@ -7,19 +7,19 @@ import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
 import "./OverlapBox.scss";
 
-const illustration = (measurement, overlap, colorScheme) => {
+const illustration = (measurement, overlap) => {
     switch (measurement) {
         case "sleeve":
-            return <Sleeve overlap={overlap} colorScheme={colorScheme}/>;
+            return <Sleeve overlap={overlap}/>;
 
         case "frontHeight":
-            return <FrontHeight overlap={overlap} colorScheme={colorScheme}/>;
+            return <FrontHeight overlap={overlap}/>;
 
         case "chest":
-            return <Pinch overlap={overlap} colorScheme={colorScheme}/>;
+            return <Pinch overlap={overlap}/>;
 
         case "footLength":
-            return <Shoe overlap={overlap} colorScheme={colorScheme}/>;
+            return <Shoe overlap={overlap}/>;
 
         default:
             return null;
@@ -40,25 +40,10 @@ class OverlapBox extends React.Component {
     render () {
         const overlap = this.props.fit.overlap / (isPinch(this.props.humanProperty) ? 20 : 10);
 
-        const colorScheme = {
-            mainLine: { color: "#666666", width: "6" },
-            subLine: { color: "#333333", width: "4" },
-            baseFill: { color: "#CCCCCC", fillOpacity: "1" },
-            overlayFill: { color: "#FFFFFF", fillOpacity: "0.9" }
-        };
-		/*		
-        const colorScheme = {
-            mainLine: { color: "#FF0000", width: "6" },
-            subLine: { color: "#00FF00", width: "4" },
-            baseFill: { color: "#0000FF", fillOpacity: "1" },
-            overlayFill: { color: "#CC00CC", fillOpacity: "0.5" }
-        };
-		*/
-
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip" onMouseEnter={this.props.hover}>
                 <div className="overlap-svg">
-                    {illustration(this.props.humanProperty, overlap, colorScheme)}
+                    {illustration(this.props.humanProperty, overlap)}
                 </div>
                 <div className="overlap-text">
                     <div>{overlap > 0 && "+"}{overlap.toFixed(1)} cm</div>

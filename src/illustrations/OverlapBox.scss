@@ -1,4 +1,5 @@
 @import "../scss/variables";
+@import "./svg-variables";
 
 .overlap-box {
   border: 1px solid $default_color;
@@ -15,6 +16,28 @@
     svg {
       max-height: 70px;
 	  border-radius: $border_radius 0 0 $border_radius;
+
+      .mainLine {
+        @include base();
+        @include mainLine();
+      }
+
+      .subLine {
+        @include base();
+        @include subLine();
+      }
+
+      .baseFill {
+        @include baseFill();
+      }
+
+      .overlayFill {
+        @include overlayFill();
+      }
+
+      .noFill {
+        fill: none;
+      }
     }
   }
 
@@ -30,7 +53,5 @@
       top: 50%;
       transform: translateY(-50%);
     }
-
   }
-
 }
