@@ -39,20 +39,21 @@ class OverlapBox extends React.Component {
 
     render () {
         const overlap = this.props.fit.overlap / (isPinch(this.props.humanProperty) ? 20 : 10);
-		/*
+
         const colorScheme = {
             mainLine: { color: "#666666", width: "6" },
             subLine: { color: "#333333", width: "4" },
             baseFill: { color: "#CCCCCC", fillOpacity: "1" },
             overlayFill: { color: "#FFFFFF", fillOpacity: "0.9" }
         };
-		*/
+		/*		
         const colorScheme = {
             mainLine: { color: "#FF0000", width: "6" },
             subLine: { color: "#00FF00", width: "4" },
             baseFill: { color: "#0000FF", fillOpacity: "1" },
             overlayFill: { color: "#CC00CC", fillOpacity: "0.5" }
         };
+		*/
 
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip" onMouseEnter={this.props.hover}>
