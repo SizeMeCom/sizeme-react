@@ -113,12 +113,14 @@
       padding: 5px 5px 5px 20px;
       max-width: 170px;
       list-style-type: disc;
+	  border-radius: 3px 3px 0 0;
     }
 
     .measurement-guide-link {
       padding: 4px 0 4px 8px;
 	  color: black;
 	  background-color: $light_bg_color;
+	  border-radius: 0 0 3px 3px;
 
       a {
         pointer-events: all;
