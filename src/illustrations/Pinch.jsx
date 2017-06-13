@@ -15,13 +15,6 @@ const Pinch = (props) => {
     return (
         <svg version="1.1" viewBox="200 240 342 273.6" preserveAspectRatio="xMidYMin meet">
             <g>
-                <line
-				    fill="none"
-					stroke={props.colorScheme.mainLine.color}
-					strokeWidth={props.colorScheme.mainLine.width}
-					strokeLinecap="round"
-					strokeLinejoin="round"
-                    x1="486.743" y1="366.027" x2="486.743" y2="397.398"/>
                 <path
 				    fill={props.colorScheme.overlayFill.color}
 					stroke={props.colorScheme.mainLine.color}
@@ -55,14 +48,18 @@ const Pinch = (props) => {
 						stroke={props.colorScheme.mainLine.color}
 						strokeWidth={props.colorScheme.mainLine.width}
 						strokeMiterlimit="10"
-						d="M490.922,345.386h-59.967
-						c-12.667,0-30.471-16.77-39.028-8.114c-8.56,8.655,12.36,11.606,39.028,8.114"/> &&
+						d="M490.922,345.386h-59.967c-12.667,0-30.471-16.77-39.028-8.114c-8.56,
+						8.655,12.36,11.606,39.028,8.114"/>
+				}	
+				{scale > 0 &&
 					<path
 						fill="none"
 						stroke={props.colorScheme.mainLine.color}
 						strokeWidth={props.colorScheme.mainLine.width}
 						strokeMiterlimit="10"
-						d="M476.423,344.657c0,0,12.57,0.209,13.093,12.81"/> &&
+						d="M476.423,344.657c0,0,12.57,0.209,13.093,12.81"/>
+				}
+				{scale > 0 &&
 					<line
 						fill="none"
 						stroke={props.colorScheme.subLine.color}
@@ -70,7 +67,9 @@ const Pinch = (props) => {
 						strokeLinecap="round"
 						strokeLinejoin="round"
 						strokeDasharray="2.821,5.641"
-						x1="486.743" y1="270" x2="486.743" y2="430"/> &&
+						x1="486.743" y1="270" x2="486.743" y2="430"/>
+				}
+				{scale > 0 &&
 					<line
 						fill="none"
 						stroke={props.colorScheme.subLine.color}
