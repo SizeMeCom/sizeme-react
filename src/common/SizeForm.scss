@@ -28,9 +28,9 @@
     }
 
     .measurement-input {
-      border: 1px solid #079814;
-      border-radius: 4px;
-      background-color: #fff;
+      border: 1px solid $default_color;
+      border-radius: $border_radius;
+      background-color: $bg_color;
       position: relative;
 
       input {
@@ -73,23 +73,23 @@
     }
 
     .measurement-input.too_small {
-      background-color: $too_small;
+      border-color: $too_small;
     }
 
     .measurement-input.slim {
-      background-color: $slim;
+      border-color: $slim;
     }
 
     .measurement-input.regular {
-      background-color: $regular;
+      border-color: $regular;
     }
 
     .measurement-input.loose {
-      background-color: $loose;
+      border-color: $loose;
     }
 
     .measurement-input.too_big {
-      background-color: $too_big;
+      border-color: $too_big;
     }
 
     .overlap-box {
@@ -98,30 +98,34 @@
   }
 
   .__react_component_tooltip.measurement-tooltip {
-    background-color: $default_blue;
-    padding: 3px;
+    background-color: $default_color;
+    padding: 1px;
     opacity: 1;
     pointer-events: all;
 
     &:after {
-      border-bottom-color: $default_blue !important;
+      border-bottom-color: $default_color !important;
     }
 
     ul {
-      background-color: white;
+      background-color: $bg_color;
       color: black;
       padding: 5px 5px 5px 20px;
       max-width: 170px;
       list-style-type: disc;
+	  border-radius: $border_radius $border_radius 0 0;
     }
 
     .measurement-guide-link {
-      padding: 3px 0 0 2px;
+      padding: 4px 0 4px 8px;
+	  color: black;
+	  background-color: $light_bg_color;
+	  border-radius: 0 0 3px 3px;
 
       a {
-        color: white;
         pointer-events: all;
         cursor: pointer;
+		color: black;
         text-decoration: underline !important;
       }
     }
@@ -145,26 +149,26 @@
   overflow: auto;
   max-height: 85%;
   /*transform: translate(-105%, 0);*/
-  background-color: white;
+  background-color: $bg_color;
   -webkit-overflow-scrolling: touch;
   padding: 10px;
   border: 1px solid black;
-  border-radius: 6px;
+  border-radius: $border_radius;
   
   .measurement-instruction-box {
     line-height: 1em;
     padding: 18px 22px 18px 18px;
-    color: #fff;
+    color: $bg_color;
     font-size: 16px;
-    border-radius: 6px;
-    background-color: #5fc146;
+    border-radius: $border_radius;
+    background-color: $default_color;
     width: 250px;
     box-sizing: border-box;
     position: relative;
     text-align: left;
 
     h2 {
-      color: white;
+      color: $bg_color;
       line-height: 1em;
       margin-bottom: 10px;
     }

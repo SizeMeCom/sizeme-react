@@ -5,59 +5,6 @@ import { translate } from "react-i18next";
 import { getResult } from "../api/ProductModel";
 import { connect } from "react-redux";
 
-const defaultFHHeight = 25;
-
-const specialTooltipOptions = {
-    sleeve: {
-        defaultHeight: 29,
-        left: -7,
-        baseHeightFn: percentage => Math.min(
-            105, Math.max(
-                11, Math.round(29 + percentage * 75 / 0.3)
-            )
-        ),
-        measTopFn: height => height - 29 < 14 ? height + 23 : Math.round(((height - 29) / 2) + 29 - 9)
-    },
-
-    front_height: {
-        defaultHeight: defaultFHHeight,
-        baseHeightFn: percentage => Math.min(
-            105, Math.max(
-                0, Math.round(defaultFHHeight + percentage * 9 / 0.05)
-            )
-        ),
-        measTopFn: (height, arrows) => height - defaultFHHeight < 18 ?
-            Math.max(height, defaultFHHeight) + (arrows ? 23 : 0) :
-            Math.round(((height - defaultFHHeight) / 2) + defaultFHHeight - 9)
-    }
-};
-
-const addSpecialTooltip = (measurement, fitData) => {
-    const { fitText, matchItem } = fitData;
-    if (!matchItem || !specialTooltipOptions[measurement]) {
-        return null;
-    }
-    const { defaultHeight, baseHeightFn, measTopFn } = specialTooltipOptions[measurement];
-    const classes = [measurement];
-    let height = baseHeightFn(matchItem.percentage);
-    const measDivStyle = {};
-
-    if (matchItem.overlap < 0) {
-        classes.push("negative-overlap");
-        if (matchItem.componentFit >= 1000) {
-            height = defaultHeight;
-        }
-    }
-    measDivStyle.top = `${measTopFn(height, matchItem.overlap >= 0)}px`;
-    
-    return (
-        <div className={classes.join(" ")}>
-            <div className="meas" style={measDivStyle}>{fitText}</div>
-            <div className={`${measurement}-overlap`} style={{ height: `${height + 23}px` }}/>
-        </div>
-    );
-};
-
 function getStretchedTxt (stretchValue, t) {
     if (stretchValue > 0) {
         if (stretchValue < 25) {
@@ -72,19 +19,6 @@ function getStretchedTxt (stretchValue, t) {
     }
     return "";
 }
-
-const overlapAndPinched = (fitData) => {
-    const { matchItem, fitText, isPinched } = fitData;
-    if (matchItem && matchItem.overlap > 0 && isPinched) {
-        return (
-            <div className="pinched">
-                <div className="meas">{fitText.replace("+", "")}</div>
-            </div>
-        );
-    } else {
-        return null;
-    }
-};
 
 const overlap = (fitData, t) => {
     const { matchItem, fitText, isPinched } = fitData;
@@ -174,8 +108,6 @@ class FitTooltip2 extends React.Component {
             return (
                 <ReactTooltip id="fit-tooltip"
                               place="right" className={`fit-tooltip ${measurement}`}>
-                    {overlapAndPinched(fitData)}
-                    {addSpecialTooltip(measurement, fitData)}
                     {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
                     {overlap(fitData, t)}
                     {noOverlap(fitData, t)}

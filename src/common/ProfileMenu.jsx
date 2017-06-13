@@ -29,7 +29,7 @@ const ProfileMenu = (props) => {
                         </div>
                     )}
                     <div className="profile">
-                        <a className="profile-name"
+                        <a className="profile-name add-new"
                            href={`${contextAddress}/account/profiles.html`} target="_blank">Add new profile</a>
                     </div>
                 </div>
