@@ -46,7 +46,7 @@ class OverlapBox extends React.Component {
             baseFill: { color: "#CCCCCC", fillOpacity: "1" },
             overlayFill: { color: "#FFFFFF", fillOpacity: "0.9" }
         };
-		/*		
+		/*
         const colorScheme = {
             mainLine: { color: "#FF0000", width: "6" },
             subLine: { color: "#00FF00", width: "4" },
@@ -56,7 +56,8 @@ class OverlapBox extends React.Component {
 		*/
 
         return (
-            <div className="overlap-box" data-tip data-for="fit-tooltip" onMouseEnter={this.props.hover}>
+            <div className="overlap-box" data-tip data-for="fit-tooltip" 
+			    data-effect="solid" data-place="bottom" onMouseEnter={this.props.hover}>
                 <div className="overlap-svg">
                     {illustration(this.props.humanProperty, overlap, colorScheme)}
                 </div>
