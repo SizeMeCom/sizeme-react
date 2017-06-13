@@ -25,12 +25,13 @@ class MeasurementInput extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const nextValue = this.viewValue(nextProps);
-        if (nextValue !== this.state.value) {
-            this.setState({
-                value: nextValue,
-                modelValue: this.modelValue(nextValue)
-            });
+        if (nextProps.value !== this.state.modelValue || nextProps.unit !== this.props.unit) {
+            const nextValue = this.viewValue(nextProps);
+            if (nextValue !== this.state.value) {
+                this.setState({
+                    value: nextValue
+                });
+            }
         }
     }
 
@@ -39,9 +40,9 @@ class MeasurementInput extends React.Component {
     }
 
     modelValue (value) {
-        //const value = this.state.value.replace(",", ".");
-        if (value.length > 0) {
-            return Math.floor(parseFloat(value) * unitFactors[this.props.unit]);
+        const fixedValue = value.replace(",", ".");
+        if (fixedValue.length > 0) {
+            return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
         } else {
             return null;
         }
@@ -80,16 +81,21 @@ class MeasurementInput extends React.Component {
         }
         if (!this.state.error) {
             const value = this.modelValue(this.state.value);
-            if (value !== this.state.modelValue) {
-                this.props.onChange(value);
-            }
-            this.setState({ pending: false, modelValue: value });
+            const doDispatch = value !== this.state.modelValue;
+            this.setState({ pending: false, modelValue: value }, () => {
+                if (doDispatch) {
+                    this.props.onChange(value);
+                }
+            });
         }
     };
 
     onBlur = () => {
         ReactTooltip.hide(this.tooltip);
         this.dispatchChange();
+        this.setState({
+            value: this.viewValue(this.props)
+        });
     };
 
     onFocus = () => {
