@@ -29,8 +29,8 @@
 
     .measurement-input {
       border: 1px solid $default_color;
-      border-radius: 4px;
-      background-color: #fff;
+      border-radius: $border_radius;
+      background-color: $bg_color;
       position: relative;
 
       input {
@@ -108,12 +108,12 @@
     }
 
     ul {
-      background-color: white;
+      background-color: $bg_color;
       color: black;
       padding: 5px 5px 5px 20px;
       max-width: 170px;
       list-style-type: disc;
-	  border-radius: 3px 3px 0 0;
+	  border-radius: $border_radius $border_radius 0 0;
     }
 
     .measurement-guide-link {
@@ -149,26 +149,26 @@
   overflow: auto;
   max-height: 85%;
   /*transform: translate(-105%, 0);*/
-  background-color: white;
+  background-color: $bg_color;
   -webkit-overflow-scrolling: touch;
   padding: 10px;
   border: 1px solid black;
-  border-radius: 6px;
+  border-radius: $border_radius;
   
   .measurement-instruction-box {
     line-height: 1em;
     padding: 18px 22px 18px 18px;
-    color: #fff;
+    color: $bg_color;
     font-size: 16px;
-    border-radius: 6px;
-    background-color: #5fc146;
+    border-radius: $border_radius;
+    background-color: $default_color;
     width: 250px;
     box-sizing: border-box;
     position: relative;
     text-align: left;
 
     h2 {
-      color: white;
+      color: $bg_color;
       line-height: 1em;
       margin-bottom: 10px;
     }

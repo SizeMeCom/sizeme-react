@@ -28,7 +28,7 @@
       background: $light_bg_color url(../images/sizeme_logo_plain_h22.png) no-repeat 97% center;
       width: 100%;
       height: 30px;
-	  border-radius: 0 0 3px 3px;
+	  border-radius: 0 0 $border_radius $border_radius;
     }
 
     .profile {

@@ -2,7 +2,7 @@
 
 .overlap-box {
   border: 1px solid $default_color;
-  border-radius: 4px;
+  border-radius: $border_radius;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -18,7 +18,7 @@
 
   .overlap-text {
     background-color: $default_color;
-    color: white;
+    color: $bg_color;
     width: 50%;
     text-align: center;
     position: relative;
