@@ -13,13 +13,10 @@ const Pinch = (props) => {
     const scale = props.overlap <= 0 ? 0 : Math.min(1, props.overlap / 10.0);
     const pinchLine = zeroPinchLine - scale * pinchLinePosRange;
     return (
-        <svg version="1.1" viewBox="200 240 342 273.6" preserveAspectRatio="xMidYMin meet">
+        <svg version="1.1" viewBox="200 240 342 273.6" preserveAspectRatio="xMidYMin meet" className="pinch">
             <g>
-                <path
-				    fill={props.colorScheme.overlayFill.color}
-					stroke={props.colorScheme.mainLine.color}
-					strokeWidth={props.colorScheme.mainLine.width}
-					strokeMiterlimit="10" d={`
+                <path className="mainLine overlayFill"
+				    d={`
 			M144.546,481.84c0,0,77.175-39.67,88.715-67.8c11.54-28.129,32.457-115.401,49.767-126.221
 			c17.31-10.818,73.569-29.571,94.485-34.62c20.917-5.049,87.994,49.767,102.42,57.701
 			c7.934,6.491,14.425,35.342-13.704,31.735c-28.13-3.606-69.242-41.111-69.242-41.111s-30.293,5.77-38.226,18.752
@@ -27,55 +24,27 @@ const Pinch = (props) => {
 			c10.817-15.868,34.988-25.965,46.345-23.801c11.356,2.163,22.175,26.686,4.144,43.996c-18.031,17.312-57.701,
 			44.481-78.617,81.385c-13.704,18.149-48.325,18.149-80.781,28.969c-32.457,10.819-83.667,52.651-113.238,77.896
 			c-29.572,25.244-87.995,72.126-87.995,72.126L34.193,519.345L144.546,481.84z`}/>
-                <path
-				    fill="none"
-					stroke={props.colorScheme.mainLine.color}
-					strokeWidth={props.colorScheme.mainLine.width}
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					strokeMiterlimit="10"
-					d="M455,355,440,370,460,404,480,390" />
-                <path
-				    fill={props.colorScheme.baseFill.color}
-					stroke={props.colorScheme.mainLine.color}
-					strokeWidth={props.colorScheme.mainLine.width}
-					strokeMiterlimit="10"
-                    d="M570,209,512,209c0,0-51,124-0,309 L570,518z"/>
+                <path className="mainLine noFill"
+				    d="M455,355,440,370,460,404,480,390" />
+                <path className="mainLine baseFill"
+				    d="M570,209,512,209c0,0-51,124-0,309 L570,518z"/>
                 {scale > 0 &&
-					<path
+					<path className="mainLine noFill"
 						transform={transMatrix(scale, cX)}
-						fill="none"
-						stroke={props.colorScheme.mainLine.color}
-						strokeWidth={props.colorScheme.mainLine.width}
-						strokeMiterlimit="10"
 						d="M490.922,345.386h-59.967c-12.667,0-30.471-16.77-39.028-8.114c-8.56,
 						8.655,12.36,11.606,39.028,8.114"/>
 				}	
 				{scale > 0 &&
-					<path
-						fill="none"
-						stroke={props.colorScheme.mainLine.color}
-						strokeWidth={props.colorScheme.mainLine.width}
-						strokeMiterlimit="10"
+					<path className="mainLine noFill"
 						d="M476.423,344.657c0,0,12.57,0.209,13.093,12.81"/>
 				}
 				{scale > 0 &&
-					<line
-						fill="none"
-						stroke={props.colorScheme.subLine.color}
-						strokeWidth={props.colorScheme.subLine.width}
-						strokeLinecap="round"
-						strokeLinejoin="round"
+					<line className="subLine noFill"
 						strokeDasharray="2.821,5.641"
 						x1="486.743" y1="270" x2="486.743" y2="430"/>
 				}
 				{scale > 0 &&
-					<line
-						fill="none"
-						stroke={props.colorScheme.subLine.color}
-						strokeWidth={props.colorScheme.subLine.width}
-						strokeLinecap="round"
-						strokeLinejoin="round"
+					<line className="subLine noFill"
 						strokeDasharray="2.821,5.641"
 						x1={pinchLine} y1="270" x2={pinchLine} y2="430"/>
 				}
@@ -85,8 +54,7 @@ const Pinch = (props) => {
 };
 
 Pinch.propTypes = {
-    overlap: PropTypes.number,
-    colorScheme: PropTypes.object.isRequired
+    overlap: PropTypes.number
 };
 
 Pinch.defaultProps = {

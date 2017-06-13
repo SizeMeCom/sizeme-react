@@ -1,0 +1,25 @@
+@mixin base() {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+}
+
+@mixin mainLine() {
+  stroke: #666666;
+  stroke-width: 6;
+}
+
+@mixin subLine() {
+  stroke: #333333;
+  stroke-width: 4;
+}
+
+@mixin baseFill() {
+  fill: #CCCCCC;
+  fill-opacity: 1;
+}
+
+@mixin overlayFill() {
+  fill: #FFFFFF;
+  fill-opacity: 0.9;
+}
