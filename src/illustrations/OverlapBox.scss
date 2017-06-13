@@ -1,23 +1,49 @@
 @import "../scss/variables";
+@import "./svg-variables";
 
 .overlap-box {
-  border: 1px solid $default_blue;
-  border-radius: 4px;
+  border: 1px solid $default_color;
+  border-radius: $border_radius;
   display: flex;
   flex-direction: row;
   align-items: stretch;
 
   .overlap-svg {
     width: 50%;
+	background-color: $light_bg_color;
+	border-radius: $border_radius 0 0 $border_radius;
 
     svg {
       max-height: 70px;
+	  border-radius: $border_radius 0 0 $border_radius;
+
+      .mainLine {
+        @include base();
+        @include mainLine();
+      }
+
+      .subLine {
+        @include base();
+        @include subLine();
+      }
+
+      .baseFill {
+        @include baseFill();
+      }
+
+      .overlayFill {
+        @include overlayFill();
+      }
+
+      .noFill {
+        fill: none;
+      }
     }
   }
 
   .overlap-text {
-    background-color: $default_blue;
-    color: white;
+    background-color: $default_color;
+    color: $bg_color;
     width: 50%;
     text-align: center;
     position: relative;
@@ -27,7 +53,5 @@
       top: 50%;
       transform: translateY(-50%);
     }
-
   }
-
 }
