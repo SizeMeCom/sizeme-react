@@ -138,7 +138,7 @@ class SizeForm extends React.Component {
                         ).orElse(null)}
                     </div>
                 ))}
-                <ReactTooltip id="input-tooltip" getContent={this.tooltipContent(t)}/>
+                <ReactTooltip id="input-tooltip" type="light" getContent={this.tooltipContent(t)}/>
                 <Modal isOpen={this.state.guideModalOpen}
                        onRequestClose={this.closeGuideModal}
                        className="measurement-guide-modal"

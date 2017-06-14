@@ -103,10 +103,10 @@ class FitTooltip2 extends React.Component {
         const { measurementName } = product.model;
         const { fitData } = this.state;
         if (!fitData || !measurement) {
-            return <ReactTooltip id="fit-tooltip" place="right" className="fit-tooltip"/>;
+            return <ReactTooltip id="fit-tooltip" type="light" place="right" className="fit-tooltip"/>;
         } else {
             return (
-                <ReactTooltip id="fit-tooltip"
+                <ReactTooltip id="fit-tooltip" type="light" 
                               place="right" className={`fit-tooltip ${measurement}`}>
                     {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
                     {overlap(fitData, t)}
