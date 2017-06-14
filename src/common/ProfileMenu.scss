@@ -84,26 +84,3 @@
   }
 }
 
-.__react_component_tooltip.place-right.profile-menu {
-  &::before {
-    border-right: 6px solid $default_color;
-    left: -6px;
-  }
-
-  &::after {
-    border-right-color: white;
-    padding-right: 1px;
-  }
-}
-
-.__react_component_tooltip.place-left.profile-menu {
-  &::after {
-    border-left-color: white;
-    padding-left: 1px;
-  }
-
-  &::before {
-    border-left: 6px solid $default_color;
-    right: -6px;
-  }
-}
