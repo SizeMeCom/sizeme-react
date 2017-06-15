@@ -26,8 +26,7 @@ const Pinch = (props) => {
 			c-29.572,25.244-87.995,72.126-87.995,72.126L34.193,519.345L144.546,481.84z`}/>
                 <path className="mainLine noFill"
 				    d="M455,355,440,370,460,404,480,390" />
-                <path className="mainLine baseFill"
-				    d="M570,209,512,209c0,0-51,124-0,309 L570,518z"/>
+                <circle className="mainLine baseFill" cx="1288" cy="350" r="800"/>
                 {scale > 0 &&
 					<path className="mainLine noFill"
 						transform={transMatrix(scale, cX)}
