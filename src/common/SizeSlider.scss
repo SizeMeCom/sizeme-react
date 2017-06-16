@@ -36,16 +36,18 @@
 
   svg.recommendation, svg.indicator {
     position: absolute;
-    height: 16px;
-    bottom: -5px;
+    height: 18px;
+    bottom: -4px;
     transition: left 0.5s ease-in-out;
+	cursor: help;
   }
 
   svg.indicator {
     polygon {
       fill: #ff0000;
       fill-opacity: 1;
-      stroke-width: 0;
+      stroke-width: 0.2px;
+      stroke: rgba(0,0,0,0.5);
     }
 
     polygon.too_small {
@@ -70,10 +72,10 @@
   }
 
   svg.recommendation {
+	bottom: 0px;
     path {
-      fill: #333333;
+      fill: $recommendation_color;
       fill-opacity: 1;
-      fill-rule: evenodd;
     }
   }
 }
