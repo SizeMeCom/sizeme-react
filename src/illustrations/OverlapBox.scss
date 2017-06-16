@@ -16,6 +16,7 @@
 
     svg {
       max-height: 70px;
+	  min-width: 100%;
 	  border-radius: $border_radius 0 0 $border_radius;
 
       .mainLine {
