@@ -21,8 +21,8 @@ FitIndicator.propTypes = {
 const RecommendationIndicator = (props) => {
     const left = `calc(${props.value}% - 8px`;
     return (
-        <svg className="recommendation" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-            <path d="M5 0 L10 10 L0 10 Z M5 2.2 L8.4 9.1 L1.6 9.1 Z" />
+        <svg className="recommendation" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10">
+            <path d="M10 5 L20 10 L0 10 Z" />
         </svg>
     );
 };
@@ -84,10 +84,10 @@ class SizeSlider extends React.Component {
                         <Interpolate i18nKey={`fitVerdict.${fit.label}`}/>
                     </div>
                 ))}
-                {doShowFit && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
-                                                   fitRange={this.getFitRange()}/>}
                 {doShowFit && this.props.recommendedMatch && <RecommendationIndicator
                     value={this.getFitPosition(this.props.recommendedMatch.totalFit)}/>}
+                {doShowFit && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
+                                                   fitRange={this.getFitRange()}/>}
             </div>
         );
     }
