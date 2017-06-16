@@ -1,3 +1,5 @@
+/* global sizeme_options */
+
 import uiOptions from "./api/uiOptions";
 import i18n from "i18next";
 import en from "./i18n/en.json";
@@ -7,7 +9,7 @@ import sv from "./i18n/sv.json";
 i18n.init({
     lng: uiOptions.lang || document.documentElement.lang || "en",
     fallbackLng: "en",
-    debug: true,
+    debug: false,
     interpolation: {
         format: (value, format) => {
             switch (format) {
@@ -34,5 +36,15 @@ i18n.init({
         }
     }
 });
+
+if (sizeme_options.additionalTranslations) {
+    console.log(sizeme_options.additionalTranslations);
+    const addtr = sizeme_options.additionalTranslations;
+    ["en", "fi", "sv"].forEach(lng => {
+        if (addtr[lng]) {
+            i18n.addResourceBundle(lng, "translation", addtr[lng], true, true);
+        }
+    });
+}
 
 export default i18n;

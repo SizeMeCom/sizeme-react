@@ -26,7 +26,8 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   gaTrackingId: "UA-40735596-2",
   shopType: "magento",
   debugState: false,
-  uiOptions: {}
+  uiOptions: {},
+  additionalTranslations: {}
 }
 ```
 * [serviceStatus] (_Boolean_): is SizeMe enabled. Default: true.
@@ -50,3 +51,16 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"
   - [addToCartElement] (_String_): DOM-element to listen to for add-to-cart events
   - [addToCartEvent] (_String_): DOM-event for add-to-cart
+  
+* [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to 
+override the Swedish translation for chest:
+```javascript
+{
+  sv: {
+    humanMeasurements: {
+      chest: "Bröst"
+    }
+  }
+}
+```
+Similarly override any other key in any other language (en, fi, sv).
