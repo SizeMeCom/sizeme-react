@@ -2,7 +2,8 @@
   "common": {
     "closeText": "Close",
     "selectedSize": "Selected size",
-    "shoppingFor": "Shopping for"
+    "shoppingFor": "Shopping for",
+	"sizingBarSplash": "Enter your measurements to find your size"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",

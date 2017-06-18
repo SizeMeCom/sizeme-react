@@ -71,12 +71,13 @@ class SizeSlider extends React.Component {
     }
 
     render () {
+        const { t } = this.props;
         const doShowFit = this.doShowFit();
         return (
             <div className={`sizeme-slider${doShowFit ? "" : " no-fit"}`}>
                 <div className="slider-placeholder">
                     <span ref={ref => { this.placeholder = ref; }}>
-                        Enter your measurements to find the right size.
+                        {t("common.sizingBarSplash")}
                     </span>
                 </div>
                 {fitRanges.map(fit => (
@@ -95,7 +96,8 @@ class SizeSlider extends React.Component {
 
 SizeSlider.propTypes = {
     match: PropTypes.object,
-    recommendedMatch: PropTypes.object
+    recommendedMatch: PropTypes.object,
+    t: PropTypes.func
 };
 
 export default translate()(SizeSlider);

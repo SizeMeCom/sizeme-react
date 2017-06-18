@@ -2,7 +2,8 @@
   "common": {
     "closeText": "Sulje",
     "selectedSize": "Valittu koko", 
-    "shoppingFor": "Aktiivinen profiili"
+    "shoppingFor": "Aktiivinen profiili",
+	"sizingBarSplash": "Syötä mittasi, niin suosittelemme sinulle oikean koon"
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",

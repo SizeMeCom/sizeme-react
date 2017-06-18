@@ -2,7 +2,8 @@
   "common": {
     "closeText": "Stäng",
     "selectedSize": "Vald storlek",
-    "shoppingFor": "Shoppa för"
+    "shoppingFor": "Shoppa för",
+	"sizingBarSplash": "Enter your measurements to find your size"
   },
   "detailed": {
     "windowTitle": "Detaljerad Bild för",
