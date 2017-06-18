@@ -120,8 +120,11 @@ function getEssentialMeasurements (itemTypeArr) {
 
         case 3:
             arr.push("shoe_inside_length");
-            if (itemTypeArr[3] < 6) {
+            if (itemTypeArr[3] > 6) {
                 arr.push("calf_width");
+            }
+            if (itemTypeArr[3] > 7) {
+                arr.push("knee_width");
             }
             break;
 
