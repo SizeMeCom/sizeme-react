@@ -39,14 +39,14 @@ class SignupBox extends React.Component {
         return (
             <div>
                 <div className="sizeme-login-link">
-                    <a onClick={() => openLoginFrame("login-frame")}>Already a SizeMe user? »</a>
+                    <a onClick={() => openLoginFrame("login-frame")}>{t("common.alreadyUser")} »</a>
                 </div>
                 <div className="sizeme-signup-box">
                     <div>{t("signupBox.message")}</div>
                     <div className={inputClassName}>
                         <input type="email" value={this.state.email} onChange={this.handleChange}
                                placeholder="myname@example.com"/>
-                        <a disabled={!this.state.valid} onClick={this.handleClick}>Save</a>
+                        <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
                     </div>
                     {isError && <div className="signup-alert">
                         {errorMessage}

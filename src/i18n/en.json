@@ -1,5 +1,6 @@
 {
   "common": {
+    "alreadyUser": "Already a SizeMe user?",
     "closeText": "Close",
     "selectedSize": "Selected size",
     "shoppingFor": "Shopping for",
@@ -150,6 +151,7 @@
   },
   "signupBox": {
     "message": "Save your measurements, so you don't have to remember them ever again.",
+	"save": "Save",
     "signupPrompt": "Save with email",
     "duplicateUser": "An account with this email already exists. Try to log in?"
   },

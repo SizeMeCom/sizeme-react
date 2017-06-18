@@ -1,5 +1,6 @@
 {
   "common": {
+    "alreadyUser": "Kirjaudu SizeMe-palveluun",
     "closeText": "Sulje",
     "selectedSize": "Valittu koko", 
     "shoppingFor": "Aktiivinen profiili",
@@ -97,7 +98,7 @@
     "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
     "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
     "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
-    "shoe_inside_length": "Place a measuring tape next to a wall and stand on the tape. Use thin socks or no socks at all.",
+    "shoe_inside_length": "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle.  Käytä ohuita sukkia tai ei sukkia ollenkaan.",
     "calf_width": "Measure around widest part of calf.",
     "hat_width": "Measure the biggest circumference of head at just above top of ears."
   },
@@ -149,9 +150,10 @@
     "noTopButton": "Paidan ylin nappi ei tässä koossa mene kiinni."
   },
   "signupBox": {
-    "message": "Save your measurements, so you don't have to remember them ever again.",
-    "signupPrompt": "Save with email",
-    "duplicateUser": "An account with this email already exists. Try to log in?"
+    "message": "Tallenna mittasi niin sinun ei tarvitse muistaa niitä enää.",
+	"save": "Tallenna",	
+    "signupPrompt": "Tallenna sähköpostiosoitteella",
+    "duplicateUser": "Tili tällä sähköpostiosoitteella on jo olemassa.  Kirjaudu sisään siis!"
   },
   "sizeGuide": {
     "advertisement": "Tämän kokotaulukon toimittaa",
