@@ -1,8 +1,10 @@
 {
   "common": {
+    "alreadyUser": "Already a SizeMe user?",
     "closeText": "Stäng",
     "selectedSize": "Vald storlek",
-    "shoppingFor": "Shoppa för"
+    "shoppingFor": "Shoppa för",
+	"sizingBarSplash": "Enter your measurements to find your size"
   },
   "detailed": {
     "windowTitle": "Detaljerad Bild för",
@@ -148,9 +150,11 @@
     "noTopButton": "Översta knappen skjorta kan inte stängas i denna storlek."
   },
   "signupBox": {
+    "duplicateUser": "An account with this email already exists. Try to log in?",  
+	"emailPlaceholder": "myname@example.com",  
     "message": "Save your measurements, so you don't have to remember them ever again.",
-    "signupPrompt": "Save with email",
-    "duplicateUser": "An account with this email already exists. Try to log in?"
+	"save": "Save",	
+    "signupPrompt": "Save with email"
   },
   "sizeGuide": {
     "advertisement": "Denna storleksguide har gjorts för dig av",
