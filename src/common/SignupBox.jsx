@@ -45,7 +45,7 @@ class SignupBox extends React.Component {
                     <div>{t("signupBox.message")}</div>
                     <div className={inputClassName}>
                         <input type="email" value={this.state.email} onChange={this.handleChange}
-                               placeholder="myname@example.com"/>
+                               placeholder={t("signupBox.emailPlaceholder")}/>
                         <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
                     </div>
                     {isError && <div className="signup-alert">
