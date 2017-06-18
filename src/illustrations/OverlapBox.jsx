@@ -6,6 +6,8 @@ import Pinch from "./Pinch";
 import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
 import "./OverlapBox.scss";
+import ProductModel from "../api/ProductModel";
+import { translate } from "react-i18next";
 
 const illustration = (measurement, overlap) => {
     switch (measurement) {
@@ -38,16 +40,20 @@ class OverlapBox extends React.Component {
     }
 
     render () {
-        const overlap = this.props.fit.overlap / (isPinch(this.props.humanProperty) ? 20 : 10);
+        const { fit, humanProperty, hover, t } = this.props;
+        const overlap = fit.overlap / (isPinch(humanProperty) ? 20 : 10);
 
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip" 
-			    data-effect="solid" data-place="bottom" onMouseEnter={this.props.hover}>
+			    data-effect="solid" data-place="bottom" onMouseEnter={hover}>
                 <div className="overlap-svg">
-                    {illustration(this.props.humanProperty, overlap)}
+                    {illustration(humanProperty, overlap)}
                 </div>
                 <div className="overlap-text">
                     <div>{overlap > 0 && "+"}{overlap.toFixed(1)} cm</div>
+                </div>
+                <div className="overlap-verdict">
+                    <div>{t(`fitVerdict.${ProductModel.getFit(fit).label}`)}</div>
                 </div>
             </div>
         );
@@ -57,7 +63,8 @@ class OverlapBox extends React.Component {
 OverlapBox.propTypes = {
     fit: PropTypes.object.isRequired,
     humanProperty: PropTypes.string.isRequired,
-    hover: PropTypes.func.isRequired
+    hover: PropTypes.func.isRequired,
+    t: PropTypes.func
 };
 
-export default OverlapBox;
+export default translate()(OverlapBox);
