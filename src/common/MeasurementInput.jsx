@@ -15,7 +15,7 @@ const unitFactors = {
 class MeasurementInput extends React.Component {
     constructor (props) {
         super(props);
-        const currValue = this.viewValue(props);
+        const currValue = this.viewValue(props.value);
         this.state = {
             error: false,
             pending: false,
@@ -26,7 +26,7 @@ class MeasurementInput extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         if (nextProps.value !== this.state.modelValue || nextProps.unit !== this.props.unit) {
-            const nextValue = this.viewValue(nextProps);
+            const nextValue = this.viewValue(nextProps.value);
             if (nextValue !== this.state.value) {
                 this.setState({
                     value: nextValue
@@ -35,56 +35,66 @@ class MeasurementInput extends React.Component {
         }
     }
 
-    viewValue (props) {
-        return props.value ? (parseInt(props.value, 10) / unitFactors[props.unit]).toFixed(1) : "";
+    viewValue (value) {
+        return value ? (parseInt(value, 10) / unitFactors[this.props.unit]).toFixed(1) : "";
     }
 
     modelValue (value) {
-        const fixedValue = value.replace(",", ".");
-        if (fixedValue.length > 0) {
+        let fixedValue = value.replace(",", ".");
+        if (fixedValue === ".") {
+            return 0;
+        } else if (fixedValue.length > 0) {
             return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
         } else {
             return null;
         }
     }
 
-    valueChanged = (event) => {
+    valueChanged = (isBlur) => {
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
 
-        const newValue = event.target.value;
-        if (newValue === this.state.value) {
+        // because isBlur could be an event
+        const blur = isBlur === true;
+
+        const newValue = this.input.value;
+        if (newValue === this.state.value && !blur) {
             return;
-        } else if (newValue.length > 0 && !newValue.match(/^\d+[,.]?\d*$/)) {
+        } else if (newValue.length > 0 && !newValue.match(/^\d*[,.]?\d*$/)) {
             return;
         }
         const newState = {
             pending: true
         };
+
         if (isNaN(this.modelValue(newValue))) {
             newState.error = true;
         } else {
             newState.value = newValue;
         }
 
-        this.setState(newState);
-
-        this.timeout = setTimeout(this.dispatchChange, 1000);
+        this.setState(newState, () => {
+            if (blur) {
+                this.dispatchChange(true);
+            } else {
+                this.timeout = setTimeout(this.dispatchChange, 1000);
+            }
+        });
     };
 
-    dispatchChange = () => {
-        if (this.timeout) {
-            clearTimeout(this.timeout);
-            this.timeout = null;
-        }
+    dispatchChange = (setValue) => {
         if (!this.state.error) {
-            const value = this.modelValue(this.state.value);
-            const doDispatch = value !== this.state.modelValue;
-            this.setState({ pending: false, modelValue: value }, () => {
+            const modelValue = this.modelValue(this.state.value);
+            const doDispatch = modelValue !== this.state.modelValue;
+            const state = { pending: false, modelValue };
+            if (setValue) {
+                state.value = this.viewValue(modelValue);
+            }
+            this.setState(state, () => {
                 if (doDispatch) {
-                    this.props.onChange(value);
+                    this.props.onChange(modelValue);
                 }
             });
         }
@@ -92,10 +102,7 @@ class MeasurementInput extends React.Component {
 
     onBlur = () => {
         ReactTooltip.hide(this.tooltip);
-        this.dispatchChange();
-        this.setState({
-            value: this.viewValue(this.props)
-        });
+        this.valueChanged(true);
     };
 
     onFocus = () => {
