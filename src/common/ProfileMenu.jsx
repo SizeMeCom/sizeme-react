@@ -7,7 +7,7 @@ import "./ProfileMenu.scss";
 
 const ProfileMenu = (props) => {
     const selectProfile = (e, profileId) => {
-        if (e.target.classList.contains("profile-name")) {
+        if (e.target.classList.contains("profile") || e.target.classList.contains("profile-name")) {
             props.setSelectedProfile(profileId);
         }
     };
