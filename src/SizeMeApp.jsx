@@ -50,20 +50,27 @@ class SizeMeApp extends React.Component {
     };
 
     render () {
-        if (this.props.resolved) {
+        const { resolved, loggedIn,
+            currentMatch, recommendedMatch,
+            profiles, selectedProfile, setSelectedProfile,
+            measurementInputs,
+            onSignup, signupStatus
+        } = this.props;
+
+        if (resolved) {
             return (
-                <div className="sizeme-content">
+                <div className={`${currentMatch ? "" : "no-fit"} sizeme-content`}>
                     <div className="sizeme-slider-row">                        
-                        <SizeSlider match={this.props.currentMatch} recommendedMatch={this.props.recommendedMatch}/>
-                        {this.props.loggedIn && <ProfileMenu profiles={this.props.profiles}
-                                                             selectedProfile={this.props.selectedProfile.id}
-                                                             setSelectedProfile={this.props.setSelectedProfile}/>}
+                        <SizeSlider match={currentMatch} recommendedMatch={recommendedMatch}/>
+                        {loggedIn && <ProfileMenu profiles={profiles}
+                                                             selectedProfile={selectedProfile.id}
+                                                             setSelectedProfile={setSelectedProfile}/>}
                     </div>
-                    {this.props.measurementInputs && <SizeForm fields={this.props.measurementInputs} />}
-                    {!this.props.loggedIn && <SignupBox onLogin={this.userLoggedIn}
-                                                        onSignup={this.props.onSignup}
-                                                        signupStatus={this.props.signupStatus}/>}
-                    {this.props.resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
+                    {measurementInputs && <SizeForm fields={measurementInputs} />}
+                    {currentMatch && <SignupBox onLogin={this.userLoggedIn}
+                                                        onSignup={onSignup}
+                                                        signupStatus={signupStatus}/>}
+                    {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
                     <FitTooltip2/>
                 </div>
             );

@@ -5,7 +5,7 @@ import { translate } from "react-i18next";
 import { getResult } from "../api/ProductModel";
 import { connect } from "react-redux";
 
-function getStretchedTxt (stretchValue, t) {
+const getStretchedTxt = (stretchValue, t) => {
     if (stretchValue > 0) {
         if (stretchValue < 25) {
             return t("fitInfo.stretchedLittle");
@@ -18,7 +18,7 @@ function getStretchedTxt (stretchValue, t) {
         }
     }
     return "";
-}
+};
 
 const overlap = (fitData, t) => {
     const { matchItem, fitText, isPinched } = fitData;
@@ -37,7 +37,7 @@ const noOverlap = (fitData, t) => {
     const { matchItem, fitText, isPinched } = fitData;
     if (matchItem && matchItem.overlap <= 0) {
         if (matchItem.componentFit >= 1000) {
-            return <span>{t("fitInfo.noOverlap")} {getStretchedTxt(matchItem.componentStretch)}</span>;
+            return <span>{t("fitInfo.noOverlap")} {getStretchedTxt(matchItem.componentStretch, t)}</span>;
         } else {
             return (
                 <span dangerouslySetInnerHTML={{ __html: t("fitInfo.isSmaller", {
@@ -73,7 +73,7 @@ const verdict = (fitData, t) => {
     }
 };
 
-class FitTooltip2 extends React.Component {
+class FitTooltip extends React.Component {
     constructor (props) {
         super(props);
         this.state = { fitData: null };
@@ -119,7 +119,7 @@ class FitTooltip2 extends React.Component {
     }
 }
 
-FitTooltip2.propTypes = {
+FitTooltip.propTypes = {
     measurement: PropTypes.string,
     product: PropTypes.object,
     selectedSize: PropTypes.string,
@@ -135,4 +135,4 @@ const mapStateToProps = state => ({
         state.match.matchResult[state.selectedSize] : null
 });
 
-export default translate()(connect(mapStateToProps)(FitTooltip2));
+export default translate()(connect(mapStateToProps)(FitTooltip));
