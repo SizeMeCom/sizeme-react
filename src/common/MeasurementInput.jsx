@@ -26,10 +26,11 @@ class MeasurementInput extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         if (nextProps.value !== this.state.modelValue || nextProps.unit !== this.props.unit) {
-            const nextValue = this.viewValue(nextProps.value);
-            if (nextValue !== this.state.value) {
+            const value = this.viewValue(nextProps.value);
+            if (value !== this.state.value) {
                 this.setState({
-                    value: nextValue
+                    value,
+                    modelValue: this.modelValue(value)
                 });
             }
         }
