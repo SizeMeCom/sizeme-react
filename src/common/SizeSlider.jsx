@@ -71,7 +71,7 @@ class SizeSlider extends React.Component {
     }
 
     render () {
-        const { t } = this.props;
+        const { t, fitRecommendation, match } = this.props;
         const doShowFit = this.doShowFit();
         return (
             <div className={`sizeme-slider${doShowFit ? "" : " no-fit"}`}>
@@ -85,9 +85,9 @@ class SizeSlider extends React.Component {
                         <Interpolate i18nKey={`fitVerdict.${fit.label}`}/>
                     </div>
                 ))}
-                {doShowFit && this.props.recommendedMatch && <RecommendationIndicator
-                    value={this.getFitPosition(this.props.recommendedMatch.totalFit)}/>}
-                {doShowFit && <FitIndicator value={this.getFitPosition(this.props.match.totalFit)}
+                {doShowFit && fitRecommendation > 0 && <RecommendationIndicator
+                    value={this.getFitPosition(fitRecommendation)}/>}
+                {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit)}
                                                    fitRange={this.getFitRange()}/>}
             </div>
         );
@@ -96,7 +96,7 @@ class SizeSlider extends React.Component {
 
 SizeSlider.propTypes = {
     match: PropTypes.object,
-    recommendedMatch: PropTypes.object,
+    fitRecommendation: PropTypes.number,
     t: PropTypes.func
 };
 

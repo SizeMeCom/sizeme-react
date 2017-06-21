@@ -12,7 +12,7 @@ import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
 import { trackEvent } from "./api/ga";
-import FitTooltip2 from "./common/FitTooltip";
+import FitTooltip from "./common/FitTooltip";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -51,17 +51,18 @@ class SizeMeApp extends React.Component {
 
     render () {
         const { resolved, loggedIn,
-            currentMatch, recommendedMatch,
+            currentMatch, 
             profiles, selectedProfile, setSelectedProfile,
             measurementInputs,
-            onSignup, signupStatus
+            onSignup, signupStatus,
+            product
         } = this.props;
 
         if (resolved) {
             return (
                 <div className={`${currentMatch ? "" : "no-fit"} sizeme-content`}>
                     <div className="sizeme-slider-row">                        
-                        <SizeSlider match={currentMatch} recommendedMatch={recommendedMatch}/>
+                        <SizeSlider match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}/>
                         {loggedIn && <ProfileMenu profiles={profiles}
                                                              selectedProfile={selectedProfile.id}
                                                              setSelectedProfile={setSelectedProfile}/>}
@@ -71,7 +72,7 @@ class SizeMeApp extends React.Component {
                                                         onSignup={onSignup}
                                                         signupStatus={signupStatus}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
-                    <FitTooltip2/>
+                    <FitTooltip/>
                 </div>
             );
         } else {
@@ -84,7 +85,6 @@ SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
     currentMatch: PropTypes.object,
-    recommendedMatch: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
@@ -93,7 +93,8 @@ SizeMeApp.propTypes = {
     getProfiles: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
     onSignup: PropTypes.func.isRequired,
-    signupStatus: PropTypes.object.isRequired
+    signupStatus: PropTypes.object.isRequired,
+    product: PropTypes.object
 };
 
 const mapStateToProps = state => ({
@@ -101,13 +102,12 @@ const mapStateToProps = state => ({
     loggedIn: state.authToken.loggedIn,
     sizemeProductPage: state.productInfo.product !== null,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
-    recommendedMatch: Optional.ofNullable(state.match.matchResult)
-        .map(res => res.recommendedFit ? res[res.recommendedFit] : null).orElse(null),
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
-    signupStatus: state.signupStatus
+    signupStatus: state.signupStatus,
+    product: state.productInfo.product
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

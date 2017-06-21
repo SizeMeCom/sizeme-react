@@ -11,7 +11,7 @@ import SizeGuideModel from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 
-const OPTIMAL_FIT = 1070;
+const DEFAULT_OPTIMAL_FIT = 1070;
 
 const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
 const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
@@ -306,9 +306,10 @@ function doMatch (fitRequest, token, useProfile) {
     return fetch(address, request).then(jsonResponse);
 }
 
-function getRecommendedFit (fitResults) {
+function getRecommendedFit (fitResults, optimalFit) {
+    const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
     const [bestMatch] = fitResults.reduce(([accSize, fit], [size, res]) => {
-        const newFit = Math.abs(res.totalFit - OPTIMAL_FIT);
+        const newFit = Math.abs(res.totalFit - optFit);
         if (!accSize || newFit < fit) {
             return [size, newFit];
         } else {
@@ -365,8 +366,10 @@ function match (doSelectBestFit = true) {
                 const fitResults = Object.entries(result);
                 // if user is logged in, don't care about the accuracy. If not,
                 // filter out results where accuracy is 0
-                const recommendedFit = getRecommendedFit(token ? fitResults : fitResults
-                    .filter(([, res]) => res.accuracy > 0));
+                const recommendedFit = getRecommendedFit(
+                    token ? fitResults : fitResults.filter(([, res]) => res.accuracy > 0),
+                    product.item.fitRecommendation
+                );
                 dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
 
                 if (doSelectBestFit && recommendedFit) {
