@@ -67,7 +67,7 @@ class SizeMeApp extends React.Component {
                                                              setSelectedProfile={setSelectedProfile}/>}
                     </div>
                     {measurementInputs && <SizeForm fields={measurementInputs} />}
-                    {currentMatch && <SignupBox onLogin={this.userLoggedIn}
+                    {!loggedIn && currentMatch && <SignupBox onLogin={this.userLoggedIn}
                                                         onSignup={onSignup}
                                                         signupStatus={signupStatus}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
