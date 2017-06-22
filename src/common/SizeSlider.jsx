@@ -19,7 +19,7 @@ FitIndicator.propTypes = {
 };
 
 const RecommendationIndicator = (props) => {
-    const left = `calc(${props.value}% - 8px`;
+    const left = `calc(${props.value}% - 18px`;
     return (
         <svg className="recommendation" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10">
             <path d="M10 5 L20 10 L0 10 Z" />
