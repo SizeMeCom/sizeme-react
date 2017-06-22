@@ -18,6 +18,12 @@ const illustration = (measurement, overlap) => {
             return <FrontHeight overlap={overlap}/>;
 
         case "chest":
+        case "shirtWaist":
+        case "pantWaist":
+        case "thighCircumference":
+        case "kneeCircumference":
+        case "calfCircumference":
+        case "ankleCircumference":
             return <Pinch overlap={overlap}/>;
 
         case "footLength":
