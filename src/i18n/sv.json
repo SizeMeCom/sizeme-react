@@ -5,8 +5,8 @@
     "selectedSize": "Vald storlek",
     "shoppingFor": "Shoppa för",
 	"sizingBarSplash": "Enter your measurements to find your size",
-    "sizingBarFitTooltip": "This indicates how size <strong>{{selectedSize}}</strong> will fit you.",
-    "sizingBarRecommendationTooltip": "We recommend that your fit is around this area."
+    "sizingBarFitTooltip": "This indicates how size <strong>{{selectedSize}}</strong> will fit you",
+    "sizingBarRecommendationTooltip": "We recommend that your fit is around this area"
   },
   "detailed": {
     "windowTitle": "Detaljerad Bild för",

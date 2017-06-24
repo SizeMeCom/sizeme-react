@@ -5,8 +5,8 @@
     "selectedSize": "Valittu koko", 
     "shoppingFor": "Aktiivinen profiili",
 	"sizingBarSplash": "Syötä mittasi, niin suosittelemme sinulle oikean koon",
-    "sizingBarFitTooltip": "This indicates how size <strong>{{selectedSize}}</strong> will fit you.",
-    "sizingBarRecommendationTooltip": "We recommend that your fit is around this area."
+    "sizingBarFitTooltip": "Tämä näyttää miten koko <strong>{{selectedSize}}</strong> sopii sinulle",
+    "sizingBarRecommendationTooltip": "Tämän tuotteen kohdalla suosittelemme tätä sopivuutta"
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",
