@@ -11,3 +11,13 @@ $light_bg_color: #e2e2e2;
 $recommendation_color: #5fc153;
 
 $border_radius: 4px;
+
+@mixin default_tooltip() {
+  color: black !important;
+  background-color: $bg_color !important;
+  opacity: 1 !important;
+  z-index: 15 !important;
+  padding: 10px 10px !important;
+  border: 1px solid $default_color;
+  border-radius: $border_radius !important;
+}

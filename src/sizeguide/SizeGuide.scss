@@ -26,13 +26,7 @@ a.link-btn.size-guide {
 
 .fit-tooltip {
   max-width: 300px !important;
-  color: black !important;
-  background-color: $bg_color !important;
-  opacity: 1 !important;
-  z-index: 15 !important;
-  padding: 10px 10px !important;
-  border: 1px solid $default_color;
-  border-radius: $border_radius !important;
+  @include default_tooltip();
 
   .front_height {
     float: right;

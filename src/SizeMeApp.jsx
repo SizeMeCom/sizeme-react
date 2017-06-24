@@ -51,7 +51,7 @@ class SizeMeApp extends React.Component {
 
     render () {
         const { resolved, loggedIn,
-            currentMatch, 
+            currentMatch, selectedSize,
             profiles, selectedProfile, setSelectedProfile,
             measurementInputs,
             onSignup, signupStatus,
@@ -62,7 +62,8 @@ class SizeMeApp extends React.Component {
             return (
                 <div className={`${currentMatch ? "" : "no-fit"} sizeme-content`}>
                     <div className="sizeme-slider-row">                        
-                        <SizeSlider match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}/>
+                        <SizeSlider match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}
+                                    selectedSize={selectedSize}/>
                         {loggedIn && <ProfileMenu profiles={profiles}
                                                              selectedProfile={selectedProfile.id}
                                                              setSelectedProfile={setSelectedProfile}/>}
@@ -85,6 +86,7 @@ SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
     currentMatch: PropTypes.object,
+    selectedSize: PropTypes.string,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
@@ -101,6 +103,7 @@ const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
     loggedIn: state.authToken.loggedIn,
     sizemeProductPage: state.productInfo.product !== null,
+    selectedSize: state.selectedSize,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),

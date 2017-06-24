@@ -71,8 +71,13 @@
     }
   }
 
+  .indicator-tooltip {
+    @include default_tooltip();
+    max-width: 150px !important;
+  }
+
   svg.recommendation {
-	bottom: 0px;
+	bottom: 0;
     path {
       fill: $recommendation_color;
       fill-opacity: 0.75;
@@ -86,7 +91,7 @@
     opacity: 1;
     transition-delay:0s;
   }
-  .fit-area span {
+  .fit-area {
     visibility: hidden;
 	transition-delay:0.2s;
   }

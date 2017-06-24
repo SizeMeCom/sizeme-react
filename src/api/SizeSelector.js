@@ -109,7 +109,9 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
         const options = element.querySelectorAll("li");
         for (let i = 0; i < options.length; i++) {
             const option = options.item(i);
-            this.selectors[getId(option)] = () => option.click();
+            const sizeValue = getId(option);
+            this.selectors[sizeValue] = () => option.click();
+            sizeMapper.push([sizeValue, option.textContent.trim()]);
         }
     }
 }

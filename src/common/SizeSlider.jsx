@@ -1,34 +1,56 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { translate, Interpolate } from "react-i18next";
+import { translate } from "react-i18next";
 import "./SizeSlider.scss";
 import ProductModel, { fitRanges } from "../api/ProductModel";
+import ReactTooltip from "react-tooltip";
+import SizeSelector from "../api/SizeSelector";
 
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 8px`;
+    const { selectedSize, t } = props;
+    const size = SizeSelector.sizeMapper.filter(([size]) => size === selectedSize)
+        .map(([_, sizeName]) => sizeName)[0] || "";
     return (
-        <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-            <polygon className={props.fitRange.label} points="5,0 10,10 0,10 5,0" />
-        </svg>
+        <div>
+            <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                <polygon className={props.fitRange.label} points="5,0 10,10 0,10 5,0"
+                         data-tip data-for="fitTooltip"/>
+            </svg>
+            <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
+                <span dangerouslySetInnerHTML={{ __html: t("common.sizingBarFitTooltip", {
+                    selectedSize: size
+                }) }}/>
+            </ReactTooltip>
+        </div>
     );
 };
 
 FitIndicator.propTypes = {
     value: PropTypes.number.isRequired,
-    fitRange: PropTypes.object.isRequired
+    fitRange: PropTypes.object.isRequired,
+    selectedSize: PropTypes.string,
+    t: PropTypes.func
 };
 
 const RecommendationIndicator = (props) => {
     const left = `calc(${props.value}% - 18px`;
     return (
-        <svg className="recommendation" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10">
-            <path d="M10 5 L20 10 L0 10 Z" />
-        </svg>
+        <div>
+            <svg className="recommendation" style={{ left }} xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 20 10" data-tip data-for="recommendationTooltip">
+                <path d="M10 5 L20 10 L0 10 Z" />
+            </svg>
+            <ReactTooltip id="recommendationTooltip" type="light" class="indicator-tooltip">
+                {props.t("common.sizingBarRecommendationTooltip")}
+            </ReactTooltip>
+        </div>
     );
 };
 
 RecommendationIndicator.propTypes = {
-    value: PropTypes.number.isRequired
+    value: PropTypes.number.isRequired,
+    t: PropTypes.func
 };
 
 class SizeSlider extends React.Component {
@@ -71,7 +93,7 @@ class SizeSlider extends React.Component {
     }
 
     render () {
-        const { t, fitRecommendation, match } = this.props;
+        const { t, fitRecommendation, match, selectedSize } = this.props;
         const doShowFit = this.doShowFit();
         return (
             <div className={`sizeme-slider${doShowFit ? "" : " no-fit"}`}>
@@ -82,13 +104,13 @@ class SizeSlider extends React.Component {
                 </div>
                 {fitRanges.map(fit => (
                     <div className={fit.label + " fit-area"} key={fit.label}>
-                        <Interpolate i18nKey={`fitVerdict.${fit.label}`}/>
+                        {t(`fitVerdict.${fit.label}`)}
                     </div>
                 ))}
-                {doShowFit && fitRecommendation > 0 && <RecommendationIndicator
+                {doShowFit && fitRecommendation > 0 && <RecommendationIndicator t={t}
                     value={this.getFitPosition(fitRecommendation)}/>}
-                {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit)}
-                                                   fitRange={this.getFitRange()}/>}
+                {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit)} t={t}
+                                                   fitRange={this.getFitRange()} selectedSize={selectedSize}/>}
             </div>
         );
     }
@@ -96,6 +118,7 @@ class SizeSlider extends React.Component {
 
 SizeSlider.propTypes = {
     match: PropTypes.object,
+    selectedSize: PropTypes.string,
     fitRecommendation: PropTypes.number,
     t: PropTypes.func
 };

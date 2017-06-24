@@ -4,7 +4,9 @@
     "closeText": "Close",
     "selectedSize": "Selected size",
     "shoppingFor": "Shopping for",
-	"sizingBarSplash": "Enter your measurements to find your size"
+	"sizingBarSplash": "Enter your measurements to find your size",
+    "sizingBarFitTooltip": "This indicates how size <strong>{{selectedSize}}</strong> will fit you.",
+    "sizingBarRecommendationTooltip": "We recommend that your fit is around this area."
   },
   "detailed": {
     "buttonText": "Detailed view of fit",
