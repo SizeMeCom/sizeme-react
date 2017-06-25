@@ -52,6 +52,7 @@ class MeasurementInput extends React.Component {
     }
 
     valueChanged = (isBlur) => {
+        ReactTooltip.hide(this.tooltip);
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
@@ -134,7 +135,7 @@ class MeasurementInput extends React.Component {
             <div className={className}>
                 <span className="units">{unitMarks[this.props.unit]}</span>
                 <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
-                   data-place="right" data-type="light" data-class="measurement-tooltip" data-effect="solid"
+                   data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid"
                 />
                 <input type="text" value={this.state.value} onChange={this.valueChanged}
                        onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input = el;}}

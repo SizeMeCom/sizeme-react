@@ -59,8 +59,8 @@
 
       .tooltip-trigger {
         position: absolute;
-        right: 8px;
-        bottom: 10px;
+        left: 40%;
+        bottom: 4px;
       }
     }
 
@@ -97,37 +97,37 @@
     }
   }
 
-    .__react_component_tooltip.measurement-tooltip {
+  .__react_component_tooltip.measurement-tooltip {
 
-		background-color: $default_color;
-		padding: 1px;
-		opacity: 1;
-		pointer-events: all;
-		margin-left: 15px;
+    background-color: $default_color;
+    padding: 1px;
+    opacity: 1;
+    pointer-events: all;
+    margin-left: 15px;
 
-		ul {
-		  background-color: $bg_color;
-		  color: black;
-		  padding: 5px 5px 5px 20px;
-		  max-width: 170px;
-		  list-style-type: disc;
-		  border-radius: $border_radius $border_radius 0 0;
-		}
-
-		.measurement-guide-link {
-		  padding: 4px 0 4px 8px;
-		  color: black;
-		  background-color: $light_bg_color;
-		  border-radius: 0 0 3px 3px;
-
-		  a {
-			pointer-events: all;
-			cursor: pointer;
-			color: black;
-			text-decoration: underline !important;
-		  }
-		}
+    ul {
+      background-color: $bg_color;
+      color: black;
+      padding: 5px 5px 5px 20px;
+      max-width: 170px;
+      list-style-type: disc;
+      border-radius: $border_radius $border_radius 0 0;
     }
+
+    .measurement-guide-link {
+      padding: 4px 0 4px 8px;
+      color: black;
+      background-color: $light_bg_color;
+      border-radius: 0 0 3px 3px;
+
+      a {
+        pointer-events: all;
+        cursor: pointer;
+        color: black;
+        text-decoration: underline !important;
+      }
+    }
+  }
 }
 
 .measurement-guide-overlay {
@@ -154,55 +154,55 @@
   border-radius: $border_radius;
 
   .measurement-instruction-box {
-	line-height: 1em;
-	padding: 18px 22px 18px 18px;
-	color: $bg_color;
-	font-size: 16px;
-	border-radius: $border_radius;
-	background-color: $default_color;
-	width: 250px;
-	box-sizing: border-box;
-	position: relative;
-	text-align: left;
+    line-height: 1em;
+    padding: 18px 22px 18px 18px;
+    color: $bg_color;
+    font-size: 16px;
+    border-radius: $border_radius;
+    background-color: $default_color;
+    width: 250px;
+    box-sizing: border-box;
+    position: relative;
+    text-align: left;
 
-	h2 {
-	  color: $bg_color;
-	  line-height: 1em;
-	  margin-bottom: 10px;
-	}
+    h2 {
+      color: $bg_color;
+      line-height: 1em;
+      margin-bottom: 10px;
+    }
 
-	.instruction-content {
-	  font-size: smaller;
-	}
+    .instruction-content {
+      font-size: smaller;
+    }
 
-	.gender-male .female {
-	  display: none;
-	}
+    .gender-male .female {
+      display: none;
+    }
 
-	.gender-female .male {
-	  display: none;
-	}
+    .gender-female .male {
+      display: none;
+    }
 
-	.fa {
-	  position: absolute;
-	  right: 6px;
-	  top: 5px;
-	  font-size: larger;
-	  cursor: pointer;
-	}
+    .fa {
+      position: absolute;
+      right: 6px;
+      top: 5px;
+      font-size: larger;
+      cursor: pointer;
+    }
 
-	&::after {
-	  content: "";
-	  border-top: 20px solid $default_color;
-	  position: absolute;
-	  border-left: 20px solid transparent;
-	  border-right: 20px solid transparent;
-	  bottom: -20px;
-	  right: 25%;
-	}
+    &::after {
+      content: "";
+      border-top: 20px solid $default_color;
+      position: absolute;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      bottom: -20px;
+      right: 25%;
+    }
   }
 
   .rh5v-Overlay_component {
-	display: none;
+    display: none;
   }
 }
