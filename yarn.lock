@@ -4458,9 +4458,9 @@ react-fontawesome@^1.6.1:
   dependencies:
     prop-types "^15.5.6"
 
-react-html5video@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-html5video/-/react-html5video-2.1.0.tgz#e6d1e29487a5949d058a7ef78b60138d129c8e96"
+react-html5video@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-html5video/-/react-html5video-2.2.0.tgz#a75b3040a760a3fc9ae35b84e9537c55d601609a"
 
 react-i18next@^4.1.0:
   version "4.1.0"
