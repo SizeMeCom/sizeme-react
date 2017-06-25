@@ -16,6 +16,9 @@ class AbstractSelect {
     setSelected = val => {
         if (this.selectors[val]) {
             this.selectors[val]();
+        } else {
+            this.clearSelection();
+            selectSize("");
         }
     };
 }
@@ -42,6 +45,10 @@ class DefaultSelect extends AbstractSelect {
         }
     }
 
+    clearSelection = () => {
+        this.el.value = "";
+    };
+
     clone = () => {
         if (this.el) {
             const clone = this.el.cloneNode(true);
@@ -63,6 +70,8 @@ class SwatchesSelect extends AbstractSelect {
         const getId = li => li.id.replace("option", "");
 
         this.getSize = e => getId(e.target.parentNode.parentNode);
+
+        this.clearSelection = () => element.querySelector("li.selected").classList.remove("selected");
 
         const options = element.querySelectorAll("li");
         for (let i = 0; i < options.length; i++) {
@@ -105,6 +114,8 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
 
         const getId = li => li.id.replace(/li-(\d+)-.*/, "$1");
         this.getSize = e => getId(e.target);
+
+        this.clearSelection = () => element.querySelector("li.li_selected").classList.remove("li_selected");
 
         const options = element.querySelectorAll("li");
         for (let i = 0; i < options.length; i++) {

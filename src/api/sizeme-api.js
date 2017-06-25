@@ -308,14 +308,16 @@ function doMatch (fitRequest, token, useProfile) {
 
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
-    const [bestMatch] = fitResults.reduce(([accSize, fit], [size, res]) => {
-        const newFit = Math.abs(res.totalFit - optFit);
-        if (!accSize || newFit < fit) {
-            return [size, newFit];
-        } else {
-            return [accSize, fit];
-        }
-    }, [null, 0]);
+    const [bestMatch] = fitResults
+        .filter(([_, res]) => res.totalFit >= 1000)
+        .reduce(([accSize, fit], [size, res]) => {
+            const newFit = Math.abs(res.totalFit - optFit);
+            if (!accSize || newFit < fit) {
+                return [size, newFit];
+            } else {
+                return [accSize, fit];
+            }
+        }, [null, 0]);
     return bestMatch;
 }
 
@@ -372,7 +374,7 @@ function match (doSelectBestFit = true) {
                 );
                 dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
 
-                if (doSelectBestFit && recommendedFit) {
+                if (doSelectBestFit) {
                     SizeSelector.setSelectedSize(recommendedFit);
                 }
             } catch (reason) {

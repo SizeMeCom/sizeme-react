@@ -75,7 +75,7 @@ class SizeSlider extends React.Component {
             const containerWidth = this.placeholder.parentNode.offsetWidth - 10;
             this.placeholder.style.transform = "scale(1)";
             const placeholderWidth = this.placeholder.offsetWidth;
-            this.placeholder.style.transform = `scale(${containerWidth / placeholderWidth})`;
+            this.placeholder.style.transform = `scale(${Math.min(1.5, containerWidth / placeholderWidth)})`;
         }
     }
 
@@ -93,13 +93,19 @@ class SizeSlider extends React.Component {
     }
 
     render () {
-        const { t, fitRecommendation, match, selectedSize } = this.props;
-        const doShowFit = this.doShowFit();
+        const { t, fitRecommendation, match, selectedSize, matchState } = this.props;
+        const doShowFit = matchState === "match";
+        let placeholderText = "";
+        if (matchState === "no-fit") {
+            placeholderText = t("common.sizingBarSplashNoFit");
+        } else if (matchState === "no-size") {
+            placeholderText = t("common.sizingBarSplashNoSize");
+        }
         return (
-            <div className={`sizeme-slider${doShowFit ? "" : " no-fit"}`}>
+            <div className="sizeme-slider">
                 <div className="slider-placeholder">
                     <span ref={ref => { this.placeholder = ref; }}>
-                        {t("common.sizingBarSplash")}
+                        {placeholderText}
                     </span>
                 </div>
                 {fitRanges.map(fit => (
@@ -120,6 +126,7 @@ SizeSlider.propTypes = {
     match: PropTypes.object,
     selectedSize: PropTypes.string,
     fitRecommendation: PropTypes.number,
+    matchState: PropTypes.string.isRequired,
     t: PropTypes.func
 };
 

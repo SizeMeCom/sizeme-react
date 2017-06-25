@@ -4,7 +4,8 @@
     "closeText": "Sulje",
     "selectedSize": "Valittu koko", 
     "shoppingFor": "Aktiivinen profiili",
-	"sizingBarSplash": "Syötä mittasi, niin suosittelemme sinulle oikean koon",
+	"sizingBarSplashNoFit": "Syötä mittasi, niin suosittelemme sinulle oikean koon",
+    "sizingBarSplashNoSize": "Select a size to see your fit",
     "sizingBarFitTooltip": "Tämä näyttää miten koko <strong>{{selectedSize}}</strong> sopii sinulle",
     "sizingBarRecommendationTooltip": "Tämän tuotteen kohdalla suosittelemme tätä sopivuutta"
   },

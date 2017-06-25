@@ -51,19 +51,35 @@ class SizeMeApp extends React.Component {
 
     render () {
         const { resolved, loggedIn,
-            currentMatch, selectedSize,
+            matchResult, selectedSize,
             profiles, selectedProfile, setSelectedProfile,
             measurementInputs,
             onSignup, signupStatus,
             product
         } = this.props;
 
+        let currentMatch = null;
+        let matchState = "match";
+        if (matchResult && selectedSize) {
+            const match = matchResult[selectedSize];
+            if (match.accuracy > 0) {
+                currentMatch = matchResult[selectedSize];
+            } else {
+                matchState = "no-fit";
+            }
+        } else if (matchResult) {
+            matchState = "no-size";
+        } else {
+            matchState = "no-fit";
+        }
+
+
         if (resolved) {
             return (
-                <div className={`${currentMatch ? "" : "no-fit"} sizeme-content`}>
+                <div className={`${matchState} sizeme-content`}>
                     <div className="sizeme-slider-row">                        
                         <SizeSlider match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}
-                                    selectedSize={selectedSize}/>
+                                    selectedSize={selectedSize} matchState={matchState}/>
                         {loggedIn && <ProfileMenu profiles={profiles}
                                                              selectedProfile={selectedProfile.id}
                                                              setSelectedProfile={setSelectedProfile}/>}
@@ -85,8 +101,8 @@ class SizeMeApp extends React.Component {
 SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
-    currentMatch: PropTypes.object,
     selectedSize: PropTypes.string,
+    matchResult: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
@@ -104,6 +120,7 @@ const mapStateToProps = state => ({
     loggedIn: state.authToken.loggedIn,
     sizemeProductPage: state.productInfo.product !== null,
     selectedSize: state.selectedSize,
+    matchResult: state.match.matchResult,
     currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),

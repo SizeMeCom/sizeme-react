@@ -85,7 +85,7 @@
   }
 }
 
-.sizeme-slider.no-fit {
+.no-fit .sizeme-slider, .no-size .sizeme-slider {
   .slider-placeholder {
     visibility: visible;
     opacity: 1;
