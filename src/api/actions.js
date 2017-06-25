@@ -13,6 +13,7 @@ export const RECEIVE_PRODUCT_INFO = "RECEIVE_PRODUCT_INFO";
 export const SELECT_PROFILE = "SELECT_PROFILE";
 export const SELECT_PROFILE_DONE = "SELECT_PROFILE_DONE";
 export const SET_MEASUREMENTS = "SET_MEASUREMENTS";
+export const SAVED_MEASUREMENTS = "SAVED_MEASUREMENTS";
 export const REQUEST_MATCH = "REQUEST_MATCH";
 export const RECEIVE_MATCH = "RECEIVE_MATCH";
 export const RESET_MATCH = "RESET_MATCH";
@@ -24,8 +25,8 @@ export const { checkToken, fetchToken, resolveToken, clearToken } =
 export const { signup, signupDone } = createActions(SIGNUP, SIGNUP_DONE);
 export const { requestProfileList, receiveProfileList } = createActions(REQUEST_PROFILE_LIST, RECEIVE_PROFILE_LIST);
 export const { requestProductInfo, receiveProductInfo } = createActions(REQUEST_PRODUCT_INFO, RECEIVE_PRODUCT_INFO);
-export const { selectProfile, selectProfileDone, setMeasurements } = createActions(
-    SELECT_PROFILE, SELECT_PROFILE_DONE, SET_MEASUREMENTS
+export const { selectProfile, selectProfileDone, setMeasurements, savedMeasurements } = createActions(
+    SELECT_PROFILE, SELECT_PROFILE_DONE, SET_MEASUREMENTS, SAVED_MEASUREMENTS
 );
 export const { requestMatch, receiveMatch, resetMatch } = createActions(REQUEST_MATCH, RECEIVE_MATCH, RESET_MATCH);
 export const { selectSize } = createActions(SELECT_SIZE);

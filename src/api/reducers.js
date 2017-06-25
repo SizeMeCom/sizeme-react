@@ -93,6 +93,10 @@ const selectedProfile = handleActions({
         ...state,
         ...resolvePayload(action, "measurements"),
         dirty: true
+    }),
+    [actions.SAVED_MEASUREMENTS]: (state) => ({
+        ...state,
+        dirty: false
     })
 }, {
     id: "",

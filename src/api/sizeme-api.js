@@ -73,6 +73,10 @@ function createRequest (method, { token, withCredentials, body } = {}) {
     return request;
 }
 
+function getEndpointAddress (endpoint) {
+    return `${contextAddress}/api/${endpoint}`;
+}
+
 class ApiError extends Error {
     constructor (message, response) {
         super(message);
@@ -126,7 +130,7 @@ function resolveAuthToken (reset = false) {
         } else {
             dispatch(actions.fetchToken());
             try {
-                const tokenResp = await fetch(`${contextAddress}/api/authToken`,
+                const tokenResp = await fetch(getEndpointAddress("authToken"),
                     createRequest("GET", { withCredentials: true }))
                     .then(jsonResponse);
                 sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
@@ -146,7 +150,7 @@ function signup (email) {
         dispatch(actions.signup());
         trackEvent("clickSignUp", "Store: Sign up clicked");
         try {
-            const signupResp = await fetch(`${contextAddress}/api/createAccount`,
+            const signupResp = await fetch(getEndpointAddress("createAccount"),
                 createRequest("POST", {
                     withCredentials: true,
                     body: { email }
@@ -161,7 +165,7 @@ function signup (email) {
             }
 
             const profile = getState().selectedProfile;
-            profile.id = await fetch(`${contextAddress}/api/createProfile`,
+            profile.id = await fetch(getEndpointAddress("createProfile"),
                 createRequest("POST", { token, body: profile })).then(jsonResponse);
             dispatch(actions.receiveProfileList([profile]));
             dispatch(setSelectedProfile(profile.id));
@@ -180,7 +184,7 @@ function getProfiles () {
         dispatch(actions.requestProfileList());
         const token = getState().authToken.token;
         try {
-            const profileList = await fetch(`${contextAddress}/api/profiles`, createRequest("GET", { token }))
+            const profileList = await fetch(getEndpointAddress("profiles"), createRequest("GET", { token }))
                 .then(jsonResponse);
 
             trackEvent("fetchProfiles", "API: fetchProfiles");
@@ -217,7 +221,7 @@ function getProduct () {
 
         try {
             const dbItem = await fetch(
-                `${contextAddress}/api/products/${encodeURIComponent(product.SKU)}`,
+                getEndpointAddress(`products/${encodeURIComponent(product.SKU)}`),
                 createRequest("GET")
             ).then(jsonResponse);
 
@@ -291,18 +295,8 @@ function setSelectedProfile (profileId) {
 }
 
 function doMatch (fitRequest, token, useProfile) {
-    const request = createRequest("POST", { token });
-    const { headers } = request;
-    headers.append("Content-Type", "application/json");
-    request.body = JSON.stringify(fitRequest);
-
-    let address;
-    if (useProfile) {
-        address = `${contextAddress}/api/compareSizes`;
-    } else {
-        address = `${contextAddress}/api/compareSizesSansProfile`;
-    }
-
+    const request = createRequest("POST", { token, body: fitRequest });
+    const address = getEndpointAddress(useProfile ? "compareSizes" : "compareSizesSansProfile");
     return fetch(address, request).then(jsonResponse);
 }
 
@@ -388,10 +382,23 @@ function setProfileMeasurements (measurements) {
     return async (dispatch) => {
         localStorage.setItem(storeMeasurementsKey, JSON.stringify(measurements));
         dispatch(actions.setMeasurements(measurements));
+        dispatch(saveProfile());
         if (Object.values(measurements).some(item => item)) {
             await dispatch(match());
         } else {
             dispatch(actions.resetMatch());
+        }
+    };
+}
+
+function saveProfile () {
+    return async (dispatch, getState) => {
+        const profile = getState().selectedProfile;
+        const token = getState().authToken.token;
+        if (profile && token) {
+            await fetch(getEndpointAddress(`updateProfileMeasurements/${profile.id}`),
+                createRequest("PUT", { token, body: profile.measurements }))
+                .then(() => dispatch(actions.savedMeasurements()));
         }
     };
 }
