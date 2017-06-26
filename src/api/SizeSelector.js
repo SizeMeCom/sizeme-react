@@ -10,7 +10,12 @@ class AbstractSelect {
         this.el = element;
         this.selectors = {};
 
-        element.addEventListener(event, e => selectSize(this.getSize(e)), useCapture);
+        element.addEventListener(event, e => {
+            const size = this.getSize(e);
+            if (sizeMapper.find(([s]) => s === size)) {
+                selectSize(this.getSize(e));
+            }
+        }, useCapture);
     }
 
     setSelected = val => {
