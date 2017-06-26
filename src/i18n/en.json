@@ -7,7 +7,7 @@
 	"sizingBarSplashNoFit": "Enter your measurements to find your size",
     "sizingBarSplashNoSize": "Select a size to see your fit",
     "sizingBarFitTooltip": "This indicates how size <strong>{{selectedSize}}</strong> will fit you",
-    "sizingBarRecommendationTooltip": "We recommend that your fit is around this area"
+    "sizingBarRecommendationTooltip": "We recommend that your fit is close to this area"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",
