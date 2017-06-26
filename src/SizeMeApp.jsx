@@ -20,6 +20,8 @@ class SizeMeApp extends React.Component {
         this.state = {
             loginModalOpen: false
         };
+        this.shopType = Optional.ofNullable(uiOptions.shopType).map((s) => `sizeme-${s}`).orElse("");
+        this.skinClasses = uiOptions.skinClasses || "";
     }
 
     componentDidMount () {
@@ -76,7 +78,7 @@ class SizeMeApp extends React.Component {
 
         if (resolved) {
             return (
-                <div className={`${matchState} sizeme-content`}>
+                <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${matchState}`}>
                     <div className="sizeme-slider-row">                        
                         <SizeSlider match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}
                                     selectedSize={selectedSize} matchState={matchState}/>

@@ -17,7 +17,6 @@ import "./scss/index.scss";
 console.log("Initializing SizeMe, version " + VERSION + ", built on " + BUILD_DATE);
 
 const section = document.createElement("div");
-section.setAttribute("class", `sizeme-content-${uiOptions.shopType}`);
 document.querySelector(uiOptions.appendContentTo).appendChild(section);
 
 const { addToCartElement, addToCartEvent } = uiOptions;
