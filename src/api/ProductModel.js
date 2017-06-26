@@ -235,6 +235,13 @@ function init (itemTypeArr) {
         style: "line",
         lift: false
     };
+	
+    arrows.calf_width = {
+        mirror: false,
+        coords: [{ X: 40, Y: 784 }, { X: 280, Y: 784 }],
+        style: "line",
+        lift: false
+    };	
 
     arrows.hat_width = {
         mirror: false,
