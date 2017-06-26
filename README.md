@@ -51,6 +51,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"
   - [addToCartElement] (_String_): DOM-element to listen to for add-to-cart events
   - [addToCartEvent] (_String_): DOM-event for add-to-cart
+  - [maxRecommendationDistance] (_Integer_): maximum difference between optimal fit and total fit for SizeMe to consider the size for pre-selection. Default not set, meaning all sizes that are not too small are considered.
   
 * [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to 
 override the Swedish translation for chest:

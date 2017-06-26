@@ -76,7 +76,12 @@ class SwatchesSelect extends AbstractSelect {
 
         this.getSize = e => getId(e.target.parentNode.parentNode);
 
-        this.clearSelection = () => element.querySelector("li.selected").classList.remove("selected");
+        this.clearSelection = () => {
+            const selected = element.querySelector("li.selected");
+            if (selected && selected.classList) {
+                selected.classList.remove("selected");
+            }
+        };
 
         const options = element.querySelectorAll("li");
         for (let i = 0; i < options.length; i++) {
@@ -120,7 +125,12 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
         const getId = li => li.id.replace(/li-(\d+)-.*/, "$1");
         this.getSize = e => getId(e.target);
 
-        this.clearSelection = () => element.querySelector("li.li_selected").classList.remove("li_selected");
+        this.clearSelection = () => {
+            const selected = element.querySelector("li.li_selected");
+            if (selected && selected.classList) {
+                selected.classList.remove("li_selected");
+            }
+        };
 
         const options = element.querySelectorAll("li");
         for (let i = 0; i < options.length; i++) {

@@ -14,7 +14,8 @@ const shops = {
         addToCartElement: "button.btn-cart",
         addToCartEvent: "click",
         firstRecommendation: true,
-        sizeSelectorType: "default"
+        sizeSelectorType: "default",
+        maxRecommendationDistance: null
     }
 };
 

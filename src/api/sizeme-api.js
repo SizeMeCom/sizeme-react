@@ -10,6 +10,7 @@ import rootReducer from "./reducers";
 import SizeGuideModel from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
+import uiOptions from "./uiOptions";
 
 const DEFAULT_OPTIMAL_FIT = 1070;
 
@@ -302,11 +303,12 @@ function doMatch (fitRequest, token, useProfile) {
 
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
+    const maxDist = uiOptions.maxRecommendationDistance || 9999;
     const [bestMatch] = fitResults
         .filter(([_, res]) => res.totalFit >= 1000)
         .reduce(([accSize, fit], [size, res]) => {
             const newFit = Math.abs(res.totalFit - optFit);
-            if (!accSize || newFit < fit) {
+            if (newFit <= maxDist && (!accSize || newFit < fit)) {
                 return [size, newFit];
             } else {
                 return [accSize, fit];
