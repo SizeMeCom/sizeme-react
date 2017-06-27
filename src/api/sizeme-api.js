@@ -12,6 +12,7 @@ import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
 import equals from "shallow-equals";
+import cookie from "react-cookie";
 
 const DEFAULT_OPTIMAL_FIT = 1070;
 
@@ -57,7 +58,7 @@ observeStore(
         } else {
             smAction = "hasProfile";
         }
-        sessionStorage.setItem("sizeme.smAction", smAction);
+        cookie.save("sm_action", smAction, { path: window.location.pathname });
     }
 );
 
