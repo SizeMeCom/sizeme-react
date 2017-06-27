@@ -31,7 +31,7 @@
   "fitVerdict": {
     "not_fitted": "Pieni",
     "too_small": "Pieni",
-    "slim": "Kapea",
+    "slim": "Napakka",
     "regular": "Normaali",
     "loose": "Väljä",
     "very_loose": "Erittäin väljä",
