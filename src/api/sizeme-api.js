@@ -11,6 +11,7 @@ import SizeGuideModel from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
+import equals from "shallow-equals";
 
 const DEFAULT_OPTIMAL_FIT = 1070;
 
@@ -26,6 +27,39 @@ const sizemeStore = createStore(rootReducer, applyMiddleware(
         duration: true
     })
 ));
+
+function observeStore (select, onChange) {
+    let currentState;
+
+    function handleChange () {
+        let nextState = select(sizemeStore.getState());
+        if (!equals(nextState, currentState)) {
+            currentState = nextState;
+            onChange(currentState);
+        }
+    }
+
+    let unsubscribe = sizemeStore.subscribe(handleChange);
+    handleChange();
+    return unsubscribe;
+}
+
+observeStore(
+    ({ productInfo, selectedProfile }) => ({ product: productInfo.product, selectedProfile }),
+    ({ product, selectedProfile }) => {
+        let smAction;
+        if (!product) {
+            smAction = "noProduct";
+        } else if (!Object.values(selectedProfile.measurements).some(item => item)) {
+            smAction = "noHuman";
+        } else if (!selectedProfile.id) {
+            smAction = "hasUnsaved";
+        } else {
+            smAction = "hasProfile";
+        }
+        sessionStorage.setItem("sizeme.smAction", smAction);
+    }
+);
 
 class FitRequest {
     constructor (subject, item) {
