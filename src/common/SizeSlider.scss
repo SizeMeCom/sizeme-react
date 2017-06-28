@@ -37,6 +37,7 @@
   svg.recommendation, svg.indicator {
     position: absolute;
     height: 18px;
+    width: 18px;
     bottom: -4px;
     transition: left 0.5s ease-in-out;
 	cursor: help;
@@ -78,6 +79,7 @@
 
   svg.recommendation {
 	bottom: 0;
+    width: 36px;	
     path {
       fill: $recommendation_color;
       fill-opacity: 0.75;
