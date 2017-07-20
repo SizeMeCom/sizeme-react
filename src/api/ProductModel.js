@@ -55,8 +55,7 @@ const longFits = [
     "inseam",
     "outseam",
     "sleeve",
-    "front_height",
-    "shoe_inside_length"
+    "front_height"
 ];
 
 const fitOrder = [
