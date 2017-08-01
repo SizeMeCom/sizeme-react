@@ -94,11 +94,11 @@ class MeasurementInput extends React.Component {
             const state = { pending: false, modelValue };
             if (setValue) {
                 state.value = this.viewValue(modelValue);
-                trackEvent("measurementEntered", "Store: Measurement entered or changed in input field");
             }
             this.setState(state, () => {
                 if (doDispatch) {
                     this.props.onChange(modelValue);
+                    trackEvent("measurementEntered", "Store: Measurement entered or changed in input field");					
                 }
             });
         }
