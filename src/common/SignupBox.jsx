@@ -4,7 +4,6 @@ import LoginFrame, { openLoginFrame } from "./LoginFrame.jsx";
 import "./SignupBox.scss";
 import validator from "validator";
 import { translate } from "react-i18next";
-import { trackEvent } from "../api/ga";
 
 class SignupBox extends React.Component {
     constructor (props) {
@@ -24,7 +23,6 @@ class SignupBox extends React.Component {
     handleClick = () => {
         if (this.state.valid) {
             this.props.onSignup(this.state.email);
-            trackEvent("emailEntered", "Store: Email entered in sign up box");
         }
     };
 
