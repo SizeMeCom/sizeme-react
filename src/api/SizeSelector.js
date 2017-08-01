@@ -21,9 +21,11 @@ class AbstractSelect {
     setSelected = val => {
         if (this.selectors[val]) {
             this.selectors[val]();
+            trackEvent("sizeRecommended", "Store: Recommended a size based on user input");
         } else {
             this.clearSelection();
             selectSize("");
+            trackEvent("sizeCantRecommend", "Store: We couldnt find a size based on user input");
         }
     };
 }

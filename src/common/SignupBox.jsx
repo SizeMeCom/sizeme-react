@@ -5,7 +5,6 @@ import "./SignupBox.scss";
 import validator from "validator";
 import { translate } from "react-i18next";
 
-
 class SignupBox extends React.Component {
     constructor (props) {
         super(props);

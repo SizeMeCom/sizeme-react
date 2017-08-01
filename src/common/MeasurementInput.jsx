@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
+import { trackEvent } from "../api/ga";
 
 const unitMarks = {
     cm: "cm",
@@ -97,6 +98,7 @@ class MeasurementInput extends React.Component {
             this.setState(state, () => {
                 if (doDispatch) {
                     this.props.onChange(modelValue);
+                    trackEvent("measurementEntered", "Store: Measurement entered or changed in input field");					
                 }
             });
         }

@@ -31,13 +31,13 @@ class SizeMeApp extends React.Component {
             getProduct()
         ]).then(([tokenResolved, productResolved]) => {
             if (tokenResolved && productResolved) {
-                trackEvent("productPageLoggedIn", "Store: Product page load, logged in");
+                trackEvent("productPageLoggedIn", "Store: Product page load, SM product, logged in");
             } else if (tokenResolved && !productResolved) {
-                trackEvent("productPageNonSMLoggedIn", "Store: Product page load, logged in");
+                trackEvent("productPageNonSMLoggedIn", "Store: Product page load, Non-SM product, logged in");
             } else if (!tokenResolved && productResolved) {
-                trackEvent("productPageLoggedOut", "Store: Product page load, logged out");
+                trackEvent("productPageLoggedOut", "Store: Product page load, SM product, logged out");
             } else {
-                trackEvent("productPageNonSMLoggedOut", "Store: Product page load, logged out");
+                trackEvent("productPageNonSMLoggedOut", "Store: Product page load, Non-SM product, logged out");
             }
             setSelectedProfile();
         });

@@ -14,6 +14,7 @@ import OverlapBox from "../illustrations/OverlapBox";
 import "./SizeForm.scss";
 import { translate } from "react-i18next";
 import { setTooltip } from "../api/actions";
+import { trackEvent } from "../api/ga";
 
 class SizeForm extends React.Component {
 
@@ -59,6 +60,7 @@ class SizeForm extends React.Component {
 
     openGuideModal = () => {
         this.setState({ guideModalOpen: true });
+        trackEvent("measurementGuideOpened", "Store: Measurement guide modal clicked");
     };
 
     closeGuideModal = () => {
