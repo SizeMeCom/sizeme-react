@@ -48,6 +48,12 @@
     "huge": "Huge",
     "too_big": "Too long"
   },
+  "sizingBarRangeLabel": {
+    "too_small": "Too small",
+    "slim": "Slim",
+    "regular": "Recommended",
+    "loose": "Loose"
+  },
   "humanMeasurements": {
     "chest": "Chest",
     "shirtWaist": "Waist",

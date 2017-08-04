@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { translate } from "react-i18next";
-import "./SizeSlider.scss";
-import ProductModel, { fitRanges } from "../api/ProductModel";
+import "./SizingBar.scss";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
@@ -53,13 +53,12 @@ RecommendationIndicator.propTypes = {
     t: PropTypes.func
 };
 
-class SizeSlider extends React.Component {
+class SizingBar extends React.Component {
 
     constructor (props) {
         super(props);
-        this.sliderPosXMin = fitRanges[0].start;
-        this.sliderPosXMax = fitRanges.slice(-1)[0].end;
-        this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
+        this.ranges = fitRanges.slice(0, -1);
+        this.calculateSliderPositions();
     }
 
     componentDidMount () {
@@ -68,6 +67,20 @@ class SizeSlider extends React.Component {
 
     componentDidUpdate () {
         this.calculatePlaceholderSize();
+    }
+
+    calculateSliderPositions () {
+        let { fitRecommendation } = this.props;
+        if (fitRecommendation <= 1000) {
+            fitRecommendation = DEFAULT_OPTIMAL_FIT;
+        }
+        const regular = this.ranges.find(r => r.label === "regular");
+        const rangeWidth = regular.end - regular.start;
+        const regularMidPoint = regular.end - rangeWidth / 2;
+        const scaledWidth = rangeWidth / ((regularMidPoint - 1000) / (fitRecommendation - 1000));
+        this.sliderPosXMin = 1000 - scaledWidth;
+        this.sliderPosXMax = this.ranges.slice(1).reduce((end, _) => end + scaledWidth, 1000);
+        this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
     }
 
     calculatePlaceholderSize () {
@@ -108,12 +121,12 @@ class SizeSlider extends React.Component {
                         {placeholderText}
                     </span>
                 </div>
-                {fitRanges.map(fit => (
+                {this.ranges.map(fit => (
                     <div className={fit.label + " fit-area"} key={fit.label}>
-                        {t(`fitVerdict.${fit.label}`)}
+                        {t(`sizingBarRangeLabel.${fit.label}`)}
                     </div>
                 ))}
-                {doShowFit && fitRecommendation > 0 && <RecommendationIndicator t={t}
+                {doShowFit && fitRecommendation > 1000 && <RecommendationIndicator t={t}
                     value={this.getFitPosition(fitRecommendation)}/>}
                 {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit)} t={t}
                                                    fitRange={this.getFitRange()} selectedSize={selectedSize}/>}
@@ -122,7 +135,7 @@ class SizeSlider extends React.Component {
     }
 }
 
-SizeSlider.propTypes = {
+SizingBar.propTypes = {
     match: PropTypes.object,
     selectedSize: PropTypes.string,
     fitRecommendation: PropTypes.number,
@@ -130,4 +143,4 @@ SizeSlider.propTypes = {
     t: PropTypes.func
 };
 
-export default translate()(SizeSlider);
+export default translate()(SizingBar);

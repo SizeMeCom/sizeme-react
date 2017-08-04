@@ -48,6 +48,12 @@
     "huge": "3XL",
     "too_big": "För lång"
   },
+  "sizingBarRangeLabel": {
+    "too_small": "För liten",
+    "slim": "Slim",
+    "regular": "Rekommenderad",
+    "loose": "Lös"
+  },
   "humanMeasurements": {
     "chest": "Chest",
     "shirtWaist": "Waist",

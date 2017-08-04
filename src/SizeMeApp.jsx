@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
-import SizeSlider from "./common/SizeSlider.jsx";
+import SizingBar from "./common/SizingBar.jsx";
 import SizeForm from "./common/SizeForm.jsx";
 import * as api from "./api/sizeme-api";
 import Optional from "optional-js";
@@ -80,8 +80,8 @@ class SizeMeApp extends React.Component {
             return (
                 <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${matchState}`}>
                     <div className="sizeme-slider-row">                        
-                        <SizeSlider match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}
-                                    selectedSize={selectedSize} matchState={matchState}/>
+                        <SizingBar match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}
+                                   selectedSize={selectedSize} matchState={matchState}/>
                         {loggedIn && <ProfileMenu profiles={profiles}
                                                              selectedProfile={selectedProfile.id}
                                                              setSelectedProfile={setSelectedProfile}/>}

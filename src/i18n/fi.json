@@ -48,6 +48,12 @@
     "huge": "Valtava",
     "too_big": "Liian pitkä"
   },
+  "sizingBarRangeLabel": {
+    "too_small": "Pieni",
+    "slim": "Napakka",
+    "regular": "Suositeltu",
+    "loose": "Väljä"
+  },
   "humanMeasurements": {
     "chest": "Rinnan ympärys",
     "shirtWaist": "Vyötärö",

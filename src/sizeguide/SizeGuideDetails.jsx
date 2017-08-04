@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ProfileSelect from "../common/ProfileSelect.jsx";
-import SizeSlider from "../common/SizeSlider.jsx";
+import SizingBar from "../common/SizingBar.jsx";
 import SizeSelector from "../api/SizeSelector";
 import DetailSection from "./DetailSection.jsx";
 import DetailedFit from "./DetailedFit.jsx";
@@ -60,7 +60,7 @@ class SizeGuideDetails extends React.Component {
                     <DetailsSizeSelector selectedSize={selectedSize}/>
                 </DetailSection>
                 <DetailSection title={t("fitInfo.overallFit")}>
-                    <SizeSlider match={match} fitRangeVisible/>
+                    <SizingBar match={match} fitRangeVisible/>
                 </DetailSection>
                 <DetailSection title={t("detailed.tableTitle")}>
                     <div className="fit-table">

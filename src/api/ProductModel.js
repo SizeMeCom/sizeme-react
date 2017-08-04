@@ -1154,8 +1154,13 @@ const getResult = (measurement, value, matchItem) => {
     };
 };
 
+const DEFAULT_OPTIMAL_FIT = 1070;
+
 export {
     humanMeasurementMap,
     fitRanges,
-    getResult
+    getResult,
+    DEFAULT_OPTIMAL_FIT
 };
+
+

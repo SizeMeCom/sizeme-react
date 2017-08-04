@@ -7,14 +7,12 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import SizeGuideModel from "./ProductModel";
+import SizeGuideModel, { DEFAULT_OPTIMAL_FIT } from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
 import equals from "shallow-equals";
 import cookie from "react-cookie";
-
-const DEFAULT_OPTIMAL_FIT = 1070;
 
 const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
 const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
