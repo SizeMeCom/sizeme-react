@@ -52,7 +52,8 @@
     "too_small": "För liten",
     "slim": "Slim",
     "regular": "Rekommenderad",
-    "loose": "Lös"
+    "loose": "Lös",
+    "too_big": "Stor"
   },
   "humanMeasurements": {
     "chest": "Chest",

@@ -57,7 +57,7 @@ class SizingBar extends React.Component {
 
     constructor (props) {
         super(props);
-        this.ranges = fitRanges.slice(0, -1);
+        this.ranges = fitRanges;
         this.calculateSliderPositions();
     }
 
