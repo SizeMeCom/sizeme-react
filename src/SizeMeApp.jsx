@@ -70,7 +70,11 @@ class SizeMeApp extends React.Component {
                 matchState = "no-fit";
             }
         } else if (matchResult) {
-            matchState = "no-size";
+            if (Object.values(matchResult).some(match => match && match.accuracy > 0)) {
+                matchState = "no-size";
+            } else {
+                matchState = "no-fit";
+            }
         } else {
             matchState = "no-fit";
         }

@@ -22,9 +22,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    transition: visibility 0s linear 0.5s, opacity 0.5s linear;
-    visibility: hidden;
   }
 
   .fit-area {
@@ -89,12 +86,32 @@
 
 .no-fit .sizeme-slider, .no-size .sizeme-slider {
   .slider-placeholder {
-    visibility: visible;
     opacity: 1;
     transition-delay:0s;
   }
   .fit-area {
     visibility: hidden;
 	transition-delay:0.2s;
+  }
+}
+
+.match .sizeme-slider {
+  &.new-size {
+    .slider-placeholder {
+      opacity: 1;
+    }
+
+    .fit-area {
+      opacity: 0.3;
+    }
+  }
+
+  .slider-placeholder {
+    opacity: 0;
+    transition: opacity 0.3s linear;
+  }
+  .fit-area {
+    opacity: 1;
+    transition: opacity 0.3s linear;
   }
 }

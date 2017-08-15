@@ -6,11 +6,13 @@ import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductMode
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
+const getSizename = (selectedSize) =>
+    SizeSelector.sizeMapper.filter(([size]) => size === selectedSize)
+        .map(([_, sizeName]) => sizeName)[0] || selectedSize;
+
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 9px`;
     const { selectedSize, t } = props;
-    const size = SizeSelector.sizeMapper.filter(([size]) => size === selectedSize)
-        .map(([_, sizeName]) => sizeName)[0] || "";
     return (
         <div>
             <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
@@ -19,7 +21,7 @@ const FitIndicator = (props) => {
             </svg>
             <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
                 <span dangerouslySetInnerHTML={{ __html: t("common.sizingBarFitTooltip", {
-                    selectedSize: size
+                    selectedSize: getSizename(selectedSize)
                 }) }}/>
             </ReactTooltip>
         </div>
@@ -58,6 +60,9 @@ class SizingBar extends React.Component {
     constructor (props) {
         super(props);
         this.ranges = fitRanges;
+        this.state = {
+            newSize: false
+        };
         this.calculateSliderPositions();
     }
 
@@ -65,8 +70,18 @@ class SizingBar extends React.Component {
         this.calculatePlaceholderSize();
     }
 
+    componentWillUpdate (newProps) {
+        if (newProps.matchState === "match" && newProps.selectedSize !== this.props.selectedSize) {
+            clearTimeout(this.timeout);
+            this.setState({ newSize: true });
+        }
+    }
+
     componentDidUpdate () {
         this.calculatePlaceholderSize();
+        if (this.state.newSize) {
+            this.timeout = setTimeout(() => this.setState({ newSize: false }), 2000);
+        }
     }
 
     calculateSliderPositions () {
@@ -84,16 +99,12 @@ class SizingBar extends React.Component {
     }
 
     calculatePlaceholderSize () {
-        if (!this.doShowFit() && this.placeholder) {
+        if (this.placeholder) {
             const containerWidth = this.placeholder.parentNode.offsetWidth - 10;
             this.placeholder.style.transform = "scale(1)";
             const placeholderWidth = this.placeholder.offsetWidth;
             this.placeholder.style.transform = `scale(${Math.min(1.5, containerWidth / placeholderWidth)})`;
         }
-    }
-
-    doShowFit () {
-        return this.props.match && this.props.match.matchMap && this.props.match.accuracy > 0;
     }
 
     getFitPosition (value) {
@@ -109,13 +120,17 @@ class SizingBar extends React.Component {
         const { t, fitRecommendation, match, selectedSize, matchState } = this.props;
         const doShowFit = matchState === "match";
         let placeholderText = "";
-        if (matchState === "no-fit") {
+        if (matchState === "match") {
+            placeholderText = t("common.sizingBarSplashMatch", {
+                sizeName: getSizename(selectedSize)
+            });
+        } else if (matchState === "no-fit") {
             placeholderText = t("common.sizingBarSplashNoFit");
         } else if (matchState === "no-size") {
             placeholderText = t("common.sizingBarSplashNoSize");
         }
         return (
-            <div className="sizeme-slider">
+            <div className={"sizeme-slider" + (this.state.newSize ? " new-size" : "")}>
                 <div className="slider-placeholder">
                     <span ref={ref => { this.placeholder = ref; }}>
                         {placeholderText}
