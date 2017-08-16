@@ -151,7 +151,7 @@ const mapStateToProps = (state) => ({
     product: state.productInfo.product,
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
-    selectedSize: state.selectedSize,
+    selectedSize: state.selectedSize.size,
     matchResult: state.match.matchResult,
     loggedIn: state.authToken.loggedIn
 });

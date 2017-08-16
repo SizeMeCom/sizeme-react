@@ -71,8 +71,10 @@ class SizingBar extends React.Component {
     }
 
     componentWillUpdate (newProps) {
-        if (newProps.matchState === "match" && newProps.selectedSize !== this.props.selectedSize) {
+        const { size, auto } = newProps.selectedSize;
+        if (!auto && newProps.matchState === "match" && size !== this.props.selectedSize.size) {
             clearTimeout(this.timeout);
+            this.timeout = null;
             this.setState({ newSize: true });
         }
     }
@@ -80,7 +82,9 @@ class SizingBar extends React.Component {
     componentDidUpdate () {
         this.calculatePlaceholderSize();
         if (this.state.newSize) {
-            this.timeout = setTimeout(() => this.setState({ newSize: false }), 2000);
+            if (!this.timeout) {
+                this.timeout = setTimeout(() => this.setState({ newSize: false }), 2000);
+            }
         }
     }
 
@@ -118,11 +122,12 @@ class SizingBar extends React.Component {
 
     render () {
         const { t, fitRecommendation, match, selectedSize, matchState } = this.props;
+        const { size, auto } = selectedSize;
         const doShowFit = matchState === "match";
         let placeholderText = "";
         if (matchState === "match") {
             placeholderText = t("common.sizingBarSplashMatch", {
-                sizeName: getSizename(selectedSize)
+                sizeName: getSizename(size)
             });
         } else if (matchState === "no-fit") {
             placeholderText = t("common.sizingBarSplashNoFit");
@@ -130,7 +135,7 @@ class SizingBar extends React.Component {
             placeholderText = t("common.sizingBarSplashNoSize");
         }
         return (
-            <div className={"sizeme-slider" + (this.state.newSize ? " new-size" : "")}>
+            <div className={"sizeme-slider" + (this.state.newSize && auto ? " new-size" : "")}>
                 <div className="slider-placeholder">
                     <span ref={ref => { this.placeholder = ref; }}>
                         {placeholderText}
@@ -144,7 +149,7 @@ class SizingBar extends React.Component {
                 {doShowFit && fitRecommendation > 1000 && <RecommendationIndicator t={t}
                     value={this.getFitPosition(fitRecommendation)}/>}
                 {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit)} t={t}
-                                                   fitRange={this.getFitRange()} selectedSize={selectedSize}/>}
+                                                   fitRange={this.getFitRange()} selectedSize={size}/>}
             </div>
         );
     }
@@ -152,7 +157,7 @@ class SizingBar extends React.Component {
 
 SizingBar.propTypes = {
     match: PropTypes.object,
-    selectedSize: PropTypes.string,
+    selectedSize: PropTypes.object,
     fitRecommendation: PropTypes.number,
     matchState: PropTypes.string.isRequired,
     t: PropTypes.func

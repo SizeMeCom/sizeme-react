@@ -130,9 +130,9 @@ FitTooltip.propTypes = {
 const mapStateToProps = state => ({
     measurement: state.tooltip,
     product: state.productInfo.product,
-    selectedSize: state.selectedSize,
-    matchResult: state.selectedSize && state.match.matchResult ?
-        state.match.matchResult[state.selectedSize] : null
+    selectedSize: state.selectedSize.size,
+    matchResult: state.selectedSize.size && state.match.matchResult ?
+        state.match.matchResult[state.selectedSize.size] : null
 });
 
 export default translate()(connect(mapStateToProps)(FitTooltip));

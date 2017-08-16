@@ -69,6 +69,6 @@ if (!sizemeDisabled) {
             </Provider>
         </I18nextProvider>,
         section,
-        () => SizeSelector.initSizeSelector(size => sizemeStore.dispatch(selectSize(size)))
+        () => SizeSelector.initSizeSelector(size => sizemeStore.dispatch(selectSize({ size, auto: false })))
     );
 }

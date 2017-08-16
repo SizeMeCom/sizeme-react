@@ -182,13 +182,13 @@ export default translate()(connect(
             .flatMap(p => Optional.ofNullable(p.gender))
             .map(g => g.toLowerCase())
             .orElse("female"),
-        matchResult: state.selectedSize && state.match.matchResult ?
-            state.match.matchResult[state.selectedSize] : null,
+        matchResult: state.selectedSize.size && state.match.matchResult ?
+            state.match.matchResult[state.selectedSize.size] : null,
         measurements: Optional.ofNullable(state.selectedProfile)
             .map(p => p.measurements)
             .orElse({}),
         product: state.productInfo.product,
-        selectedSize: state.selectedSize
+        selectedSize: state.selectedSize.size
     }),
     mapDispatchToProps
 )(SizeForm));

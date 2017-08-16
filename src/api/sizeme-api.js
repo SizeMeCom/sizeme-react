@@ -405,6 +405,7 @@ function match (doSelectBestFit = true) {
 
                 if (doSelectBestFit) {
                     SizeSelector.setSelectedSize(recommendedFit);
+                    dispatch(actions.selectSize({ auto: true }));
                 }
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));

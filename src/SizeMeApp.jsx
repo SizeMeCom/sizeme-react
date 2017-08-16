@@ -62,10 +62,11 @@ class SizeMeApp extends React.Component {
 
         let currentMatch = null;
         let matchState = "match";
-        if (matchResult && selectedSize) {
-            const match = matchResult[selectedSize];
+        const currentSize = selectedSize.size;
+        if (matchResult && currentSize) {
+            const match = matchResult[currentSize];
             if (match.accuracy > 0) {
-                currentMatch = matchResult[selectedSize];
+                currentMatch = match;
             } else {
                 matchState = "no-fit";
             }
@@ -107,7 +108,7 @@ class SizeMeApp extends React.Component {
 SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
-    selectedSize: PropTypes.string,
+    selectedSize: PropTypes.object,
     matchResult: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -127,7 +128,6 @@ const mapStateToProps = state => ({
     sizemeProductPage: state.productInfo.product !== null,
     selectedSize: state.selectedSize,
     matchResult: state.match.matchResult,
-    currentMatch: (state.selectedSize && state.match.matchResult) ? state.match.matchResult[state.selectedSize] : null,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,

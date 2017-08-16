@@ -129,7 +129,13 @@ const match = handleActions({
 
 const tooltip = handleAction(actions.SET_TOOLTIP, (state, action) => action.payload, null);
 
-const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => action.payload, "");
+const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => ({
+    ...state,
+    ...action.payload
+}), {
+    size: "",
+    auto: false
+});
 
 const rootReducer = combineReducers({
     authToken,
