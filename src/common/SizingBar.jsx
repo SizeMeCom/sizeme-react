@@ -83,7 +83,7 @@ class SizingBar extends React.Component {
         this.calculatePlaceholderSize();
         if (this.state.newSize) {
             if (!this.timeout) {
-                this.timeout = setTimeout(() => this.setState({ newSize: false }), 2000);
+                this.timeout = setTimeout(() => this.setState({ newSize: false }), 3000);
             }
         }
     }
