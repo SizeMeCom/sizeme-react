@@ -6,7 +6,7 @@
     "shoppingFor": "Aktiivinen profiili",
 	"sizingBarSplashNoFit": "Syötä mittasi, niin suosittelemme sinulle oikean koon",
     "sizingBarSplashNoSize": "Valitse koko, niin näytämme miten se sopii sinulle",
-    "sizingBarSplashMatch": "Valitsimme sinulle koon {{sizeName}}",
+    "sizingBarSplashMatch": "Suosittelemme sinulle kokoa {{sizeName}}",
     "sizingBarFitTooltip": "Tämä näyttää miten koko <strong>{{selectedSize}}</strong> sopii sinulle",
     "sizingBarRecommendationTooltip": "Tämän tuotteen kohdalla suosittelemme tätä sopivuutta"
   },
@@ -72,8 +72,8 @@
     "kneeCircumference": "Polven ympärys",
     "ankleCircumference": "Nilkan ympärys",
     "calfCircumference": "Pohkeen ympärys",
-    "footLength": "Jalkaterän pituus",
-    "footWidth": "Jalkaterän leveys",
+    "footLength": "Jalkateräsi pituus",
+    "footWidth": "Jalkateräsi leveys",
     "headCircumference": "Pään ympärys"
   },  
   "measurement": {
@@ -109,7 +109,7 @@
     "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
     "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
     "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
-    "shoe_inside_length": "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin",
+    "shoe_inside_length": "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin kantapää seinässä kiinni",
     "calf_width": "Measure around widest part of calf.",
     "hat_width": "Measure the biggest circumference of head at just above top of ears."
   },
@@ -142,7 +142,7 @@
       "Measure down to your ankle bone"
     ],
     "shoe_inside_length": [
-      "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin"
+      "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin kantapää seinässä kiinni"
     ],
     "calf_width": [
       "Measure around widest part of calf"
