@@ -83,7 +83,7 @@ class SizingBar extends React.Component {
         this.calculatePlaceholderSize();
         if (this.state.newSize) {
             if (!this.timeout) {
-                this.timeout = setTimeout(() => this.setState({ newSize: false }), 2000);
+                this.timeout = setTimeout(() => this.setState({ newSize: false }), 3000);
             }
         }
     }
@@ -107,7 +107,7 @@ class SizingBar extends React.Component {
             const containerWidth = this.placeholder.parentNode.offsetWidth - 10;
             this.placeholder.style.transform = "scale(1)";
             const placeholderWidth = this.placeholder.offsetWidth;
-            this.placeholder.style.transform = `scale(${Math.min(1.5, containerWidth / placeholderWidth)})`;
+            this.placeholder.style.transform = `scale(${Math.min(1, containerWidth / placeholderWidth)})`;
         }
     }
 

@@ -8,10 +8,10 @@
   align-items: flex-end;
   background: url(../images/slider_bg_black_grid.svg) no-repeat bottom center;
   background-size: 100% 100%;
-  font-size: smaller;
+  font-size: 90%;
   margin: 5px 0 20px 0;
   position: relative;
-  top: 5px; 
+  top: 5px;
 
   .slider-placeholder {
     position: absolute;
@@ -76,7 +76,7 @@
 
   svg.recommendation {
 	bottom: 0;
-    width: 36px;	
+    width: 36px;
     path {
       fill: $recommendation_color;
       fill-opacity: 0.75;
@@ -102,7 +102,7 @@
     }
 
     .fit-area {
-      opacity: 0.3;
+      opacity: 0;
     }
   }
 

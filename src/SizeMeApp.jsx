@@ -12,7 +12,6 @@ import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
 import { trackEvent } from "./api/ga";
-import FitTooltip from "./common/FitTooltip";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -96,7 +95,6 @@ class SizeMeApp extends React.Component {
                                                         onSignup={onSignup}
                                                         signupStatus={signupStatus}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
-                    <FitTooltip/>
                 </div>
             );
         } else {

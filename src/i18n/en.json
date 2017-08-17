@@ -6,7 +6,7 @@
     "shoppingFor": "Shopping for",
 	"sizingBarSplashNoFit": "Enter your measurements to find your size",
     "sizingBarSplashNoSize": "No size was found based on your measurement",
-    "sizingBarSplashMatch": "We selected size {{sizeName}} for you",
+    "sizingBarSplashMatch": "We recommend size {{sizeName}} for you",
     "sizingBarFitTooltip": "This indicates how size <strong>{{selectedSize}}</strong> will fit you",
     "sizingBarRecommendationTooltip": "We recommend that your fit is close to this area"
   },
@@ -109,7 +109,7 @@
     "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
     "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
     "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
-    "shoe_inside_length": "Place a measuring tape next to a wall and stand on the tape.  Use thin socks or no socks at all.",
+    "shoe_inside_length": "Place a measuring tape next to a wall and stand on the tape with bare feet",
     "calf_width": "Measure around widest part of calf.",
     "hat_width": "Measure the biggest circumference of head at just above top of ears."
   },
@@ -142,8 +142,7 @@
       "Measure down to your ankle bone"
     ],
     "shoe_inside_length": [
-      "Place a measuring tape next to a wall and stand on the tape",
-      "Use thin socks or no socks at all"
+      "Place a measuring tape next to a wall and stand on the tape with bare feet"
     ],
     "calf_width": [
       "Measure around widest part of calf"
@@ -163,7 +162,7 @@
   "signupBox": {
     "duplicateUser": "An account with this email already exists. Try to log in?",  
 	"emailPlaceholder": "myname@example.com",
-    "message": "Save your measurements, so you don't have to remember them ever again.",
+    "message": "Save your measurements using the SizeMe service",
 	"save": "Save",
     "signupPrompt": "Save with email"
   },
