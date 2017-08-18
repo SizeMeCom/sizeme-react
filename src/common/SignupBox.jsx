@@ -21,6 +21,12 @@ class SignupBox extends React.Component {
         this.setState({ email, valid });
     };
 
+    handleEnter = (event) => {
+        if (event.key === "Enter") {
+            this.handleClick();
+        }
+    };
+
     handleClick = () => {
         if (this.state.valid) {
             this.props.onSignup(this.state.email)
@@ -46,7 +52,7 @@ class SignupBox extends React.Component {
                     <div>{t("signupBox.message")}</div>
                     <div className={inputClassName}>
                         <input type="email" value={this.state.email} onChange={this.handleChange}
-                               placeholder={t("signupBox.emailPlaceholder")}/>
+                               placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
                         <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
                     </div>
                     {isError && <div className="signup-alert">
@@ -59,9 +65,7 @@ class SignupBox extends React.Component {
 }
 
 SignupBox.propTypes = {
-    onLogin: PropTypes.func.isRequired,
     onSignup: PropTypes.func.isRequired,
-    signupStatus: PropTypes.object.isRequired,
     t: PropTypes.func
 };
 

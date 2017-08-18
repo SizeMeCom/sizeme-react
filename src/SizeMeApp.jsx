@@ -56,7 +56,7 @@ class SizeMeApp extends React.Component {
             matchResult, selectedSize,
             profiles, selectedProfile, setSelectedProfile,
             measurementInputs,
-            onSignup, signupStatus,
+            onSignup,
             product
         } = this.props;
 
@@ -92,9 +92,7 @@ class SizeMeApp extends React.Component {
                                                              setSelectedProfile={setSelectedProfile}/>}
                     </div>
                     {measurementInputs && <SizeForm fields={measurementInputs} />}
-                    {!loggedIn && currentMatch && <SignupBox onLogin={this.userLoggedIn}
-                                                        onSignup={onSignup}
-                                                        signupStatus={signupStatus}/>}
+                    {!loggedIn && currentMatch && <SignupBox onSignup={onSignup}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
                     <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                 </div>
@@ -118,7 +116,6 @@ SizeMeApp.propTypes = {
     getProfiles: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
     onSignup: PropTypes.func.isRequired,
-    signupStatus: PropTypes.object.isRequired,
     product: PropTypes.object
 };
 
@@ -132,7 +129,6 @@ const mapStateToProps = state => ({
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
-    signupStatus: state.signupStatus,
     product: state.productInfo.product
 });
 
