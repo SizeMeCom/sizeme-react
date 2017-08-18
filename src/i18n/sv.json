@@ -164,7 +164,7 @@
     "duplicateUser": "An account with this email already exists. Try to log in?",  
 	"emailPlaceholder": "myname@example.com",  
     "message": "Save your measurements, so you don't have to remember them ever again.",
-	"save": "Save",	
+	"save": "Ok",
     "signupPrompt": "Save with email"
   },
   "sizeGuide": {

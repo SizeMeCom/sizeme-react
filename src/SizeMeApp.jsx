@@ -12,6 +12,7 @@ import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
 import { trackEvent } from "./api/ga";
+import LoginFrame from "./common/LoginFrame";
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -95,6 +96,7 @@ class SizeMeApp extends React.Component {
                                                         onSignup={onSignup}
                                                         signupStatus={signupStatus}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
+                    <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                 </div>
             );
         } else {

@@ -7,9 +7,9 @@ import "./LoginFrame.scss";
 
 const instances = {};
 
-const openLoginFrame = (id, mode = "login") => {
+const openLoginFrame = (id, mode = "login", email) => {
     if (instances[id]) {
-        instances[id].openLoginModal(mode);
+        instances[id].openLoginModal(mode, email);
     }
 };
 
@@ -19,7 +19,8 @@ class LoginFrame extends React.Component {
         instances[this.props.id] = this;
         this.state = {
             loginModalOpen: false,
-            mode: "login"
+            mode: "login",
+            email: null
         };
     }
 
@@ -37,10 +38,11 @@ class LoginFrame extends React.Component {
         }
     };
 
-    openLoginModal = (mode) => {
+    openLoginModal = (mode, email) => {
         this.setState({
             loginModalOpen: true,
-            mode: mode
+            mode,
+            email
         }, () => {
             window.addEventListener("message", this.receiveMessage, false);
             trackEvent("clickLogin", "Store: Login clicked");
@@ -55,6 +57,9 @@ class LoginFrame extends React.Component {
     };
 
     render () {
+        const { mode, email } = this.state;
+        const loginParam = email ? `&login=${email}` : "";
+        const src = `${contextAddress}/remote-login2.html?mode=${mode}${loginParam}`;
         return (
             <Modal isOpen={this.state.loginModalOpen}
                    onRequestClose={this.closeLoginModal}
@@ -62,7 +67,7 @@ class LoginFrame extends React.Component {
                    overlayClassName="login-frame-overlay"
                    contentLabel="SizeMe Login Frame"
             >
-                <iframe src={`${contextAddress}/remote-login2.html?mode=${this.state.mode}`}
+                <iframe src={src}
                         frameBorder="0"
                         width="305"
                         height="348"

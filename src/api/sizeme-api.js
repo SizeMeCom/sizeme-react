@@ -206,6 +206,7 @@ function signup (email) {
             dispatch(actions.signupDone());
         } catch (reason) {
             dispatch(actions.signupDone(reason));
+            throw reason;
         }
     };
 }

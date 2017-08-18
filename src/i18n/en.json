@@ -163,7 +163,7 @@
     "duplicateUser": "An account with this email already exists. Try to log in?",  
 	"emailPlaceholder": "myname@example.com",
     "message": "Save your measurements using the SizeMe service",
-	"save": "Save",
+	"save": "Ok",
     "signupPrompt": "Save with email"
   },
   "sizeGuide": {

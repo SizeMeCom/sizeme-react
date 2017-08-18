@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoginFrame, { openLoginFrame } from "./LoginFrame.jsx";
+import { openLoginFrame } from "./LoginFrame.jsx";
 import "./SignupBox.scss";
 import validator from "validator";
 import { translate } from "react-i18next";
@@ -10,7 +10,8 @@ class SignupBox extends React.Component {
         super(props);
         this.state = {
             email: "",
-            valid: false
+            valid: false,
+            error: null
         };
     }
 
@@ -22,24 +23,25 @@ class SignupBox extends React.Component {
 
     handleClick = () => {
         if (this.state.valid) {
-            this.props.onSignup(this.state.email);
+            this.props.onSignup(this.state.email)
+                .catch(err => {
+                    const error = err.message;
+                    if (error.indexOf("Duplicate user") >= 0) {
+                        openLoginFrame("login-frame", "login", this.state.email);
+                    } else {
+                        this.setState({ error });
+                    }
+                });
         }
     };
 
     render () {
         const { t } = this.props;
-        const error = this.props.signupStatus.error;
+        const error = this.state.error;
         const isError = !!error;
         const inputClassName = "signup-email" + (isError ? " error" : "");
-        let errorMessage = error;
-        if (isError && error.indexOf("Duplicate user") >= 0) {
-            errorMessage = t("signupBox.duplicateUser");
-        }
         return (
             <div>
-                <div className="sizeme-login-link">
-                    <a onClick={() => openLoginFrame("login-frame")}>{t("common.alreadyUser")} »</a>
-                </div>
                 <div className="sizeme-signup-box">
                     <div>{t("signupBox.message")}</div>
                     <div className={inputClassName}>
@@ -48,10 +50,9 @@ class SignupBox extends React.Component {
                         <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
                     </div>
                     {isError && <div className="signup-alert">
-                        {errorMessage}
+                        {error}
                     </div>}
                 </div>
-                <LoginFrame id="login-frame" onLogin={this.props.onLogin}/>
             </div>
         );
     }

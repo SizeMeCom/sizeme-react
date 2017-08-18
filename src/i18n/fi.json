@@ -163,7 +163,7 @@
     "duplicateUser": "Tili tällä sähköpostiosoitteella on jo olemassa.  Kirjaudu sisään siis!",  
 	"emailPlaceholder": "oma.nimi@esimerkki.fi",  
     "message": "Tallenna mittasi SizeMe-palveluun",
-	"save": "Tallenna",	
+	"save": "Ok",
     "signupPrompt": "Tallenna sähköpostiosoitteella"
   },
   "sizeGuide": {

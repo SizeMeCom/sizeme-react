@@ -1,17 +1,7 @@
 @import "../scss/variables";
 
-.sizeme-login-link {
-  text-align: right;
-  font-style: italic;
-
-  a {
-    cursor: pointer;
-    text-decoration: none;
-    color: #4c4c4c;
-  }
-}
-
 .sizeme-signup-box {
+  margin-top: 5px;
   padding: 10px;
   background-color: #caefc6;
   border-radius: $border_radius;
