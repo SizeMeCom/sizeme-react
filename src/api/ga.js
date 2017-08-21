@@ -14,11 +14,7 @@
 })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
 
 let gaTrackingId = sizeme_options.gaTrackingId;
-
-let gaEnabled = false;
-ga(function () {
-    gaEnabled = gaTrackingId !== null;
-});
+let gaEnabled = gaTrackingId !== null;
 
 let trackEvent = (action, label) => {
     if (gaEnabled) {
@@ -32,6 +28,8 @@ let trackEvent = (action, label) => {
             });
         };
         trackEvent(action, label);
+    } else {
+        trackEvent = () => {};
     }
 };
 
