@@ -121,8 +121,6 @@ SizeMeApp.propTypes = {
 
 const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
-    loggedIn: state.authToken.loggedIn,
-    sizemeProductPage: state.productInfo.product !== null,
     selectedSize: state.selectedSize,
     matchResult: state.match.matchResult,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))

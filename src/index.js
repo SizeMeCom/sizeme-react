@@ -41,7 +41,9 @@ const { addToCartElement, addToCartEvent } = uiOptions;
 if (addToCartElement && addToCartEvent) {
     const elements = document.querySelectorAll(addToCartElement);
     const fn = () => {
-        const { loggedIn, sizemeProductPage } = sizemeStore.getState();
+        const { authToken, productInfo } = sizemeStore.getState();
+        const loggedIn = authToken.loggedIn;
+        const sizemeProductPage = productInfo.product !== null;
         if (loggedIn && sizemeProductPage) {
             trackEvent("addToCartSM", "Store: Product added to cart by SizeMe user");
         } else if (loggedIn && !sizemeProductPage) {
