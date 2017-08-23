@@ -1,9 +1,6 @@
 /* global ga, sizeme_options */
-let gaTrackingId = sizeme_options.gaTrackingId;
-let gaEnabled = gaTrackingId !== null;
-
-if (gaEnabled && !window["ga"]) {
-    (function (i, s, o, g, r) {
+function loadGa (i, s, o, g, r) {
+    if (!i[r]) {
         i["GoogleAnalyticsObject"] = r;
         i[r] = i[r] ||
             function () {
@@ -15,11 +12,17 @@ if (gaEnabled && !window["ga"]) {
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m);
-    })(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+    }
 }
 
-let trackEvent = (action, label) => {
-    if (gaEnabled) {
+let gaTrackingId = sizeme_options.gaTrackingId;
+let gaEnabled = !!gaTrackingId;
+let trackEvent;
+
+if (gaEnabled) {
+    loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+
+    trackEvent = (action, label) => {
         ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
         trackEvent = (a, l) => {
             ga("sizemeTracker.send", {
@@ -30,9 +33,8 @@ let trackEvent = (action, label) => {
             });
         };
         trackEvent(action, label);
-    } else {
-        trackEvent = () => {};
-    }
-};
-
+    };
+} else {
+    trackEvent = () => {};
+}
 export { trackEvent, gaEnabled };
