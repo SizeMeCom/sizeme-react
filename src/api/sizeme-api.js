@@ -258,7 +258,15 @@ function getProduct () {
             const dbItem = await fetch(
                 getEndpointAddress(`products/${encodeURIComponent(product.SKU)}`),
                 createRequest("GET")
-            ).then(jsonResponse);
+            )
+                .then(response => {
+                    if (response.status === 204) {
+                        throw new ApiError("Product not found", response);
+                    } else {
+                        return response;
+                    }
+                })
+                .then(jsonResponse);
 
             const skuMap = new Map(Object.entries(product.item));
             const measurements = Object.assign(
