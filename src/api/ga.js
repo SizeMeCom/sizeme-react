@@ -2,7 +2,7 @@
 let gaTrackingId = sizeme_options.gaTrackingId;
 let gaEnabled = gaTrackingId !== null;
 
-if (gaEnabled && !ga) {
+if (gaEnabled && !window["ga"]) {
     (function (i, s, o, g, r) {
         i["GoogleAnalyticsObject"] = r;
         i[r] = i[r] ||
