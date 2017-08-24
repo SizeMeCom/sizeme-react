@@ -1,4 +1,7 @@
 /* global ga, sizeme_options */
+const prodTrackingId = "UA-40735596-1";
+const devTrackingId = "UA-40735596-2";
+
 function loadGa (i, s, o, g, r) {
     if (!i[r]) {
         i["GoogleAnalyticsObject"] = r;
@@ -15,26 +18,22 @@ function loadGa (i, s, o, g, r) {
     }
 }
 
-let gaTrackingId = sizeme_options.gaTrackingId;
-let gaEnabled = !!gaTrackingId;
+const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
 let trackEvent;
 
-if (gaEnabled) {
-    loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
 
-    trackEvent = (action, label) => {
-        ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
-        trackEvent = (a, l) => {
-            ga("sizemeTracker.send", {
-                hitType: "event",
-                eventCategory: window.location.hostname,
-                eventAction: a,
-                eventLabel: l + " (v3)"
-            });
-        };
-        trackEvent(action, label);
+trackEvent = (action, label) => {
+    ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
+    trackEvent = (a, l) => {
+        ga("sizemeTracker.send", {
+            hitType: "event",
+            eventCategory: window.location.hostname,
+            eventAction: a,
+            eventLabel: l + " (v3)"
+        });
     };
-} else {
-    trackEvent = () => {};
-}
-export { trackEvent, gaEnabled };
+    trackEvent(action, label);
+};
+
+export { trackEvent };

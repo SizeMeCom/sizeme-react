@@ -22,8 +22,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 {
   serviceStatus: true,
   pluginVersion: "MAG1-0.1.0",
-  contextAddress: "https://sizeme.greitco.com",
-  gaTrackingId: "UA-40735596-2",
+  contextAddress: "https://sizeme.greitco.com"
   shopType: "magento",
   debugState: false,
   uiOptions: {},
@@ -35,8 +34,6 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 * [pluginVersion] (_String_): version of the webstore-plugin. Optional.
 
 * [contextAddress] (_String_): URL to the SizeMe backend service.
-
-* [gaTrackingId] (_String_): Google Analytics tracking id to be used when sending tracking events.
 
 * [shopType] (_String_): webstore provider (magento|printmotor|pupeshop|woocommerce)
 
