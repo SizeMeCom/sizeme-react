@@ -1,7 +1,7 @@
 /* global sizeme_options, sizeme_product */
 
 import "isomorphic-fetch";
-import { trackEvent, gaEnabled } from "./ga.js";
+import { trackEvent } from "./ga.js";
 import * as actions from "./actions";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
@@ -78,12 +78,9 @@ class FitRequest {
 
 function createRequest (method, { token, withCredentials, body } = {}) {
     const headers = new Headers({
-        "X-Sizeme-Pluginversion": pluginVersion
+        "X-Sizeme-Pluginversion": pluginVersion,
+        "X-Analytics-Enabled": true
     });
-
-    if (gaEnabled) {
-        headers.append("X-Analytics-Enabled", true);
-    }
 
     if (token) {
         headers.append("Authorization", "Bearer " + token);
