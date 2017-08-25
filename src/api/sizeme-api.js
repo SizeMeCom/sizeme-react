@@ -56,7 +56,7 @@ observeStore(
         } else {
             smAction = "hasProfile";
         }
-        cookie.save("sm_action", smAction, { path: window.location.pathname });
+        cookie.save("sm_action", smAction);
     }
 );
 
