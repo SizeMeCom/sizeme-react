@@ -22,7 +22,7 @@ const storeMeasurementsKey = "sizemeMeasurements";
 const sizemeStore = createStore(rootReducer, applyMiddleware(
     thunkMiddleware,
     createLogger({
-        predicate: () => !!sizeme_options.debugState,
+        predicate: () => sizeme_options.debugState,
         duration: true
     })
 ));
