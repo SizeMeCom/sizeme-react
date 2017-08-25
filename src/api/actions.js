@@ -19,6 +19,7 @@ export const RECEIVE_MATCH = "RECEIVE_MATCH";
 export const RESET_MATCH = "RESET_MATCH";
 export const SELECT_SIZE = "SELECT_SIZE";
 export const SET_TOOLTIP = "SET_TOOLTIP";
+export const SET_AB_STATUS = "SET_AB_STATUS";
 
 export const { checkToken, fetchToken, resolveToken, clearToken } =
     createActions(CHECK_TOKEN, FETCH_TOKEN, RESOLVE_TOKEN, CLEAR_TOKEN);
@@ -31,3 +32,4 @@ export const { selectProfile, selectProfileDone, setMeasurements, savedMeasureme
 export const { requestMatch, receiveMatch, resetMatch } = createActions(REQUEST_MATCH, RECEIVE_MATCH, RESET_MATCH);
 export const { selectSize } = createActions(SELECT_SIZE);
 export const { setTooltip } = createActions(SET_TOOLTIP);
+export const { setAbStatus } = createActions(SET_AB_STATUS);

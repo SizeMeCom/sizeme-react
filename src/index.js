@@ -8,7 +8,7 @@ import { sizemeStore } from "./api/sizeme-api";
 import SizeMeApp from "./SizeMeApp";
 import uiOptions from "./api/uiOptions";
 import SizeSelector from "./api/SizeSelector";
-import { selectSize } from "./api/actions";
+import { selectSize, setAbStatus } from "./api/actions";
 import { I18nextProvider } from "react-i18next";
 import { trackEvent } from "./api/ga";
 import i18n from "./i18n";
@@ -28,7 +28,9 @@ if (sizeme_options.serviceStatus === "ab") {
         sizemeDisabled = JSON.parse(storageABValue);
     }
 
-    console.log("SizeMe A/B testing, status: " + (sizemeDisabled ? "B" : "A"));
+    const abStatus = sizemeDisabled ? "B" : "A";
+    console.log("SizeMe A/B testing, status: " + abStatus);
+    sizemeStore.dispatch(setAbStatus(abStatus));
 
     if (sizemeDisabled) {
         trackEvent("productPageLoggedOutABDenied", "Store: Product page load, logged out, AB SM denied");

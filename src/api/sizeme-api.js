@@ -44,11 +44,12 @@ function observeStore (select, onChange) {
 }
 
 observeStore(
-    ({ productInfo, selectedProfile }) => ({ product: productInfo.product, selectedProfile }),
-    ({ product, selectedProfile }) => {
+    ({ productInfo, selectedProfile, abStatus }) => ({ product: productInfo.product, selectedProfile, abStatus }),
+    ({ product, selectedProfile, abStatus }) => {
         let smAction;
+        const statusPostFix = abStatus ? "-" + abStatus : "";
         if (!product) {
-            smAction = "noProduct";
+            smAction = "noProduct" + statusPostFix;
         } else if (!Object.values(selectedProfile.measurements).some(item => item)) {
             smAction = "noHuman";
         } else if (!selectedProfile.id) {
