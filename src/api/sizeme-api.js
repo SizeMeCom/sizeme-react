@@ -22,7 +22,7 @@ const storeMeasurementsKey = "sizemeMeasurements";
 const sizemeStore = createStore(rootReducer, applyMiddleware(
     thunkMiddleware,
     createLogger({
-        predicate: () => !!sizeme_options.debugState,
+        predicate: () => sizeme_options.debugState,
         duration: true
     })
 ));
@@ -44,11 +44,12 @@ function observeStore (select, onChange) {
 }
 
 observeStore(
-    ({ productInfo, selectedProfile }) => ({ product: productInfo.product, selectedProfile }),
-    ({ product, selectedProfile }) => {
+    ({ productInfo, selectedProfile, abStatus }) => ({ product: productInfo.product, selectedProfile, abStatus }),
+    ({ product, selectedProfile, abStatus }) => {
         let smAction;
+        const statusPostFix = abStatus ? "-" + abStatus : "";
         if (!product) {
-            smAction = "noProduct";
+            smAction = "noProduct" + statusPostFix;
         } else if (!Object.values(selectedProfile.measurements).some(item => item)) {
             smAction = "noHuman";
         } else if (!selectedProfile.id) {
@@ -56,7 +57,7 @@ observeStore(
         } else {
             smAction = "hasProfile";
         }
-        cookie.save("sm_action", smAction, { path: window.location.pathname });
+        cookie.save("sm_action", smAction, { path: "/" });
     }
 );
 
