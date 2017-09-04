@@ -13,11 +13,23 @@
 	background-color: $light_bg_color;
 	border-radius: $border_radius 0 0 $border_radius;
 	line-height: 0;
+	overflow: hidden;
 
     svg {
       max-height: 70px;
 	  min-width: 100%;
 	  border-radius: $border_radius 0 0 $border_radius;
+	  transform: scale(1);
+	  transition: all .3s ease-in-out;
+	  
+	  
+	  &:hover {
+		transform: scale(1.5);
+	  }
+	  
+	  &.shoe:hover {
+		transform: scale(2.0) translate(0, 14%);
+	  }
 
       .mainLine {
         @include base();
