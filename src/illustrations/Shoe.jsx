@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const cmFactor = 8;
+const cmFactor = 12;
 const baseTrans = -24;
 
 const Shoe = (props) => {
