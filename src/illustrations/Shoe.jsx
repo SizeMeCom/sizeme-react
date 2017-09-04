@@ -2,13 +2,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const cmFactor = 12;
+const cmFactor = 10;
 const baseTrans = -24;
 
 const Shoe = (props) => {
     const yTrans = Math.min(96, Math.max(-50, props.overlap * cmFactor + baseTrans));
     return (
-        <svg viewBox="-20 106 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">
+        <svg viewBox="-30 106 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">
             <g transform="rotate(90, 130.906, 113.741)">
                 <path className="mainLine baseFill"
 				    d="&#10;&#9;&#9;M139,306.437c0,0-20.333-192.696,24.694-192.696c131.64,0,108.17,112.696,108.17,198.696"/>
