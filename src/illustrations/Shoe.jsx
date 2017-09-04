@@ -8,10 +8,10 @@ const baseTrans = -24;
 const Shoe = (props) => {
     const yTrans = Math.min(96, Math.max(-50, props.overlap * cmFactor + baseTrans));
     return (
-        <svg viewBox="-50 100 210 168" preserveAspectRatio="xMinYMin meet" className="shoe">
+        <svg viewBox="-20 106 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">
             <g transform="rotate(90, 130.906, 113.741)">
                 <path className="mainLine baseFill"
-				    d="&#10;&#9;&#9;M137,306.437c0,0-34.333-192.696,47.694-192.696c96.64,0,90.17,112.696,90.17,198.696"/>
+				    d="&#10;&#9;&#9;M139,306.437c0,0-20.333-192.696,24.694-192.696c131.64,0,108.17,112.696,108.17,198.696"/>
             </g>
             <g transform={`rotate(90, 130.906, 113.741) translate(0 ${yTrans})`}>
                 <path className="mainLine overlayFill"
