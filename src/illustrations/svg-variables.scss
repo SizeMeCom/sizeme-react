@@ -6,12 +6,13 @@
 
 @mixin mainLine() {
   stroke: #666666;
-  stroke-width: 6;
+  stroke-width: 4;
 }
 
 @mixin subLine() {
   stroke: #333333;
-  stroke-width: 4;
+  stroke-width: 2;
+  stroke-linecap: square;
 }
 
 @mixin baseFill() {
