@@ -9,11 +9,14 @@ class AbstractSelect {
     constructor (element, { event, useCapture = false }) {
         this.el = element;
         this.selectors = {};
+        this.currSel = "";
 
         element.addEventListener(event, e => {
             const size = this.getSize(e);
-            if (sizeMapper.find(([s]) => s === size)) {
-                selectSize(this.getSize(e));
+            console.log(this.currSel);
+            console.log(size !== this.currSel);
+            if (size !== this.currSel && sizeMapper.find(([s]) => s === size)) {
+                selectSize(size);
             }
         }, useCapture);
     }
@@ -21,9 +24,11 @@ class AbstractSelect {
     setSelected = val => {
         if (this.selectors[val]) {
             this.selectors[val]();
+            this.currSel = val;
             trackEvent("sizeRecommended", "Store: Recommended a size based on user input");
         } else {
             this.clearSelection();
+            this.currSel = "";
             selectSize("");
             trackEvent("sizeCantRecommend", "Store: We couldnt find a size based on user input");
         }
@@ -40,6 +45,7 @@ class DefaultSelect extends AbstractSelect {
         const getSelectFn = (value) => () => {
             this.el.value = value || "";
             selectSize(value);
+            element.dispatchEvent(new Event("change"));
         };
 
         for (let i = 0; i < options.length; i++) {
