@@ -19,7 +19,7 @@
       padding-right: 0;
     }
 
-    .label {
+    .measurement-label {
       font-size: 90%;
       font-weight: 100;
       text-transform: uppercase;
@@ -37,8 +37,8 @@
         display: block;
         border: none;
         width: calc(100% - 24px);
-        padding-right: 0;
-        padding-left: 24px;
+        padding: 0 0 0 24px;
+        margin: 0;
         height: 22px;
         line-height: 22px;
         font-weight: bold;
@@ -109,6 +109,7 @@
       background-color: $bg_color;
       color: black;
       padding: 5px 5px 5px 20px;
+      margin: 0;
       max-width: 170px;
       list-style-type: disc;
       border-radius: $border_radius $border_radius 0 0;

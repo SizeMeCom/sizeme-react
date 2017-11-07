@@ -6,21 +6,21 @@
 }
 
 a.link-btn.size-guide {
-  margin: 10px 0 0 0;
+  margin: 10px 0;
   padding: 5px 8px;
-  border: 1px solid #666;
+  border: 1px solid $default_color;
   font-weight: bold;
   border-radius: $border_radius;
-  background: #fff linear-gradient(to bottom, #ffffff 0%, #dddddd 100%);
+  background-color: $light_bg_color;
   width: 50%;
-  color: #666;
+  color: $default_color;
   display: inline-block;
 
   span.fa {
     display: inline-block;
     float: right;
-    line-height: 18px;
-    color: #666;
+    line-height: 24px;
+    color: $default_color;
   }
 }
 

@@ -130,7 +130,7 @@ class SizeForm extends React.Component {
                 
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
-                        <div className="label">{t(`humanMeasurements.${humanProperty}`)}</div>
+                        <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
                                           value={this.state.measurements[humanProperty]}
                                           fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
