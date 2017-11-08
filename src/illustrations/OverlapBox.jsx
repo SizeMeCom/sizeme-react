@@ -20,6 +20,7 @@ const illustration = (measurement, overlap) => {
         case "chest":
         case "shirtWaist":
         case "pantWaist":
+        case "hips":
         case "thighCircumference":
         case "kneeCircumference":
         case "calfCircumference":
