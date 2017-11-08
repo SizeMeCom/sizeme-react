@@ -5,7 +5,7 @@ const cmFactor = 5;
 const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 
 const FrontHeight = (props) => {
-    const shirtHeight = Math.min(260, Math.max(115, props.overlap * cmFactor + baseHeight));
+    const shirtHeight = Math.min(350, Math.max(115, props.overlap * cmFactor + baseHeight));
     const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="frontHeight"

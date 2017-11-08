@@ -5,7 +5,7 @@ const cmFactor = 6.3;
 const baseWidth = 363; // waist line X
 
 const Sleeve = (props) => {
-    const sleeveWidth = cmFactor * Math.min(9, Math.max(-9, props.overlap)) + baseWidth;
+    const sleeveWidth = cmFactor * Math.min(50, Math.max(-9, props.overlap)) + baseWidth;
     return (
         <svg version="1.1" id="Layer_1" viewBox="298 226 250 200" preserveAspectRatio="xMaxYMin meet"
              className="sleeve">
