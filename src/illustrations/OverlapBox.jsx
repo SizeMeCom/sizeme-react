@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 import Sleeve from "./Sleeve";
+import Outseam from "./Outseam";
 import Pinch from "./Pinch";
 import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
@@ -26,6 +27,9 @@ const illustration = (measurement, overlap) => {
         case "calfCircumference":
         case "ankleCircumference":
             return <Pinch overlap={overlap}/>;
+            
+        case "outSeam":
+            return <Outseam overlap={overlap}/>;            
 
         case "footLength":
             return <Shoe overlap={overlap}/>;
