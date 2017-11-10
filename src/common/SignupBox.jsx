@@ -47,7 +47,7 @@ class SignupBox extends React.Component {
         const isError = !!error;
         const inputClassName = "signup-email" + (isError ? " error" : "");
         return (
-            <div>
+            <div className="section-signup-box">
                 <div className="sizeme-signup-box">
                     <div>{t("signupBox.message")}</div>
                     <div className={inputClassName}>

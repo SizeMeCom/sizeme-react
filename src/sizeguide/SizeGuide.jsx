@@ -87,7 +87,7 @@ class SizeGuide extends React.Component {
         };
 
         return (
-            <div>
+            <div className="section-size-guide">
                 <a className="link-btn size-guide"
                    onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
                 {guideIsOpen &&
