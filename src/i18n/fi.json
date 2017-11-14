@@ -167,7 +167,7 @@
     "signupPrompt": "Tallenna sähköpostiosoitteella"
   },
   "sizeGuide": {
-    "advertisement": "Tämän kokotaulukon toimittaa",
+    "advertisement": "Tämän kokotaulukon toimittaa SizeMe",
     "buttonText": "Kokotaulukko",
     "measurementDisclaimer": "Nämä mitat on otettu <u>tuotteen päältä tasaisella alustalla</u>.",
     "measurementDisclaimerCollar": "Paitsi kaulus, joka on ympärysmitta kauluksen sisäpuolelta.",
@@ -182,6 +182,6 @@
     "btnNoThanksTitle": "Ehkä myöhemmin",
     "btnSignUpLabel": "Liityn mukaan",
     "btnSignUpTitle": "Jep, haluan luoda oman tunnuksen",
-    "detailedText": "Ota <b>muutama mitta</b> itsestäsi ja näe miten tämä tuote <b>sopisi sinulle</b>.<br />Luo oma <b>SizeMe</b>-tunnus ja lopeta arvailu!"
+    "detailedText": "Ota <b>muutama mitta</b> itsestäsi ja näe miten tämä tuote <b>sopisi sinulle</b>. Luo oma <b>SizeMe</b>-tunnus ja lopeta arvailu!"
   }
 }

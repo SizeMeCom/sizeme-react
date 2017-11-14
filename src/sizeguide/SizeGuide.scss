@@ -155,12 +155,12 @@ a.link-btn.size-guide {
     }
 
     .modal-footer {
-      height: 30px;
-      background-color: $bar-background-color;
-      border-top: $bar-border;
+      height: 40px;
+      background-color: white;
+      border-top: 0;
       width: 100%;
       box-sizing: border-box;
-      padding-right: 30px;
+      padding-right: 20px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -177,7 +177,7 @@ a.link-btn.size-guide {
           top: -1px;
           left: 5px;
           background: url(../images/sizeme_logo_plain_h22.png) no-repeat 0 0;
-          width: 77px;
+          width: 110px;
           height: 22px;
           vertical-align: top;
         }
@@ -295,15 +295,16 @@ a.link-btn.size-guide {
     }
 
     .size-guide-splash {
-      padding: 5px 0;
+      padding: 10px;
       border-radius: $border_radius;
       text-align: center;
-      background: #eee url(../images/sizeme_logo_plain_h32.png) no-repeat 20px 10px;
+      background-color: #eee;
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 0;
 
       p {
-        margin: 1px 10px 10px 150px;
+        margin: 0px 5px 10px 5px;
+        font-size: 12px;
       }
 
       .splash-choices {
@@ -319,17 +320,17 @@ a.link-btn.size-guide {
         }
 
         a.sign-up {
-          background-image: linear-gradient(to bottom left, #7DCC5D 0%, #48952A 100%);
+          background-color: #7DCC5D;
           border: 1px solid #76DC4C;
           color: #fff!important;
         }
 
         a.log-in {
-          background-image: linear-gradient(to bottom left, #FFFFFF 0%, #CFCFCF 100%);
+          background-color: #CFCFCF;
         }
 
         a.no-thanks {
-          background-image: linear-gradient(to bottom left, #888888 0%, #333333 100%);
+          background-color: #333333;
           border: 1px solid #888888;
           color: #ccc!important;
           padding: 3px 8px;
