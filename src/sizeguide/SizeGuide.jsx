@@ -121,12 +121,10 @@ class SizeGuide extends React.Component {
                         </div>
 
                         <div className="modal-footer">
-                            {!loggedIn &&
                             <span className="sizeme-advertisement">
-                                {t("sizeGuide.advertisement")}
-                                <a id="sizeme_ad_link" href={contextAddress} target="_blank"/>
+                                <a id="sizeme_ad_link" href={contextAddress} 
+                                    title={t("sizeGuide.advertisement")} target="_blank"/>
                             </span>
-                            }
                         </div>
                     </div>
                 </Modal>}

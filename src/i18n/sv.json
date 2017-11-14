@@ -168,7 +168,7 @@
     "signupPrompt": "Save with email"
   },
   "sizeGuide": {
-    "advertisement": "Denna storleksguide har gjorts för dig av",
+    "advertisement": "Denna storleksguide har gjorts för dig av SizeMe",
     "buttonText": "Storleks guide",
     "measurementDisclaimer": "Dessa mått är uppmätta <u>på jämnt underlag på artikelns utsida</u>.",
     "measurementDisclaimerCollar": "Med undantag av kragmåttet, som är uppmätt på kragens insida.",
@@ -183,6 +183,6 @@
     "btnNoThanksTitle": "Kanske senare",
     "btnSignUpLabel": "Signera",
     "btnSignUpTitle": "Ja, jag vill skapa ett gratis konto",
-    "detailedText": "Tag några <b>mått av dig själv</b> och få personlig info hur denna artikel skulle <b>passa dig</b>.<br />Gör en gratis <b>SizeMe</b> profil och sluta gissa!"
+    "detailedText": "Tag några <b>mått av dig själv</b> och få personlig info hur denna artikel skulle <b>passa dig</b>. Gör en gratis <b>SizeMe</b> profil och sluta gissa!"
   }
 }
