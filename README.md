@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/BA-Group/sizeme-react.svg?branch=master)](https://travis-ci.org/BA-Group/sizeme-react)
+[![Build Status](https://travis-ci.org/SizeMeCom/sizeme-react.svg?branch=master)](https://travis-ci.org/SizeMeCom/sizeme-react)
 
 # SizeMe React
 
