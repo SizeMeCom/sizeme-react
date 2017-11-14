@@ -295,15 +295,16 @@ a.link-btn.size-guide {
     }
 
     .size-guide-splash {
-      padding: 5px 0;
+      padding: 5px;
       border-radius: $border_radius;
       text-align: center;
-      background: #eee url(../images/sizeme_logo_plain_h32.png) no-repeat 20px 10px;
+      background: #eee url(../images/sizeme_logo_plain_h32.png) no-repeat 15px 10px;
       width: 100%;
       margin-bottom: 10px;
 
       p {
-        margin: 1px 10px 10px 150px;
+        margin: 1px 5px 10px 180px;
+        font-size: 12px;
       }
 
       .splash-choices {
