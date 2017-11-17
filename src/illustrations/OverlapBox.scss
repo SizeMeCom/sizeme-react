@@ -44,6 +44,10 @@
       .baseFill {
         @include baseFill();
       }
+      
+      .otherBaseFill {
+        @include otherBaseFill();
+      }
 
       .overlayFill {
         @include overlayFill();

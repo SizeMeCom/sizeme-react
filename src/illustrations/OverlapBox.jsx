@@ -6,6 +6,9 @@ import Outseam from "./Outseam";
 import Pinch from "./Pinch";
 import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
+import Chest from "./Chest";
+import PantWaist from "./PantWaist";
+import Hips from "./Hips";
 import "./OverlapBox.scss";
 import ProductModel from "../api/ProductModel";
 import { translate } from "react-i18next";
@@ -14,14 +17,15 @@ const illustration = (measurement, overlap) => {
     switch (measurement) {
         case "sleeve":
             return <Sleeve overlap={overlap}/>;
-
         case "frontHeight":
             return <FrontHeight overlap={overlap}/>;
-
         case "chest":
-        case "shirtWaist":
+            return <Chest overlap={overlap}/>;
         case "pantWaist":
+            return <PantWaist overlap={overlap}/>;
         case "hips":
+            return <Hips overlap={overlap}/>;
+        case "shirtWaist":
         case "thighCircumference":
         case "kneeCircumference":
         case "calfCircumference":
@@ -39,7 +43,21 @@ const illustration = (measurement, overlap) => {
     }
 };
 
-const isPinch = (measurement) => measurement === "chest";
+const illustrationDivider = (measurement) => {
+    switch (measurement) {
+        case "chest":
+        case "pantWaist":
+        case "hips":
+        case "shirtWaist":
+        case "thighCircumference":
+        case "kneeCircumference":
+        case "calfCircumference":
+        case "ankleCircumference":
+            return 40;
+        default:
+            return 10;
+    }
+};
 
 class OverlapBox extends React.Component {
     constructor (props) {
@@ -52,7 +70,7 @@ class OverlapBox extends React.Component {
 
     render () {
         const { fit, humanProperty, hover, t } = this.props;
-        const overlap = fit.overlap / (isPinch(humanProperty) ? 20 : 10);
+        const overlap = fit.overlap / illustrationDivider(humanProperty);
 
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip" 
