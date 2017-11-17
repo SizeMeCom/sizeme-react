@@ -27,7 +27,7 @@
     "stretchedMuch": "The item is stretched a lot.",
     "stretchedSomewhat": "The item is stretched.",
     "tooltipDefaultText": "The item's {{measurement, lowercase}} measurement ",
-    "whenPinched": " when pinched"
+    "whenPinched": " on both sides"
   },
   "fitVerdict": {
     "not_fitted": "Too small",

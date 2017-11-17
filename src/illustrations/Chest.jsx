@@ -2,14 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 5;
-const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 
-const FrontHeight = (props) => {
-    const shirtHeight = Math.min(350, Math.max(115, props.overlap * cmFactor + baseHeight));
-    const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
+const Chest = (props) => {
+    const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
     return (
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="frontHeight"
-             viewBox="108 220 337.5 270" preserveAspectRatio="xMidYMin meet">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="chest"
+             viewBox="108 50 337.5 270" preserveAspectRatio="xMidYMin meet">
             <g>
                 /* torso */
                 <path className="mainLine baseFill"
@@ -71,7 +69,7 @@ const FrontHeight = (props) => {
                 <circle className="mainLine noFill"
                     cx="277.831"
                     cy="308.234"
-                    r="2.534"/>                
+                    r="2.534"/>
 
                 /* pants with pockets and button */
                 <path className="mainLine otherBaseFill"
@@ -94,31 +92,31 @@ const FrontHeight = (props) => {
                     cx="276.331"
                     cy="355.234"
                     r="5.906"/>
-
-                <line className="subLine noFill"
-                    strokeDasharray="3.704,7.408" x1="156.889" y1="338.545" x2="397.66" y2="338.545"/>
+                    
             </g>
-            <rect className="mainLine overlayFill"
-                x="185.552"
-                y="162.204"
-                width="183.446"
-                height={shirtHeight}/>
-            <line className="subLine noFill"
-                strokeDasharray="3.3258,6.6527"
-                x1="156.889"
-                y1={hemLine}
-                x2="397.66"
-                y2={hemLine}/>
+            <path className="mainLine overlayFill"
+            d={`
+                M ` + (201.75 - widthPlus) + `,337.89999
+                l 0,-181.23331
+                l -232.00002, 10.33331
+                l -1.66667, -33
+                l ` + (251.33336 + widthPlus) + `,-43.66669
+                c 33.77777,27.55557 75.55554,30.11112 110.33331,0
+                l ` + (251.33336 + widthPlus) + `, 43.66669
+                l -1.66667, 33
+                l -232.00002, -10.33331
+                l 0, 181.23331z`}/> 
+
         </svg>
     );
 };
 
-FrontHeight.propTypes = {
+Chest.propTypes = {
     overlap: PropTypes.number
 };
 
-FrontHeight.defaultProps = {
+Chest.defaultProps = {
     overlap: 0
 };
 
-export default FrontHeight;
+export default Chest;

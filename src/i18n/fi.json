@@ -27,7 +27,7 @@
     "stretchedMuch": "Tuote venyy kunnolla.",
     "stretchedSomewhat": "Tuote venyy.",
     "tooltipDefaultText": "Tuotteen {{measurement, lowercase}}-mitta ",
-    "whenPinched": " nipistettynä sormien väliin"
+    "whenPinched": " molemmilta puolilta"
   },
   "fitVerdict": {
     "not_fitted": "Pieni",

@@ -63,16 +63,6 @@ const noMatchItem = (fitData, t) => {
     }
 };
 
-const verdict = (fitData, t) => {
-    const { matchItem, fit, isLongFit } = fitData;
-    if (matchItem && matchItem.componentFit > 0) {
-        const fitVerdict = isLongFit ? t(`fitVerdictLong.${fit.label}`) : t(`fitVerdict.${fit.label}`);
-        return <span> {t("fitInfo.smConsidersFit")} <strong>{fitVerdict.toLowerCase()}</strong>.</span>;
-    } else {
-        return null;
-    }
-};
-
 class FitTooltip extends React.Component {
     constructor (props) {
         super(props);
@@ -111,7 +101,6 @@ class FitTooltip extends React.Component {
                     {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
                     {overlap(fitData, t)}
                     {noOverlap(fitData, t)}
-                    {verdict(fitData, t)}
                     {noMatchItem(fitData, t)}
                 </ReactTooltip>
             );

@@ -2,14 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 5;
-const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 
-const FrontHeight = (props) => {
-    const shirtHeight = Math.min(350, Math.max(115, props.overlap * cmFactor + baseHeight));
-    const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
+const Hips = (props) => {
+    const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
     return (
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="frontHeight"
-             viewBox="108 220 337.5 270" preserveAspectRatio="xMidYMin meet">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="hips"
+             viewBox="158 270 237.5 210" preserveAspectRatio="xMidYMin meet">
             <g>
                 /* torso */
                 <path className="mainLine baseFill"
@@ -71,54 +69,54 @@ const FrontHeight = (props) => {
                 <circle className="mainLine noFill"
                     cx="277.831"
                     cy="308.234"
-                    r="2.534"/>                
+                    r="2.534"/>
 
-                /* pants with pockets and button */
+                /* under pants */
                 <path className="mainLine otherBaseFill"
-                    d="
-                         M 356.76001,685.56201
-                         l -1.819,-292.09702
+                    d="m352.94101,393.465
+                    l -0.7225,-53.91998
+                    l -154.69001,0
+                    l -2.59149,54.09799
+                    c 26.45552,0.629 47.91098,6.25803 66.892,21.93497
+                    l 22.34552,0
+                    c 22.45551,-12.371 42.91098,-21.74197 70.36649,-22.11298z"/>
+
+            </g>
+                /* pants with pockets and button */
+                <path className="mainLine overlayFill"
+                    d={`M 356.76001,685.56201
+                         l ` + (-1.819 + widthPlus) + `,-292.09702
                          l -2.7225,-53.91998
-                         l -154.69001,0
+                         l ` + (-154.69001 - (widthPlus * 2)) + `,0
                          l -3.59149,55.09799
-                         l -5.433,289.87799
+                         l ` + (-5.433 + widthPlus) + `,289.87799
                          l 47.26199,0
                          l 33.063,-249.94302
                          l 9.69101,0
-                         l 25.50998,251.19302z"/>
+                         l 25.50998,251.19302z`}/>
                 <path className="mainLine noFill"
-                    d="M230.208,364.504c0,0-3.344,24.618-27.826,25.548"/>
+                    d={`
+                        M ` + (230.208 - (widthPlus / 2)) + `,364.504c0,0-3.344,24.618-27.826,25.548
+                      `}/>
                 <path className="mainLine noFill"
-                    d="M317.346,365.795c0,0,3.346,24.618,27.826,25.548"/>
+                    d={`
+                        M ` + (317.346 + (widthPlus / 2)) + `,365.795c0,0,3.346,24.618,27.826,25.548
+                     `}/>
                 <circle className="mainLine noFill"
                     cx="276.331"
                     cy="355.234"
                     r="5.906"/>
 
-                <line className="subLine noFill"
-                    strokeDasharray="3.704,7.408" x1="156.889" y1="338.545" x2="397.66" y2="338.545"/>
-            </g>
-            <rect className="mainLine overlayFill"
-                x="185.552"
-                y="162.204"
-                width="183.446"
-                height={shirtHeight}/>
-            <line className="subLine noFill"
-                strokeDasharray="3.3258,6.6527"
-                x1="156.889"
-                y1={hemLine}
-                x2="397.66"
-                y2={hemLine}/>
         </svg>
     );
 };
 
-FrontHeight.propTypes = {
+Hips.propTypes = {
     overlap: PropTypes.number
 };
 
-FrontHeight.defaultProps = {
+Hips.defaultProps = {
     overlap: 0
 };
 
-export default FrontHeight;
+export default Hips;
