@@ -12,6 +12,7 @@ import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
 import { trackEvent } from "./api/ga";
+import FitTooltip from "./common/FitTooltip";
 import LoginFrame from "./common/LoginFrame";
 
 class SizeMeApp extends React.Component {
@@ -94,6 +95,7 @@ class SizeMeApp extends React.Component {
                     {measurementInputs && <SizeForm fields={measurementInputs} />}
                     {!loggedIn && currentMatch && <SignupBox onSignup={onSignup}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
+                    <FitTooltip/>
                     <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                 </div>
             );

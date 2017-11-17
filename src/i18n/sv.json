@@ -27,7 +27,7 @@
     "stretchedMuch": "Artikeln är töjd mycket.",
     "stretchedSomewhat": "Artikeln är töjd.",
     "tooltipDefaultText": "Artikelns {{measurement, lowercase}} mått ",
-    "whenPinched": " när utdragen"
+    "whenPinched": " på båda sidor"
   },
   "fitVerdict": {
     "not_fitted": "För liten",
