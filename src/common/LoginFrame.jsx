@@ -69,8 +69,8 @@ class LoginFrame extends React.Component {
             >
                 <iframe src={src}
                         frameBorder="0"
-                        width="305"
-                        height="348"
+                        width="310"
+                        height="375"
                 />
             </Modal>
         );
