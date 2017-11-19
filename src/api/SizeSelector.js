@@ -39,7 +39,6 @@ class DefaultSelect extends AbstractSelect {
         const options = element.querySelectorAll("option");
         const getSelectFn = (value) => () => {
             this.el.value = value || "";
-            selectSize(value);
             element.dispatchEvent(new Event("sizemeChange"));
         };
 
@@ -63,6 +62,7 @@ class DefaultSelect extends AbstractSelect {
             clone.value = this.el.value;
             clone.addEventListener("change", (event) => {
                 this.setSelected(event.target.value);
+                selectSize(event.target.value);
             });
             return clone;
         } else {

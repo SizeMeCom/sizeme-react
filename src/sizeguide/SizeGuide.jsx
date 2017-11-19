@@ -95,7 +95,7 @@ class SizeGuide extends React.Component {
                     isOpen={guideIsOpen}
                     onRequestClose={this.closeGuide}
                     contentLabel="Size Guide"
-                    className="size-guide-modal"
+                    className={`size-guide-modal ${this.props.matchState.state}`}
                     overlayClassName="size-guide-overlay"
                 >
                     <div className="modal-wrapper">
@@ -142,6 +142,7 @@ SizeGuide.propTypes = {
     onFitHover: PropTypes.func,
     matchResult: PropTypes.object,
     loggedIn: PropTypes.bool.isRequired,
+    matchState: PropTypes.object,
     t: PropTypes.func
 };
 
@@ -151,7 +152,8 @@ const mapStateToProps = (state) => ({
     selectedProfile: state.selectedProfile,
     selectedSize: state.selectedSize.size,
     matchResult: state.match.matchResult,
-    loggedIn: state.authToken.loggedIn
+    loggedIn: state.authToken.loggedIn,
+    matchState: state.matchState
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
