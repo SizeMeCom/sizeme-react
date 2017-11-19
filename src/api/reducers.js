@@ -139,6 +139,11 @@ const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => ({
 
 const abStatus = handleAction(actions.SET_AB_STATUS, (state, action) => action.payload, null);
 
+const matchState = handleAction(actions.SET_MATCH_STATE, (state, action) => action.payload, {
+    match: null,
+    state: null
+});
+
 const rootReducer = combineReducers({
     authToken,
     signupStatus,
@@ -148,7 +153,8 @@ const rootReducer = combineReducers({
     match,
     selectedSize,
     tooltip,
-    abStatus
+    abStatus,
+    matchState
 });
 
 export default rootReducer;

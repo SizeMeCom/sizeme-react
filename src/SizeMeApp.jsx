@@ -54,46 +54,22 @@ class SizeMeApp extends React.Component {
 
     render () {
         const { resolved, loggedIn,
-            matchResult, selectedSize,
             profiles, selectedProfile, setSelectedProfile,
-            measurementInputs,
-            onSignup,
-            product
+            measurementInputs, matchState, onSignup
         } = this.props;
-
-        let currentMatch = null;
-        let matchState = "match";
-        const currentSize = selectedSize.size;
-        if (matchResult && currentSize) {
-            const match = matchResult[currentSize];
-            if (match.accuracy > 0) {
-                currentMatch = match;
-            } else {
-                matchState = "no-fit";
-            }
-        } else if (matchResult) {
-            if (Object.values(matchResult).some(match => match && match.accuracy > 0)) {
-                matchState = "no-size";
-            } else {
-                matchState = "no-fit";
-            }
-        } else {
-            matchState = "no-fit";
-        }
-
+        const { match, state } = matchState;
 
         if (resolved) {
             return (
-                <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${matchState}`}>
+                <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state}`}>
                     <div className="sizeme-slider-row">                        
-                        <SizingBar match={currentMatch} fitRecommendation={product.item.fitRecommendation || 0}
-                                   selectedSize={selectedSize} matchState={matchState}/>
+                        <SizingBar/>
                         {loggedIn && <ProfileMenu profiles={profiles}
                                                              selectedProfile={selectedProfile.id}
                                                              setSelectedProfile={setSelectedProfile}/>}
                     </div>
                     {measurementInputs && <SizeForm fields={measurementInputs} />}
-                    {!loggedIn && currentMatch && <SignupBox onSignup={onSignup}/>}
+                    {!loggedIn && match && <SignupBox onSignup={onSignup}/>}
                     {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
                     <FitTooltip/>
                     <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
@@ -108,8 +84,6 @@ class SizeMeApp extends React.Component {
 SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
-    selectedSize: PropTypes.object,
-    matchResult: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
@@ -118,19 +92,19 @@ SizeMeApp.propTypes = {
     getProfiles: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
     onSignup: PropTypes.func.isRequired,
-    product: PropTypes.object
+    product: PropTypes.object,
+    matchState: PropTypes.object
 };
 
 const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
-    selectedSize: state.selectedSize,
-    matchResult: state.match.matchResult,
     loggedIn: state.authToken.loggedIn,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
-    product: state.productInfo.product
+    product: state.productInfo.product,
+    matchState: state.matchState
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

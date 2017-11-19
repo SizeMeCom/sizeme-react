@@ -4,11 +4,11 @@ import "babel-polyfill";
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { sizemeStore } from "./api/sizeme-api";
+import { sizemeStore, selectSize } from "./api/sizeme-api";
 import SizeMeApp from "./SizeMeApp";
 import uiOptions from "./api/uiOptions";
 import SizeSelector from "./api/SizeSelector";
-import { selectSize, setAbStatus } from "./api/actions";
+import { setAbStatus } from "./api/actions";
 import { I18nextProvider } from "react-i18next";
 import { trackEvent } from "./api/ga";
 import i18n from "./i18n";
@@ -73,6 +73,6 @@ if (!sizemeDisabled) {
             </Provider>
         </I18nextProvider>,
         section,
-        () => SizeSelector.initSizeSelector(size => sizemeStore.dispatch(selectSize({ size, auto: false })))
+        () => SizeSelector.initSizeSelector(size => sizemeStore.dispatch(selectSize(size, false)))
     );
 }

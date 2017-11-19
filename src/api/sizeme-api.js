@@ -411,8 +411,7 @@ function match (doSelectBestFit = true) {
                 dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
 
                 if (doSelectBestFit) {
-                    SizeSelector.setSelectedSize(recommendedFit);
-                    dispatch(actions.selectSize({ auto: true }));
+                    dispatch(selectSize(recommendedFit, true));
                 }
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));
@@ -446,6 +445,37 @@ function saveProfile () {
     };
 }
 
+function selectSize (size, auto) {
+    return (dispatch, getState) => {
+        if (auto) {
+            SizeSelector.setSelectedSize(size);
+        }
+        dispatch(actions.selectSize({ size, auto }));
+
+        let match = null;
+        let state = "match";
+        const currentSize = getState().selectedSize.size;
+        const matchResult = getState().match.matchResult;
+        if (matchResult && currentSize) {
+            const currentMatch = matchResult[currentSize];
+            if (currentMatch.accuracy > 0) {
+                match = currentMatch;
+            } else {
+                state = "no-fit";
+            }
+        } else if (matchResult) {
+            if (Object.values(matchResult).some(m => m && m.accuracy > 0)) {
+                state = "no-size";
+            } else {
+                state = "no-fit";
+            }
+        } else {
+            state = "no-fit";
+        }
+        dispatch(actions.setMatchState({ match, state }));
+    };
+}
+
 export {
     sizemeStore,
     resolveAuthToken,
@@ -455,6 +485,7 @@ export {
     setSelectedProfile,
     match,
     setProfileMeasurements,
+    selectSize,
     contextAddress,
     cdnLocation
 };
