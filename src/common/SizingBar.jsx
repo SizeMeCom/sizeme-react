@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { translate } from "react-i18next";
+import { translate, Trans } from "react-i18next";
 import "./SizingBar.scss";
 import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
@@ -13,7 +13,7 @@ const getSizename = (selectedSize) =>
 
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 9px`;
-    const { selectedSize, t } = props;
+    const { selectedSize } = props;
     return (
         <div>
             <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
@@ -21,9 +21,9 @@ const FitIndicator = (props) => {
                          data-tip data-for="fitTooltip"/>
             </svg>
             <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
-                <span dangerouslySetInnerHTML={{ __html: t("common.sizingBarFitTooltip", {
-                    selectedSize: getSizename(selectedSize)
-                }) }}/>
+                <Trans i18nKey="common.sizingBarFitTooltip">
+                    This indicates how size <strong>{{ selectedSize }}</strong> will fit you
+                </Trans>
             </ReactTooltip>
         </div>
     );
@@ -135,9 +135,12 @@ class SizingBar extends React.Component {
         const doShowFit = state === "match";
         let placeholderText = "";
         if (state === "match") {
-            placeholderText = t("common.sizingBarSplashMatch", {
-                sizeName: getSizename(size)
-            });
+            const sizeName = getSizename(size);
+            placeholderText = (
+                <Trans i18nKey="common.sizingBarSplashMatch">
+                    We recommend size <span className="size-name">{{ sizeName }}</span> for you
+                </Trans>    
+            );
         } else if (state === "no-fit") {
             placeholderText = t("common.sizingBarSplashNoFit");
         } else if (state === "no-size") {
