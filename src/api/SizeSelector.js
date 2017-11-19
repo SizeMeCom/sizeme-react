@@ -62,6 +62,7 @@ class DefaultSelect extends AbstractSelect {
             clone.value = this.el.value;
             clone.addEventListener("change", (event) => {
                 this.setSelected(event.target.value);
+                selectSize(event.target.value);
             });
             return clone;
         } else {
