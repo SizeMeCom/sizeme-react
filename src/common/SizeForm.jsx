@@ -70,7 +70,7 @@ class SizeForm extends React.Component {
     tooltipContent = t => () => {
         const linkTexts = t("measurementTooltips.linkToGuide", { returnObjects: true });
         const tooltips = this.activeTooltip ?
-            Object.values(t(`measurementTooltips.${this.activeTooltip}`, { returnObjects: true })) : [];
+            t(`measurementTooltips.${this.activeTooltip}`, { returnObjects: true }) : [];
         return (
             <div>
                 <ul>

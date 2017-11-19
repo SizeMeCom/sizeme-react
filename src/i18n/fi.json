@@ -6,8 +6,8 @@
     "shoppingFor": "Aktiivinen profiili",
 	"sizingBarSplashNoFit": "Syötä mittasi, niin suosittelemme sinulle oikean koon",
     "sizingBarSplashNoSize": "Valitse koko, niin näytämme miten se sopii sinulle",
-    "sizingBarSplashMatch": "Suosittelemme sinulle kokoa {{- sizeName}}",
-    "sizingBarFitTooltip": "Tämä näyttää miten koko <strong>{{selectedSize}}</strong> sopii sinulle",
+    "sizingBarSplashMatch": "Suosittelemme sinulle kokoa <1><0>{{sizeName}}</0></1>",
+    "sizingBarFitTooltip": "Tämä näyttää miten koko <1><0>{{selectedSize}}</0></1> sopii sinulle",
     "sizingBarRecommendationTooltip": "Tämän tuotteen kohdalla suosittelemme tätä sopivuutta"
   },
   "detailed": {
