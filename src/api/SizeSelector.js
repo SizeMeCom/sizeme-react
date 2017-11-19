@@ -39,7 +39,6 @@ class DefaultSelect extends AbstractSelect {
         const options = element.querySelectorAll("option");
         const getSelectFn = (value) => () => {
             this.el.value = value || "";
-            selectSize(value);
             element.dispatchEvent(new Event("sizemeChange"));
         };
 

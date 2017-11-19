@@ -79,8 +79,8 @@ class SizingBar extends React.Component {
     }
 
     componentWillUpdate (newProps) {
-        const { size, auto } = newProps.selectedSize;
-        if (!auto && newProps.matchState.state === "match" && size !== this.props.selectedSize.size) {
+        const { size } = newProps.selectedSize;
+        if (size !== this.props.selectedSize.size) {
             clearTimeout(this.timeout);
             this.timeout = null;
             this.setState({ newSize: true });
