@@ -60,7 +60,7 @@ class SizeGuideDetails extends React.Component {
                     <DetailsSizeSelector selectedSize={selectedSize}/>
                 </DetailSection>
                 <DetailSection title={t("fitInfo.overallFit")}>
-                    <SizingBar match={match} fitRangeVisible/>
+                    <SizingBar/>
                 </DetailSection>
                 <DetailSection title={t("detailed.tableTitle")}>
                     <div className="fit-table">

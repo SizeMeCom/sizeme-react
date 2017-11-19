@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { translate } from "react-i18next";
 import "./SizingBar.scss";
 import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductModel";
@@ -57,6 +58,13 @@ RecommendationIndicator.propTypes = {
 
 class SizingBar extends React.Component {
 
+    static propTypes = {
+        selectedSize: PropTypes.object,
+        fitRecommendation: PropTypes.number,
+        matchState: PropTypes.object,
+        t: PropTypes.func
+    };
+
     constructor (props) {
         super(props);
         this.ranges = fitRanges;
@@ -72,7 +80,7 @@ class SizingBar extends React.Component {
 
     componentWillUpdate (newProps) {
         const { size, auto } = newProps.selectedSize;
-        if (!auto && newProps.matchState === "match" && size !== this.props.selectedSize.size) {
+        if (!auto && newProps.matchState.state === "match" && size !== this.props.selectedSize.size) {
             clearTimeout(this.timeout);
             this.timeout = null;
             this.setState({ newSize: true });
@@ -117,21 +125,22 @@ class SizingBar extends React.Component {
     }
 
     getFitRange () {
-        return ProductModel.getFit({ componentFit: this.props.match.totalFit, importance: 1 }, true);
+        return ProductModel.getFit({ componentFit: this.props.matchState.match.totalFit, importance: 1 }, true);
     }
 
     render () {
-        const { t, fitRecommendation, match, selectedSize, matchState } = this.props;
+        const { t, fitRecommendation, selectedSize, matchState } = this.props;
         const { size, auto } = selectedSize;
-        const doShowFit = matchState === "match";
+        const { match, state } = matchState;
+        const doShowFit = state === "match";
         let placeholderText = "";
-        if (matchState === "match") {
+        if (state === "match") {
             placeholderText = t("common.sizingBarSplashMatch", {
                 sizeName: getSizename(size)
             });
-        } else if (matchState === "no-fit") {
+        } else if (state === "no-fit") {
             placeholderText = t("common.sizingBarSplashNoFit");
-        } else if (matchState === "no-size") {
+        } else if (state === "no-size") {
             placeholderText = t("common.sizingBarSplashNoSize");
         }
         return (
@@ -155,12 +164,11 @@ class SizingBar extends React.Component {
     }
 }
 
-SizingBar.propTypes = {
-    match: PropTypes.object,
-    selectedSize: PropTypes.object,
-    fitRecommendation: PropTypes.number,
-    matchState: PropTypes.string.isRequired,
-    t: PropTypes.func
-};
+const mapStateToProps = state => ({
+    matchResult: state.match.matchResult,
+    fitRecommendation: state.productInfo.product.item.fitRecommendation || 0,
+    selectedSize: state.selectedSize,
+    matchState: state.matchState
+});
 
-export default translate()(SizingBar);
+export default translate()(connect(mapStateToProps)(SizingBar));
