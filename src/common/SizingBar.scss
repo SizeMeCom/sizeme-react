@@ -15,8 +15,8 @@
 
   .slider-placeholder {
     position: absolute;
-	top: -10px;
-	left: 0;
+    top: -10px;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -37,7 +37,7 @@
     width: 18px;
     bottom: -4px;
     transition: left 0.5s ease-in-out;
-	cursor: help;
+    cursor: help;
   }
 
   svg.indicator {
@@ -81,6 +81,10 @@
       fill: $recommendation_color;
       fill-opacity: 0.75;
     }
+  }
+  
+  span.size-recommendation strong {
+    text-transform: uppercase;
   }
 }
 

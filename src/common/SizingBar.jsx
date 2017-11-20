@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { translate, Trans } from "react-i18next";
+import { translate } from "react-i18next";
 import "./SizingBar.scss";
 import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
@@ -13,7 +13,7 @@ const getSizename = (selectedSize) =>
 
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 9px`;
-    const { selectedSize } = props;
+    const { selectedSize, t } = props;
     return (
         <div>
             <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
@@ -21,9 +21,11 @@ const FitIndicator = (props) => {
                          data-tip data-for="fitTooltip"/>
             </svg>
             <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
-                <Trans i18nKey="common.sizingBarFitTooltip">
-                    This indicates how size <strong>{{ selectedSize }}</strong> will fit you
-                </Trans>
+                <span className="size-recommendation"
+                    dangerouslySetInnerHTML={{ __html: t("common.sizingBarFitTooltip", {
+                        selectedSize: getSizename(selectedSize)
+                    }) }}
+                />
             </ReactTooltip>
         </div>
     );
@@ -135,12 +137,9 @@ class SizingBar extends React.Component {
         const doShowFit = state === "match";
         let placeholderText = "";
         if (state === "match") {
-            const sizeName = getSizename(size);
-            placeholderText = (
-                <Trans i18nKey="common.sizingBarSplashMatch">
-                    We recommend size <span className="size-name">{{ sizeName }}</span> for you
-                </Trans>    
-            );
+            placeholderText = t("common.sizingBarSplashMatch", {
+                sizeName: getSizename(size)
+            });
         } else if (state === "no-fit") {
             placeholderText = t("common.sizingBarSplashNoFit");
         } else if (state === "no-size") {
@@ -149,9 +148,9 @@ class SizingBar extends React.Component {
         return (
             <div className={"sizeme-slider" + (this.state.newSize && auto ? " new-size" : "")}>
                 <div className="slider-placeholder">
-                    <span ref={ref => { this.placeholder = ref; }}>
-                        {placeholderText}
-                    </span>
+                    <span className="size-recommendation"
+                        ref={ref => { this.placeholder = ref; }}
+                        dangerouslySetInnerHTML={{ __html: placeholderText }}/>
                 </div>
                 {this.ranges.map(fit => (
                     <div className={fit.label + " fit-area"} key={fit.label}>
