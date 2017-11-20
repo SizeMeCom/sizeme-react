@@ -6,8 +6,8 @@
     "shoppingFor": "Shoppa för",
 	"sizingBarSplashNoFit": "Enter your measurements to find your size",
     "sizingBarSplashNoSize": "Select a size to see your fit",
-    "sizingBarSplashMatch": "We selected size <1><0>{{sizeName}}</0></1> for you",
-    "sizingBarFitTooltip": "This indicates how size <1><0>{{selectedSize}}</0></1> will fit you",
+    "sizingBarSplashMatch": "We selected size <strong>{{- sizeName}}</strong> for you",
+    "sizingBarFitTooltip": "This indicates how size <strong>{{- selectedSize}}</strong> will fit you",
     "sizingBarRecommendationTooltip": "We recommend that your fit is around this area"
   },
   "detailed": {
