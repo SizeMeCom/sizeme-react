@@ -20,7 +20,8 @@ class LoginFrame extends React.Component {
         this.state = {
             loginModalOpen: false,
             mode: "login",
-            email: null
+            email: null,
+            modalHeight: 375
         };
     }
 
@@ -32,9 +33,18 @@ class LoginFrame extends React.Component {
         if (origin !== contextAddress) {
             return;
         }
-        this.closeLoginModal();
         if (e.data) {
-            this.props.onLogin();
+            const { loggedIn, modalHeight } = e.data;
+
+            if (loggedIn !== undefined) {
+                if (loggedIn) {
+                    this.props.onLogin();
+                }
+            } else if (modalHeight) {
+                this.setState({ modalHeight: modalHeight + 10 });
+            }
+        } else {
+            this.closeLoginModal();
         }
     };
 
@@ -70,7 +80,7 @@ class LoginFrame extends React.Component {
                 <iframe src={src}
                         frameBorder="0"
                         width="310"
-                        height="375"
+                        height={this.state.modalHeight}
                 />
             </Modal>
         );
