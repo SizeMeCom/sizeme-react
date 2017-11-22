@@ -18,7 +18,7 @@ class DetailsSizeSelector extends React.Component {
     }
 
     componentDidUpdate () {
-        this.select.value = this.props.selectedSize;
+        this.select.value = this.props.selectedSize || "";
     }
 
     render () {
@@ -27,7 +27,7 @@ class DetailsSizeSelector extends React.Component {
 }
 
 DetailsSizeSelector.propTypes = {
-    selectedSize: PropTypes.string.isRequired
+    selectedSize: PropTypes.string
 };
 
 class SizeGuideDetails extends React.Component {
@@ -67,10 +67,12 @@ class SizeGuideDetails extends React.Component {
                         {product.model.measurementOrder.map((measurement, i) => (
                             <HoverContainer measurement={measurement} onHover={onHover} key={i}>
                                 <div className="fit-wrapper" data-tip data-for="fit-tooltip">
-                                    <DetailedFit measurement={measurement} num={i + 1}
+                                    {selectedSize && (
+                                        <DetailedFit measurement={measurement} num={i + 1}
                                                  item={item} measurementName={product.model.measurementName}
                                                  match={match}
-                                    />
+                                        />
+                                    )}
                                 </div>
                             </HoverContainer>
                         ))}
@@ -85,7 +87,7 @@ SizeGuideDetails.propTypes = {
     onSelectProfile: PropTypes.func.isRequired,
     selectedProfile: PropTypes.string.isRequired,
     profiles: PropTypes.arrayOf(PropTypes.object),
-    selectedSize: PropTypes.string.isRequired,
+    selectedSize: PropTypes.string,
     onHover: PropTypes.func.isRequired,
     matchResult: PropTypes.object,
     product: PropTypes.object.isRequired,
