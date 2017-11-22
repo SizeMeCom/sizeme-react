@@ -59,7 +59,7 @@ class LoginFrame extends React.Component {
     render () {
         const { mode, email } = this.state;
         const loginParam = email ? `&login=${email}` : "";
-        const src = `${contextAddress}/remote-login2.html?mode=${mode}${loginParam}`;
+        const src = `${contextAddress}/remote-login.html?mode=${mode}${loginParam}#new`;
         return (
             <Modal isOpen={this.state.loginModalOpen}
                    onRequestClose={this.closeLoginModal}
