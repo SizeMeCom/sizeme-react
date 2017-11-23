@@ -10,26 +10,29 @@
 
   .overlap-svg {
     width: 50%;
-	background-color: $light_bg_color;
-	border-radius: $border_radius 0 0 $border_radius;
-	line-height: 0;
-	overflow: hidden;
+    background-color: $light_bg_color;
+    border-radius: $border_radius 0 0 $border_radius;
+    line-height: 0;
+    overflow: hidden;
 
     svg {
       max-height: 70px;
-	  min-width: 100%;
-	  border-radius: $border_radius 0 0 $border_radius;
-	  transform: scale(1);
-	  transition: all .3s ease-in-out;
-	  
-	  
-	  &:hover {
-		transform: scale(1.5);
-	  }
-	  
-	  &.shoe:hover {
-		transform: scale(2.0) translate(0, 14%);
-	  }
+      min-width: 100%;
+      border-radius: $border_radius 0 0 $border_radius;
+      transform: scale(1);
+      transition: all .5s ease-in-out;
+
+      &:hover {
+        transform: scale(1.5);
+      }
+
+      &.shoe:hover {
+        transform: scale(2.0) translate(0, 14%);
+      }
+
+      &.chest:hover {
+        transform: scale(3.0) translate(26%, 3%);
+      }
 
       .mainLine {
         @include base();
@@ -41,10 +44,33 @@
         @include subLine();
       }
 
+      .measurementBase {
+        @include base();
+        @include measurementBase();
+        transition: all .5s ease-in-out;
+        opacity: 0;
+      }
+
+      &:hover .measurementBase {
+        opacity: 1;
+      }
+
+      .measurementLine {
+        @include measurementLine();
+      }
+
+      .arrowsInside {
+        @include arrowsInside();
+      }
+
+      .arrowsOutside {
+        @include arrowsOutside();
+      }
+
       .baseFill {
         @include baseFill();
       }
-      
+
       .otherBaseFill {
         @include otherBaseFill();
       }
