@@ -1128,7 +1128,7 @@ const getResult = (measurement, value, matchItem) => {
         if (matchItem.overlap <= 0 && matchItem.componentFit >= 1000) {
             fitValue = 0;
         } else if (pinched) {
-            fitValue = matchItem.overlap / 20.0;
+            fitValue = matchItem.overlap / 40.0;
         } else {
             fitValue = matchItem.overlap / 10.0;
         }
