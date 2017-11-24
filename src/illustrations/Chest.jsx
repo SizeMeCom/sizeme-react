@@ -9,6 +9,24 @@ const Chest = (props) => {
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="chest"
              viewBox="108 50 337.5 270" preserveAspectRatio="xMidYMin meet">
+             
+            <defs>
+                <marker id="triangleInsideChest"
+                  viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+                </marker>
+                <marker id="triangleOutsideChest"
+                  viewBox="0 0 10 10" refX="1" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+                </marker>
+            </defs>
+             
             <g>
                 /* torso */
                 <path className="mainLine baseFill"
@@ -68,7 +86,7 @@ const Chest = (props) => {
 
                 /* belly button */
                 <circle className="mainLine noFill"
-                    cx="277.831"
+                    cx="276.331"
                     cy="308.234"
                     r="2.534"/>
 
@@ -108,24 +126,10 @@ const Chest = (props) => {
                 l -232.00002, -10.33331
                 l 0, 181.23331z`}/>
 
-            <marker id="triangleInside"
-              viewBox="0 0 10 10" refX="9" refY="5"
-              markerWidth="6" markerHeight="6"
-              className="measurementBase"
-              orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" />
-            </marker>
-            <marker id="triangleOutside"
-              viewBox="0 0 10 10" refX="1" refY="5"
-              markerWidth="6" markerHeight="6"
-              className="measurementBase"
-              orient="auto-start-reverse">
-              <path d="M 0 5 L 10 0 L 10 10 z" />
-            </marker>
             /* measurement arrow line */
             <path
                 className={`
-                measurementBase measurementLine noFill ` + arrowPositions}
+                measurementLine noFill ` + arrowPositions}
                 d={`
                 M ` + (202 - widthPlus) + `,180
                 L 204, 180`} />

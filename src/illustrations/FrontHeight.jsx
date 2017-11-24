@@ -7,9 +7,28 @@ const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 const FrontHeight = (props) => {
     const shirtHeight = Math.min(350, Math.max(115, props.overlap * cmFactor + baseHeight));
     const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
+    const arrowPositions = (shirtHeight > 196 ? "arrowsInside" : "arrowsOutside");
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="frontHeight"
              viewBox="108 220 337.5 270" preserveAspectRatio="xMidYMin meet">
+             
+            <defs>
+                <marker id="triangleInsideFrontHeight"
+                  viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+                </marker>
+                <marker id="triangleOutsideFrontHeight"
+                  viewBox="0 0 10 10" refX="1" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+                </marker>
+            </defs>
+            
             <g>
                 /* torso */
                 <path className="mainLine baseFill"
@@ -60,18 +79,18 @@ const FrontHeight = (props) => {
                 /* nipples */
                 <circle className="mainLine noFill"
                     cx="229.47"
-                    cy="162.40"
+                    cy="180"
                     r="4.906"/>
                 <circle className="mainLine noFill"
                     cx="322.43"
-                    cy="162.40"
+                    cy="180"
                     r="4.906"/>
 
                 /* belly button */
                 <circle className="mainLine noFill"
-                    cx="277.831"
+                    cx="276.331"
                     cy="308.234"
-                    r="2.534"/>                
+                    r="2.534"/>
 
                 /* pants with pockets and button */
                 <path className="mainLine otherBaseFill"
@@ -109,6 +128,14 @@ const FrontHeight = (props) => {
                 y1={hemLine}
                 x2="397.66"
                 y2={hemLine}/>
+
+            /* measurement arrow line */
+            <path
+                className={`
+                measurementLine noFill ` + arrowPositions}
+                d={`
+                M 170,338.545
+                L 170, ` + hemLine} />
         </svg>
     );
 };

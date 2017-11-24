@@ -15,28 +15,12 @@
   stroke-linecap: square;
 }
 
-@mixin measurementBase() {
+@mixin measurementLine() {
   stroke: #9E509F;
-  fill: #9E509F;  
-  stroke-width: 0;
+  fill: #9E509F;
+  stroke-width: 2;
   stroke-linecap: butt;
   stroke-linejoin: miter;
-}
-
-@mixin measurementLine() {
-  marker-start: url(#triangleInside);
-  marker-end: url(#triangleInside);
-  stroke-width: 2;
-}
-
-@mixin arrowsInside() {
-  marker-start: url(#triangleInside);
-  marker-end: url(#triangleInside);
-}
-
-@mixin arrowsOutside() {
-  marker-start: url(#triangleOutside);
-  marker-end: url(#triangleOutside);
 }
 
 @mixin baseFill() {
