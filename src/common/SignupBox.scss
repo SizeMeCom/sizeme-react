@@ -3,7 +3,7 @@
 .sizeme-signup-box {
   margin-top: 5px;
   padding: 10px;
-  background-color: #caefc6;
+  background: url(../images/sizeme_badge_w196.png) calc(100% - 32px) 8px / 24px auto no-repeat $light_bg_color;
   border-radius: $border_radius;
   text-align: center;
   font-weight: bold;
