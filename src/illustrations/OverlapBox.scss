@@ -58,9 +58,6 @@
         fill-opacity: 1;
       }
 
-      &.chest .measurementLine { fill: #333333; stroke: #333333; }
-      &.frontHeight .measurementLine { fill: #dc9ddd; stroke: #dc9ddd; }
-
       &.chest .arrowsInside { marker-start: url(#triangleInsideChest); marker-end: url(#triangleInsideChest); }
       &.chest .arrowsOutside { marker-start: url(#triangleOutsideChest); marker-end: url(#triangleOutsideChest); }
 
@@ -122,4 +119,24 @@
   .overlap-verdict {
     display: none;
   }
+}
+
+.measurement-input.too_small + .overlap-box { 
+  .overlap-svg svg .measurementLine { fill: $too_small; stroke: $too_small; } 
+}
+
+.measurement-input.slim + .overlap-box { 
+  .overlap-svg svg .measurementLine { fill: $slim; stroke: $slim; } 
+}
+
+.measurement-input.regular + .overlap-box { 
+  .overlap-svg svg .measurementLine { fill: $regular; stroke: $regular; } 
+}
+
+.measurement-input.loose + .overlap-box { 
+  .overlap-svg svg .measurementLine { fill: $loose; stroke: $loose; } 
+}
+
+.measurement-input.too_big + .overlap-box { 
+  .overlap-svg svg .measurementLine { fill: $too_big; stroke: $too_big; } 
 }
