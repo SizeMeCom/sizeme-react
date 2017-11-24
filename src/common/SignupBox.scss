@@ -3,7 +3,7 @@
 .sizeme-signup-box {
   margin-top: 5px;
   padding: 10px;
-  background: url(../images/sizeme_badge_w196.png) calc(100% - 32px) 8px / 24px auto no-repeat $light_bg_color;
+  background-color: $light_bg_color;
   border-radius: $border_radius;
   text-align: center;
   font-weight: bold;
@@ -35,7 +35,7 @@
 
   .signup-email {
     margin: 10px 30px 0;
-    border: 1px solid #079814;
+    border: 1px solid $default_color;
     border-radius: $border_radius;
     background-color: $bg_color;
     position: relative;
@@ -59,9 +59,11 @@
       background-color: #079814;
       color: white;
       text-decoration: none;
-      border-top-left-radius: $border_radius;
-      border-bottom-left-radius: $border_radius;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       cursor: pointer;
+      text-transform: uppercase;
+      font-weight: normal;
     }
 
     a[disabled] {
