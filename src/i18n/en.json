@@ -162,7 +162,7 @@
   "signupBox": {
     "duplicateUser": "An account with this email already exists. Try to log in?",  
 	"emailPlaceholder": "myname@example.com",
-    "message": "Save your measurements using SizeMe",
+    "message": "Save your measurements",
 	"save": "Ok",
     "signupPrompt": "Save with email"
   },
