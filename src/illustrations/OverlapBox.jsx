@@ -46,6 +46,7 @@ const illustration = (measurement, overlap) => {
 const illustrationDivider = (measurement) => {
     switch (measurement) {
         case "chest":
+        case "underbust":
         case "pantWaist":
         case "hips":
         case "shirtWaist":

@@ -5,9 +5,26 @@ const cmFactor = 5;
 
 const Hips = (props) => {
     const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
+    const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="hips"
              viewBox="158 270 237.5 210" preserveAspectRatio="xMidYMin meet">
+            <defs>
+                <marker id="triangleInsideHips"
+                  viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+                </marker>
+                <marker id="triangleOutsideHips"
+                  viewBox="0 0 10 10" refX="1" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+                </marker>
+            </defs>
             <g>
                 /* torso */
                 <path className="mainLine baseFill"
@@ -106,6 +123,13 @@ const Hips = (props) => {
                     cx="276.331"
                     cy="355.234"
                     r="5.906"/>
+
+                /* measurement arrow line */
+                <path
+                    className={`measurementLine noFill ${arrowPositions}`}
+                    d={`
+                    M ${194.5285 - widthPlus} ,404.545
+                    L 194.5285, 404.545`} />
 
         </svg>
     );

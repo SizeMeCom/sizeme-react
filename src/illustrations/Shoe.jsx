@@ -2,13 +2,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const cmFactor = 10;
+const cmFactor = 12;
 const baseTrans = -24;
 
 const Shoe = (props) => {
     const yTrans = Math.min(96, Math.max(-50, props.overlap * cmFactor + baseTrans));
+    const arrowPositions = yTrans > 5 ? "arrowsInside" : "arrowsOutside";
     return (
-        <svg viewBox="-30 106 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">
+        <svg viewBox="-30 96 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">
+        
+            <defs>
+                <marker id="triangleInsideShoe"
+                  viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+                </marker>
+                <marker id="triangleOutsideShoe"
+                  viewBox="0 0 10 10" refX="1" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+                </marker>
+            </defs>
+            
             <g transform="rotate(90, 130.906, 113.741)">
                 <path className="mainLine baseFill"
 				    d="&#10;&#9;&#9;M139,306.437c0,0-20.333-192.696,24.694-192.696c131.64,0,108.17,112.696,108.17,198.696"/>
@@ -28,14 +47,22 @@ const Shoe = (props) => {
 				    d="&#10;&#9;&#9;M235.662,204.097c0.304,0.319,11.69-6.144,14.093-12.144c-7.265,11.333-7.146,15.11-7.538,19.555"/>
                 <line className="subLine noFill"
 				    strokeDasharray="3.285,6.57"
-					x1="130.906" y1="136.496" x2="276.731" y2="136.496"/>
+					x1="120.906" y1="136.496" x2="286.731" y2="136.496"/>
             </g>
             <g transform="rotate(90, 130.906, 113.741)">
                 <line className="subLine noFill"
 				    strokeDasharray="3.285,6.57"
-					x1="130.906" y1="113.741" x2="276.731" y2="113.741"/>
+					x1="120.906" y1="113.741" x2="286.731" y2="113.741"/>
             </g>
-			
+            /* measurement arrow line */
+            <g transform="rotate(90, 130.906, 113.741)">
+                <path
+                    className={`measurementLine noFill ${arrowPositions}`}
+                    d={`
+                    M 126, ${135.496 + yTrans}
+                    L 126, 115.496`} />
+            </g>
+
         </svg>
     );
 };

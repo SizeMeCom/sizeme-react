@@ -5,9 +5,28 @@ const cmFactor = 5;
 
 const Chest = (props) => {
     const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
+    const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="chest"
              viewBox="108 50 337.5 270" preserveAspectRatio="xMidYMin meet">
+             
+            <defs>
+                <marker id="triangleInsideChest"
+                  viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+                </marker>
+                <marker id="triangleOutsideChest"
+                  viewBox="0 0 10 10" refX="1" refY="5"
+                  markerWidth="6" markerHeight="6"
+                  className="measurementLine"
+                  orient="auto-start-reverse">
+                  <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+                </marker>
+            </defs>
+             
             <g>
                 /* torso */
                 <path className="mainLine baseFill"
@@ -58,16 +77,16 @@ const Chest = (props) => {
                 /* nipples */
                 <circle className="mainLine noFill"
                     cx="229.47"
-                    cy="162.40"
+                    cy="180"
                     r="4.906"/>
                 <circle className="mainLine noFill"
                     cx="322.43"
-                    cy="162.40"
+                    cy="180"
                     r="4.906"/>
 
                 /* belly button */
                 <circle className="mainLine noFill"
-                    cx="277.831"
+                    cx="276.331"
                     cy="308.234"
                     r="2.534"/>
 
@@ -92,21 +111,27 @@ const Chest = (props) => {
                     cx="276.331"
                     cy="355.234"
                     r="5.906"/>
-                    
+
             </g>
             <path className="mainLine overlayFill"
             d={`
-                M ` + (201.75 - widthPlus) + `,337.89999
+                M ${201.75 - widthPlus},337.89999
                 l 0,-181.23331
                 l -232.00002, 10.33331
                 l -1.66667, -33
-                l ` + (251.33336 + widthPlus) + `,-43.66669
+                l ${251.33336 + widthPlus},-43.66669
                 c 33.77777,27.55557 75.55554,30.11112 110.33331,0
-                l ` + (251.33336 + widthPlus) + `, 43.66669
+                l ${251.33336 + widthPlus}, 43.66669
                 l -1.66667, 33
                 l -232.00002, -10.33331
-                l 0, 181.23331z`}/> 
+                l 0, 181.23331z`}/>
 
+            /* measurement arrow line */
+            <path
+                className={`measurementLine noFill ${arrowPositions}`}
+                d={`
+                M ${202 - widthPlus},180
+                L 204, 180`} />
         </svg>
     );
 };
