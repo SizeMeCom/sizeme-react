@@ -6,7 +6,7 @@ const baseWidth = 363; // waist line X
 
 const Sleeve = (props) => {
     const sleeveWidth = cmFactor * Math.min(50, Math.max(-9, props.overlap)) + baseWidth;
-    const arrowPositions = (sleeveWidth > 393 ? "arrowsInside" : "arrowsOutside");
+    const arrowPositions = sleeveWidth > 393 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" id="Layer_1" viewBox="298 226 250 200" preserveAspectRatio="xMaxYMin meet"
              className="sleeve">
@@ -63,9 +63,9 @@ const Sleeve = (props) => {
             /* measurement arrow line */
             <path
                 className={`
-                measurementLine noFill ` + arrowPositions}
+                measurementLine noFill ${arrowPositions}`}
                 d={`
-                M ` + (sleeveWidth) + `,265
+                M ${sleeveWidth}, 265
                 L 363, 265`} />
 
         </svg>

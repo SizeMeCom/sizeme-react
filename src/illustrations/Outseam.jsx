@@ -6,7 +6,7 @@ const baseHeight = 330; // ankle bone line Y
 
 const Outseam = (props) => {
     const sleeveHeight = cmFactor * Math.min(50, Math.max(-9, props.overlap)) + baseHeight;
-    const arrowPositions = (sleeveHeight > 360 ? "arrowsInside" : "arrowsOutside");
+    const arrowPositions = sleeveHeight > 360 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" id="Layer_1" viewBox="200 250 250 225" preserveAspectRatio="xMaxYMin meet"
              className="outseam">
@@ -65,10 +65,10 @@ const Outseam = (props) => {
             /* measurement arrow line */
             <path
                 className={`
-                measurementLine noFill ` + arrowPositions}
+                measurementLine noFill ${arrowPositions}`}
                 d={`
                 M 360,330
-                L 360, ` + sleeveHeight} />
+                L 360, ${sleeveHeight}`} />
         </svg>
     );
 };

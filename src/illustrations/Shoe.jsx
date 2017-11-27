@@ -7,7 +7,7 @@ const baseTrans = -24;
 
 const Shoe = (props) => {
     const yTrans = Math.min(96, Math.max(-50, props.overlap * cmFactor + baseTrans));
-    const arrowPositions = (yTrans > 5 ? "arrowsInside" : "arrowsOutside");
+    const arrowPositions = yTrans > 5 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg viewBox="-30 96 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">
         
@@ -58,9 +58,9 @@ const Shoe = (props) => {
             <g transform="rotate(90, 130.906, 113.741)">
                 <path
                     className={`
-                    measurementLine noFill ` + arrowPositions}
+                    measurementLine noFill ${arrowPositions}`}
                     d={`
-                    M 126, ` + (135.496 + yTrans) + `
+                    M 126, ${135.496 + yTrans}
                     L 126, 115.496`} />
             </g>
 

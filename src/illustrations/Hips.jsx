@@ -5,7 +5,7 @@ const cmFactor = 5;
 
 const Hips = (props) => {
     const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
-    const arrowPositions = (widthPlus > 30 ? "arrowsInside" : "arrowsOutside");
+    const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="hips"
              viewBox="158 270 237.5 210" preserveAspectRatio="xMidYMin meet">
@@ -127,9 +127,9 @@ const Hips = (props) => {
                 /* measurement arrow line */
                 <path
                     className={`
-                    measurementLine noFill ` + arrowPositions}
+                    measurementLine noFill ${arrowPositions}`}
                     d={`
-                    M ` + (194.5285 - widthPlus) + `,404.545
+                    M ${194.5285 - widthPlus} ,404.545
                     L 194.5285, 404.545`} />
 
         </svg>

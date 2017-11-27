@@ -7,7 +7,7 @@ const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 const FrontHeight = (props) => {
     const shirtHeight = Math.min(350, Math.max(115, props.overlap * cmFactor + baseHeight));
     const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
-    const arrowPositions = (shirtHeight > 196 ? "arrowsInside" : "arrowsOutside");
+    const arrowPositions = shirtHeight > 196 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="frontHeight"
              viewBox="108 220 337.5 270" preserveAspectRatio="xMidYMin meet">
@@ -132,10 +132,10 @@ const FrontHeight = (props) => {
             /* measurement arrow line */
             <path
                 className={`
-                measurementLine noFill ` + arrowPositions}
+                measurementLine noFill ${arrowPositions}`}
                 d={`
                 M 170,338.545
-                L 170, ` + hemLine} />
+                L 170, ${hemLine}`} />
         </svg>
     );
 };

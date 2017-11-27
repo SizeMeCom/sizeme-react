@@ -5,7 +5,7 @@ const cmFactor = 5;
 
 const Chest = (props) => {
     const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
-    const arrowPositions = (widthPlus > 30 ? "arrowsInside" : "arrowsOutside");
+    const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
     return (
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="chest"
              viewBox="108 50 337.5 270" preserveAspectRatio="xMidYMin meet">
@@ -129,9 +129,9 @@ const Chest = (props) => {
             /* measurement arrow line */
             <path
                 className={`
-                measurementLine noFill ` + arrowPositions}
+                measurementLine noFill ${arrowPositions}`}
                 d={`
-                M ` + (202 - widthPlus) + `,180
+                M ${202 - widthPlus},180
                 L 204, 180`} />
         </svg>
     );
