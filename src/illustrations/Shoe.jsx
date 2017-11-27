@@ -57,8 +57,7 @@ const Shoe = (props) => {
             /* measurement arrow line */
             <g transform="rotate(90, 130.906, 113.741)">
                 <path
-                    className={`
-                    measurementLine noFill ${arrowPositions}`}
+                    className={`measurementLine noFill ${arrowPositions}`}
                     d={`
                     M 126, ${135.496 + yTrans}
                     L 126, 115.496`} />

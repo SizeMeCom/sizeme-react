@@ -115,21 +115,20 @@ const Chest = (props) => {
             </g>
             <path className="mainLine overlayFill"
             d={`
-                M ` + (201.75 - widthPlus) + `,337.89999
+                M ${201.75 - widthPlus},337.89999
                 l 0,-181.23331
                 l -232.00002, 10.33331
                 l -1.66667, -33
-                l ` + (251.33336 + widthPlus) + `,-43.66669
+                l ${251.33336 + widthPlus},-43.66669
                 c 33.77777,27.55557 75.55554,30.11112 110.33331,0
-                l ` + (251.33336 + widthPlus) + `, 43.66669
+                l ${251.33336 + widthPlus}, 43.66669
                 l -1.66667, 33
                 l -232.00002, -10.33331
                 l 0, 181.23331z`}/>
 
             /* measurement arrow line */
             <path
-                className={`
-                measurementLine noFill ${arrowPositions}`}
+                className={`measurementLine noFill ${arrowPositions}`}
                 d={`
                 M ${202 - widthPlus},180
                 L 204, 180`} />

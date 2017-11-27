@@ -64,8 +64,7 @@ const Outseam = (props) => {
 
             /* measurement arrow line */
             <path
-                className={`
-                measurementLine noFill ${arrowPositions}`}
+                className={`measurementLine noFill ${arrowPositions}`}
                 d={`
                 M 360,330
                 L 360, ${sleeveHeight}`} />

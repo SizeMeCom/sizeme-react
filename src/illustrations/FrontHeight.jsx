@@ -131,8 +131,7 @@ const FrontHeight = (props) => {
 
             /* measurement arrow line */
             <path
-                className={`
-                measurementLine noFill ${arrowPositions}`}
+                className={`measurementLine noFill ${arrowPositions}`}
                 d={`
                 M 170,338.545
                 L 170, ${hemLine}`} />

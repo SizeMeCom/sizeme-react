@@ -62,8 +62,7 @@ const Sleeve = (props) => {
 
             /* measurement arrow line */
             <path
-                className={`
-                measurementLine noFill ${arrowPositions}`}
+                className={`measurementLine noFill ${arrowPositions}`}
                 d={`
                 M ${sleeveWidth}, 265
                 L 363, 265`} />

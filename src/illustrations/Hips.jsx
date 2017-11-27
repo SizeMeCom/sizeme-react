@@ -126,8 +126,7 @@ const Hips = (props) => {
 
                 /* measurement arrow line */
                 <path
-                    className={`
-                    measurementLine noFill ${arrowPositions}`}
+                    className={`measurementLine noFill ${arrowPositions}`}
                     d={`
                     M ${194.5285 - widthPlus} ,404.545
                     L 194.5285, 404.545`} />
