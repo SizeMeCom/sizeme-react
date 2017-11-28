@@ -371,7 +371,9 @@ function writeItemCanvas (canvas, options) {
     // item
     plotItem(c, itemDrawing, scale, offsetX, offsetY);
     // arrows
-    plotArrows(measurements.get(selectedSize) || measurements.values().next().value);
+    if (measurements.size) {
+        plotArrows(measurements.get(selectedSize) || measurements.values().next().value);
+    }
 }
 
 class SizeGuideItem extends React.Component {

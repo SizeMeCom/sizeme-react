@@ -44,7 +44,7 @@ const developmentConfig = merge([
             devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]"
         }
     },
-    parts.generateSourceMaps({ type: "source-map" }),
+    parts.generateSourceMaps({ type: "cheap-module-source-map" }),
     parts.devServer({
         // Customize host/port here if needed
         host: process.env.HOST || "0.0.0.0",
@@ -66,7 +66,8 @@ const developmentConfig = merge([
     parts.page({ template: "index4.html", filename: "index4.html" }),
     parts.page({ template: "index5.html", filename: "index5.html" }),
     parts.page({ template: "kookenka.html", filename: "kookenka.html" }),
-    parts.page({ template: "selectric.html", filename: "selectric.html" })
+    parts.page({ template: "selectric.html", filename: "selectric.html" }),
+    parts.page({ template: "makia1.html", filename: "makia1.html" })
 ]);
 
 const productionConfig = merge([
@@ -86,6 +87,7 @@ const productionConfig = merge([
         recordsPath: path.join(__dirname, "records.json")*/
     },
     parts.clean(PATHS.build),
+    parts.generateSourceMaps({ type: "source-map" }),
     parts.extractCSS({ filename: "sizeme-styles.css" }),
     parts.extractBundles([
         {
