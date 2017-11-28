@@ -54,6 +54,11 @@ class SizeGuide extends React.Component {
         });
     };
 
+    componentDidCatch (_, info) {
+        this.setState({ guideIsOpen: false });
+        console.error("Occured ", info.componentStack);
+    }
+
     render () {
         const {
             t, onSelectProfile, selectedProfile, profiles, selectedSize, product, matchResult, loggedIn

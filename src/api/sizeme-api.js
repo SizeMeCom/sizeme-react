@@ -458,7 +458,7 @@ function selectSize (size, auto) {
         const matchResult = getState().match.matchResult;
         if (matchResult && currentSize) {
             const currentMatch = matchResult[currentSize];
-            if (currentMatch.accuracy > 0) {
+            if (currentMatch && currentMatch.accuracy > 0) {
                 match = currentMatch;
             } else {
                 state = "no-fit";
