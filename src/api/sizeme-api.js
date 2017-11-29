@@ -267,16 +267,23 @@ function getProduct () {
                 .then(jsonResponse);
 
             const skuMap = new Map(Object.entries(product.item));
-            const measurements = Object.assign(
-                {},
-                ...Object.entries(dbItem.measurements)
-                    .filter(([sku]) => skuMap.has(sku))
-                    .map(([sku, val]) => ({ [skuMap.get(sku)]: val }))
-            );
-            const item = { ...dbItem, measurements };
-            const model = new SizeGuideModel(item);
-            dispatch(actions.receiveProductInfo({ ...product, item, skuMap, model }));
-            return true;
+            const measurementEntries = Object.entries(dbItem.measurements)
+                .filter(([sku]) => skuMap.has(sku))
+                .map(([sku, val]) => ({ [skuMap.get(sku)]: val }));
+
+            if (measurementEntries.length) {
+                const measurements = Object.assign(
+                    {},
+                    ...measurementEntries
+                );
+                const item = { ...dbItem, measurements };
+                const model = new SizeGuideModel(item);
+                dispatch(actions.receiveProductInfo({ ...product, item, skuMap, model }));
+                return true;
+            } else {
+                console.log("Initializing SizeMe failed: Couldn't map product measurements");
+                dispatch(actions.requestProductInfo(new ApiError("Couldn't map product measurements")));
+            }
         } catch (reason) {
             dispatch(actions.receiveProductInfo(reason));
             return false;
