@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/SizeMeCom/sizeme-react.svg?branch=master)](https://travis-ci.org/SizeMeCom/sizeme-react)
-
-# SizeMe React
+# SizeMe React [![CircleCI](https://circleci.com/gh/SizeMeCom/sizeme-react.svg?style=svg)](https://circleci.com/gh/SizeMeCom/sizeme-react)
 
 ## Development
 
