@@ -1,0 +1,120 @@
+# Scala CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/sample-config/ for more details
+#
+defaults: &defaults
+  working_directory: ~/sizeme
+  environment:
+    TERM: dumb
+
+yarnDeps: &yarnDeps
+  keys:
+    - v1-yarn-deps-{{ checksum "yarn.lock" }}
+    - v1-yarn-deps-
+
+yarnPaths: &yarnPaths
+  paths:
+    - node_modules
+  key: v1-yarn-deps-{{ checksum "yarn.lock" }}
+
+deploy: &deploy
+  <<: *defaults
+
+  docker:
+    - image: sizeme/circleci-deploy:1.0
+
+  steps:
+    - setup_remote_docker:
+        docker_layer_caching: true
+
+    - attach_workspace:
+        at: .
+
+    - run:
+        name: Move dist
+        command: mv dist docker
+
+    - run:
+       name: Login to ECR
+       command: $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+
+    - run:
+       name: Build image
+       command: docker build -t $NGINX_REPOSITORY_URI:$IMAGE_TAG .
+       working_directory: docker
+
+    - deploy:
+       name: Push image
+       command: docker push $NGIX_REPOSITORY_URI:$IMAGE_TAG
+
+    - deploy:
+       name: Deploy backend nginx
+       command: ecs-deploy -c default -n $ECS_SERVICE -t 600 --force-new-deployment
+
+version: 2
+
+jobs:
+  build:
+    <<: *defaults
+
+    docker:
+      - image: sizeme/circleci-scala-yarn:1.0
+    
+    steps:
+      - checkout
+
+      - restore_cache:
+          <<: *yarnDeps
+
+      - run:
+          name: Update dependencies
+          command: cat /dev/null | yarn install
+
+      - run:
+          name: Build
+          command: cat /dev/null | yarn build
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+      - save_cache:
+          <<: *yarnPaths
+
+  deploy_to_qa:
+    <<: *deploy
+
+  deploy_to_prod:
+    <<: *deploy
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              only: /.*/
+
+      - deploy_to_qa:
+          context: QA
+          requires:
+            - build
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              only: master
+
+      - deploy_to_prod:
+          context: PROD
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/
