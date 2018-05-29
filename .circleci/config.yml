@@ -41,7 +41,7 @@ deploy: &deploy
 
     - deploy:
        name: Push image
-       command: docker push $NGIX_REPOSITORY_URI:$IMAGE_TAG
+       command: docker push $NGINX_REPOSITORY_URI:$IMAGE_TAG
 
     - deploy:
        name: Deploy backend nginx
