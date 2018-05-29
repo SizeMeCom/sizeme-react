@@ -73,7 +73,8 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - docker
+            - dist
 
       - save_cache:
           <<: *yarnPaths
