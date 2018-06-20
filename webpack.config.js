@@ -66,6 +66,7 @@ const developmentConfig = merge([
     parts.page({ template: "index4.html", filename: "index4.html" }),
     parts.page({ template: "index5.html", filename: "index5.html" }),
     parts.page({ template: "kookenka.html", filename: "kookenka.html" }),
+    parts.page({ template: "kookenka2.html", filename: "kookenka2.html" }),
     parts.page({ template: "selectric.html", filename: "selectric.html" }),
     parts.page({ template: "makia1.html", filename: "makia1.html" })
 ]);
