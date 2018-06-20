@@ -62,17 +62,33 @@ if (addToCartElement && addToCartEvent) {
 }
 
 if (!sizemeDisabled) {
-    const section = document.createElement("div");
-    document.querySelector(uiOptions.appendContentTo).appendChild(section);
+    const isVisible = (elem) => !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 
-    //noinspection RequiredAttributes
-    render(
-        <I18nextProvider i18n={i18n}>
-            <Provider store={sizemeStore}>
-                <SizeMeApp/>
-            </Provider>
-        </I18nextProvider>,
-        section,
-        () => SizeSelector.initSizeSelector(size => sizemeStore.dispatch(selectSize(size, false)))
-    );
+    // postpone execution of this block to wait for the shop UI to finish rendering. At least
+    // with KooKenka accordion component this was needed
+    setTimeout(() => {
+        const section = document.createElement("div");
+        const elementList = document.querySelectorAll(uiOptions.appendContentTo);
+        let found = false;
+        for (let i = 0; i < elementList.length && !found; i++) {
+            const el = elementList[i];
+            if (isVisible(el)) {
+                found = true;
+                el.appendChild(section);
+            }
+        }
+
+        if (found) {
+            //noinspection RequiredAttributes
+            render(
+                <I18nextProvider i18n={i18n}>
+                    <Provider store={sizemeStore}>
+                        <SizeMeApp/>
+                    </Provider>
+                </I18nextProvider>,
+                section,
+                () => SizeSelector.initSizeSelector(size => sizemeStore.dispatch(selectSize(size, false)))
+            );
+        }
+    });
 }
