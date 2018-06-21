@@ -483,6 +483,20 @@ function selectSize (size, auto) {
     };
 }
 
+function findVisibleElement (selector) {
+    const isVisible = (elem) => !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+
+    const elementList = document.querySelectorAll(selector);
+
+    for (let el of elementList) {
+        if (isVisible(el)) {
+            return el;
+        }
+    }
+
+    return null;
+}
+
 export {
     sizemeStore,
     resolveAuthToken,
@@ -494,5 +508,6 @@ export {
     setProfileMeasurements,
     selectSize,
     contextAddress,
-    cdnLocation
+    cdnLocation,
+    findVisibleElement
 };

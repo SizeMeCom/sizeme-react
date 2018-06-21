@@ -4,7 +4,7 @@ import "babel-polyfill";
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { sizemeStore, selectSize } from "./api/sizeme-api";
+import { sizemeStore, selectSize, findVisibleElement } from "./api/sizeme-api";
 import SizeMeApp from "./SizeMeApp";
 import uiOptions from "./api/uiOptions";
 import SizeSelector from "./api/SizeSelector";
@@ -62,23 +62,14 @@ if (addToCartElement && addToCartEvent) {
 }
 
 if (!sizemeDisabled) {
-    const isVisible = (elem) => !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
-
     // postpone execution of this block to wait for the shop UI to finish rendering. At least
     // with KooKenka accordion component this was needed
     setTimeout(() => {
         const section = document.createElement("div");
-        const elementList = document.querySelectorAll(uiOptions.appendContentTo);
-        let found = false;
-        for (let i = 0; i < elementList.length && !found; i++) {
-            const el = elementList[i];
-            if (isVisible(el)) {
-                found = true;
-                el.appendChild(section);
-            }
-        }
+        const el = findVisibleElement(uiOptions.appendContentTo);
 
-        if (found) {
+        if (el) {
+            el.appendChild(section);
             //noinspection RequiredAttributes
             render(
                 <I18nextProvider i18n={i18n}>
