@@ -1,5 +1,6 @@
 import uiOptions from "./uiOptions";
 import { trackEvent } from "./ga";
+import { findVisibleElement } from "./sizeme-api";
 
 const sizeMapper = [];
 let selector;
@@ -151,7 +152,7 @@ const initSizeSelector = selectSizeFn => {
         trackEvent("sizeChanged", "Store: Product size changed");
     };
     const getInstance = (constructor) => {
-        const element = document.querySelector(uiOptions.invokeElement);
+        const element = findVisibleElement(uiOptions.invokeElement);
         if (element) {
             return new constructor(element);
         } else {
