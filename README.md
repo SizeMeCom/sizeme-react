@@ -20,7 +20,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 {
   serviceStatus: true,
   pluginVersion: "MAG1-0.1.0",
-  contextAddress: "https://sizeme.greitco.com"
+  contextAddress: "https://test.sizeme.com"
   shopType: "magento",
   debugState: false,
   uiOptions: {},
