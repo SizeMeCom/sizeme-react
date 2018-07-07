@@ -1,9 +1,19 @@
 /* global ga, sizeme_options */
+import cookie from "react-cookie";
+
 const prodTrackingId = "UA-40735596-1";
 const devTrackingId = "UA-40735596-2";
 
+const optanonConsentGaDisabled = () => {
+    const optanonConsent = cookie.load("OptanonConsent", false);
+    return optanonConsent && optanonConsent.match(/groups=:?(\d+:\d+,)*2:0/);
+};
+
+const gaDisabledChecks = [optanonConsentGaDisabled];
+
 function loadGa (i, s, o, g, r) {
-    if (!i[r]) {
+    const gaDisabled = gaDisabledChecks.some(fn => fn());
+    if (!gaDisabled && !i[r]) {
         i["GoogleAnalyticsObject"] = r;
         i[r] = i[r] ||
             function () {
