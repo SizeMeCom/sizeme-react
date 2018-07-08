@@ -12,8 +12,7 @@ const optanonConsentGaDisabled = () => {
 const gaDisabledChecks = [optanonConsentGaDisabled];
 
 function loadGa (i, s, o, g, r) {
-    const gaDisabled = gaDisabledChecks.some(fn => fn());
-    if (!gaDisabled && !i[r]) {
+    if (!i[r]) {
         i["GoogleAnalyticsObject"] = r;
         i[r] = i[r] ||
             function () {
@@ -28,22 +27,28 @@ function loadGa (i, s, o, g, r) {
     }
 }
 
-const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
+const gaDisabled = gaDisabledChecks.some(fn => fn());
 let trackEvent;
 
-loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+if (!gaDisabled) {
+    const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
 
-trackEvent = (action, label) => {
-    ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
-    trackEvent = (a, l) => {
-        ga("sizemeTracker.send", {
-            hitType: "event",
-            eventCategory: window.location.hostname,
-            eventAction: a,
-            eventLabel: l + " (v3)"
-        });
+    loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+
+    trackEvent = (action, label) => {
+        ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
+        trackEvent = (a, l) => {
+            ga("sizemeTracker.send", {
+                hitType: "event",
+                eventCategory: window.location.hostname,
+                eventAction: a,
+                eventLabel: l + " (v3)"
+            });
+        };
+        trackEvent(action, label);
     };
-    trackEvent(action, label);
-};
+} else {
+    trackEvent = () => {};
+}
 
 export { trackEvent };
