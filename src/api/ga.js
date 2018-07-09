@@ -1,6 +1,15 @@
 /* global ga, sizeme_options */
+import cookie from "react-cookie";
+
 const prodTrackingId = "UA-40735596-1";
 const devTrackingId = "UA-40735596-2";
+
+const optanonConsentGaDisabled = () => {
+    const optanonConsent = cookie.load("OptanonConsent", false);
+    return optanonConsent && optanonConsent.match(/groups=:?(\d+:\d+,)*2:0/);
+};
+
+const gaDisabledChecks = [optanonConsentGaDisabled];
 
 function loadGa (i, s, o, g, r) {
     if (!i[r]) {
@@ -18,22 +27,28 @@ function loadGa (i, s, o, g, r) {
     }
 }
 
-const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
+const gaDisabled = gaDisabledChecks.some(fn => fn());
 let trackEvent;
 
-loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+if (!gaDisabled) {
+    const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
 
-trackEvent = (action, label) => {
-    ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
-    trackEvent = (a, l) => {
-        ga("sizemeTracker.send", {
-            hitType: "event",
-            eventCategory: window.location.hostname,
-            eventAction: a,
-            eventLabel: l + " (v3)"
-        });
+    loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
+
+    trackEvent = (action, label) => {
+        ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
+        trackEvent = (a, l) => {
+            ga("sizemeTracker.send", {
+                hitType: "event",
+                eventCategory: window.location.hostname,
+                eventAction: a,
+                eventLabel: l + " (v3)"
+            });
+        };
+        trackEvent(action, label);
     };
-    trackEvent(action, label);
-};
+} else {
+    trackEvent = () => {};
+}
 
 export { trackEvent };
