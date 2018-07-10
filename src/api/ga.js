@@ -1,17 +1,23 @@
 /* global ga, sizeme_options */
 import cookie from "react-cookie";
 
+const PENDING = -1;
+const DISABLED = 0;
+const ENABLED = 1;
+
 const prodTrackingId = "UA-40735596-1";
 const devTrackingId = "UA-40735596-2";
 
-const optanonConsentGaDisabled = () => {
+const optanonConsent = () => {
     const optanonConsent = cookie.load("OptanonConsent", false);
-    return optanonConsent && optanonConsent.match(/groups=:?(\d+:\d+,)*2:0/);
+    if (!optanonConsent) {
+        return PENDING;
+    } else {
+        return optanonConsent.match(/groups=:?(\d+:\d+,)*2:0/) ? DISABLED : ENABLED;
+    }
 };
 
-const gaDisabledChecks = [optanonConsentGaDisabled];
-
-function loadGa (i, s, o, g, r) {
+((i, s, o, g, r) => {
     if (!i[r]) {
         i["GoogleAnalyticsObject"] = r;
         i[r] = i[r] ||
@@ -25,30 +31,51 @@ function loadGa (i, s, o, g, r) {
         a.src = g;
         m.parentNode.insertBefore(a, m);
     }
-}
+})(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
 
-const gaDisabled = gaDisabledChecks.some(fn => fn());
+const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
 let trackEvent;
+let gaConsent = () => ENABLED;
+const trackingConsentMethod = sizeme_options.trackingConsentMethod;
+const gaQueue = [() => {
+    ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
+}];
 
-if (!gaDisabled) {
-    const gaTrackingId = !sizeme_options.debugState ? prodTrackingId : devTrackingId;
+if (trackingConsentMethod) {
+    switch (trackingConsentMethod.toLowerCase()) {
+        case "optanon":
+            gaConsent = optanonConsent;
+            break;
 
-    loadGa(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga");
-
-    trackEvent = (action, label) => {
-        ga("create", gaTrackingId, "auto", { name: "sizemeTracker" });
-        trackEvent = (a, l) => {
-            ga("sizemeTracker.send", {
-                hitType: "event",
-                eventCategory: window.location.hostname,
-                eventAction: a,
-                eventLabel: l + " (v3)"
-            });
-        };
-        trackEvent(action, label);
-    };
-} else {
-    trackEvent = () => {};
+        default:
+    }
 }
+
+const _trackEvent = (action, label) => {
+    ga("sizemeTracker.send", {
+        hitType: "event",
+        eventCategory: window.location.hostname,
+        eventAction: action,
+        eventLabel: label + " (v3)"
+    });
+};
+
+
+trackEvent = (action, label) => {
+    switch (gaConsent()) {
+        case PENDING:
+            gaQueue.push(() => _trackEvent(action, label));
+            break;
+
+        case ENABLED:
+            gaQueue.forEach(fn => fn());
+            _trackEvent(action, label);
+            trackEvent = _trackEvent;
+            break;
+
+        case DISABLED:
+            trackEvent = () => {};
+    }
+};
 
 export { trackEvent };
