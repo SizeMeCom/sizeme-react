@@ -1,8 +1,7 @@
 import uiOptions from "./uiOptions";
-import { trackEvent } from "./ga";
-import { findVisibleElement } from "./sizeme-api";
+import {trackEvent} from "./ga";
+import {findVisibleElement} from "./sizeme-api";
 
-const sizeMapper = [];
 let selector;
 let selectSize = size => {};
 
@@ -10,10 +9,11 @@ class AbstractSelect {
     constructor (element, { event, useCapture = false }) {
         this.el = element;
         this.selectors = {};
+        this.sizeMapper = [];
 
         element.addEventListener(event, e => {
             const size = this.getSize(e);
-            if (sizeMapper.find(([s]) => s === size)) {
+            if (this.sizeMapper.find(([s]) => s === size)) {
                 selectSize(size);
             }
         }, useCapture);
@@ -47,7 +47,7 @@ class DefaultSelect extends AbstractSelect {
             const option = options.item(i);
             const value = option.getAttribute("value");
             if (value) {
-                sizeMapper.push([value, option.textContent]);
+                this.sizeMapper.push([value, option.textContent]);
                 this.selectors[value] = getSelectFn(value);
             }
         }
@@ -94,7 +94,7 @@ class SwatchesSelect extends AbstractSelect {
             const textSpan = option.querySelector("span.swatch-label");
             if (textSpan) {
                 this.selectors[sizeValue] = () => textSpan.click();
-                sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
+                this.sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
             }
         }
     }
@@ -141,8 +141,40 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
             const option = options.item(i);
             const sizeValue = getId(option);
             this.selectors[sizeValue] = () => option.click();
-            sizeMapper.push([sizeValue, option.textContent.trim()]);
+            this.sizeMapper.push([sizeValue, option.textContent.trim()]);
         }
+    }
+}
+
+class HarrysOfLondonSelect extends AbstractSelect {
+    constructor (element) {
+        super(element, { event: "click" });
+
+        this.getSize = e => {
+            console.log(e.target.dataset.size);
+            return e.target.dataset.size;
+        };
+
+        const sizeMaps = {};
+        const sizeTabs = document.querySelector("ul.size-tabs");
+        const sizeTabList = sizeTabs.querySelectorAll("li");
+        for (let i = 0; i < sizeTabList.length; i++) {
+            const mapName = sizeTabList.item(i).dataset.name;
+            const sizes = sizeMaps[mapName] = [];
+            const sizeElems = element.querySelectorAll("ul.hidden-select-size." + mapName + " li");
+            for (let j = 0; j < sizeElems.length; j++) {
+                const sizeItem = sizeElems.item(j);
+                sizes.push([sizeItem.dataset.size, sizeItem.textContent.trim()]);
+            }
+        }
+
+        const setActiveSizeTab = () => {
+            const activeSizeMapName = sizeTabs.querySelector("li.active").dataset.name;
+            console.log("Setting active sizemap to " + activeSizeMapName);
+            this.sizeMapper = sizeMaps[activeSizeMapName];
+        };
+        setActiveSizeTab();
+        sizeTabs.addEventListener("click", setActiveSizeTab, true);
     }
 }
 
@@ -168,6 +200,10 @@ const initSizeSelector = selectSizeFn => {
             selector = getInstance(KooKenkaSwatchesSelect);
             break;
 
+        case "harrys":
+            selector = getInstance(HarrysOfLondonSelect);
+            break;
+
         default:
             selector = getInstance(DefaultSelect);
     }
@@ -179,6 +215,7 @@ const setSelectedSize = size => {
 const getClone = () => {
     return selector.clone();
 };
+const getSizeMapper = () => selector.sizeMapper;
 
 
-export default { initSizeSelector, setSelectedSize, getClone, sizeMapper };
+export default { initSizeSelector, setSelectedSize, getClone, getSizeMapper };
