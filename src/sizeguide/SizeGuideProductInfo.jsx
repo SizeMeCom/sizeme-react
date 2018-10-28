@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import DetailSection from "./DetailSection.jsx";
 import SizeSelector from "../api/SizeSelector";
-import {translate} from "react-i18next";
+import { translate } from "react-i18next";
 import HoverContainer from "./HoverContainer.jsx";
-import CookieHideWrapper, {hideSizeMe} from "../common/CookieHideWrapper.jsx";
-import {openLoginFrame} from "../common/LoginFrame";
+import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
+import { openLoginFrame } from "../common/LoginFrame";
 
 class SizeGuideProductInfo extends React.Component {
 

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {translate} from "react-i18next";
+import { connect } from "react-redux";
+import { translate } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, {DEFAULT_OPTIMAL_FIT, fitRanges} from "../api/ProductModel";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
