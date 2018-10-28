@@ -43,6 +43,7 @@
     ],
     "eol-last": [
       0
-    ]
+    ],
+    "object-curly-spacing": "off"
   }
 }

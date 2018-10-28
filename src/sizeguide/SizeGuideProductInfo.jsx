@@ -46,7 +46,7 @@ class SizeGuideProductInfo extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                                {SizeSelector.sizeMapper.map(([size, sizeName]) => (
+                                {SizeSelector.getSizeMapper().map(([size, sizeName]) => (
                                     <tr key={sizeName}>
                                         <td className="size-col">{sizeName}</td>
                                         {measurementOrder.map(measurement => measurementCell(size, measurement))}

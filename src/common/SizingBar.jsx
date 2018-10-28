@@ -8,7 +8,7 @@ import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
 const getSizename = (selectedSize) =>
-    SizeSelector.sizeMapper.filter(([size]) => size === selectedSize)
+    SizeSelector.getSizeMapper().filter(([size]) => size === selectedSize)
         .map(([_, sizeName]) => sizeName)[0] || selectedSize;
 
 const FitIndicator = (props) => {

@@ -1,8 +1,7 @@
 import uiOptions from "./uiOptions";
-import { trackEvent } from "./ga";
+import {trackEvent} from "./ga";
 import { findVisibleElement } from "./sizeme-api";
 
-const sizeMapper = [];
 let selector;
 let selectSize = size => {};
 
@@ -10,11 +9,14 @@ class AbstractSelect {
     constructor (element, { event, useCapture = false }) {
         this.el = element;
         this.selectors = {};
+        this.sizeMapper = [];
 
         element.addEventListener(event, e => {
             const size = this.getSize(e);
-            if (sizeMapper.find(([s]) => s === size)) {
+            if (this.sizeMapper.find(([s]) => s === size)) {
                 selectSize(size);
+            } else {
+                selectSize("");
             }
         }, useCapture);
     }
@@ -47,7 +49,7 @@ class DefaultSelect extends AbstractSelect {
             const option = options.item(i);
             const value = option.getAttribute("value");
             if (value) {
-                sizeMapper.push([value, option.textContent]);
+                this.sizeMapper.push([value, option.textContent]);
                 this.selectors[value] = getSelectFn(value);
             }
         }
@@ -88,13 +90,14 @@ class SwatchesSelect extends AbstractSelect {
         };
 
         const options = element.querySelectorAll("li");
+        const mkSelectFn = textSpan => () => textSpan.click();
         for (let i = 0; i < options.length; i++) {
             const option = options.item(i);
             const sizeValue = getId(option);
             const textSpan = option.querySelector("span.swatch-label");
             if (textSpan) {
-                this.selectors[sizeValue] = () => textSpan.click();
-                sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
+                this.selectors[sizeValue] = mkSelectFn(textSpan);
+                this.sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
             }
         }
     }
@@ -107,13 +110,14 @@ class SwatchesSelect extends AbstractSelect {
             };
 
             const links = clone.querySelectorAll("li");
+            const mkEventListener = link => e => {
+                clearSelected();
+                link.classList.add("selected");
+                this.setSelected(e.currentTarget.id.replace("option", ""));
+            };
             for (let i = 0; i < links.length; i++) {
                 const link = links.item(i);
-                link.addEventListener("click", e => {
-                    clearSelected();
-                    link.classList.add("selected");
-                    this.setSelected(e.currentTarget.id.replace("option", ""));
-                }, true);
+                link.addEventListener("click", mkEventListener(link), true);
             }
             return clone;
         } else {
@@ -137,12 +141,62 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
         };
 
         const options = element.querySelectorAll("li");
+        const mkSelectFn = option => () => option.click();
         for (let i = 0; i < options.length; i++) {
             const option = options.item(i);
             const sizeValue = getId(option);
-            this.selectors[sizeValue] = () => option.click();
-            sizeMapper.push([sizeValue, option.textContent.trim()]);
+            this.selectors[sizeValue] = mkSelectFn(option);
+            this.sizeMapper.push([sizeValue, option.textContent.trim()]);
         }
+    }
+}
+
+class HarrysOfLondonSelect extends AbstractSelect {
+    constructor (element) {
+        super(element, { event: "click" });
+
+        this.getSize = () => {
+            const selected = element.querySelector("ul.hidden-select-size.active li.selected");
+            if (selected) {
+                return selected.dataset.size;
+            } else {
+                return "";
+            }
+        };
+
+        const sizeMaps = {};
+        const selectorMap = {};
+        const sizeTabs = document.querySelector("ul.size-tabs");
+        const sizeTabList = sizeTabs.querySelectorAll("li");
+
+        const mkSelectFn = sizeItem => () => {
+            if (!sizeItem.classList.contains("selected")) {
+                sizeItem.click();
+            }
+        };
+
+        for (let i = 0; i < sizeTabList.length; i++) {
+            const mapName = sizeTabList.item(i).dataset.name;
+            const sizes = sizeMaps[mapName] = [];
+            const selectors = selectorMap[mapName] = {};
+            const sizeElems = element.querySelectorAll("ul.hidden-select-size." + mapName + " li");
+            for (let j = 0; j < sizeElems.length; j++) {
+                const sizeItem = sizeElems.item(j);
+                sizes.push([sizeItem.dataset.size, sizeItem.textContent.trim()]);
+                selectors[sizeItem.dataset.size] = mkSelectFn(sizeItem);
+            }
+        }
+
+        const setActiveSizeTab = () => {
+            const activeSizeMapName = sizeTabs.querySelector("li.active").dataset.name;
+            this.sizeMapper = sizeMaps[activeSizeMapName];
+            this.selectors = selectorMap[activeSizeMapName];
+        };
+        setActiveSizeTab();
+        sizeTabs.addEventListener("click", () => setTimeout(() => {
+            setActiveSizeTab();
+            selectSize(this.getSize());
+        }, 0), true);
     }
 }
 
@@ -168,6 +222,10 @@ const initSizeSelector = selectSizeFn => {
             selector = getInstance(KooKenkaSwatchesSelect);
             break;
 
+        case "harrys":
+            selector = getInstance(HarrysOfLondonSelect);
+            break;
+
         default:
             selector = getInstance(DefaultSelect);
     }
@@ -179,6 +237,7 @@ const setSelectedSize = size => {
 const getClone = () => {
     return selector.clone();
 };
+const getSizeMapper = () => selector.sizeMapper;
 
 
-export default { initSizeSelector, setSelectedSize, getClone, sizeMapper };
+export default { initSizeSelector, setSelectedSize, getClone, getSizeMapper };
