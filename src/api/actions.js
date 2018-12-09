@@ -21,6 +21,7 @@ export const SELECT_SIZE = "SELECT_SIZE";
 export const SET_TOOLTIP = "SET_TOOLTIP";
 export const SET_AB_STATUS = "SET_AB_STATUS";
 export const SET_MATCH_STATE = "SET_MATCH_STATE";
+export const SET_SIZEME_HIDDEN = "SET_SIZEME_HIDDEN";
 
 export const { checkToken, fetchToken, resolveToken, clearToken } =
     createActions(CHECK_TOKEN, FETCH_TOKEN, RESOLVE_TOKEN, CLEAR_TOKEN);
@@ -35,3 +36,4 @@ export const { selectSize } = createActions(SELECT_SIZE);
 export const { setTooltip } = createActions(SET_TOOLTIP);
 export const { setAbStatus } = createActions(SET_AB_STATUS);
 export const { setMatchState } = createActions(SET_MATCH_STATE);
+export const { setSizemeHidden } = createActions(SET_SIZEME_HIDDEN);

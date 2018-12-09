@@ -2,7 +2,8 @@
 
 const general = {
     disableSizeGuide: false,
-    lang: "en"
+    lang: "en",
+    toggler: false
 };
 
 const shops = {

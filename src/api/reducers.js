@@ -144,6 +144,8 @@ const matchState = handleAction(actions.SET_MATCH_STATE, (state, action) => acti
     state: null
 });
 
+const sizemeHidden = handleAction(actions.SET_SIZEME_HIDDEN, (state, action) => action.payload, false);
+
 const rootReducer = combineReducers({
     authToken,
     signupStatus,
@@ -154,7 +156,8 @@ const rootReducer = combineReducers({
     selectedSize,
     tooltip,
     abStatus,
-    matchState
+    matchState,
+    sizemeHidden
 });
 
 export default rootReducer;
