@@ -2,7 +2,6 @@
 
 const general = {
     disableSizeGuide: false,
-    lang: "en",
     toggler: false
 };
 
