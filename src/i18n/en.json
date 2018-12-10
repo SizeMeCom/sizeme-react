@@ -8,7 +8,8 @@
     "sizingBarSplashNoSize": "No size was found based on your measurement",
     "sizingBarSplashMatch": "We recommend size <strong>{{- sizeName}}</strong> for you",
     "sizingBarFitTooltip": "This indicates how size <strong>{{- selectedSize}}</strong> will fit you",
-    "sizingBarRecommendationTooltip": "We recommend that your fit is close to this area"
+    "sizingBarRecommendationTooltip": "We recommend that your fit is close to this area",
+    "togglerText": "Find my size"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",

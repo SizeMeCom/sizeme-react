@@ -497,6 +497,13 @@ function findVisibleElement (selector) {
     return null;
 }
 
+function setSizemeHidden (sizemeHidden) {
+    return dispatch => {
+        dispatch(actions.setSizemeHidden(sizemeHidden));
+        localStorage.setItem("sizemeToggledVisible", JSON.stringify(!sizemeHidden));
+    };
+}
+
 export {
     sizemeStore,
     resolveAuthToken,
@@ -509,5 +516,6 @@ export {
     selectSize,
     contextAddress,
     cdnLocation,
-    findVisibleElement
+    findVisibleElement,
+    setSizemeHidden
 };
