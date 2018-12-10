@@ -48,6 +48,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [addToCartEvent] (_String_): DOM-event for add-to-cart
   - [maxRecommendationDistance] (_Integer_): maximum difference between optimal fit and total fit for SizeMe to consider the size for pre-selection. Default not set, meaning all sizes that are not too small are considered.
   - [skinClasses] (_String_): contents will be appended to the class-attribute of SizeMe container element. Empty by default.
+  - [toggler] (_Boolean_): enable/disable functionality that can be used to toggle the visibility of SizeMe content
   
 * [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to 
 override the Swedish translation for chest:
