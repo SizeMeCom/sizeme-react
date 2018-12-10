@@ -4,11 +4,12 @@
     "closeText": "إغلاق",
     "selectedSize": "اختيار المقاس",
     "shoppingFor": "التسوق للبحث عن",
-	"sizingBarSplashNoFit": "أدخل القياسات الخاصة بك للعثور على حجمك",
+    "sizingBarSplashNoFit": "أدخل القياسات الخاصة بك للعثور على حجمك",
     "sizingBarSplashNoSize": "ا يوجد مقاس مناسب للقياسات التي ذكرتها",
     "sizingBarSplashMatch": "نوص <strong>{{- sizeName}}</strong> اس (...) لك",
     "sizingBarFitTooltip": "<strong>{{- selectedSize}}</strong> هذا يشير إلى مدى ملاءمة المقاس لك",
-    "sizingBarRecommendationTooltip": " نوصي بأن يكون مقاسك قريبًا من هذه المنطقة"
+    "sizingBarRecommendationTooltip": " نوصي بأن يكون مقاسك قريبًا من هذه المنطقة",
+    "togglerText": "ابحث عن مقاسي"
   },
   "detailed": {
     "buttonText": "صورة تفصيلية للمقاس",
