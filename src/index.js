@@ -4,7 +4,7 @@ import "babel-polyfill";
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { sizemeStore, selectSize, findVisibleElement } from "./api/sizeme-api";
+import { sizemeStore, selectSize, findVisibleElement, setSizemeHidden } from "./api/sizeme-api";
 import SizeMeApp from "./SizeMeApp";
 import uiOptions from "./api/uiOptions";
 import SizeSelector from "./api/SizeSelector";
@@ -61,15 +61,47 @@ if (addToCartElement && addToCartEvent) {
     }
 }
 
+if (uiOptions.toggler) {
+    uiOptions.toggleHidden = hidden => {
+        const h = hidden !== null && hidden !== undefined ? hidden : !sizemeStore.getState().sizemeHidden;
+        setSizemeHidden(h)(sizemeStore.dispatch);
+        return h;
+    };
+    const sizemeHidden = !JSON.parse(localStorage.getItem("sizemeToggledVisible"));
+    uiOptions.toggleHidden(sizemeHidden);
+}
+
 if (!sizemeDisabled) {
     // postpone execution of this block to wait for the shop UI to finish rendering. At least
     // with KooKenka accordion component this was needed
     setTimeout(() => {
-        const section = document.createElement("div");
         const el = findVisibleElement(uiOptions.appendContentTo);
 
         if (el) {
-            el.appendChild(section);
+            if (uiOptions.toggler) {
+                const togglerContainer = el.appendChild(document.createElement("div"));
+                togglerContainer.classList.add(
+                    "sizeme-toggler",
+                    sizemeStore.getState().sizemeHidden ? "sm-hidden" : "sm-visible"
+                );
+
+                const toggler = togglerContainer.appendChild(document.createElement("a"));
+                toggler.innerText = i18n.t("common.togglerText");
+
+                const arrow = toggler.appendChild(document.createElement("i"));
+                arrow.classList.add("fa");
+                arrow.setAttribute("aria-hidden", "true");
+
+                toggler.onclick = () => {
+                    if (uiOptions.toggleHidden()) {
+                        togglerContainer.classList.replace("sm-visible", "sm-hidden");
+                    } else {
+                        togglerContainer.classList.replace("sm-hidden", "sm-visible");
+                    }
+                };
+            }
+
+            const section = el.appendChild(document.createElement("div"));
             //noinspection RequiredAttributes
             render(
                 <I18nextProvider i18n={i18n}>

@@ -26,20 +26,17 @@ class SizeMeApp extends React.Component {
     }
 
     componentDidMount () {
-        const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } = this.props;
+        const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile, sizemeHidden } = this.props;
         Promise.all([
             resolveAuthToken().then(resolved => getProfiles().then(() => resolved)),
             getProduct()
         ]).then(([tokenResolved, productResolved]) => {
-            if (tokenResolved && productResolved) {
-                trackEvent("productPageLoggedIn", "Store: Product page load, SM product, logged in");
-            } else if (tokenResolved && !productResolved) {
-                trackEvent("productPageNonSMLoggedIn", "Store: Product page load, Non-SM product, logged in");
-            } else if (!tokenResolved && productResolved) {
-                trackEvent("productPageLoggedOut", "Store: Product page load, SM product, logged out");
-            } else {
-                trackEvent("productPageNonSMLoggedOut", "Store: Product page load, Non-SM product, logged out");
-            }
+            const pageEvent = productResolved ? ["", "SM product"] : ["NonSM", "Non-SM product"];
+            const logInStatus = tokenResolved ? ["LoggedIn", "logged in"] : ["LoggedOut", "logged out"];
+            const hidden = sizemeHidden ? ["Hidden", ", SM hidden"] : ["", ""];
+
+            trackEvent(`productPage${pageEvent[0]}${logInStatus[0]}${hidden[0]}`,
+                `Store: Product page load, ${pageEvent[1]}, ${logInStatus[1]}${hidden[1]}`);
             setSelectedProfile();
         });
     }
@@ -55,11 +52,11 @@ class SizeMeApp extends React.Component {
     render () {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
-            measurementInputs, matchState, onSignup
+            measurementInputs, matchState, onSignup, sizemeHidden
         } = this.props;
         const { match, state } = matchState;
 
-        if (resolved) {
+        if (resolved && !sizemeHidden) {
             return (
                 <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state}`}>
                     <div className="sizeme-slider-row">                        
@@ -93,7 +90,8 @@ SizeMeApp.propTypes = {
     getProduct: PropTypes.func.isRequired,
     onSignup: PropTypes.func.isRequired,
     product: PropTypes.object,
-    matchState: PropTypes.object
+    matchState: PropTypes.object,
+    sizemeHidden: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -104,7 +102,8 @@ const mapStateToProps = state => ({
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
     product: state.productInfo.product,
-    matchState: state.matchState
+    matchState: state.matchState,
+    sizemeHidden: state.sizemeHidden
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
