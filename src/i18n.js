@@ -5,6 +5,7 @@ import i18n from "i18next";
 import en from "./i18n/en.json";
 import fi from "./i18n/fi.json";
 import sv from "./i18n/sv.json";
+import ar from "./i18n/ar.json";
 
 i18n.init({
     lng: uiOptions.lang || document.documentElement.lang || "en",
@@ -33,6 +34,9 @@ i18n.init({
         },
         sv: {
             translation: sv
+        },
+        ar: {
+            translation: ar
         }
     }
 });
@@ -40,7 +44,7 @@ i18n.init({
 if (sizeme_options.additionalTranslations) {
     console.log(sizeme_options.additionalTranslations);
     const addtr = sizeme_options.additionalTranslations;
-    ["en", "fi", "sv"].forEach(lng => {
+    ["en", "fi", "sv", "ar"].forEach(lng => {
         if (addtr[lng]) {
             i18n.addResourceBundle(lng, "translation", addtr[lng], true, true);
         }

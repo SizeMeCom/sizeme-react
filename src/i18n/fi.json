@@ -112,7 +112,8 @@
     "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
     "shoe_inside_length": "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin kantapää seinässä kiinni",
     "calf_width": "Measure around widest part of calf.",
-    "hat_width": "Measure the biggest circumference of head at just above top of ears."
+    "hat_width": "Measure the biggest circumference of head at just above top of ears.",
+    "hips": "Measure around your body at the widest part of your hips."
   },
   "measurementTooltips": {
     "linkToGuide": {
