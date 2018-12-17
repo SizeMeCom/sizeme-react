@@ -70,7 +70,8 @@ const developmentConfig = merge([
     parts.page({ template: "kookenka2.html", filename: "kookenka2.html" }),
     parts.page({ template: "selectric.html", filename: "selectric.html" }),
     parts.page({ template: "makia1.html", filename: "makia1.html" }),
-    parts.page({ template: "harrysoflondon.html", filename: "harrysoflondon.html" })
+    parts.page({ template: "harrysoflondon.html", filename: "harrysoflondon.html" }),
+    parts.page({ template: "levelshoes.html", filename: "levelshoes.html" })
 ]);
 
 const productionConfig = merge([
