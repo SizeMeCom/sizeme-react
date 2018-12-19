@@ -436,6 +436,7 @@ function setProfileMeasurements (measurements) {
             await dispatch(match());
         } else {
             dispatch(actions.resetMatch());
+            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
         }
     };
 }
