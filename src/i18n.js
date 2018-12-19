@@ -42,7 +42,6 @@ i18n.init({
 });
 
 if (sizeme_options.additionalTranslations) {
-    console.log(sizeme_options.additionalTranslations);
     const addtr = sizeme_options.additionalTranslations;
     ["en", "fi", "sv", "ar"].forEach(lng => {
         if (addtr[lng]) {
