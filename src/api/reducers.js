@@ -141,7 +141,7 @@ const abStatus = handleAction(actions.SET_AB_STATUS, (state, action) => action.p
 
 const matchState = handleAction(actions.SET_MATCH_STATE, (state, action) => action.payload, {
     match: null,
-    state: null
+    state: "no-fit"
 });
 
 const sizemeHidden = handleAction(actions.SET_SIZEME_HIDDEN, (state, action) => action.payload, false);
