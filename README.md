@@ -40,7 +40,6 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 * [uiOptions] (_Object_): Optionally override default UI options. Defaults per shopType are specified in [`uiOptions.js`](src/api/uiOptions.js)
   - [lang] (_String_): language to use (fi, sv, en, en is fallback).
   - [appendContentTo] (_String_):  DOM-element where SizeMe is injected.
-  - [appendContentTo] (_String_):  DOM-element where SizeMe is injected.
   - [invokeElement] (_String_): DOM-element that handles size changes
   - [disableSizeGuide] (_Boolean_): disable SizeGuide
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"

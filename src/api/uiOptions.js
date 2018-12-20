@@ -8,10 +8,18 @@ const general = {
 const shops = {
     magento: {
         appendContentTo: ".product-options",
-        sizeSelectionElement: "select.sizeme-magento-size-selector",
         invokeElement: "select.super-attribute-select",
         invokeEvent: "change",
         addToCartElement: "button.btn-cart",
+        addToCartEvent: "click",
+        firstRecommendation: true,
+        sizeSelectorType: "default"
+    },
+    woocommerce: {
+        appendContentTo: ".sizeme-container",
+        invokeElement: ".sizeme-selection-container select",
+        invokeEvent: "change",
+        addToCartElement: "button.single_add_to_cart_button",
         addToCartEvent: "click",
         firstRecommendation: true,
         sizeSelectorType: "default"
