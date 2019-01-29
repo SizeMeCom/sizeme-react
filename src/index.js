@@ -62,13 +62,8 @@ if (addToCartElement && addToCartEvent) {
 }
 
 if (uiOptions.toggler) {
-    uiOptions.toggleHidden = hidden => {
-        const h = hidden !== null && hidden !== undefined ? hidden : !sizemeStore.getState().sizemeHidden;
-        setSizemeHidden(h)(sizemeStore.dispatch);
-        return h;
-    };
     const sizemeHidden = !JSON.parse(localStorage.getItem("sizemeToggledVisible"));
-    uiOptions.toggleHidden(sizemeHidden);
+    setSizemeHidden(sizemeHidden)(sizemeStore.dispatch);
 }
 
 if (!sizemeDisabled) {
@@ -78,29 +73,6 @@ if (!sizemeDisabled) {
         const el = findVisibleElement(uiOptions.appendContentTo);
 
         if (el) {
-            if (uiOptions.toggler) {
-                const togglerContainer = el.appendChild(document.createElement("div"));
-                togglerContainer.classList.add(
-                    "sizeme-toggler",
-                    sizemeStore.getState().sizemeHidden ? "sm-hidden" : "sm-visible"
-                );
-
-                const toggler = togglerContainer.appendChild(document.createElement("a"));
-                toggler.innerText = i18n.t("common.togglerText");
-
-                const arrow = toggler.appendChild(document.createElement("i"));
-                arrow.classList.add("fa");
-                arrow.setAttribute("aria-hidden", "true");
-
-                toggler.onclick = () => {
-                    if (uiOptions.toggleHidden()) {
-                        togglerContainer.classList.replace("sm-visible", "sm-hidden");
-                    } else {
-                        togglerContainer.classList.replace("sm-hidden", "sm-visible");
-                    }
-                };
-            }
-
             const section = el.appendChild(document.createElement("div"));
             //noinspection RequiredAttributes
             render(
