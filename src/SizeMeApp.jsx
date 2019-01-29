@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { translate } from "react-i18next";
 import { connect } from "react-redux";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizingBar from "./common/SizingBar.jsx";
@@ -14,6 +15,31 @@ import ProfileMenu from "./common/ProfileMenu";
 import { trackEvent } from "./api/ga";
 import FitTooltip from "./common/FitTooltip";
 import LoginFrame from "./common/LoginFrame";
+
+class SizeMeTogglerComp extends React.Component {
+
+    toggle = () => {
+        const { sizemeHidden, setSizemeHidden } = this.props;
+        setSizemeHidden(!sizemeHidden);
+    };
+
+    render () {
+        const { t, sizemeHidden } = this.props;
+        return (
+            <div className={`sizeme-toggler ${sizemeHidden ? "sm-hidden" : "sm-visible"}`}>
+                <a onClick={this.toggle}>{t("common.togglerText")} <i className="fa" aria-hidden/></a>
+            </div>
+        );
+    }
+}
+
+const SizemeToggler = translate()(SizeMeTogglerComp);
+
+SizeMeTogglerComp.propTypes = SizemeToggler.propTypes = {
+    sizemeHidden: PropTypes.bool.isRequired,
+    setSizemeHidden: PropTypes.func.isRequired
+};
+
 
 class SizeMeApp extends React.Component {
     constructor (props) {
@@ -52,24 +78,29 @@ class SizeMeApp extends React.Component {
     render () {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
-            measurementInputs, matchState, onSignup, sizemeHidden
+            measurementInputs, matchState, onSignup, sizemeHidden,
+            setSizemeHidden
         } = this.props;
         const { match, state } = matchState;
 
-        if (resolved && !sizemeHidden) {
+        if (resolved) {
             return (
-                <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state}`}>
-                    <div className="sizeme-slider-row">                        
-                        <SizingBar/>
-                        {loggedIn && <ProfileMenu profiles={profiles}
-                                                             selectedProfile={selectedProfile.id}
-                                                             setSelectedProfile={setSelectedProfile}/>}
-                    </div>
-                    {measurementInputs && <SizeForm fields={measurementInputs} />}
-                    {!loggedIn && match && <SignupBox onSignup={onSignup}/>}
-                    {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
-                    <FitTooltip/>
-                    <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
+                <div>
+                    {uiOptions.toggler && <SizemeToggler
+                        sizemeHidden={sizemeHidden} setSizemeHidden={setSizemeHidden}/>}
+                    {!sizemeHidden && <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state}`}>
+                        <div className="sizeme-slider-row">
+                            <SizingBar/>
+                            {loggedIn && <ProfileMenu profiles={profiles}
+                                                      selectedProfile={selectedProfile.id}
+                                                      setSelectedProfile={setSelectedProfile}/>}
+                        </div>
+                        {measurementInputs && <SizeForm fields={measurementInputs} />}
+                        {!loggedIn && match && <SignupBox onSignup={onSignup}/>}
+                        {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
+                        <FitTooltip/>
+                        <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
+                    </div>}
                 </div>
             );
         } else {
@@ -91,7 +122,8 @@ SizeMeApp.propTypes = {
     onSignup: PropTypes.func.isRequired,
     product: PropTypes.object,
     matchState: PropTypes.object,
-    sizemeHidden: PropTypes.bool.isRequired
+    sizemeHidden: PropTypes.bool.isRequired,
+    setSizemeHidden: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -111,7 +143,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     resolveAuthToken: api.resolveAuthToken,
     getProfiles: api.getProfiles,
     getProduct: api.getProduct,
-    onSignup: api.signup
+    onSignup: api.signup,
+    setSizemeHidden: api.setSizemeHidden
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SizeMeApp);
