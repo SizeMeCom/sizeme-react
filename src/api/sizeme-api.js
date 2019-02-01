@@ -408,6 +408,22 @@ function match (doSelectBestFit = true) {
                             .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
                     );
                 }
+                // time for the single fitted pantWaist exception
+                // run thru all results and see if we have a single pantWaist entered
+                const optFit = product.item.fitRecommendation ? product.item.fitRecommendation : DEFAULT_OPTIMAL_FIT;
+                Object.entries(result).forEach(([key, singleResult]) => {
+                    if (singleResult.matchMap) {
+                        if ((Object.keys(singleResult.matchMap).length === 1) &&
+                            (Object.keys(singleResult.matchMap)[0] === "pant_waist")) {
+                            // move the single totalFit to the optimal by force
+                            if (singleResult.matchMap.pant_waist.overlap >= 0) {
+                                singleResult.totalFit = (optFit - 1000) +
+                                                        singleResult.totalFit -
+                                                        Math.floor(singleResult.matchMap.pant_waist.componentStretch / 20);
+                            }
+                        }
+                    }
+                });
                 const fitResults = Object.entries(result);
                 // if user is logged in, don't care about the accuracy. If not,
                 // filter out results where accuracy is 0
