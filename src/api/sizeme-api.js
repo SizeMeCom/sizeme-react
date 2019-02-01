@@ -416,7 +416,7 @@ function match (doSelectBestFit = true) {
                         if ((Object.keys(singleResult.matchMap).length === 1) &&
                             (Object.keys(singleResult.matchMap)[0] === "pant_waist")) {
                             // move the single totalFit to the optimal by force
-                            if (singleResult.matchMap.pant_waist.overlap >= 0) {
+                            if (singleResult.matchMap.pant_waist.componentFit >= 1000) {
                                 singleResult.totalFit = (optFit - 1000) +
                                                         singleResult.totalFit -
                                                         Math.floor(singleResult.matchMap.pant_waist.componentStretch / 20);
