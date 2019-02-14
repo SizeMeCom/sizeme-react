@@ -1,5 +1,3 @@
-/* global sizeme_options */
-
 const general = {
     disableSizeGuide: false,
     toggler: false
@@ -26,5 +24,11 @@ const shops = {
     }
 };
 
-export default Object.assign({ shopType: sizeme_options.shopType }, general,
-    shops[sizeme_options.shopType], sizeme_options.uiOptions);
+export default (sizemeOptions => {
+    if (sizemeOptions) {
+        return Object.assign({ shopType: sizemeOptions.shopType }, general,
+            shops[sizemeOptions.shopType], sizemeOptions.uiOptions);
+    } else {
+        return {};
+    }
+})(window.sizeme_options);

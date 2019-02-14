@@ -1,4 +1,4 @@
-/* global sizeme_options, sizeme_product */
+/* global sizeme_product */
 
 import "isomorphic-fetch";
 import { trackEvent } from "./ga.js";
@@ -14,52 +14,62 @@ import uiOptions from "./uiOptions";
 import equals from "shallow-equals";
 import cookie from "react-cookie";
 
-const contextAddress = sizeme_options.contextAddress || "https://www.sizeme.com";
-const pluginVersion = sizeme_options.pluginVersion || "UNKNOWN";
+const sizemeOptions = () => window.sizeme_options || {};
+
+const contextAddress = sizemeOptions().contextAddress || "https://www.sizeme.com";
+const pluginVersion = sizemeOptions().pluginVersion || "UNKNOWN";
 const cdnLocation = "https://cdn.sizeme.com";
 const storeMeasurementsKey = "sizemeMeasurements";
 
-const sizemeStore = createStore(rootReducer, applyMiddleware(
-    thunkMiddleware,
-    createLogger({
-        predicate: () => sizeme_options.debugState,
-        duration: true
-    })
-));
-
-function observeStore (select, onChange) {
-    let currentState;
-
-    function handleChange () {
-        let nextState = select(sizemeStore.getState());
-        if (!equals(nextState, currentState)) {
-            currentState = nextState;
-            onChange(currentState);
-        }
+const sizemeStore = (sizemeOpts => {
+    if (!sizemeOpts) {
+        return {};
     }
 
-    let unsubscribe = sizemeStore.subscribe(handleChange);
-    handleChange();
-    return unsubscribe;
-}
+    const store = createStore(rootReducer, applyMiddleware(
+        thunkMiddleware,
+        createLogger({
+            predicate: () => sizemeOpts.debugState,
+            duration: true
+        })
+    ));
 
-observeStore(
-    ({ productInfo, selectedProfile, abStatus }) => ({ product: productInfo.product, selectedProfile, abStatus }),
-    ({ product, selectedProfile, abStatus }) => {
-        let smAction;
-        const statusPostFix = abStatus ? "-" + abStatus : "";
-        if (!product) {
-            smAction = "noProduct" + statusPostFix;
-        } else if (!Object.values(selectedProfile.measurements).some(item => item)) {
-            smAction = "noHuman";
-        } else if (!selectedProfile.id) {
-            smAction = "hasUnsaved";
-        } else {
-            smAction = "hasProfile";
+    function observeStore (select, onChange) {
+        let currentState;
+
+        function handleChange () {
+            let nextState = select(store.getState());
+            if (!equals(nextState, currentState)) {
+                currentState = nextState;
+                onChange(currentState);
+            }
         }
-        cookie.save("sm_action", smAction, { path: "/" });
+
+        let unsubscribe = store.subscribe(handleChange);
+        handleChange();
+        return unsubscribe;
     }
-);
+
+    observeStore(
+        ({productInfo, selectedProfile, abStatus}) => ({product: productInfo.product, selectedProfile, abStatus}),
+        ({product, selectedProfile, abStatus}) => {
+            let smAction;
+            const statusPostFix = abStatus ? "-" + abStatus : "";
+            if (!product) {
+                smAction = "noProduct" + statusPostFix;
+            } else if (!Object.values(selectedProfile.measurements).some(item => item)) {
+                smAction = "noHuman";
+            } else if (!selectedProfile.id) {
+                smAction = "hasUnsaved";
+            } else {
+                smAction = "hasProfile";
+            }
+            cookie.save("sm_action", smAction, {path: "/"});
+        }
+    );
+
+    return store;
+})(window.sizeme_options);
 
 class FitRequest {
     constructor (subject, item) {

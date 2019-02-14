@@ -41,8 +41,10 @@ i18n.init({
     }
 });
 
-if (sizeme_options.additionalTranslations) {
-    const addtr = sizeme_options.additionalTranslations;
+const additionalTranslations = window.sizeme_options ? sizeme_options.additionalTranslations : null;
+
+if (additionalTranslations) {
+    const addtr = additionalTranslations;
     ["en", "fi", "sv", "ar"].forEach(lng => {
         if (addtr[lng]) {
             i18n.addResourceBundle(lng, "translation", addtr[lng], true, true);
