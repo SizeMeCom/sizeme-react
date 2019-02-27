@@ -60,7 +60,7 @@ const Sleeve = (props) => {
                   strokeDasharray="3.3258,6.6527"
                   x1={sleeveWidth} y1="259" x2={sleeveWidth} y2="394"/>
 
-            /* measurement arrow line */
+            {/* measurement arrow line */}
             <path
                 className={`measurementLine noFill ${arrowPositions}`}
                 d={`

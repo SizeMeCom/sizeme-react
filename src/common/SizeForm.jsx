@@ -132,11 +132,12 @@ class SizeForm extends React.Component {
                     <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
                         <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
-                                          value={this.state.measurements[humanProperty]}
-                                          fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
+                            value={this.state.measurements[humanProperty]}
+                            fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
                         />
                         {getFit(field).map(f =>
-                            <OverlapBox fit={f} humanProperty={humanProperty} hover={() => onOverlapBoxHover(field)}/>
+                            <OverlapBox fit={f} humanProperty={humanProperty} hover={() => onOverlapBoxHover(field)}
+                                key={humanProperty}/>
                         ).orElse(null)}
                     </div>
                 ))}

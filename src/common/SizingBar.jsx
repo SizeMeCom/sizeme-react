@@ -9,7 +9,7 @@ import SizeSelector from "../api/SizeSelector";
 
 const getSizename = (selectedSize) =>
     SizeSelector.getSizeMapper().filter(([size]) => size === selectedSize)
-        .map(([_, sizeName]) => sizeName)[0] || selectedSize;
+        .map(([, sizeName]) => sizeName)[0] || selectedSize;
 
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 9px`;
@@ -108,7 +108,7 @@ class SizingBar extends React.Component {
         const regularMidPoint = regular.end - rangeWidth / 2;
         const scaledWidth = rangeWidth / ((regularMidPoint - 1000) / (fitRecommendation - 1000));
         this.sliderPosXMin = 1000 - scaledWidth;
-        this.sliderPosXMax = this.ranges.slice(1).reduce((end, _) => end + scaledWidth, 1000);
+        this.sliderPosXMax = this.ranges.slice(1).reduce(end => end + scaledWidth, 1000);
         this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
     }
 

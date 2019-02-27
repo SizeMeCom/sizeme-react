@@ -62,7 +62,7 @@ const Outseam = (props) => {
                   strokeDasharray="3.3258,6.6527"
                   x1="220" y1={sleeveHeight} x2="370" y2={sleeveHeight}/>
 
-            /* measurement arrow line */
+            {/* measurement arrow line */}
             <path
                 className={`measurementLine noFill ${arrowPositions}`}
                 d={`

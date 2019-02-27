@@ -11,24 +11,24 @@ const PantWaist = (props) => {
              viewBox="158 250 237.5 210" preserveAspectRatio="xMidYMin meet">
             <defs>
                 <marker id="triangleInsidePantWaist"
-                  viewBox="0 0 10 10" refX="9" refY="5"
-                  markerWidth="6" markerHeight="6"
-                  className="measurementLine"
-                  orient="auto-start-reverse">
-                  <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+                        viewBox="0 0 10 10" refX="9" refY="5"
+                        markerWidth="6" markerHeight="6"
+                        className="measurementLine"
+                        orient="auto-start-reverse">
+                    <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
                 </marker>
                 <marker id="triangleOutsidePantWaist"
-                  viewBox="0 0 10 10" refX="1" refY="5"
-                  markerWidth="6" markerHeight="6"
-                  className="measurementLine"
-                  orient="auto-start-reverse">
-                  <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+                        viewBox="0 0 10 10" refX="1" refY="5"
+                        markerWidth="6" markerHeight="6"
+                        className="measurementLine"
+                        orient="auto-start-reverse">
+                    <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
                 </marker>
             </defs>
             <g>
-                /* torso */
+                {/* torso */}
                 <path className="mainLine baseFill"
-                d="m349.03101,309.17599c-0.10501,-23.21799 -5.164,-88.552 -0.42102,-158.20599c51.11301,
+                      d="m349.03101,309.17599c-0.10501,-23.21799 -5.164,-88.552 -0.42102,-158.20599c51.11301,
                 -1.62 90.423,2.16 106.33603,4.644c15.91397,2.48401 34.46198,7.343 76.30099,-0.756c41.73401,
                 -7.991 77.88202,-3.34801 84.83698,-2.916c1.68701,0.108 5.90204,2.48399 10.85504,5.616c5.47998,
                 3.347 8.85297,6.479 13.91095,9.179c7.79901,4.319 15.28204,6.371 7.48303,-4.42799c-1.47504,
@@ -72,25 +72,25 @@ const PantWaist = (props) => {
                 -110.69c-4.42593,-30.12903 -9.27399,-58.42297 -7.79794,-77.42902c1.47501,-19.11401 7.79794,
                 -65.44199 9.06302,-74.83701c1.47501,-12.203 5.79599,-62.095 -0.42206,-100.323z"/>
 
-                /* nipples */
+                {/* nipples */}
                 <circle className="mainLine noFill"
-                    cx="229.47"
-                    cy="162.40"
-                    r="4.906"/>
+                        cx="229.47"
+                        cy="162.40"
+                        r="4.906"/>
                 <circle className="mainLine noFill"
-                    cx="322.43"
-                    cy="162.40"
-                    r="4.906"/>
+                        cx="322.43"
+                        cy="162.40"
+                        r="4.906"/>
 
-                /* belly button */
+                {/* belly button */}
                 <circle className="mainLine noFill"
-                    cx="277.831"
-                    cy="308.234"
-                    r="2.534"/>
+                        cx="277.831"
+                        cy="308.234"
+                        r="2.534"/>
 
-                /* under pants */
+                {/* under pants */}
                 <path className="mainLine otherBaseFill"
-                    d="m352.94101,393.465
+                      d="m352.94101,393.465
                     l -0.7225,-53.91998
                     l -154.69001,0
                     l -2.59149,54.09799
@@ -99,9 +99,9 @@ const PantWaist = (props) => {
                     c 22.45551,-12.371 42.91098,-21.74197 70.36649,-22.11298z"/>
 
             </g>
-                /* pants with pockets and button */
-                <path className="mainLine overlayFill"
-                    d={`M 356.76001,685.56201
+            {/* pants with pockets and button */}
+            <path className="mainLine overlayFill"
+                  d={`M 356.76001,685.56201
                          l ` + (-1.819 + widthPlus) + `,-292.09702
                          l -2.7225,-53.91998
                          l ` + (-154.69001 - (widthPlus * 2)) + `,0
@@ -111,23 +111,23 @@ const PantWaist = (props) => {
                          l 33.063,-249.94302
                          l 9.69101,0
                          l 25.50998,251.19302z`}/>
-                <path className="mainLine noFill"
-                    d={`
+            <path className="mainLine noFill"
+                  d={`
                         M ` + (230.208 - (widthPlus / 2)) + `,364.504c0,0-3.344,24.618-27.826,25.548
                       `}/>
-                <path className="mainLine noFill"
-                    d={`
+            <path className="mainLine noFill"
+                  d={`
                         M ` + (317.346 + (widthPlus / 2)) + `,365.795c0,0,3.346,24.618,27.826,25.548
                      `}/>
-                <circle className="mainLine noFill"
+            <circle className="mainLine noFill"
                     cx="276.331"
                     cy="355.234"
                     r="5.906"/>
 
-                /* measurement arrow line */
-                <path
-                    className={`measurementLine noFill ${arrowPositions}`}
-                    d={`
+            {/* measurement arrow line */}
+            <path
+                className={`measurementLine noFill ${arrowPositions}`}
+                d={`
                     M ` + (197.5285 - widthPlus) + `,338.545
                     L 197.5285, 338.545`} />
 

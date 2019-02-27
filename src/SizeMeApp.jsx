@@ -92,8 +92,8 @@ class SizeMeApp extends React.Component {
                         <div className="sizeme-slider-row">
                             <SizingBar/>
                             {loggedIn && <ProfileMenu profiles={profiles}
-                                                      selectedProfile={selectedProfile.id}
-                                                      setSelectedProfile={setSelectedProfile}/>}
+                                selectedProfile={selectedProfile.id}
+                                setSelectedProfile={setSelectedProfile}/>}
                         </div>
                         {measurementInputs && <SizeForm fields={measurementInputs} />}
                         {!loggedIn && match && <SignupBox onSignup={onSignup}/>}

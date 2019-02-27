@@ -10,13 +10,13 @@ function resolvePayload (action, payloadKey, errorPayload = null) {
 }
 
 const authToken = handleActions({
-    [actions.CHECK_TOKEN]: (state, action) => ({
+    [actions.CHECK_TOKEN]: () => ({
         loggedIn: false,
         isFetching: false,
         resolved: false
     }),
 
-    [actions.FETCH_TOKEN]: (state, action) => ({ ...state, isFetching: true }),
+    [actions.FETCH_TOKEN]: state => ({ ...state, isFetching: true }),
 
     [actions.RESOLVE_TOKEN]: (state, action) => ({
         ...state,
@@ -38,7 +38,7 @@ const authToken = handleActions({
 });
 
 const signupStatus = handleActions({
-    [actions.SIGNUP]: (state, action) => ({ error: null, inProgress: true }),
+    [actions.SIGNUP]: () => ({ error: null, inProgress: true }),
 
     [actions.SIGNUP_DONE]: (state, action) => ({
         ...state,
@@ -51,7 +51,7 @@ const signupStatus = handleActions({
 });
 
 const profileList = handleActions({
-    [actions.REQUEST_PROFILE_LIST]: (state, action) => ({ ...state, isFetching: true }),
+    [actions.REQUEST_PROFILE_LIST]: state => ({ ...state, isFetching: true }),
 
     [actions.RECEIVE_PROFILE_LIST]: (state, action) => ({
         ...state,
@@ -64,7 +64,7 @@ const profileList = handleActions({
 });
 
 const productInfo = handleActions({
-    [actions.REQUEST_PRODUCT_INFO]: (state, action) => ({ ...state, isFetching: true }),
+    [actions.REQUEST_PRODUCT_INFO]: state => ({ ...state, isFetching: true }),
 
     [actions.RECEIVE_PRODUCT_INFO]: (state, action) => ({
         ...state,
@@ -107,7 +107,7 @@ const selectedProfile = handleActions({
 });
 
 const match = handleActions({
-    [actions.REQUEST_MATCH]: (state, action) => ({
+    [actions.REQUEST_MATCH]: state => ({
         ...state,
         isFetching: true
     }),

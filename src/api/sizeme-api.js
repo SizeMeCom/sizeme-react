@@ -362,7 +362,7 @@ function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
     const [bestMatch] = fitResults
-        .filter(([_, res]) => res.totalFit >= 1000 && res.accuracy > 0)
+        .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
         .reduce(([accSize, fit], [size, res]) => {
             const newFit = Math.abs(res.totalFit - optFit);
             if (newFit <= maxDist && (!accSize || newFit < fit)) {
