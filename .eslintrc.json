@@ -15,10 +15,11 @@
   },
   "rules": {
     "indent": [
-      "off",
+      "error",
       4,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "ignoredNodes": [ "JSXAttribute", "JSXSpreadAttribute" ]
       }
     ],
     "no-console": ["error", { "allow": ["warn", "error", "log"] }],
