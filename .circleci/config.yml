@@ -54,7 +54,7 @@ jobs:
     <<: *defaults
 
     docker:
-      - image: sizeme/circleci-scala-yarn:1.0
+      - image: circleci/node:11
     
     steps:
       - checkout
