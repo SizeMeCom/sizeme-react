@@ -19,7 +19,8 @@
       4,
       {
         "SwitchCase": 1,
-        "ignoredNodes": [ "JSXAttribute", "JSXSpreadAttribute" ]
+        "ignoredNodes": [ "JSXAttribute", "JSXSpreadAttribute" ],
+        "MemberExpression": "off"
       }
     ],
     "no-console": ["error", { "allow": ["warn", "error", "log"] }],
