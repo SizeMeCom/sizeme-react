@@ -167,7 +167,14 @@
     "emailPlaceholder": "myname@example.com",
     "message": "Save your measurements, so you don't have to remember them ever again.",
     "save": "Ok",
-    "signupPrompt": "Save with email"
+    "signupPrompt": "Save with email",
+    "tooltipBullets": [
+      "Save your measurements so we will remember you next time!",
+      "Have you already saved your measurements? Enter your email here to log in."
+    ],
+    "tooltipProvided": "The size recommendation is provided by",
+    "tooltipPolicyLink": "Privacy policy",
+    "signupDone": "Your measurements have been saved!  You should receive a confirmation email from SizeMe shortly."
   },
   "sizeGuide": {
     "advertisement": "Denna storleksguide har gjorts för dig av SizeMe",
@@ -176,13 +183,7 @@
     "measurementDisclaimerCollar": "Med undantag av kragmåttet, som är uppmätt på kragens insida.",
     "measurementDisclaimerInside": "Dessa mått är uppmätta <u>på insidan av artikeln</u>.",
     "tableTitle": "Aktuella artikel mått",
-    "windowTitle": "Storleks Guide för",
-    "tooltipBullets": [
-      "Save your measurements so we will remember you next time!",
-      "Have you already saved your measurements? Enter your email here to log in."
-    ],
-    "tooltipProvided": "The size recommendation is provided by",
-    "tooltipPolicyLink": "Privacy policy"
+    "windowTitle": "Storleks Guide för"
   },
   "splash": {
     "btnLogInLabel": "Logga in",
