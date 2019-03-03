@@ -11,6 +11,7 @@ import SizeSelector from "./api/SizeSelector";
 import { setAbStatus } from "./api/actions";
 import { I18nextProvider } from "react-i18next";
 import { trackEvent } from "./api/ga";
+import Modal from "react-modal";
 import i18n from "./i18n";
 import "./scss/index.scss";
 
@@ -80,6 +81,7 @@ import "./scss/index.scss";
 
             if (el) {
                 const section = el.appendChild(document.createElement("div"));
+                Modal.setAppElement(uiOptions.appendContentTo + " div");
                 //noinspection RequiredAttributes
                 render(
                     <I18nextProvider i18n={i18n}>

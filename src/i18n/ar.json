@@ -166,7 +166,11 @@
 	"emailPlaceholder": "myname@example.com",
     "message": "حفظ قياساتك",
 	"save": "حسنا",
-    "signupPrompt": "حفظ بواسطة البريد الإلكتروني"
+    "signupPrompt": "حفظ بواسطة البريد الإلكتروني",
+    "tooltipBullet1": "!!Save your measurements so we will remember you next time!!!",
+    "tooltipBullet2": "!!Have you already saved your measurements? Enter your email here to log in.!!",
+    "tooltipProvided": "!!The size recommendation is provided by!!",
+    "tooltipPolicyLink": "!!Privacy policy!!"
   },
   "sizeGuide": {
     "advertisement": "ل دليل المقاسات هذا مقدم من ”سايزمي”",
