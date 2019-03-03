@@ -75,7 +75,7 @@ class OverlapBox extends React.Component {
 
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip" 
-			    data-effect="solid" data-place="bottom" onMouseEnter={hover}>
+                 data-effect="solid" data-place="bottom" onMouseEnter={hover}>
                 <div className="overlap-svg">
                     {illustration(humanProperty, overlap)}
                 </div>

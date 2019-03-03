@@ -79,8 +79,10 @@ class SizeForm extends React.Component {
                     ))}
                 </ul>
                 <div className="measurement-guide-link">
-                    {linkTexts.start} <a onClick={this.openGuideModal} onMouseDown={e => {e.preventDefault();}}>
-                    {linkTexts.link}</a> {linkTexts.end} <FontAwesome name="play-circle" />
+                    <span>{linkTexts.start} </span>
+                    <a onClick={this.openGuideModal} onMouseDown={e => {e.preventDefault();}}>{linkTexts.link}</a>
+                    <span> {linkTexts.end} </span>
+                    <FontAwesome name="play-circle" />
                 </div>
             </div>
         );
@@ -132,11 +134,12 @@ class SizeForm extends React.Component {
                     <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
                         <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
                         <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
-                                          value={this.state.measurements[humanProperty]}
-                                          fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
+                            value={this.state.measurements[humanProperty]}
+                            fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
                         />
                         {getFit(field).map(f =>
-                            <OverlapBox fit={f} humanProperty={humanProperty} hover={() => onOverlapBoxHover(field)}/>
+                            <OverlapBox fit={f} humanProperty={humanProperty} hover={() => onOverlapBoxHover(field)}
+                                key={humanProperty}/>
                         ).orElse(null)}
                     </div>
                 ))}

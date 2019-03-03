@@ -46,14 +46,14 @@ class SizeGuideProductInfo extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                                {SizeSelector.getSizeMapper()
-                                    .filter(([size]) => !!measurements[size])
-                                    .map(([size, sizeName]) => (
-                                    <tr key={sizeName}>
-                                        <td className="size-col">{sizeName}</td>
-                                        {measurementOrder.map(measurement => measurementCell(size, measurement))}
-                                    </tr>
-                                ))}
+                            {SizeSelector.getSizeMapper()
+                            .filter(([size]) => !!measurements[size])
+                            .map(([size, sizeName]) => (
+                                <tr key={sizeName}>
+                                    <td className="size-col">{sizeName}</td>
+                                    {measurementOrder.map(measurement => measurementCell(size, measurement))}
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                     {this.isInside() ?

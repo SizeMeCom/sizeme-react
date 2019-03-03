@@ -3,26 +3,27 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "react"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true
-    },
     "sourceType": "module"
   },
-  "plugins": [
-    "react"
-  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "indent": [
       "error",
       4,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "ignoredNodes": [ "JSXAttribute", "JSXSpreadAttribute" ],
+        "MemberExpression": "off"
       }
     ],
+    "no-console": ["error", { "allow": ["warn", "error", "log"] }],
     "linebreak-style": [
       "error",
       "unix"

@@ -25,12 +25,14 @@ const ProfileMenu = (props) => {
                             <span
                                 className={"profile-name" + (profile.id === props.selectedProfile ? " selected" : "")}>
                                 {profile.profileName}</span>
-                            <a href={profileAddress(profile.id)} target="_blank"><FontAwesome name="pencil"/></a>
+                            <a href={profileAddress(profile.id)} target="_blank" rel="noopener noreferrer"><FontAwesome
+                                name="pencil"/></a>
                         </div>
                     )}
                     <div className="profile">
                         <a className="profile-name add-new"
-                           href={`${contextAddress}/account/profiles.html`} target="_blank">Add new profile</a>
+                           href={`${contextAddress}/account/profiles.html`} target="_blank"
+                           rel="noopener noreferrer">Add new profile</a>
                     </div>
                 </div>
             </ReactTooltip>

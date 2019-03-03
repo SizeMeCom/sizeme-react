@@ -3,7 +3,7 @@ import {trackEvent} from "./ga";
 import { findVisibleElement } from "./sizeme-api";
 
 let selector;
-let selectSize = size => {};
+let selectSize = () => {};
 
 class AbstractSelect {
     constructor (element, { event, useCapture = false }) {
