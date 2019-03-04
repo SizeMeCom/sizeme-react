@@ -172,7 +172,8 @@
       "Have you already saved your measurements? Enter your email here to log in."
     ],
     "tooltipProvided": "The size recommendation is provided by",
-    "tooltipPolicyLink": "Privacy policy"
+    "tooltipPolicyLink": "Privacy policy",
+    "signupDone": "Your measurements have been saved!  You should receive a confirmation email from SizeMe shortly."
   },
   "sizeGuide": {
     "advertisement": "This size guide is brought to you by SizeMe",

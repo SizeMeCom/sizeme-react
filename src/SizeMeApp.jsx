@@ -79,13 +79,13 @@ class SizeMeApp extends React.Component {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
             measurementInputs, matchState, onSignup, sizemeHidden,
-            setSizemeHidden
+            setSizemeHidden, signupStatus
         } = this.props;
         const { match, state } = matchState;
 
         if (resolved) {
             return (
-                <div>
+                <>
                     {uiOptions.toggler && <SizemeToggler
                         sizemeHidden={sizemeHidden} setSizemeHidden={setSizemeHidden}/>}
                     {!sizemeHidden && <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state}`}>
@@ -96,12 +96,13 @@ class SizeMeApp extends React.Component {
                                 setSelectedProfile={setSelectedProfile}/>}
                         </div>
                         {measurementInputs && <SizeForm fields={measurementInputs} />}
-                        {!loggedIn && match && <SignupBox onSignup={onSignup}/>}
+                        {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match &&
+                        <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone}/>}
                         {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
                         <FitTooltip/>
                         <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>
                     </div>}
-                </div>
+                </>
             );
         } else {
             return null;
@@ -112,6 +113,7 @@ class SizeMeApp extends React.Component {
 SizeMeApp.propTypes = {
     resolved: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool,
+    signupStatus: PropTypes.object,
     measurementInputs: PropTypes.arrayOf(PropTypes.string),
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
@@ -129,6 +131,7 @@ SizeMeApp.propTypes = {
 const mapStateToProps = state => ({
     resolved: state.authToken.resolved && state.productInfo.resolved,
     loggedIn: state.authToken.loggedIn,
+    signupStatus: state.signupStatus,
     measurementInputs: Optional.ofNullable(state.productInfo.product).flatMap(p => Optional.ofNullable(p.model))
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,

@@ -43,9 +43,11 @@ const signupStatus = handleActions({
     [actions.SIGNUP_DONE]: (state, action) => ({
         ...state,
         inProgress: false,
-        error: action.error ? action.payload.message : null
+        error: action.error ? action.payload.message : null,
+        signupDone: !action.error
     })
 }, {
+    signupDone: false,
     inProgress: false,
     error: null
 });

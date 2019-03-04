@@ -35,15 +35,18 @@ class SignupBox extends React.Component {
 
     handleClick = () => {
         if (this.state.valid) {
-            this.props.onSignup(this.state.email)
+            this.setState({valid: false}, () =>
+                this.props.onSignup(this.state.email)
                 .catch(err => {
+                    this.setState({valid: true});
                     const error = err.message;
                     if (error.indexOf("Duplicate user") >= 0) {
                         openLoginFrame("login-frame", "login", this.state.email);
                     } else {
                         this.setState({ error });
                     }
-                });
+                })
+            );
         }
     };
 
@@ -87,22 +90,25 @@ class SignupBox extends React.Component {
     };
 
     render () {
-        const { t } = this.props;
+        const { t, signupDone } = this.props;
         const error = this.state.error;
         const isError = !!error;
         const inputClassName = "signup-email" + (isError ? " error" : "");
         return (
             <div className="section-signup-box">
                 <div className="sizeme-signup-box">
-                    <div>{t("signupBox.message")}</div>
-                    <div className={inputClassName}>
-                        <span className="tooltip-trigger" data-for="signup-tooltip" data-tip ref={el => {this.tooltip = el;}}
-                            data-place="bottom" data-type="light" data-class="signup-tooltip" data-effect="solid"
-                        />
-                        <input type="email" value={this.state.email} onChange={this.handleChange} onBlur={this.onBlur}
-                               onFocus={this.onFocus} placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
-                        <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
-                    </div>
+                    {!signupDone && (<>
+                        <div>{t("signupBox.message")}</div>
+                        <div className={inputClassName}>
+                            <span className="tooltip-trigger" data-for="signup-tooltip" data-tip ref={el => {this.tooltip = el;}}
+                                data-place="bottom" data-type="light" data-class="signup-tooltip" data-effect="solid"
+                            />
+                            <input type="email" value={this.state.email} onChange={this.handleChange} onBlur={this.onBlur}
+                                onFocus={this.onFocus}placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
+                            <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
+                        </div>
+                    </>)}
+                    {signupDone && <div>{t("signupBox.signupDone")}</div>}
                     {isError && <div className="signup-alert">
                         {error}
                     </div>}
@@ -123,7 +129,8 @@ class SignupBox extends React.Component {
 
 SignupBox.propTypes = {
     onSignup: PropTypes.func.isRequired,
-    t: PropTypes.func
+    t: PropTypes.func,
+    signupDone: PropTypes.bool
 };
 
 export default translate()(SignupBox);
