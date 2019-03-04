@@ -177,10 +177,10 @@
     "measurementDisclaimerInside": "Dessa mått är uppmätta <u>på insidan av artikeln</u>.",
     "tableTitle": "Aktuella artikel mått",
     "windowTitle": "Storleks Guide för",
-    "tooltipBullet1": "!!Save your measurements so we will remember you next time!!!",
-    "tooltipBullet2": "!!Have you already saved your measurements? Enter your email here to log in.!!",
-    "tooltipProvided": "!!The size recommendation is provided by!!",
-    "tooltipPolicyLink": "!!Privacy policy!!"
+    "tooltipBullet1": "Save your measurements so we will remember you next time!",
+    "tooltipBullet2": "Have you already saved your measurements? Enter your email here to log in.",
+    "tooltipProvided": "The size recommendation is provided by",
+    "tooltipPolicyLink": "Privacy policy"
   },
   "splash": {
     "btnLogInLabel": "Logga in",

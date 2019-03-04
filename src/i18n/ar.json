@@ -167,10 +167,10 @@
     "message": "حفظ قياساتك",
 	"save": "حسنا",
     "signupPrompt": "حفظ بواسطة البريد الإلكتروني",
-    "tooltipBullet1": "!!Save your measurements so we will remember you next time!!!",
-    "tooltipBullet2": "!!Have you already saved your measurements? Enter your email here to log in.!!",
-    "tooltipProvided": "!!The size recommendation is provided by!!",
-    "tooltipPolicyLink": "!!Privacy policy!!"
+    "tooltipBullet1": "حفظ القياسات الخاصة بك حتى نتذكر لك في المرة القادمة!",
+    "tooltipBullet2": "هل سبق لك حفظ القياسات الخاصة بك؟ أدخل بريدك الإلكتروني هنا لتسجيل الدخول.",
+    "tooltipProvided": "يتم توفير حجم التوصية من قبل",
+    "tooltipPolicyLink": "سياسة خاصة"
   },
   "sizeGuide": {
     "advertisement": "ل دليل المقاسات هذا مقدم من ”سايزمي”",

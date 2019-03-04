@@ -176,10 +176,10 @@
     "measurementDisclaimerInside": "Nämä mitat on otettu <u>tuotteen sisältä</u>.",
     "tableTitle": "Tuotteen mitat",
     "windowTitle": "Kokotaulukko tuotteelle",
-    "tooltipBullet1": "!!Save your measurements so we will remember you next time!!!",
-    "tooltipBullet2": "!!Have you already saved your measurements? Enter your email here to log in.!!",
-    "tooltipProvided": "!!The size recommendation is provided by!!",
-    "tooltipPolicyLink": "!!Privacy policy!!"
+    "tooltipBullet1": "Tallenna mittasi, niin muistamme sinut seuraavallakin kerralla",
+    "tooltipBullet2": "Oletko tallentanut jo mittasi? Syötä sähköpostisi, niin pääset kirjautumaan sisään.",
+    "tooltipProvided": "Kokosuosituksen sinulle tarjoaa",
+    "tooltipPolicyLink": "Tietosuojakäytäntö"
   },
   "splash": {
     "btnLogInLabel": "Kirjaudu",
