@@ -69,7 +69,8 @@ class SignupBox extends React.Component {
                 <li>{t("signupBox.tooltipBullet2")}</li>
             </ul>
             <div className="policy-link">
-                <div>{t("signupBox.tooltipProvided")}&nbsp;<img alt="SizeMe" src={logo}/></div>
+                <div>{t("signupBox.tooltipProvided")}</div>
+                <img alt="SizeMe" src={logo}/>
                 <a onClick={this.openPolicyModal}
                     onMouseDown={e => {e.preventDefault();}}>{t("signupBox.tooltipPolicyLink")}</a>
             </div>
