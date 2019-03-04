@@ -41,6 +41,12 @@
     position: relative;
     text-align: left;
 
+    .tooltip-trigger {
+      position: absolute;
+      left: 40%;
+      bottom: 4px;
+    }
+
     input {
       border: none;
       padding: 2px;
@@ -75,5 +81,84 @@
 
   .signup-email.error {
     border-color: #99171D;
+  }
+}
+
+.__react_component_tooltip.signup-tooltip {
+
+  background-color: $default_color;
+  padding: 1px;
+  opacity: 1;
+  pointer-events: all;
+  margin-left: 15px;
+  max-width: 220px;
+
+  ul {
+    background-color: $bg_color;
+    color: black;
+    padding: 5px 5px 5px 20px;
+    margin: 0;
+    list-style-type: disc;
+    border-radius: $border_radius $border_radius 0 0;
+  }
+
+  .policy-link {
+    text-align: center;
+    padding: 4px 0 4px 8px;
+    color: black;
+    background-color: $light_bg_color;
+    border-radius: 0 0 3px 3px;
+
+    img {
+      height: 16px;
+      vertical-align: baseline;
+	  margin: 6px auto;
+    }
+
+    a {
+      pointer-events: all;
+      cursor: pointer;
+      color: black;
+      text-decoration: underline !important;
+    }
+  }
+}
+
+.policy-modal {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  margin-left: -300px;
+  width: 600px;
+  overflow: hidden;
+  height: 85%;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 4px;
+
+  .fa {
+    position: absolute;
+    right: 6px;
+    top: 5px;
+    font-size: x-large;
+    cursor: pointer;
+    color: $default_color;
+  }
+
+  .policy-modal-header {
+    h1 {
+      font-size: 48px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 200;
+      line-height: 100%;
+    }
+    height: 48px;
+  }
+
+  iframe {
+    border: none;
+    height: 100%;
+    width: 100%;
   }
 }

@@ -2,7 +2,7 @@
   "common": {
     "alreadyUser": "Kirjaudu SizeMe-palveluun",
     "closeText": "Sulje",
-    "selectedSize": "Valittu koko", 
+    "selectedSize": "Valittu koko",
     "shoppingFor": "Aktiivinen profiili",
 	"sizingBarSplashNoFit": "Syötä mittasi, niin suosittelemme sinulle oikean koon",
     "sizingBarSplashNoSize": "Valitse koko, niin näytämme miten se sopii sinulle",
@@ -76,7 +76,7 @@
     "footLength": "Jalkateräsi pituus",
     "footWidth": "Jalkateräsi leveys",
     "headCircumference": "Pään ympärys"
-  },  
+  },
   "measurement": {
     "chest": "Rinta",
     "waist": "Vyötärö",
@@ -162,8 +162,8 @@
     "noTopButton": "Paidan ylin nappi ei tässä koossa mene kiinni."
   },
   "signupBox": {
-    "duplicateUser": "Tili tällä sähköpostiosoitteella on jo olemassa.  Kirjaudu sisään siis!",  
-	"emailPlaceholder": "oma.nimi@esimerkki.fi",  
+    "duplicateUser": "Tili tällä sähköpostiosoitteella on jo olemassa.  Kirjaudu sisään siis!",
+	"emailPlaceholder": "oma.nimi@esimerkki.fi",
     "message": "Tallenna mittasi SizeMe-palveluun",
 	"save": "Ok",
     "signupPrompt": "Tallenna sähköpostiosoitteella"
@@ -175,7 +175,13 @@
     "measurementDisclaimerCollar": "Paitsi kaulus, joka on ympärysmitta kauluksen sisäpuolelta.",
     "measurementDisclaimerInside": "Nämä mitat on otettu <u>tuotteen sisältä</u>.",
     "tableTitle": "Tuotteen mitat",
-    "windowTitle": "Kokotaulukko tuotteelle"
+    "windowTitle": "Kokotaulukko tuotteelle",
+    "tooltipBullets": [
+      "Tallenna mittasi, niin muistamme sinut seuraavallakin kerralla",
+      "Oletko tallentanut jo mittasi? Syötä sähköpostisi, niin pääset kirjautumaan sisään."
+    ],
+    "tooltipProvided": "Kokosuosituksen sinulle tarjoaa",
+    "tooltipPolicyLink": "Tietosuojakäytäntö"
   },
   "splash": {
     "btnLogInLabel": "Kirjaudu",
