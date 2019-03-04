@@ -9,7 +9,9 @@
     "sizingBarSplashMatch": "نوص <strong>{{- sizeName}}</strong> اس (...) لك",
     "sizingBarFitTooltip": "<strong>{{- selectedSize}}</strong> هذا يشير إلى مدى ملاءمة المقاس لك",
     "sizingBarRecommendationTooltip": " نوصي بأن يكون مقاسك قريبًا من هذه المنطقة",
-    "togglerText": "ابحث عن مقاسي"
+    "togglerText": "ابحث عن مقاسي",
+    "sizemeTooltip": "This product supports SizeMe, a service that recommends the best fitting size by comparing your physical measurements to the measurements of this product.",
+    "sizemeTooltipLink": "Read more"
   },
   "detailed": {
     "buttonText": "صورة تفصيلية للمقاس",

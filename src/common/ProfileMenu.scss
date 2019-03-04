@@ -1,13 +1,40 @@
 @import "../scss/variables";
 
 .profile-menu-container {
-  span.fa-cog {
+  img, span.fa-cog {
     margin-left: 5px;
-    font-size: 130%;
     cursor: pointer;
+  }
+
+  img {
+    width: 15px;
+  }
+
+  span.fa-cog {
+    font-size: 130%;
 
     &:hover {
       color: $default_color;
+    }
+  }
+
+  .__react_component_tooltip#sizeme-tooltip {
+    border: 1px solid $default_color;
+    opacity: 1.0 !important;
+    width: 200px;
+    padding: 0;
+    pointer-events: all;
+
+    div:first-child {
+      margin: 5px 10px;
+    }
+
+    div:last-child {
+      text-align: center;
+      padding: 4px 0 4px 8px;
+      color: black;
+      background-color: $light_bg_color;
+      border-radius: 0 0 3px 3px;
     }
   }
 }

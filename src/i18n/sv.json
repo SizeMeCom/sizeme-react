@@ -9,7 +9,9 @@
     "sizingBarSplashMatch": "We selected size <strong>{{- sizeName}}</strong> for you",
     "sizingBarFitTooltip": "This indicates how size <strong>{{- selectedSize}}</strong> will fit you",
     "sizingBarRecommendationTooltip": "We recommend that your fit is around this area",
-    "togglerText": "Hitta min storlek"
+    "togglerText": "Hitta min storlek",
+    "sizemeTooltip": "This product supports SizeMe, a service that recommends the best fitting size by comparing your physical measurements to the measurements of this product.",
+    "sizemeTooltipLink": "Read more"
   },
   "detailed": {
     "windowTitle": "Detaljerad Bild för",
