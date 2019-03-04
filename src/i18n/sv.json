@@ -169,7 +169,7 @@
     "save": "Ok",
     "signupPrompt": "Save with email",
     "tooltipBullets": [
-      "Save your measurements so we will remember you next time!",
+      "Save your measurements so we will remember you next time",
       "Have you already saved your measurements? Enter your email here to log in."
     ],
     "tooltipProvided": "The size recommendation is provided by",

@@ -113,6 +113,7 @@
       height: 16px;
       vertical-align: baseline;
 	  margin: 6px auto;
+	  display: block;
     }
 
     a {
@@ -138,8 +139,8 @@
 
   .fa {
     position: absolute;
-    right: 6px;
-    top: 5px;
+    right: 23px;
+    top: 7px;
     font-size: x-large;
     cursor: pointer;
     color: $default_color;
