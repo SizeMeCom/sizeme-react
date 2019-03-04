@@ -65,8 +65,9 @@ class SignupBox extends React.Component {
     tooltipContent = t => () => (
         <div>
             <ul>
-                <li>{t("signupBox.tooltipBullet1")}</li>
-                <li>{t("signupBox.tooltipBullet2")}</li>
+                {t("signupBox.tooltipBullets", { returnObjects: true }).map((text, i) => (
+                    <li key={i}>{text}</li>
+                ))}
             </ul>
             <div className="policy-link">
                 <div>{t("signupBox.tooltipProvided")}</div>

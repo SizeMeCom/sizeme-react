@@ -162,13 +162,15 @@
     "noTopButton": "The shirt's top button for this size won't close."
   },
   "signupBox": {
-    "duplicateUser": "An account with this email already exists. Try to log in?",  
-	"emailPlaceholder": "myname@example.com",
+    "duplicateUser": "An account with this email already exists. Try to log in?",
+    "emailPlaceholder": "myname@example.com",
     "message": "Save your measurements",
-	"save": "Ok",
+    "save": "Ok",
     "signupPrompt": "Save with email",
-    "tooltipBullet1": "Save your measurements so we will remember you next time!",
-    "tooltipBullet2": "Have you already saved your measurements? Enter your email here to log in.",
+    "tooltipBullets": [
+      "Save your measurements so we will remember you next time!",
+      "Have you already saved your measurements? Enter your email here to log in."
+    ],
     "tooltipProvided": "The size recommendation is provided by",
     "tooltipPolicyLink": "Privacy policy"
   },
