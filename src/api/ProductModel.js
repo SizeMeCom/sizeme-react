@@ -105,7 +105,7 @@ function getEssentialMeasurements(itemTypeArr) {
     switch (itemTypeArr[0]) {
         case 1:
             arr.push("chest", "front_height");
-            if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] == 1) ) {
+            if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
                 arr.push("sleeve");
             }
             break;
