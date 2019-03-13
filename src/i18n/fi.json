@@ -9,7 +9,9 @@
     "sizingBarSplashMatch": "Suosittelemme sinulle kokoa <strong>{{- sizeName}}</strong>",
     "sizingBarFitTooltip": "Tämä näyttää miten koko <strong>{{- selectedSize}}</strong> sopii sinulle",
     "sizingBarRecommendationTooltip": "Tämän tuotteen kohdalla suosittelemme tätä sopivuutta",
-    "togglerText": "Löydä oikea kokosi"
+    "togglerText": "Löydä oikea kokosi",
+    "sizemeTooltip": "Tässä tuotteessa on käytössä SizeMe-palvelu, joka suosittelee sopivinta kokoa vertaamalla mittojasi tämän tuotteen mittoihin.",
+    "sizemeTooltipLink": "Lue lisää"
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",
