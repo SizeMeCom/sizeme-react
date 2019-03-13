@@ -15,6 +15,8 @@ import ProfileMenu from "./common/ProfileMenu";
 import { trackEvent } from "./api/ga";
 import FitTooltip from "./common/FitTooltip";
 import LoginFrame from "./common/LoginFrame";
+import sizemeIcon from "./images/sizeme_icon.png";
+import ReactTooltip from "react-tooltip";
 
 class SizeMeTogglerComp extends React.Component {
 
@@ -79,7 +81,7 @@ class SizeMeApp extends React.Component {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
             measurementInputs, matchState, onSignup, sizemeHidden,
-            setSizemeHidden, signupStatus
+            setSizemeHidden, signupStatus, t
         } = this.props;
         const { match, state } = matchState;
 
@@ -94,6 +96,16 @@ class SizeMeApp extends React.Component {
                             {loggedIn && <ProfileMenu profiles={profiles}
                                 selectedProfile={selectedProfile.id}
                                 setSelectedProfile={setSelectedProfile}/>}
+                            {!loggedIn && (<div className="profile-menu-container">
+                                <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip" data-event="click"
+                                    ref={el => {this.tooltip = el;}} onMouseEnter={() => ReactTooltip.show(this.tooltip)}/>
+                                <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid"
+                                    globalEventOff="click">
+                                    <div>{t("common.sizemeTooltip")}</div>
+                                    <div><a href="https://sizeme.com" target="_blank" rel="noopener noreferrer"
+                                        onClick={e => e.stopPropagation()}>{t("common.sizemeTooltipLink")}</a></div>
+                                </ReactTooltip>
+                            </div>)}
                         </div>
                         {measurementInputs && <SizeForm fields={measurementInputs} />}
                         {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match &&
@@ -125,7 +137,8 @@ SizeMeApp.propTypes = {
     product: PropTypes.object,
     matchState: PropTypes.object,
     sizemeHidden: PropTypes.bool.isRequired,
-    setSizemeHidden: PropTypes.func.isRequired
+    setSizemeHidden: PropTypes.func.isRequired,
+    t: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -150,4 +163,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setSizemeHidden: api.setSizemeHidden
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SizeMeApp);
+export default translate()(connect(mapStateToProps, mapDispatchToProps)(SizeMeApp));
