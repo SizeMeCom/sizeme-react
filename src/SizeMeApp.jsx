@@ -97,13 +97,10 @@ class SizeMeApp extends React.Component {
                                 selectedProfile={selectedProfile.id}
                                 setSelectedProfile={setSelectedProfile}/>}
                             {!loggedIn && (<div className="profile-menu-container">
-                                <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip" data-event="click"
-                                    ref={el => {this.tooltip = el;}} onMouseEnter={() => ReactTooltip.show(this.tooltip)}/>
-                                <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid"
-                                    globalEventOff="click">
+                                <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip"
+                                    ref={el => {this.tooltip = el;}} />
+                                <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid">
                                     <div>{t("common.sizemeTooltip")}</div>
-                                    <div><a href="https://sizeme.com" target="_blank" rel="noopener noreferrer"
-                                        onClick={e => e.stopPropagation()}>{t("common.sizemeTooltipLink")}</a></div>
                                 </ReactTooltip>
                             </div>)}
                         </div>
