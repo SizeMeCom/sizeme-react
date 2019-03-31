@@ -28,10 +28,14 @@ class SizeForm extends React.Component {
             ...this.fields.map(f => ({ [f.humanProperty]: null })),
             props.measurements
         );
-        this.state = { guideModalOpen: false, measurements, fitTooltip: {
-            measurement: null,
-            fitData: null
-        } };
+        this.state = {
+            guideModalOpen: false,
+            measurements, fitTooltip: {
+                measurement: null,
+                fitData: null
+            },
+            unit: "cm"
+        };
         this.activeTooltip = null;
     }
 
@@ -118,6 +122,9 @@ class SizeForm extends React.Component {
         }
     };
 
+    changeUnits = newUnit =>
+        this.setState({unit: newUnit});
+
     render () {
         const getFit = field => Optional.ofNullable(this.props.matchResult)
             .flatMap(r => Optional.ofNullable(r.matchMap[field]));
@@ -129,12 +136,12 @@ class SizeForm extends React.Component {
 
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
-                
+
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
                         <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
-                        <MeasurementInput onChange={this.valueChanged(humanProperty)} unit="cm"
-                            value={this.state.measurements[humanProperty]}
+                        <MeasurementInput onChange={this.valueChanged(humanProperty)} unit={this.state.unit}
+                            initialValue={this.state.measurements[humanProperty]} changeUnit={this.changeUnits}
                             fitRange={fitRange(field)} onFocus={() => {this.setActiveTooltip(field);}}
                         />
                         {getFit(field).map(f =>

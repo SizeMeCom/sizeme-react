@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 import { trackEvent } from "../api/ga";
+import "./MeasurementInput.scss";
 
 const unitMarks = {
     cm: "cm",
@@ -14,69 +15,133 @@ const unitFactors = {
 };
 
 class MeasurementInput extends React.Component {
-    constructor (props) {
-        super(props);
-        const currValue = this.viewValue(props.value);
-        this.state = {
-            error: false,
-            pending: false,
-            value: currValue,
-            modelValue: this.modelValue(currValue)
-        };
-    }
 
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.value !== this.state.modelValue || nextProps.unit !== this.props.unit) {
-            const value = this.viewValue(nextProps.value);
-            if (value !== this.state.value) {
-                this.setState({
-                    value,
-                    modelValue: this.modelValue(value)
-                });
-            }
-        }
-    }
+    static propTypes = {
+        initialValue: PropTypes.number,
+        onChange: PropTypes.func,
+        onFocus: PropTypes.func,
+        changeUnit: PropTypes.func,
+        unit: PropTypes.string,
+        fitRange: PropTypes.string
+    };
 
-    viewValue (value) {
-        return value ? (parseInt(value, 10) / unitFactors[this.props.unit]).toFixed(1) : "";
-    }
+    static defaultProps = {
+        unit: "cm"
+    };
 
-    modelValue (value) {
-        let fixedValue = value.replace(",", ".");
-        if (fixedValue === ".") {
+    static parseInput = inputValue => {
+        let fixed = inputValue.replace(",", ".");
+        if (fixed === ".") {
             return 0;
-        } else if (fixedValue.length > 0) {
-            return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
+        } else if (fixed.length > 0) {
+            return parseFloat(fixed);
         } else {
             return null;
         }
+    };
+
+    static toSIValue = modelValue => modelValue ?
+        {
+            input: (modelValue / unitFactors.cm).toFixed(1)
+        } :
+        {
+            input: ""
+        };
+
+    static fromSIValue = inputValue => {
+        let value = MeasurementInput.parseInput(inputValue.input);
+        if (value != null) {
+            return Math.round(value * unitFactors.cm);
+        } else {
+            return null;
+        }
+    };
+
+
+    static toImperialValue = modelValue => modelValue ?
+        {
+            input: Math.floor(modelValue / unitFactors.in).toFixed(0),
+            fraction: Math.round(8 * ((modelValue / unitFactors.in) % 1)).toFixed(0)
+        } :
+        {
+            input: "",
+            fraction: "0"
+        };
+    static fromImperialValue = inputValue => {
+        let value = MeasurementInput.parseInput(inputValue.input);
+        if (value != null) {
+            return Math.round((value + inputValue.fraction / 8) * unitFactors.in);
+        }
+    };
+
+    static getDerivedStateFromProps (props, state) {
+        let newState = null;
+        if (props.unit !== state.unit || props.initialValue !== state.initialValue) {
+            const value = props.initialValue;
+
+            newState = {
+                error: isNaN(value) || (props.unit !== "cm" && props.unit !== "in"),
+                pending: false,
+                unit: props.unit,
+                initialValue: props.initialValue
+            };
+
+            if (!newState.error) {
+                newState.modelValue = Math.floor(value);
+                if (props.unit === "cm") {
+                    newState.inputValue = MeasurementInput.toSIValue(newState.modelValue);
+                } else {
+                    newState.inputValue = MeasurementInput.toImperialValue(newState.modelValue);
+                }
+            }
+        }
+        return newState;
     }
 
-    valueChanged = (isBlur) => {
-        ReactTooltip.hide(this.tooltip);
+    constructor (props) {
+        super(props);
+        console.log(props);
+        this.state = MeasurementInput.getDerivedStateFromProps(props, {});
+    }
+
+    valueChanged = isBlur => {
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
 
-        // because isBlur could be an event
-        const blur = isBlur === true;
+        const inputValue = {
+            input: this.valueInput.value,
+            fraction: "0"
+        };
+        let modelValue;
 
-        const newValue = this.input.value;
-        if (newValue === this.state.value && !blur) {
-            return;
-        } else if (newValue.length > 0 && !newValue.match(/^\d*[,.]?\d*$/)) {
-            return;
+        if (this.props.unit === "cm") {
+            if (!inputValue.input.match(/^\d*[,.]?\d*$/)) {
+                return;
+            }
+            modelValue = MeasurementInput.fromSIValue(inputValue);
+        } else {
+            if (!inputValue.input.match(/^\d+$/)) {
+                return;
+            }
+            modelValue = MeasurementInput.fromImperialValue(inputValue);
         }
+
         const newState = {
             pending: true
         };
 
-        if (isNaN(this.modelValue(newValue))) {
+        if (isNaN(modelValue)) {
             newState.error = true;
         } else {
-            newState.value = newValue;
+            newState.error = false;
+            newState.inputValue = inputValue;
+            newState.modelValue = modelValue;
         }
+
+        // isBlur could be an event
+        const blur = isBlur === true;
 
         this.setState(newState, () => {
             if (blur) {
@@ -89,75 +154,83 @@ class MeasurementInput extends React.Component {
 
     dispatchChange = (setValue) => {
         if (!this.state.error) {
-            const modelValue = this.modelValue(this.state.value);
-            const doDispatch = modelValue !== this.state.modelValue;
-            const state = { pending: false, modelValue };
+            const state = {
+                pending: false
+            };
             if (setValue) {
-                state.value = this.viewValue(modelValue);
+                if (this.props.unit === "cm") {
+                    state.inputValue = MeasurementInput.toSIValue(this.state.modelValue);
+                } else {
+                    state.inputValue = MeasurementInput.toImperialValue(this.state.modelValue);
+                }
             }
             this.setState(state, () => {
-                if (doDispatch) {
-                    this.props.onChange(modelValue);
-                    trackEvent("measurementEntered", "Store: Measurement entered or changed in input field");
-                }
+                this.props.onChange && this.props.onChange(this.state.modelValue);
+                trackEvent("measurementEntered", "Store: Measurement entered or changed in input field");
             });
         }
     };
 
     onBlur = () => {
-        ReactTooltip.hide(this.tooltip);
         this.valueChanged(true);
     };
 
     onFocus = () => {
-        this.props.onFocus();
-        ReactTooltip.show(this.tooltip);
+        this.props.onFocus && this.props.onFocus();
     };
 
     onKeyDown = e => {
         if (e.keyCode === 13) {
-            this.input.blur();
+            this.valueInput.blur();
+        }
+    };
+
+    selectCm = () => {
+        if (this.props.unit !== "cm") {
+            this.props.changeUnit("cm");
+        }
+    };
+
+    selectInches = () => {
+        if (this.props.unit !== "in") {
+            this.props.changeUnit("in");
         }
     };
 
     render () {
-        let className = "measurement-input";
+        const classNames = ["measurement-input", "measurement-units-" + this.props.unit];
         if (this.state.error) {
-            className += " measurement-input-error";
-        } else if (this.props.value) {
-            className += " measurement-input-ok";
+            classNames.push("measurement-input-error");
+        } else if (this.state.modelValue) {
+            classNames.push("measurement-input-ok");
         }
         if (this.state.pending) {
-            className += " measurement-input-pending";
+            classNames.push("measurement-input-pending");
         }
         if (this.props.fitRange) {
-            className += ` ${this.props.fitRange}`;
+            classNames.push(this.props.fitRange);
         }
+
         return (
-            <div className={className}>
-                <span className="units">{unitMarks[this.props.unit]}</span>
-                <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
-                   data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid"
-                />
-                <input type="text" value={this.state.value} onChange={this.valueChanged}
-                       onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input = el;}}
-                       onFocus={this.onFocus} autoComplete="off"
+            <div className={classNames.join(" ")}>
+                <span className="units" data-tip={true} data-for="unit-selector" data-event="click">{unitMarks[this.props.unit]}</span>
+                {this.props.unit === "in" && <span className="fractions">½</span>}
+                <ReactTooltip id="unit-selector" class="unit-selector" globalEventOff="click"
+                    place="right" type="light" effect="solid">
+                    <>
+                        <div className={`unit ${this.props.unit === "cm" ? "selected" : ""}`}
+                            onClick={this.selectCm}>centimeters</div>
+                        <div className={`unit ${this.props.unit === "in" ? "selected" : ""}`}
+                            onClick={this.selectInches}>inches</div>
+                    </>
+                </ReactTooltip>
+                <input type="text" value={this.state.inputValue.input} onChange={this.valueChanged}
+                    onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.valueInput = el;}}
+                    onFocus={this.onFocus} autoComplete="off"
                 />
             </div>
         );
     }
 }
-
-MeasurementInput.propTypes = {
-    value: PropTypes.number,
-    onChange: PropTypes.func.isRequired,
-    onFocus: PropTypes.func.isRequired,
-    unit: PropTypes.string,
-    fitRange: PropTypes.string
-};
-
-MeasurementInput.defaultProps = {
-    unit: "cm"
-};
 
 export default MeasurementInput;

@@ -1,0 +1,100 @@
+@import "../scss/variables";
+
+.measurement-input {
+  border: 1px solid $default_color;
+  border-radius: $border_radius;
+  background-color: $bg_color;
+  position: relative;
+
+  input {
+    display: block;
+    border: none;
+    padding: 0 0 0 24px;
+    margin: 0;
+    height: 22px;
+    line-height: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    background-color: transparent;
+    box-sizing: border-box;
+  }
+
+  &.measurement-units-cm input {
+    width: calc(100% - 24px);
+  }
+
+  &.measurement-units-in input {
+    width: calc(100% - 36px);
+  }
+
+  span.units, span.fractions {
+    display: block;
+    float: right;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .units {
+    width: 24px;
+  }
+
+  .fractions {
+    width: 12px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .tooltip-trigger {
+    position: absolute;
+    left: 40%;
+    bottom: 4px;
+  }
+
+  .unit-selector {
+    padding: 0;
+    border: 1px solid $default_color;
+    border-radius: $border_radius;
+
+    .unit {
+      padding: 4px 30px 4px 8px;
+      font-weight: bold;
+      cursor: pointer;
+      pointer-events: all;
+
+      &.selected {
+        background-color: $recommendation_color;
+      }
+    }
+  }
+}
+
+.measurement-input.measurement-input-ok {
+  /*background-color: #c7eace;*/
+}
+
+.measurement-input.measurement-input-pending input {
+  font-style: italic;
+}
+
+.measurement-input.too_small {
+  border-color: $too_small;
+}
+
+.measurement-input.slim {
+  border-color: $slim;
+}
+
+.measurement-input.regular {
+  border-color: $regular;
+}
+
+.measurement-input.loose {
+  border-color: $loose;
+}
+
+.measurement-input.too_big {
+  border-color: $too_big;
+}
