@@ -17,7 +17,7 @@ process.traceDeprecation = true;
 const commonConfig = merge([
     {
         entry: {
-            sizeme: PATHS.app
+            sizeme: PATHS.app + "/index"
         },
         resolve: {
             extensions: [".js", ".jsx"]
@@ -94,16 +94,16 @@ const productionConfig = merge([
     },
     parts.clean(PATHS.build),
     parts.generateSourceMaps({ type: "source-map" }),
-    parts.extractCSS({ filename: "sizeme-styles.css" }),
+    parts.loadCSS(),
     parts.extractBundles([
-        {
+        /*{
             name: "sizeme-vendor",
             minChunks: ({ resource }) => (
                 resource &&
                 resource.indexOf("node_modules") >= 0 &&
                 resource.match(/\.js$/)
             )
-        },
+        },*/
         {
             name: "sizeme-manifest",
             minChunks: Infinity
@@ -137,6 +137,6 @@ module.exports = (env) => {
     const config = env === "production" ?
         productionConfig :
         developmentConfig;
-    
+
     return merge([commonConfig, config]);
 };

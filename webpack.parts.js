@@ -65,10 +65,10 @@ const autoprefix = () => ({
 
 exports.extractCSS = ({ include, exclude, filename } = {}) => {
     // Output extracted CSS to a file
-    const plugin = new ExtractTextPlugin({
+    /*const plugin = new ExtractTextPlugin({
         filename: filename || "[name].[contenthash:8].css",
         allChunks: true
-    });
+    });*/
 
     return {
         module: {
@@ -77,14 +77,14 @@ exports.extractCSS = ({ include, exclude, filename } = {}) => {
                     test: /\.scss$/,
                     include,
                     exclude,
-                    use: plugin.extract({
-                        use: ["css-loader", "sass-loader", autoprefix()],
-                        fallback: "style-loader"
-                    })
+                    //use: plugin.extract({
+                    use: ["css-loader", "sass-loader", autoprefix()],
+                    //fallback: "style-loader"
+                    //})
                 }
             ]
         },
-        plugins: [plugin]
+        //plugins: [plugin]
     };
 };
 
