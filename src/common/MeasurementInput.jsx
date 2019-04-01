@@ -14,6 +14,10 @@ const unitFactors = {
     in: 25.4
 };
 
+const fractionList = [
+    "-", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"
+];
+
 class MeasurementInput extends React.Component {
 
     static propTypes = {
@@ -61,11 +65,11 @@ class MeasurementInput extends React.Component {
     static toImperialValue = modelValue => modelValue ?
         {
             input: Math.floor(modelValue / unitFactors.in).toFixed(0),
-            fraction: Math.round(8 * ((modelValue / unitFactors.in) % 1)).toFixed(0)
+            fraction: Math.round(8 * ((modelValue / unitFactors.in) % 1))
         } :
         {
             input: "",
-            fraction: "0"
+            fraction: 0
         };
     static fromImperialValue = inputValue => {
         let value = MeasurementInput.parseInput(inputValue.input);
@@ -112,7 +116,7 @@ class MeasurementInput extends React.Component {
 
         const inputValue = {
             input: this.valueInput.value,
-            fraction: "0"
+            fraction: this.fractionInput ? parseInt(this.fractionInput.dataset["fraction"], 10) : 0
         };
         let modelValue;
 
@@ -183,6 +187,24 @@ class MeasurementInput extends React.Component {
         if (e.keyCode === 13) {
             this.valueInput.blur();
         }
+
+        if (this.props.unit === "in") {
+            if (e.keyCode === 40) {
+                const inputValue = this.state.inputValue;
+                if (inputValue.fraction > 0) {
+                    this.fractionInput.dataset["fraction"] = (inputValue.fraction - 1) + "";
+                    this.valueChanged(false);
+                }
+            }
+
+            if (e.keyCode === 38) {
+                const inputValue = this.state.inputValue;
+                if (inputValue.fraction < 7) {
+                    this.fractionInput.dataset["fraction"] = (inputValue.fraction + 1) + "";
+                    this.valueChanged(false);
+                }
+            }
+        }
     };
 
     selectCm = () => {
@@ -211,11 +233,26 @@ class MeasurementInput extends React.Component {
             classNames.push(this.props.fitRange);
         }
 
+        const fraction = this.state.inputValue.fraction;
+
         return (
             <div className={classNames.join(" ")}>
                 <span className="units" data-tip={true} data-for="unit-selector" data-event="click">{unitMarks[this.props.unit]}</span>
-                {this.props.unit === "in" && <span className="fractions">½</span>}
-                <ReactTooltip id="unit-selector" class="unit-selector" globalEventOff="click"
+
+                {this.props.unit === "in" && <span className="fractions" ref={el => this.fractionInput = el}
+                    data-fraction={fraction} data-tip={true} data-for="fraction-selector"
+                    data-event="click">{fractionList[fraction]}</span>}
+
+                <ReactTooltip id="fraction-selector" className="fraction-selector"
+                    place="right" type="light" effect="solid">
+                    <>
+                        {fractionList.forEach((frac, ind) =>
+                            <div className={`fraction ${fraction === ind ? "selected" : ""}`} key={`frac-${ind}`}>{frac}</div>
+                        )}
+                    </>
+                </ReactTooltip>
+
+                <ReactTooltip id="unit-selector" className="unit-selector" globalEventOff="click"
                     place="right" type="light" effect="solid">
                     <>
                         <div className={`unit ${this.props.unit === "cm" ? "selected" : ""}`}

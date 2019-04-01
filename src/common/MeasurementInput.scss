@@ -14,7 +14,6 @@
     height: 22px;
     line-height: 22px;
     font-weight: bold;
-    text-align: center;
     color: #333;
     background-color: transparent;
     box-sizing: border-box;
@@ -22,10 +21,13 @@
 
   &.measurement-units-cm input {
     width: calc(100% - 24px);
+    text-align: center;
   }
 
   &.measurement-units-in input {
-    width: calc(100% - 36px);
+    width: 50%;
+    text-align: right;
+    padding-right: 5px;
   }
 
   span.units, span.fractions {
@@ -33,18 +35,22 @@
     float: right;
     height: 22px;
     line-height: 22px;
-    text-align: center;
     cursor: pointer;
   }
 
   .units {
     width: 24px;
+    text-align: center;
   }
 
   .fractions {
-    width: 12px;
+    width: calc(50% - 24px);
     font-weight: bold;
     color: #333;
+    font-size: 125%;
+    text-align: left;
+    padding-left: 5px;
+    box-sizing: border-box;
   }
 
   .tooltip-trigger {
