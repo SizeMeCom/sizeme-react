@@ -1,17 +1,15 @@
 /* global require exports */
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
-const BabiliPlugin = require("babili-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
-exports.devServer = ({ host, port, publicPath } = {}) => ({
+exports.devServer = ({ host, port } = {}) => ({
     devServer: {
         historyApiFallback: true,
         stats: "errors-only",
@@ -54,68 +52,12 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
     }
 });
 
-const autoprefix = () => ({
-    loader: "postcss-loader",
-    options: {
-        plugins: () => ([
-            require("autoprefixer")
-        ])
-    }
-});
-
-exports.extractCSS = ({ include, exclude, filename } = {}) => {
-    // Output extracted CSS to a file
-    /*const plugin = new ExtractTextPlugin({
-        filename: filename || "[name].[contenthash:8].css",
-        allChunks: true
-    });*/
-
-    return {
-        module: {
-            rules: [
-                {
-                    test: /\.scss$/,
-                    include,
-                    exclude,
-                    //use: plugin.extract({
-                    use: ["css-loader", "sass-loader", autoprefix()],
-                    //fallback: "style-loader"
-                    //})
-                }
-            ]
-        },
-        //plugins: [plugin]
-    };
-};
-
 exports.purifyCSS = ({ paths }) => ({
     plugins: [
         new PurifyCSSPlugin({ paths })
     ]
 });
 
-/*exports.lintCSS = ({ include, exclude }) => ({
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                include,
-                exclude,
-                enforce: "pre",
-
-                loader: "postcss-loader",
-                options: {
-                    plugins: () => ([
-                        require("stylelint")({
-                            // Ignore node_modules CSS
-     *///                       ignoreFiles: "node_modules/**/*.css",
-     /*                   }),
-                    ]),
-                },
-            },
-        ],
-    },
-});*/
 
 exports.loadImages = ({ include, exclude, options } = {}) => ({
     module: {
@@ -154,12 +96,6 @@ exports.loadFonts = ({ include, exclude, options } = {}) => ({
 
 exports.generateSourceMaps = ({ type }) => ({
     devtool: type
-});
-
-exports.extractBundles = (bundles) => ({
-    plugins: bundles.map((bundle) => (
-        new webpack.optimize.CommonsChunkPlugin(bundle)
-    ))
 });
 
 exports.loadJavaScript = ({ include, exclude }) => ({
@@ -204,12 +140,6 @@ exports.attachRevision = () => {
     };
 };
 
-exports.minifyJavaScript = () => ({
-    plugins: [
-        new BabiliPlugin()
-    ]
-});
-
 exports.minifyCSS = ({ options }) => ({
     plugins: [
         new OptimizeCSSAssetsPlugin({
@@ -219,17 +149,6 @@ exports.minifyCSS = ({ options }) => ({
         })
     ]
 });
-
-/*exports.setFreeVariable = (key, value) => {
-    const env = {};
-    env[key] = JSON.stringify(value);
-
-    return {
-        plugins: [
-            new webpack.DefinePlugin(env),
-        ],
-    };
-};*/
 
 exports.page = (
     {

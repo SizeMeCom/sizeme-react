@@ -78,6 +78,7 @@ const developmentConfig = merge([
 
 const productionConfig = merge([
     {
+        mode: "production",
         performance: {
             hints: false, // 'error' or false are valid too
             maxEntrypointSize: 100000, // in bytes
@@ -95,20 +96,6 @@ const productionConfig = merge([
     parts.clean(PATHS.build),
     parts.generateSourceMaps({ type: "source-map" }),
     parts.loadCSS(),
-    parts.extractBundles([
-        /*{
-            name: "sizeme-vendor",
-            minChunks: ({ resource }) => (
-                resource &&
-                resource.indexOf("node_modules") >= 0 &&
-                resource.match(/\.js$/)
-            )
-        },*/
-        {
-            name: "sizeme-manifest",
-            minChunks: Infinity
-        }
-    ]),
     parts.loadImages({
         include: PATHS.images,
         options: {
@@ -116,7 +103,6 @@ const productionConfig = merge([
             name: "[name].[hash:8].[ext]"
         }
     }),
-    parts.minifyJavaScript(),
     parts.minifyCSS({
         options: {
             discardComments: {
