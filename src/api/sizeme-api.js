@@ -12,7 +12,7 @@ import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
 import equals from "shallow-equals";
-import cookie from "react-cookie";
+import Cookies from "universal-cookie";
 
 const sizemeOptions = () => window.sizeme_options || {};
 
@@ -20,6 +20,8 @@ const contextAddress = sizemeOptions().contextAddress || "https://www.sizeme.com
 const pluginVersion = sizemeOptions().pluginVersion || "UNKNOWN";
 const cdnLocation = "https://cdn.sizeme.com";
 const storeMeasurementsKey = "sizemeMeasurements";
+
+const cookies = new Cookies();
 
 const sizemeStore = (sizemeOpts => {
     if (!sizemeOpts) {
@@ -64,7 +66,7 @@ const sizemeStore = (sizemeOpts => {
             } else {
                 smAction = "hasProfile";
             }
-            cookie.save("sm_action", smAction, {path: "/"});
+            cookies.set("sm_action", smAction, {path: "/"});
         }
     );
 

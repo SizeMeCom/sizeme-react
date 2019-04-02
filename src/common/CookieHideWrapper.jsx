@@ -1,21 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import cookie from "react-cookie";
+import Cookies from "universal-cookie";
 import { trackEvent } from "../api/ga";
 
 const maxAge = 90 * 24 * 60 * 60; // 90 days
 const cookieName = "sizeme_no_product_splash";
 const listeners = [];
 
+const cookies = new Cookies();
+
 export const hideSizeMe = () => {
     trackEvent("noThanks", "Store: SizeMe, no thanks");
-    cookie.save(cookieName, "true", { path: "/", maxAge: maxAge });
+    cookies.set(cookieName, "true", { path: "/", maxAge: maxAge });
     for (const wrapper of listeners) {
         wrapper.hide();
     }
 };
 
-export const isSizeMeHidden = () => !!(cookie.load(cookieName));
+export const isSizeMeHidden = () => !!(cookies.get(cookieName));
 
 class CookieHideWrapper extends React.Component {
     constructor (props) {
@@ -47,7 +49,7 @@ class CookieHideWrapper extends React.Component {
                     {this.props.children}
                 </div>
             );
-        } 
+        }
     }
 }
 
