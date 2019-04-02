@@ -1,6 +1,4 @@
 /* global VERSION, BUILD_DATE */
-//import "@babel/polyfill";
-
 (async sizemeOptions => {
     if (!sizemeOptions) {
         return;
