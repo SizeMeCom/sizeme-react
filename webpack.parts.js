@@ -1,6 +1,6 @@
 /* global require exports */
 
-const PurifyCSSPlugin = require("purifycss-webpack");
+const PurgecssPlugin = require("purgecss-webpack-plugin");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
@@ -52,9 +52,9 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
     }
 });
 
-exports.purifyCSS = ({ paths }) => ({
+exports.purgeCSS = ({ paths }) => ({
     plugins: [
-        new PurifyCSSPlugin({ paths })
+        new PurgecssPlugin({ paths, rejected: true })
     ]
 });
 
@@ -120,9 +120,9 @@ exports.loadJavaScript = ({ include, exclude }) => ({
     }
 });
 
-exports.clean = (path) => ({
+exports.clean = () => ({
     plugins: [
-        new CleanWebpackPlugin([path])
+        new CleanWebpackPlugin()
     ]
 });
 

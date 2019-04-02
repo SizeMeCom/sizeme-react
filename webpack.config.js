@@ -5,6 +5,9 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const parts = require("./webpack.parts");
 const glob = require("glob");
+const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+
+
 
 const PATHS = {
     app: path.resolve(__dirname, "src"),
@@ -35,11 +38,18 @@ const commonConfig = merge([
     }),
     parts.lintJavaScript({ include: PATHS.app }),
     parts.loadJavaScript({ include: PATHS.app }),
-    parts.attachRevision()
+    parts.attachRevision(),
+    {
+        plugins: [
+            new DuplicatePackageCheckerPlugin()
+        ]
+    }
+
 ]);
 
 const developmentConfig = merge([
     {
+        mode: "development",
         output: {
             devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]"
         }
@@ -93,7 +103,7 @@ const productionConfig = merge([
         ]/*,
         recordsPath: path.join(__dirname, "records.json")*/
     },
-    parts.clean(PATHS.build),
+    parts.clean(),
     parts.generateSourceMaps({ type: "source-map" }),
     parts.loadCSS(),
     parts.loadImages({
@@ -114,7 +124,7 @@ const productionConfig = merge([
             zindex: false
         }
     }),
-    parts.purifyCSS({
+    parts.purgeCSS({
         paths: glob.sync(`${PATHS.app}/**/*`, { nodir: true })
     })
 ]);
