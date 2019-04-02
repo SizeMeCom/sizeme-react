@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { openLoginFrame } from "./LoginFrame.jsx";
 import "./SignupBox.scss";
 import validator from "validator";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import logo from "../images/sizeme_logo_plain_h22.png";
 import Modal from "react-modal";
@@ -133,4 +133,4 @@ SignupBox.propTypes = {
     signupDone: PropTypes.bool
 };
 
-export default translate()(SignupBox);
+export default withTranslation()(SignupBox);

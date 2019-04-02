@@ -10,7 +10,7 @@ import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
 import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
 import ReactTooltip from "react-tooltip";
 import { trackEvent } from "../api/ga";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import "./SizeGuide.scss";
 import { setTooltip } from "../api/actions";
 
@@ -37,7 +37,7 @@ class SizeGuide extends React.Component {
             }
         }
     };
-        
+
     openGuide = () => {
         this.setState({ guideIsOpen: true }, () => {
             if (this.props.loggedIn) {
@@ -127,7 +127,7 @@ class SizeGuide extends React.Component {
 
                         <div className="modal-footer">
                             <span className="sizeme-advertisement">
-                                <a id="sizeme_ad_link" href={contextAddress} 
+                                <a id="sizeme_ad_link" href={contextAddress}
                                     title={t("sizeGuide.advertisement")} target="_blank" rel="noopener noreferrer"/>
                             </span>
                         </div>
@@ -166,7 +166,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     onFitHover: setTooltip
 }, dispatch);
 
-export default translate()(connect(
+export default withTranslation()(connect(
     mapStateToProps,
     mapDispatchToProps
 )(SizeGuide));

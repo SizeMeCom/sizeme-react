@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { getResult } from "../api/ProductModel";
 import Optional from "optional-js";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class DetailedFit extends React.Component {
     constructor (props) {
@@ -67,4 +67,4 @@ DetailedFit.propTypes = {
     measurementName: PropTypes.func.isRequired
 };
 
-export default translate()(DetailedFit);
+export default withTranslation()(DetailedFit);

@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { translate } from "react-i18next";
-import { connect } from "react-redux";
+import {withTranslation} from "react-i18next";
+import {connect} from "react-redux";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import SizingBar from "./common/SizingBar.jsx";
 import SizeForm from "./common/SizeForm.jsx";
 import * as api from "./api/sizeme-api";
 import Optional from "optional-js";
-import { bindActionCreators } from "redux";
+import {bindActionCreators} from "redux";
 import SignupBox from "./common/SignupBox";
 import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
-import { trackEvent } from "./api/ga";
+import {trackEvent} from "./api/ga";
 import FitTooltip from "./common/FitTooltip";
 import LoginFrame from "./common/LoginFrame";
 import sizemeIcon from "./images/sizeme_icon.png";
@@ -35,7 +35,7 @@ class SizeMeTogglerComp extends React.Component {
     }
 }
 
-const SizemeToggler = translate()(SizeMeTogglerComp);
+const SizemeToggler = withTranslation()(SizeMeTogglerComp);
 
 SizeMeTogglerComp.propTypes = SizemeToggler.propTypes = {
     sizemeHidden: PropTypes.bool.isRequired,
@@ -160,4 +160,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setSizemeHidden: api.setSizemeHidden
 }, dispatch);
 
-export default translate()(connect(mapStateToProps, mapDispatchToProps)(SizeMeApp));
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SizeMeApp));

@@ -8,7 +8,7 @@ import DetailedFit from "./DetailedFit.jsx";
 import HoverContainer from "./HoverContainer.jsx";
 import Optional from "optional-js";
 import ReactTooltip from "react-tooltip";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class DetailsSizeSelector extends React.Component {
 
@@ -92,6 +92,6 @@ SizeGuideDetails.propTypes = {
     matchResult: PropTypes.object,
     product: PropTypes.object.isRequired,
     t: PropTypes.func
-};      
+};
 
-export default translate()(SizeGuideDetails);
+export default withTranslation()(SizeGuideDetails);
