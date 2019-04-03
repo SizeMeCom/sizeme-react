@@ -5,13 +5,13 @@ defaults: &defaults
 
 yarnDeps: &yarnDeps
   keys:
-    - v1-yarn-deps-{{ checksum "yarn.lock" }}
-    - v1-yarn-deps-
+    - v2-yarn-deps-{{ checksum "yarn.lock" }}
+    - v2-yarn-deps-
 
 yarnPaths: &yarnPaths
   paths:
     - node_modules
-  key: v1-yarn-deps-{{ checksum "yarn.lock" }}
+  key: v2-yarn-deps-{{ checksum "yarn.lock" }}
 
 deploy: &deploy
   <<: *defaults
@@ -55,7 +55,7 @@ jobs:
 
     docker:
       - image: circleci/node:11
-    
+
     steps:
       - checkout
 
@@ -104,7 +104,9 @@ workflows:
             tags:
               ignore: /.*/
             branches:
-              only: master
+              only:
+                - master
+                - dynamic-loading
 
       - deploy_to_prod:
           context: PROD

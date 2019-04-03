@@ -47,7 +47,7 @@ const commonConfig = merge([
 
 ]);
 
-const developmentConfig = merge([
+const developmentConfig = () => merge([
     {
         mode: "development",
         output: {
@@ -86,7 +86,7 @@ const developmentConfig = merge([
     parts.page({ template: "nosizeme.html", filename: "nosizeme.html" })
 ]);
 
-const productionConfig = merge([
+const productionConfig = env => merge([
     {
         mode: "production",
         performance: {
@@ -96,7 +96,8 @@ const productionConfig = merge([
         },
         output: {
             chunkFilename: "[name].[chunkhash:8].js",
-            filename: "[name].js" //"[name].[chunkhash:8].js"
+            filename: "[name].js",
+            publicPath: env["cdn"] ? "https://cdn.sizeme.com/store/" : "/"
         },
         plugins: [
             new webpack.HashedModuleIdsPlugin()
@@ -130,9 +131,16 @@ const productionConfig = merge([
 ]);
 
 module.exports = (env) => {
-    const config = env === "production" ?
-        productionConfig :
-        developmentConfig;
+    let config;
+    if (env.environment === "production") {
+        config = productionConfig;
+        console.log("Production build");
+        if (env["cdn"]) {
+            console.log("- CDN version");
+        }
+    } else {
+        config = developmentConfig;
+    }
 
-    return merge([commonConfig, config]);
+    return merge([commonConfig, config(env)]);
 };
