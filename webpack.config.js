@@ -97,7 +97,7 @@ const productionConfig = env => merge([
         output: {
             chunkFilename: "[name].[chunkhash:8].js",
             filename: "[name].js",
-            publicPath: env["cdn"] ? "https://cdn.sizeme.com/store/" : "/"
+            publicPath: env["cdn"] ? "https://cdn.sizeme.com/store/" : "https://test.sizeme.com/3.0/"
         },
         plugins: [
             new webpack.HashedModuleIdsPlugin()
