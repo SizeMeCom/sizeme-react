@@ -1,8 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { DefaultPlayer as Video } from "react-html5video";
 import MobileDetect from "mobile-detect";
 import { cdnLocation } from "../api/sizeme-api";
+import Loadable from "react-loadable";
+import Loading from "./Loading";
+
+const Video = Loadable({
+    loader: () => import("react-html5video"),
+    loading () {
+        return <Loading/>;
+    },
+    render(loaded, props) {
+        const DefaultPlayer = loaded.DefaultPlayer;
+        return <DefaultPlayer {...props}/>;
+    }
+});
 
 const videoUrl = cdnLocation + "/videos";
 

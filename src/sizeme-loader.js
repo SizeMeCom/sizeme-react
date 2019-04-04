@@ -1,7 +1,5 @@
 import {findVisibleElement, selectSize, setSizemeHidden, sizemeStore} from "./api/sizeme-api";
 import uiOptions from "./api/uiOptions";
-import SizeMeApp from "./SizeMeApp";
-import Modal from "react-modal";
 import {render} from "react-dom";
 import {I18nextProvider} from "react-i18next";
 import i18n from "./i18n";
@@ -10,6 +8,7 @@ import SizeSelector from "./api/SizeSelector";
 import React from "react";
 import {trackEvent} from "./api/ga";
 import "./scss/index.scss";
+import SizeMeAppWrapper from "./SizeMeAppWrapper";
 
 const {addToCartElement, addToCartEvent} = uiOptions;
 if (addToCartElement && addToCartEvent) {
@@ -42,12 +41,11 @@ const el = findVisibleElement(uiOptions.appendContentTo);
 
 if (el) {
     const section = el.appendChild(document.createElement("div"));
-    Modal.setAppElement(uiOptions.appendContentTo + " div");
     //noinspection RequiredAttributes
     render(
         <I18nextProvider i18n={i18n}>
             <Provider store={sizemeStore}>
-                <SizeMeApp/>
+                <SizeMeAppWrapper/>
             </Provider>
         </I18nextProvider>,
         section,

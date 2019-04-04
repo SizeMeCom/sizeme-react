@@ -8,6 +8,9 @@ import ReactTooltip from "react-tooltip";
 import logo from "../images/sizeme_logo_plain_h22.png";
 import Modal from "react-modal";
 import FontAwesome from "react-fontawesome";
+import uiOptions from "../api/uiOptions";
+
+Modal.setAppElement(uiOptions.appendContentTo + " div");
 
 class SignupBox extends React.Component {
     constructor (props) {
@@ -104,7 +107,7 @@ class SignupBox extends React.Component {
                                 data-place="bottom" data-type="light" data-class="signup-tooltip" data-effect="solid"
                             />
                             <input type="email" value={this.state.email} onChange={this.handleChange} onBlur={this.onBlur}
-                                onFocus={this.onFocus}placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
+                                onFocus={this.onFocus} placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
                             <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
                         </div>
                     </>)}

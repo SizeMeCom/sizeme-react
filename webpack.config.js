@@ -97,7 +97,7 @@ const productionConfig = env => merge([
         output: {
             chunkFilename: "[name].[chunkhash:8].js",
             filename: "[name].js",
-            publicPath: env["cdn"] ? "https://cdn.sizeme.com/store/" : "https://test.sizeme.com/3.0/"
+            publicPath: env["cdn"] ? env["cdn"] : "https://test.sizeme.com/3.0/"
         },
         plugins: [
             new webpack.HashedModuleIdsPlugin()
@@ -136,7 +136,7 @@ module.exports = (env) => {
         config = productionConfig;
         console.log("Production build");
         if (env["cdn"]) {
-            console.log("- CDN version");
+            console.log("- CDN: " + env["cdn"]);
         }
     } else {
         config = developmentConfig;
