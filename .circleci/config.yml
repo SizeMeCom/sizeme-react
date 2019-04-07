@@ -40,6 +40,10 @@ deploy: &deploy
        working_directory: docker
 
     - deploy:
+        name: Deploy frontend
+        command: aws s3 sync docker/dist/ s3://sizeme-bucket/store --exclude "*.html" --exclude .built --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+
+    - deploy:
        name: Push image
        command: docker push $NGINX_REPOSITORY_URI:$IMAGE_TAG
 
@@ -68,7 +72,7 @@ jobs:
 
       - run:
           name: Build
-          command: cat /dev/null | yarn build
+          command: cat /dev/null | yarn build-cdn
 
       - persist_to_workspace:
           root: .
