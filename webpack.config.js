@@ -101,11 +101,9 @@ const productionConfig = env => merge([
         },
         plugins: [
             new webpack.HashedModuleIdsPlugin()
-        ]/*,
-        recordsPath: path.join(__dirname, "records.json")*/
+        ]
     },
     parts.clean(),
-    parts.generateSourceMaps({ type: "source-map" }),
     parts.loadCSS(),
     parts.loadImages({
         include: PATHS.images,

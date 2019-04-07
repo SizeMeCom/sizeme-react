@@ -41,7 +41,7 @@ deploy: &deploy
 
     - deploy:
         name: Deploy frontend
-        command: aws s3 sync docker/dist/ s3://sizeme-bucket/store --exclude "*.html" --exclude .built --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+        command: aws s3 sync docker/dist/ s3://sizeme-bucket/store --exclude sizeme.js --exclude "*.html" --exclude .built --cache-control max-age=31536000,public --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 
     - deploy:
        name: Push image
