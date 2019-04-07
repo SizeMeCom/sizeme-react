@@ -40,9 +40,16 @@ deploy: &deploy
        working_directory: docker
 
     - deploy:
-        name: Deploy frontend
-        command: aws s3 sync docker/dist/ s3://sizeme-bucket/store --exclude sizeme.js --exclude "*.html" --exclude .built --cache-control max-age=31536000,public --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
-
+        name: Deploy client files
+        command: >-
+          aws s3 sync docker/dist/ s3://sizeme-bucket/store
+          --exclude sizeme.js --exclude sizeme.js --exclude "*.html" --exclude .built
+          --cache-control max-age=31536000,public
+          --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers &&
+          aws s3 sync docker/dist/ s3://sizeme-bucket/store
+          --include sizeme.js
+          --cache-control no-cache
+          --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
     - deploy:
        name: Push image
        command: docker push $NGINX_REPOSITORY_URI:$IMAGE_TAG
