@@ -43,11 +43,11 @@ deploy: &deploy
         name: Deploy client files
         command: >-
           aws s3 sync docker/dist/ s3://sizeme-bucket/store
-          --exclude sizeme.js --exclude sizeme.js --exclude "*.html" --exclude .built
+          --exclude sizeme.js
           --cache-control max-age=31536000,public
           --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers &&
           aws s3 cp docker/dist/sizeme.js s3://sizeme-bucket/store/$SIZEME_REACT_ARTIFACT
-          --cache-control no-cache
+          --cache-control s-maxage=3600,max-age=1800,public
           --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
     - deploy:
        name: Push image
@@ -116,7 +116,6 @@ workflows:
             branches:
               only:
                 - master
-                - dynamic-loading
 
       - deploy_to_prod:
           context: PROD
