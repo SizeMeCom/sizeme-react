@@ -5,13 +5,13 @@ defaults: &defaults
 
 yarnDeps: &yarnDeps
   keys:
-    - v1-yarn-deps-{{ checksum "yarn.lock" }}
-    - v1-yarn-deps-
+    - v2-yarn-deps-{{ checksum "yarn.lock" }}
+    - v2-yarn-deps-
 
 yarnPaths: &yarnPaths
   paths:
     - node_modules
-  key: v1-yarn-deps-{{ checksum "yarn.lock" }}
+  key: v2-yarn-deps-{{ checksum "yarn.lock" }}
 
 deploy: &deploy
   <<: *defaults
@@ -40,6 +40,16 @@ deploy: &deploy
        working_directory: docker
 
     - deploy:
+        name: Deploy client files
+        command: >-
+          aws s3 sync docker/dist/ s3://sizeme-bucket/store
+          --exclude sizeme.js
+          --cache-control max-age=31536000,public
+          --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers &&
+          aws s3 cp docker/dist/sizeme.js s3://sizeme-bucket/store/$SIZEME_REACT_ARTIFACT
+          --cache-control s-maxage=3600,max-age=1800,public
+          --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+    - deploy:
        name: Push image
        command: docker push $NGINX_REPOSITORY_URI:$IMAGE_TAG
 
@@ -55,7 +65,7 @@ jobs:
 
     docker:
       - image: circleci/node:11
-    
+
     steps:
       - checkout
 
@@ -68,7 +78,7 @@ jobs:
 
       - run:
           name: Build
-          command: cat /dev/null | yarn build
+          command: cat /dev/null | yarn build-cdn
 
       - persist_to_workspace:
           root: .
@@ -104,7 +114,8 @@ workflows:
             tags:
               ignore: /.*/
             branches:
-              only: master
+              only:
+                - master
 
       - deploy_to_prod:
           context: PROD

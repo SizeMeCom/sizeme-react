@@ -1,18 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Modal from "react-modal";
 import FontAwesome from "react-fontawesome";
-import SizeGuideItem from "./SizeGuideItem.jsx";
-import SizeGuideDetails from "./SizeGuideDetails.jsx";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setSelectedProfile, contextAddress } from "../api/sizeme-api";
-import SizeGuideProductInfo from "./SizeGuideProductInfo.jsx";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {setSelectedProfile} from "../api/sizeme-api";
 import ReactTooltip from "react-tooltip";
-import { trackEvent } from "../api/ga";
-import { translate } from "react-i18next";
+import {trackEvent} from "../api/ga";
+import {withTranslation} from "react-i18next";
 import "./SizeGuide.scss";
-import { setTooltip } from "../api/actions";
+import {setTooltip} from "../api/actions";
+import Loadable from "react-loadable";
+import Loading from "../common/Loading";
+
+const SizeGuideModal = Loadable({
+    loader: () => import("./SizeGuideModal"),
+    loading() {
+        return <Loading/>;
+    }
+});
 
 class SizeGuide extends React.Component {
     constructor (props) {
@@ -37,7 +42,7 @@ class SizeGuide extends React.Component {
             }
         }
     };
-        
+
     openGuide = () => {
         this.setState({ guideIsOpen: true }, () => {
             if (this.props.loggedIn) {
@@ -61,80 +66,24 @@ class SizeGuide extends React.Component {
 
     render () {
         const {
-            t, onSelectProfile, selectedProfile, profiles, selectedSize, product, matchResult, loggedIn
+            t, loggedIn
         } = this.props;
-        const { guideIsOpen, highlight } = this.state;
-        const selectedMatchResult = matchResult ? matchResult[selectedSize] : null;
-        const matchMap = selectedMatchResult ? new Map(Object.entries(selectedMatchResult.matchMap)) : new Map();
-        const measurements = new Map(Object.entries(product.item.measurements));
+        const { guideIsOpen } = this.state;
         const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
 
-        const detailSection = () => {
-            if (loggedIn) {
-                return (
-                    <SizeGuideDetails onSelectProfile={onSelectProfile}
-                                      selectedProfile={selectedProfile ? selectedProfile.id : ""}
-                                      profiles={profiles}
-                                      selectedSize={selectedSize}
-                                      onHover={this.onHover}
-                                      matchResult={matchResult}
-                                      product={product}
-                    />
-                );
-            } else {
-                return (
-                    <SizeGuideProductInfo measurements={product.item.measurements}
-                                          productModel={product.model}
-                                          onHover={this.onHover}
-                    />
-                );
-            }
+        const modalProps = {
+            ...this.state,
+            ...this.props,
+            closeGuide: this.closeGuide,
+            onHover: this.onHover
         };
 
         return (
             <div className="section-size-guide">
                 <a className="link-btn size-guide"
-                   onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
-                {guideIsOpen &&
-                <Modal
-                    isOpen={guideIsOpen}
-                    onRequestClose={this.closeGuide}
-                    contentLabel="Size Guide"
-                    className={`size-guide-modal ${this.props.matchState.state}`}
-                    overlayClassName="size-guide-overlay"
-                >
-                    <div className="modal-wrapper">
-                        <div className="modal-header">
-                            <span className="size-guide-title">
-                                {loggedIn ? t("detailed.windowTitle") : t("sizeGuide.windowTitle")} <span
-                                className="item-name">{product.name}</span>
-                            </span>
-                            <a className="size-guide-close" role="button" onClick={this.closeGuide}>
-                                <FontAwesome name="times" title={t("common.closeText")}/>
-                            </a>
-                        </div>
-
-                        <div className="modal-body">
-                            <div className="size-guide-content">
-                                <SizeGuideItem measurements={measurements} selectedSize={selectedSize}
-                                               highlight={highlight} matchMap={matchMap}
-                                               selectedProfile={selectedProfile}
-                                               model={product.model} isGuide={!loggedIn}
-                                />
-                                {detailSection()}
-                            </div>
-                        </div>
-
-                        <div className="modal-footer">
-                            <span className="sizeme-advertisement">
-                                <a id="sizeme_ad_link" href={contextAddress} 
-                                    title={t("sizeGuide.advertisement")} target="_blank" rel="noopener noreferrer"/>
-                            </span>
-                        </div>
-                    </div>
-                </Modal>}
-            </div>
-        );
+                    onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
+                {guideIsOpen && <SizeGuideModal {...modalProps}/>}
+            </div>);
     }
 }
 
@@ -166,7 +115,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     onFitHover: setTooltip
 }, dispatch);
 
-export default translate()(connect(
+export default withTranslation()(connect(
     mapStateToProps,
     mapDispatchToProps
 )(SizeGuide));

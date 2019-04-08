@@ -1,5 +1,5 @@
 /* global ga */
-import cookie from "react-cookie";
+import Cookies from "universal-cookie";
 
 const PENDING = -1;
 const DISABLED = 0;
@@ -8,8 +8,10 @@ const ENABLED = 1;
 const prodTrackingId = "UA-40735596-1";
 const devTrackingId = "UA-40735596-2";
 
+const cookies = new Cookies();
+
 const optanonConsent = () => {
-    const optanonConsent = cookie.load("OptanonConsent", false);
+    const optanonConsent = cookies.get("OptanonConsent", { doNotParse: false });
     if (!optanonConsent) {
         return PENDING;
     } else {

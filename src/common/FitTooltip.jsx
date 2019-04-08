@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { getResult } from "../api/ProductModel";
 import { connect } from "react-redux";
 
@@ -96,7 +96,7 @@ class FitTooltip extends React.Component {
             return <ReactTooltip id="fit-tooltip" type="light" place="right" className="fit-tooltip"/>;
         } else {
             return (
-                <ReactTooltip id="fit-tooltip" type="light" 
+                <ReactTooltip id="fit-tooltip" type="light"
                               place="right" className={`fit-tooltip ${measurement}`}>
                     {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
                     {overlap(fitData, t)}
@@ -124,4 +124,4 @@ const mapStateToProps = state => ({
         state.match.matchResult[state.selectedSize.size] : null
 });
 
-export default translate()(connect(mapStateToProps)(FitTooltip));
+export default withTranslation()(connect(mapStateToProps)(FitTooltip));

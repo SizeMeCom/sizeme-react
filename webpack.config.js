@@ -5,6 +5,9 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const parts = require("./webpack.parts");
 const glob = require("glob");
+const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+
+
 
 const PATHS = {
     app: path.resolve(__dirname, "src"),
@@ -17,7 +20,7 @@ process.traceDeprecation = true;
 const commonConfig = merge([
     {
         entry: {
-            sizeme: PATHS.app
+            sizeme: PATHS.app + "/index"
         },
         resolve: {
             extensions: [".js", ".jsx"]
@@ -35,11 +38,18 @@ const commonConfig = merge([
     }),
     parts.lintJavaScript({ include: PATHS.app }),
     parts.loadJavaScript({ include: PATHS.app }),
-    parts.attachRevision()
+    parts.attachRevision(),
+    {
+        plugins: [
+            new DuplicatePackageCheckerPlugin()
+        ]
+    }
+
 ]);
 
-const developmentConfig = merge([
+const developmentConfig = () => merge([
     {
+        mode: "development",
         output: {
             devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]"
         }
@@ -76,8 +86,9 @@ const developmentConfig = merge([
     parts.page({ template: "nosizeme.html", filename: "nosizeme.html" })
 ]);
 
-const productionConfig = merge([
+const productionConfig = env => merge([
     {
+        mode: "production",
         performance: {
             hints: false, // 'error' or false are valid too
             maxEntrypointSize: 100000, // in bytes
@@ -85,30 +96,15 @@ const productionConfig = merge([
         },
         output: {
             chunkFilename: "[name].[chunkhash:8].js",
-            filename: "[name].js" //"[name].[chunkhash:8].js"
+            filename: "[name].js",
+            publicPath: env["cdn"] ? env["cdn"] : "https://test.sizeme.com/3.0/"
         },
         plugins: [
             new webpack.HashedModuleIdsPlugin()
-        ]/*,
-        recordsPath: path.join(__dirname, "records.json")*/
+        ]
     },
-    parts.clean(PATHS.build),
-    parts.generateSourceMaps({ type: "source-map" }),
-    parts.extractCSS({ filename: "sizeme-styles.css" }),
-    parts.extractBundles([
-        {
-            name: "sizeme-vendor",
-            minChunks: ({ resource }) => (
-                resource &&
-                resource.indexOf("node_modules") >= 0 &&
-                resource.match(/\.js$/)
-            )
-        },
-        {
-            name: "sizeme-manifest",
-            minChunks: Infinity
-        }
-    ]),
+    parts.clean(),
+    parts.loadCSS(),
     parts.loadImages({
         include: PATHS.images,
         options: {
@@ -116,7 +112,6 @@ const productionConfig = merge([
             name: "[name].[hash:8].[ext]"
         }
     }),
-    parts.minifyJavaScript(),
     parts.minifyCSS({
         options: {
             discardComments: {
@@ -128,15 +123,22 @@ const productionConfig = merge([
             zindex: false
         }
     }),
-    parts.purifyCSS({
+    parts.purgeCSS({
         paths: glob.sync(`${PATHS.app}/**/*`, { nodir: true })
     })
 ]);
 
 module.exports = (env) => {
-    const config = env === "production" ?
-        productionConfig :
-        developmentConfig;
-    
-    return merge([commonConfig, config]);
+    let config;
+    if (env.environment === "production") {
+        config = productionConfig;
+        console.log("Production build");
+        if (env["cdn"]) {
+            console.log("- CDN: " + env["cdn"]);
+        }
+    } else {
+        config = developmentConfig;
+    }
+
+    return merge([commonConfig, config(env)]);
 };

@@ -11,7 +11,7 @@ import PantWaist from "./PantWaist";
 import Hips from "./Hips";
 import "./OverlapBox.scss";
 import ProductModel from "../api/ProductModel";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 const illustration = (measurement, overlap) => {
     switch (measurement) {
@@ -31,9 +31,9 @@ const illustration = (measurement, overlap) => {
         case "calfCircumference":
         case "ankleCircumference":
             return <Pinch overlap={overlap}/>;
-            
+
         case "outSeam":
-            return <Outseam overlap={overlap}/>;            
+            return <Outseam overlap={overlap}/>;
 
         case "footLength":
             return <Shoe overlap={overlap}/>;
@@ -74,7 +74,7 @@ class OverlapBox extends React.Component {
         const overlap = fit.overlap / illustrationDivider(humanProperty);
 
         return (
-            <div className="overlap-box" data-tip data-for="fit-tooltip" 
+            <div className="overlap-box" data-tip data-for="fit-tooltip"
                  data-effect="solid" data-place="bottom" onMouseEnter={hover}>
                 <div className="overlap-svg">
                     {illustration(humanProperty, overlap)}
@@ -97,4 +97,4 @@ OverlapBox.propTypes = {
     t: PropTypes.func
 };
 
-export default translate()(OverlapBox);
+export default withTranslation()(OverlapBox);

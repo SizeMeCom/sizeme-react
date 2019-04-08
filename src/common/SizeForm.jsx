@@ -12,9 +12,12 @@ import VideoGuide from "./VideoGuide.jsx";
 import Optional from "optional-js";
 import OverlapBox from "../illustrations/OverlapBox";
 import "./SizeForm.scss";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { setTooltip } from "../api/actions";
 import { trackEvent } from "../api/ga";
+import uiOptions from "../api/uiOptions";
+
+Modal.setAppElement(uiOptions.appendContentTo + " div");
 
 class SizeForm extends React.Component {
 
@@ -129,7 +132,7 @@ class SizeForm extends React.Component {
 
         return (
             <div className="measurement-input-table" ref={el => { this.elem = el; }}>
-                
+
                 {this.fields.map(({ field, humanProperty }) => (
                     <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
                         <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
@@ -179,7 +182,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     onOverlapBoxHover: setTooltip
 }, dispatch);
 
-export default translate()(connect(
+export default withTranslation()(connect(
     state => ({
         gender: Optional.ofNullable(state.selectedProfile)
             .flatMap(p => Optional.ofNullable(p.gender))

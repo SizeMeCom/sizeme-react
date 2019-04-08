@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DetailSection from "./DetailSection.jsx";
 import SizeSelector from "../api/SizeSelector";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import HoverContainer from "./HoverContainer.jsx";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
 import { openLoginFrame } from "../common/LoginFrame";
@@ -98,4 +98,4 @@ SizeGuideProductInfo.propTypes = {
     t: PropTypes.func
 };
 
-export default translate()(SizeGuideProductInfo);
+export default withTranslation()(SizeGuideProductInfo);

@@ -4,8 +4,11 @@ import { contextAddress } from "../api/sizeme-api";
 import Modal from "react-modal";
 import { trackEvent } from "../api/ga";
 import "./LoginFrame.scss";
+import uiOptions from "../api/uiOptions";
 
 const instances = {};
+
+Modal.setAppElement(uiOptions.appendContentTo + " div");
 
 const openLoginFrame = (id, mode = "login", email) => {
     if (instances[id]) {
@@ -28,7 +31,7 @@ class LoginFrame extends React.Component {
     receiveMessage = (e) => {
         if (!this.state.loginModalOpen) {
             return;
-        } 
+        }
         const origin = e.origin || e.originalEvent.origin;
         if (origin !== contextAddress) {
             return;
