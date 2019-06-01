@@ -66,6 +66,7 @@ class SizeMeApp extends React.Component {
                         </ReactTooltip>
                     </div>)}
                 </div>
+                {resolved && document.body.classList.add("sizeme-active")}
                 {measurementInputs && <SizeForm fields={measurementInputs} />}
                 {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match &&
                 <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone}/>}
