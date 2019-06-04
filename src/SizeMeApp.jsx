@@ -44,6 +44,14 @@ class SizeMeApp extends React.Component {
             .then(() => setSelectedProfile());
     };
 
+    componentDidMount () {
+        document.body.classList.add("sizeme-active");
+    }
+
+    componentWillUnmount () {
+        document.body.classList.remove("sizeme-active");
+    }
+
     render () {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
@@ -66,7 +74,6 @@ class SizeMeApp extends React.Component {
                         </ReactTooltip>
                     </div>)}
                 </div>
-                {resolved && document.body.classList.add("sizeme-active")}
                 {measurementInputs && <SizeForm fields={measurementInputs} />}
                 {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match &&
                 <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone}/>}
