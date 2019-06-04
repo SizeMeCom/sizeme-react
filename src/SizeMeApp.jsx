@@ -44,6 +44,14 @@ class SizeMeApp extends React.Component {
             .then(() => setSelectedProfile());
     };
 
+    componentDidMount () {
+        document.body.classList.add("sizeme-active");
+    }
+
+    componentWillUnmount () {
+        document.body.classList.remove("sizeme-active");
+    }
+
     render () {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
