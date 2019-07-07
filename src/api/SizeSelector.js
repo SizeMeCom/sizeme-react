@@ -210,8 +210,6 @@ const initSizeSelector = selectSizeFn => {
         const element = findVisibleElement(uiOptions.invokeElement);
         if (element) {
             return new constructor(element);
-        } else {
-            console.warn("Couldn't find selection element " + uiOptions.invokeElement);
         }
     };
     switch (uiOptions.sizeSelectorType) {
@@ -233,10 +231,10 @@ const initSizeSelector = selectSizeFn => {
 };
 
 const setSelectedSize = size => {
-    selector.setSelected(size);
+    selector && selector.setSelected(size);
 };
 const getClone = () => {
-    return selector.clone();
+    return selector ? selector.clone() : null;
 };
 const getSizeMapper = () => selector.sizeMapper;
 
