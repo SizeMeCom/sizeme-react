@@ -201,6 +201,30 @@ class HarrysOfLondonSelect extends AbstractSelect {
     }
 }
 
+class VilkasSelect extends DefaultSelect {
+    constructor (element) {
+        super(element, { event: "change" });
+
+        this.getSize = e => e.target.value;
+
+        const options = element.querySelectorAll("option");
+        const getSelectFn = (value) => () => {
+            this.el.value = value || "";
+            this.el.dispatchEvent(new Event("change"));
+            this.el.dispatchEvent(new Event("sizemeChange"));
+        };
+
+        for (let i = 0; i < options.length; i++) {
+            const option = options.item(i);
+            const value = option.getAttribute("value");
+            if (value) {
+                this.sizeMapper.push([value, option.textContent]);
+                this.selectors[value] = getSelectFn(value);
+            }
+        }
+    }
+}
+
 const initSizeSelector = selectSizeFn => {
     selectSize = size => {
         selectSizeFn(size);
@@ -223,6 +247,10 @@ const initSizeSelector = selectSizeFn => {
 
         case "harrys":
             selector = getInstance(HarrysOfLondonSelect);
+            break;
+
+        case "vilkas-selector":
+            selector = getInstance(VilkasSelect);
             break;
 
         default:
