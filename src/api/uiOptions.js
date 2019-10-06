@@ -21,6 +21,15 @@ const shops = {
         addToCartEvent: "click",
         firstRecommendation: true,
         sizeSelectorType: "default"
+    },
+    vilkas: {
+        appendContentTo: ".PriceContainer",
+        invokeElement: "#SelectedVariation0",
+        invokeEvent: "change",
+        addToCartElement: "button.AddToBasketButton",
+        addToCartEvent: "click",
+        firstRecommendation: true,
+        sizeSelectorType: "default"
     }
 };
 
