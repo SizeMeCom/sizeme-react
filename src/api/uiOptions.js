@@ -29,7 +29,7 @@ const shops = {
         addToCartElement: "button.AddToBasketButton",
         addToCartEvent: "click",
         firstRecommendation: true,
-        sizeSelectorType: "vilkas-selector"
+        sizeSelectorType: "default"
     }
 };
 
