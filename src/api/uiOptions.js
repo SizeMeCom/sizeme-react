@@ -1,6 +1,7 @@
 const general = {
     disableSizeGuide: false,
-    toggler: false
+    toggler: false,
+    firstRecommendation: true
 };
 
 const shops = {
@@ -28,7 +29,7 @@ const shops = {
         invokeEvent: "change",
         addToCartElement: "button.AddToBasketButton",
         addToCartEvent: "click",
-        firstRecommendation: true,
+        firstRecommendation: false,
         sizeSelectorType: "default"
     }
 };

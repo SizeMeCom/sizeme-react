@@ -58,6 +58,8 @@ class DefaultSelect extends AbstractSelect {
         }
     }
 
+    getSelectedSize = () => this.el.value;
+
     clearSelection = () => {
         this.el.value = "";
     };
@@ -103,6 +105,15 @@ class SwatchesSelect extends AbstractSelect {
                 this.sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
             }
         }
+
+        this.getSelectedSize = () => {
+            const selected = element.querySelector("li.selected");
+            if (selected) {
+                return getId(selected);
+            } else {
+                return "";
+            }
+        };
     }
 
     clone = () => {
@@ -143,6 +154,15 @@ class KooKenkaSwatchesSelect extends AbstractSelect {
             }
         };
 
+        this.getSelectedSize = () => {
+            const selected = element.querySelector("li.li_selected");
+            if (selected) {
+                return getId(selected);
+            } else {
+                return "";
+            }
+        };
+
         const options = element.querySelectorAll("li");
         const mkSelectFn = option => () => option.click();
         for (let i = 0; i < options.length; i++) {
@@ -166,6 +186,8 @@ class HarrysOfLondonSelect extends AbstractSelect {
                 return "";
             }
         };
+
+        this.getSelectedSize = this.getSize;
 
         const sizeMaps = {};
         const selectorMap = {};
@@ -239,6 +261,7 @@ const getClone = () => {
     return selector ? selector.clone() : null;
 };
 const getSizeMapper = () => selector.sizeMapper;
+const getSelectedSize = () => selector.getSelectedSize();
 
 
-export default { initSizeSelector, setSelectedSize, getClone, getSizeMapper };
+export default { initSizeSelector, setSelectedSize, getClone, getSizeMapper, getSelectedSize };
