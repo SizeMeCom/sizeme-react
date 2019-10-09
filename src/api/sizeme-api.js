@@ -467,10 +467,15 @@ function saveProfile () {
 
 function selectSize (size, auto) {
     return (dispatch, getState) => {
-        if (auto) {
-            SizeSelector.setSelectedSize(size);
+        const firstMatch = !uiOptions.firstRecommendation && getState().selectedSize.firstMatch;
+        if (!firstMatch) {
+            if (auto) {
+                SizeSelector.setSelectedSize(size);
+            }
+            dispatch(actions.selectSize({size, auto}));
+        } else {
+            dispatch(actions.selectSize({size: SizeSelector.getSelectedSize(), auto: false}));
         }
-        dispatch(actions.selectSize({ size, auto }));
 
         let match = null;
         let state = "match";
@@ -491,6 +496,9 @@ function selectSize (size, auto) {
             }
         } else {
             state = "no-fit";
+        }
+        if (firstMatch && matchResult.recommendedFit === currentSize) {
+            dispatch(actions.selectSize({auto: true}));
         }
         dispatch(actions.setMatchState({ match, state }));
     };

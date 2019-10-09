@@ -133,10 +133,12 @@ const tooltip = handleAction(actions.SET_TOOLTIP, (state, action) => action.payl
 
 const selectedSize = handleAction(actions.SELECT_SIZE, (state, action) => ({
     ...state,
-    ...action.payload
+    ...action.payload,
+    firstMatch: false
 }), {
     size: "",
-    auto: false
+    auto: false,
+    firstMatch: true
 });
 
 const abStatus = handleAction(actions.SET_AB_STATUS, (state, action) => action.payload, null);
