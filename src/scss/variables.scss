@@ -12,6 +12,8 @@ $recommendation_color: #5fc153;
 
 $border_radius: 4px;
 
+$base_z_index: 10100; /* kookenkä's header has z-index of 10020.. */
+
 @mixin default_tooltip() {
   color: black !important;
   background-color: $bg_color !important;

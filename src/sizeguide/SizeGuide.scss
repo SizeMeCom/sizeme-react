@@ -83,7 +83,7 @@ a.link-btn.size-guide {
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.75);
-  z-index: 10;
+  z-index: $base_z_index;
 }
 
 .size-guide-modal {
@@ -252,7 +252,7 @@ a.link-btn.size-guide {
 
     .size-guide-details-section {
       flex: 1;
-      
+
       .product-info-table {
         border-collapse: separate;
         border-spacing: 3px;

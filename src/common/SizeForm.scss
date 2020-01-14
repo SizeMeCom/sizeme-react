@@ -138,7 +138,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.5);
-  z-index: 10100; /* kookenkä's header has z-index of 10020.. */
+  z-index: $base_z_index;
 }
 
 .measurement-guide-modal {

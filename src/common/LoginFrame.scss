@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.5);
-  z-index: 11;
+  z-index: $base_z_index + 1;
 }
 
 .login-frame-modal {
