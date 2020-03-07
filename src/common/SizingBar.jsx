@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, { DEFAULT_OPTIMAL_FIT, fitRanges } from "../api/ProductModel";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
@@ -121,9 +121,27 @@ class SizingBar extends React.Component {
         }
     }
 
-    getFitPosition (value) {
-        return Math.max(0,
-            (Math.min(value, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
+    getFitPosition (value,matchMap) {
+        let { fitRecommendation } = this.props;
+        let newPos = Math.max(0, (Math.min(value, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
+        if (fitRecommendation == 1000) {
+            let maxStretch = DEFAULT_OPTIMAL_STRETCH;
+            if (matchMap) {
+                let matchArr = Object.keys(matchMap).map((k) => matchMap[k]);
+                maxStretch = Math.max.apply(Math, matchArr.map(function(o) { return o.componentStretch; }));
+                if (value > 1000) {
+                    newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
+                } else if (value == 1000) {
+                    const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
+                    newPos = (maxStretch > stretchBreakpoint) ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint) * 20)) : Math.max(40, 60 - (maxStretch / stretchBreakpoint * 20));
+                } else if (value < 1000) {
+                    newPos = Math.max(0, 20 - ((1000 - value) / 55 * 20));
+                }
+            } else {
+                newPos = 50;
+            }
+        }
+        return newPos;
     }
 
     getFitRange () {
@@ -157,9 +175,9 @@ class SizingBar extends React.Component {
                         {t(`sizingBarRangeLabel.${fit.label}`)}
                     </div>
                 ))}
-                {doShowFit && fitRecommendation > 1000 && <RecommendationIndicator t={t}
+                {doShowFit && fitRecommendation >= 1000 && <RecommendationIndicator t={t}
                     value={this.getFitPosition(fitRecommendation)}/>}
-                {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit)} t={t}
+                {doShowFit && <FitIndicator value={this.getFitPosition(match.totalFit, match.matchMap)} t={t}
                                                    fitRange={this.getFitRange()} selectedSize={size}/>}
             </div>
         );

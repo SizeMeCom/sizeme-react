@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import SizeGuideModel, { DEFAULT_OPTIMAL_FIT } from "./ProductModel";
+import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH } from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
@@ -363,7 +363,7 @@ function doMatch (fitRequest, token, useProfile) {
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
-    const [bestMatch] = fitResults
+    let [bestMatch] = fitResults
         .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
         .reduce(([accSize, fit], [size, res]) => {
             const newFit = Math.abs(res.totalFit - optFit);
@@ -373,6 +373,21 @@ function getRecommendedFit (fitResults, optimalFit) {
                 return [accSize, fit];
             }
         }, [null, 0]);
+    if (optFit == 1000) {
+        const optStretch = DEFAULT_OPTIMAL_STRETCH;
+        [bestMatch] = fitResults
+            .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
+            .reduce(([accSize, fit], [size, res]) => {
+                let matchArr = Object.keys(res.matchMap).map((k) => res.matchMap[k]);
+                let maxStretch = Math.max.apply(Math, matchArr.map(function(o) { return o.componentStretch; }));
+                const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
+                if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
+                    return [size, newFit];
+                } else {
+                    return [accSize, fit];
+                }
+            }, [null, 0]);
+    }
     return bestMatch;
 }
 
