@@ -123,25 +123,25 @@ class SizingBar extends React.Component {
 
     getFitPosition (value,matchMap) {
         let { fitRecommendation } = this.props;
-        let newPos = Math.max(0, (Math.min(value, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
-        if (fitRecommendation == 1000) {
+        if (fitRecommendation === 1000) {
             let maxStretch = DEFAULT_OPTIMAL_STRETCH;
+            let newPos = 50;
             if (matchMap) {
-                let matchArr = Object.keys(matchMap).map((k) => matchMap[k]);
-                maxStretch = Math.max.apply(Math, matchArr.map(function(o) { return o.componentStretch; }));
+                let matchArr = Object.values(matchMap);
+                maxStretch = Math.max.apply(null, matchArr.map(o => o.componentStretch));
                 if (value > 1000) {
                     newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
-                } else if (value == 1000) {
+                } else if (value === 1000) {
                     const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
                     newPos = (maxStretch > stretchBreakpoint) ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint) * 20)) : Math.max(40, 60 - (maxStretch / stretchBreakpoint * 20));
                 } else if (value < 1000) {
                     newPos = Math.max(0, 20 - ((1000 - value) / 55 * 20));
                 }
-            } else {
-                newPos = 50;
             }
+            return newPos;
+        } else {
+            return Math.max(0, (Math.min(value, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale);
         }
-        return newPos;
     }
 
     getFitRange () {

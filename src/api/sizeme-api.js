@@ -363,25 +363,27 @@ function doMatch (fitRequest, token, useProfile) {
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
-    let [bestMatch] = fitResults
-        .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
-        .reduce(([accSize, fit], [size, res]) => {
-            const newFit = Math.abs(res.totalFit - optFit);
-            if (newFit <= maxDist && (!accSize || newFit < fit)) {
-                return [size, newFit];
-            } else {
-                return [accSize, fit];
-            }
-        }, [null, 0]);
-    if (optFit == 1000) {
+    let [bestMatch] = [];
+    if (optFit === 1000) {
         const optStretch = DEFAULT_OPTIMAL_STRETCH;
         [bestMatch] = fitResults
             .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
             .reduce(([accSize, fit], [size, res]) => {
-                let matchArr = Object.keys(res.matchMap).map((k) => res.matchMap[k]);
-                let maxStretch = Math.max.apply(Math, matchArr.map(function(o) { return o.componentStretch; }));
+                let matchArr = Object.values(res.matchMap);
+                let maxStretch = Math.max.apply(null, matchArr.map(o => o.componentStretch));
                 const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
                 if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
+                    return [size, newFit];
+                } else {
+                    return [accSize, fit];
+                }
+            }, [null, 0]);
+    } else {
+        [bestMatch] = fitResults
+            .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
+            .reduce(([accSize, fit], [size, res]) => {
+                const newFit = Math.abs(res.totalFit - optFit);
+                if (newFit <= maxDist && (!accSize || newFit < fit)) {
                     return [size, newFit];
                 } else {
                     return [accSize, fit];
