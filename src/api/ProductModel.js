@@ -250,9 +250,9 @@ function init(itemTypeArr) {
     // load item drawing
     switch (itemTypeArr[0]) {
 
-        case 1:	// shirts/coats
+        case 1: // shirts/coats
             switch (itemTypeArr[1]) { // collar
-                case 2:	// tight (turnover)
+                case 2: // tight (turnover)
                     itemDrawing.coords.push({X: 0, Y: -60}, {
                         X: 119,
                         Y: -48,
@@ -276,14 +276,14 @@ function init(itemTypeArr) {
                             {X: 37, Y: 78, cp1X: 60, cp1Y: 106, cp2X: 51, cp2Y: 101},
                             {X: -12, Y: 111, cp1X: 24, cp1Y: 8, cp2X: -32, cp2Y: 66}
                         ], noMirror: true
-                    });	// non mirrored turnover collar right
+                    }); // non mirrored turnover collar right
                     itemDrawing.accents.push({
                         type: "line", coords: [{X: -129, Y: 0},
                             {X: -136, Y: 26, cp1X: -132, cp1Y: 14, cp2X: -133, cp2Y: 18},
                             {X: -90, Y: 127, cp1X: -127, cp1Y: 68, cp2X: -106, cp2Y: 110},
                             {X: -9, Y: 59, cp1X: -33, cp1Y: 88, cp2X: -61, cp2Y: 25}
                         ], noMirror: true
-                    });	// non mirrored turnover collar left
+                    }); // non mirrored turnover collar left
                     itemDrawing.accents.push({type: "circle", coords: [{X: 0, Y: 100, R: 5}]});
                     arrows.neck_opening_width = {
                         mirror: false,
@@ -315,7 +315,7 @@ function init(itemTypeArr) {
                     };
 
                     break;
-                case 3:	// hood
+                case 3: // hood
                     itemDrawing.coords.push({X: 0, Y: -390}, {
                         X: 185,
                         Y: 6,
@@ -327,7 +327,7 @@ function init(itemTypeArr) {
                     itemDrawing.accents.push({
                         type: "line",
                         coords: [{X: 185, Y: 6}, {X: 0, Y: 123, cp1X: 140, cp1Y: 70, cp2X: 70, cp2Y: 100}]
-                    });	// basic round collar line
+                    }); // basic round collar line
                     itemDrawing.accents.push({
                         type: "area",
                         coords: [{X: 0, Y: -320}, {
@@ -346,12 +346,12 @@ function init(itemTypeArr) {
                         lift: true
                     };
                     break;
-                case 5:	// open high round
+                case 5: // open high round
                     itemDrawing.coords.push({X: 0, Y: 90}, {X: 189, Y: 0});
                     itemDrawing.accents.push({
                         type: "line",
                         coords: [{X: 210, Y: 6}, {X: 0, Y: 123, cp1X: 165, cp1Y: 70, cp2X: 100, cp2Y: 123}]
-                    });	// open round collar line
+                    }); // open round collar line
                     itemDrawing.accents.push({
                         type: "area",
                         coords: [{X: 0, Y: 49}, {X: 189, Y: 0, cp1X: 100, cp1Y: 47, cp2X: 155, cp2Y: 23}, {
@@ -364,12 +364,12 @@ function init(itemTypeArr) {
                         }]
                     }); // open collar area
                     break;
-                case 6:	// open low round
+                case 6: // open low round
                     itemDrawing.coords.push({X: 0, Y: 180}, {X: 164, Y: 0});
                     itemDrawing.accents.push({
                         type: "line",
                         coords: [{X: 181, Y: 5}, {X: 0, Y: 196, cp1X: 146, cp1Y: 196, cp2X: 50, cp2Y: 196}]
-                    });	// collar line
+                    }); // collar line
                     itemDrawing.accents.push({
                         type: "area",
                         coords: [{X: 0, Y: 47}, {X: 164, Y: 0, cp1X: 55, cp1Y: 45, cp2X: 130, cp2Y: 23}, {
@@ -382,12 +382,12 @@ function init(itemTypeArr) {
                         }]
                     }); // basic area
                     break;
-                case 7:	// v-style high
+                case 7: // v-style high
                     itemDrawing.coords.push({X: 0, Y: 90}, {X: 189, Y: 0});
                     itemDrawing.accents.push({
                         type: "line",
                         coords: [{X: 210, Y: 6}, {X: 0, Y: 123, cp1X: 165, cp1Y: 70, cp2X: 80, cp2Y: 100}]
-                    });	// open round collar line
+                    }); // open round collar line
                     itemDrawing.accents.push({
                         type: "area",
                         coords: [{X: 0, Y: 47}, {X: 189, Y: 0, cp1X: 80, cp1Y: 45, cp2X: 155, cp2Y: 23}, {
@@ -400,12 +400,12 @@ function init(itemTypeArr) {
                         }]
                     }); // open collar area
                     break;
-                case 8:	// v-style low
+                case 8: // v-style low
                     itemDrawing.coords.push({X: 0, Y: 90}, {X: 189, Y: 0});
                     itemDrawing.accents.push({
                         type: "line",
                         coords: [{X: 210, Y: 6}, {X: 0, Y: 123, cp1X: 165, cp1Y: 70, cp2X: 80, cp2Y: 100}]
-                    });	// open round collar line
+                    }); // open round collar line
                     itemDrawing.accents.push({
                         type: "area",
                         coords: [{X: 0, Y: 47}, {X: 189, Y: 0, cp1X: 80, cp1Y: 45, cp2X: 155, cp2Y: 23}, {
@@ -418,12 +418,12 @@ function init(itemTypeArr) {
                         }]
                     }); // open collar area
                     break;
-                default:	// elastic round
+                default:    // elastic round
                     itemDrawing.coords.push({X: 0, Y: 90}, {X: 164, Y: 0});
                     itemDrawing.accents.push({
                         type: "line",
                         coords: [{X: 185, Y: 6}, {X: 0, Y: 110, cp1X: 140, cp1Y: 70, cp2X: 70, cp2Y: 108}]
-                    });	// basic round collar line
+                    }); // basic round collar line
                     itemDrawing.accents.push({
                         type: "area",
                         coords: [{X: 0, Y: 47}, {X: 164, Y: 0, cp1X: 55, cp1Y: 45, cp2X: 130, cp2Y: 23}, {
@@ -439,8 +439,8 @@ function init(itemTypeArr) {
             }
 
             switch (itemTypeArr[3]) { // sleeve length
-                case 0:	// tank top, string top or poncho
-                case 1:	// very short (vest)
+                case 0: // tank top, string top or poncho
+                case 1: // very short (vest)
                     itemDrawing.coords.push({X: 289, Y: 34});
                     itemDrawing.coords.push({X: 250, Y: 399, cp1X: 285, cp1Y: 44, cp2X: 220, cp2Y: 389});
                     arrows.shoulder_width = {
@@ -480,7 +480,7 @@ function init(itemTypeArr) {
                     };
 
                     switch (itemTypeArr[2]) { // shoulder types
-                        case 3:	// dropped
+                        case 3: // dropped
                             itemDrawing.accents.push({
                                 type: "line",
                                 coords: [{X: 250, Y: 399}, {X: 381, Y: 184}]
@@ -493,7 +493,7 @@ function init(itemTypeArr) {
                                 midCircle: {X: 406, Y: 243}
                             };
                             break;
-                        case 2:	// raglan line
+                        case 2: // raglan line
                             itemDrawing.accents.push({
                                 type: "line",
                                 coords: [{X: 250, Y: 399}, {
@@ -513,7 +513,7 @@ function init(itemTypeArr) {
                                 midCircle: {X: 406, Y: 243}
                             };
                             break;
-                        case 1:	// normal shoulder line
+                        case 1: // normal shoulder line
                             arrows.sleeve = {
                                 mirror: false,
                                 coords: [{X: 329, Y: 44}, {X: 482, Y: 460}],
@@ -552,7 +552,7 @@ function init(itemTypeArr) {
                     };
 
                     switch (itemTypeArr[2]) { // shoulder types
-                        case 3:	// dropped
+                        case 3: // dropped
                             itemDrawing.accents.push({
                                 type: "line",
                                 coords: [{X: 250, Y: 399}, {X: 369, Y: 196}]
@@ -565,7 +565,7 @@ function init(itemTypeArr) {
                                 midCircle: {X: 450, Y: 444}
                             };
                             break;
-                        case 2:	// raglan line
+                        case 2: // raglan line
                             itemDrawing.accents.push({
                                 type: "line",
                                 coords: [{X: 250, Y: 399}, {
@@ -585,7 +585,7 @@ function init(itemTypeArr) {
                                 midCircle: {X: 450, Y: 444}
                             };
                             break;
-                        case 1:	// normal shoulder line
+                        case 1: // normal shoulder line
                             arrows.sleeve = {
                                 mirror: false,
                                 coords: [{X: 329, Y: 44}, {X: 527, Y: 719}],
@@ -616,7 +616,7 @@ function init(itemTypeArr) {
                         lift: false
                     };
 
-                    if (itemTypeArr[4] === 1) {	// elastic
+                    if (itemTypeArr[4] === 1) { // elastic
                         itemDrawing.coords.push({X: 556, Y: 902}, {X: 547, Y: 930}, {X: 557, Y: 978}, {
                             X: 463,
                             Y: 998
@@ -645,7 +645,7 @@ function init(itemTypeArr) {
                     }
 
                     switch (itemTypeArr[2]) { // shoulder types
-                        case 3:	// dropped
+                        case 3: // dropped
                             itemDrawing.accents.push({
                                 type: "line",
                                 coords: [{X: 250, Y: 399}, {X: 369, Y: 196}]
@@ -658,7 +658,7 @@ function init(itemTypeArr) {
                                 midCircle: {X: 437, Y: 444}
                             };
                             break;
-                        case 2:	// raglan line
+                        case 2: // raglan line
                             itemDrawing.accents.push({
                                 type: "line",
                                 coords: [{X: 250, Y: 399}, {
@@ -678,7 +678,7 @@ function init(itemTypeArr) {
                                 midCircle: {X: 437, Y: 444}
                             };
                             break;
-                        case 1:	// normal shoulder line
+                        case 1: // normal shoulder line
                             arrows.sleeve = {
                                 mirror: false,
                                 coords: [{X: 329, Y: 44}, {X: 569, Y: 975}],
@@ -702,7 +702,7 @@ function init(itemTypeArr) {
             }
 
             switch (itemTypeArr[5]) { // waistband
-                case 0:	// poncho dude
+                case 0: // poncho dude
                     itemDrawing.coords.push({X: 550, Y: 750, cp1X: 450, cp1Y: 70, cp2X: 450, cp2Y: 550});
                     itemDrawing.coords.push({X: 0, Y: 1038, cp1X: 450, cp1Y: 800, cp2X: 400, cp2Y: 1038});
                     arrows.front_height = {
@@ -719,8 +719,8 @@ function init(itemTypeArr) {
                         midCircle: {X: 480, Y: 444}
                     };
                     break;
-                case 3:	// pant waist
-                    if (itemTypeArr[6] === 1) {	// elastic
+                case 3: // pant waist
+                    if (itemTypeArr[6] === 1) { // elastic
                         itemDrawing.coords.push({
                             X: 250,
                             Y: 908,
@@ -758,16 +758,16 @@ function init(itemTypeArr) {
                         };
                     }
                     break;
-                case 4:	// hips
+                case 4: // hips
                 /* falls through */
-                case 5:	// half-way-thigh
+                case 5: // half-way-thigh
                 /* falls through */
                 default: {
                     let $baseY = 978;
                     if (itemTypeArr[5] === 5) {
                         $baseY = 1038;
                     }
-                    if (itemTypeArr[6] === 1) {	// elastic
+                    if (itemTypeArr[6] === 1) { // elastic
                         itemDrawing.coords.push({
                             X: 250,
                             Y: $baseY,
@@ -815,9 +815,9 @@ function init(itemTypeArr) {
                 }
             }
 
-            break;	// case 1 shirts/coats
+            break;  // case 1 shirts/coats
 
-        case 2:	// trousers/shorts
+        case 2: // trousers/shorts
             itemDrawing.mirror = false; // for accents mainly
             itemDrawing.coords.push({X: -232, Y: 0}, {
                 X: 222,
@@ -829,12 +829,12 @@ function init(itemTypeArr) {
             }, {X: 263, Y: 171});
 
             switch (itemTypeArr[3]) { // sleeve
-                case 1:	// very short
-                case 2:	// short
-                case 3:	// short-medium
+                case 1: // very short
+                case 2: // short
+                case 3: // short-medium
                     itemDrawing.coords.push({X: 278, Y: 449}, {X: 38, Y: 474});
                     break;
-                case 4:	// medium
+                case 4: // medium
                     itemDrawing.coords.push({X: 291, Y: 626}, {X: 71, Y: 651});
                     break;
                 case 5:  // semi-long
@@ -846,9 +846,9 @@ function init(itemTypeArr) {
             itemDrawing.coords.push({X: 5, Y: 297}, {X: -17, Y: 297});
 
             switch (itemTypeArr[3]) { // sleeve again as not mirror
-                case 1:	// very short
-                case 2:	// short
-                case 3:	// short-medium
+                case 1: // very short
+                case 2: // short
+                case 3: // short-medium
                     itemDrawing.coords.push({X: -38, Y: 474}, {X: -278, Y: 449});
                     arrows.outseam = {
                         mirror: false,
@@ -862,7 +862,7 @@ function init(itemTypeArr) {
                         lift: false
                     };
                     break;
-                case 4:	// medium
+                case 4: // medium
                     itemDrawing.coords.push({X: -71, Y: 651}, {X: -291, Y: 626});
                     arrows.outseam = {
                         mirror: false,
@@ -897,49 +897,64 @@ function init(itemTypeArr) {
                 },
                 {
                     type: "line",
-                    coords: [{X: -237, Y: 37}, {X: 229, Y: 37, cp1X: -137, cp1Y: 76, cp2X: 129, cp2Y: 76}]
-                },
-                {
-                    type: "line",
-                    coords: [{X: -14, Y: 19}, {X: -8, Y: 297, cp1X: 3, cp1Y: 114, cp2X: 0, cp2Y: 215}]
-                },
-                {
-                    type: "line",
-                    coords: [{X: -4, Y: 254}, {X: 29, Y: 64, cp1X: 34, cp1Y: 242, cp2X: 35, cp2Y: 188}]
-                },
-                {
-                    type: "line",
                     coords: [{X: -233, Y: 160}, {X: -147, Y: 81, cp1X: -182, cp1Y: 157, cp2X: -152, cp2Y: 123}]
                 },
                 {
                     type: "line",
                     coords: [{X: 150, Y: 85}, {X: 236, Y: 164, cp1X: 158, cp1Y: 128, cp2X: 195, cp2Y: 160}]
                 });
-            if (itemTypeArr[6] === "4") {	// rope waistband
-                itemDrawing.accents.push(
-                    {
-                        type: "line",
-                        coords: [{X: 9, Y: 49}, {X: 8, Y: 47, cp1X: -24, cp1Y: 168, cp2X: -69, cp2Y: 84}]
-                    },
-                    {
-                        type: "line",
-                        coords: [{X: 9, Y: 50}, {X: 8, Y: 49, cp1X: 47, cp1Y: 149, cp2X: 70, cp2Y: 99}]
-                    },
-                    {
-                        type: "line",
-                        coords: [{X: 9, Y: 49}, {X: 49, Y: 49, cp1X: 27, cp1Y: 59, cp2X: 36, cp2Y: 54}]
-                    },
-                    {
-                        type: "line",
-                        coords: [{X: 9, Y: 49}, {X: 9, Y: 64, cp1X: 11, cp1Y: 54, cp2X: 11, cp2Y: 54}]
-                    });
-            } else {
-                itemDrawing.accents.push({type: "circle", coords: [{X: 9, Y: 48, R: 10}]});
+            switch (itemTypeArr[6]) { // trouser waistband
+                case 4: // rope waistband
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: 9, Y: 49}, {X: 8, Y: 47, cp1X: -24, cp1Y: 168, cp2X: -69, cp2Y: 84}]
+                        },
+                        {
+                            type: "line",
+                            coords: [{X: 9, Y: 50}, {X: 8, Y: 49, cp1X: 47, cp1Y: 149, cp2X: 70, cp2Y: 99}]
+                        },
+                        {
+                            type: "line",
+                            coords: [{X: 9, Y: 49}, {X: 49, Y: 49, cp1X: 27, cp1Y: 59, cp2X: 36, cp2Y: 54}]
+                        },
+                        {
+                            type: "line",
+                            coords: [{X: 9, Y: 49}, {X: 9, Y: 64, cp1X: 11, cp1Y: 54, cp2X: 11, cp2Y: 54}]
+                        });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: 3, Y: 69}, {X: -4, Y: 297, cp1X: 3, cp1Y: 134, cp2X: 0, cp2Y: 215}]
+                        });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: -237, Y: 37}, {X: 229, Y: 37, cp1X: -137, cp1Y: 76, cp2X: 129, cp2Y: 76}]
+                        });
+                    break;
+                default:
+                    itemDrawing.accents.push({type: "circle", coords: [{X: 9, Y: 48, R: 10}]});
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: -14, Y: 19}, {X: -8, Y: 297, cp1X: 3, cp1Y: 114, cp2X: 0, cp2Y: 215}]
+                        },
+                        {
+                            type: "line",
+                            coords: [{X: -4, Y: 254}, {X: 29, Y: 64, cp1X: 34, cp1Y: 242, cp2X: 35, cp2Y: 188}]
+                        });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: -237, Y: 37}, {X: 229, Y: 37, cp1X: -137, cp1Y: 76, cp2X: 129, cp2Y: 76}]
+                        });
+                    break;
             }
 
-            break; 	// case 2 trousers
+            break;  // case 2 trousers
 
-        case 3:	// shoes for my friends
+        case 3: // shoes for my friends
             itemDrawing.mirror = false;
             itemDrawing.coords = [{X: 130, Y: 0}, {X: 363, Y: 456, cp1X: 240, cp1Y: 8, cp2X: 345, cp2Y: 214},
                 {X: 328, Y: 633, cp1X: 358, cp1Y: 532, cp2X: 328, cp2Y: 564}, {
@@ -1009,11 +1024,11 @@ function init(itemTypeArr) {
                     }, {X: 164, Y: 539, cp1X: 65, cp1Y: 457, cp2X: 129, cp2Y: 509}]
                 }
             ];
-            break;	// case 3 shoes
+            break;  // case 3 shoes
 
-        case 4:	// hats off
+        case 4: // hats off
             switch (itemTypeArr[1]) {
-                case 1:	// bucket
+                case 1: // bucket
                     itemDrawing.mirror = false;
                     itemDrawing.coords = [{X: 300, Y: 0},
                         {X: 522, Y: 214, cp1X: 452, cp1Y: 17, cp2X: 458, cp2Y: 61},
@@ -1033,7 +1048,7 @@ function init(itemTypeArr) {
                         }];
                     break;
             }
-            break;	// case 4 hats
+            break;  // case 4 hats
     }
 
     return {
