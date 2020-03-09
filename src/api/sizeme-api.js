@@ -258,6 +258,10 @@ function getProduct () {
         }
 
         if (!product.SKU) {
+            if (!product.item.itemType) {
+                dispatch(actions.receiveProductInfo(new Error("no product")));
+                return false;
+            }
             const model = new SizeGuideModel(sizeme_product.item);
             // eslint-disable-next-line camelcase
             dispatch(actions.receiveProductInfo({ ...sizeme_product, model }));
