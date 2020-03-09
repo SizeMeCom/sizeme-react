@@ -1209,12 +1209,14 @@ const getResult = (measurement, value, matchItem) => {
 };
 
 const DEFAULT_OPTIMAL_FIT = 1070;
+const DEFAULT_OPTIMAL_STRETCH = 5;
 
 export {
     humanMeasurementMap,
     fitRanges,
     getResult,
-    DEFAULT_OPTIMAL_FIT
+    DEFAULT_OPTIMAL_FIT,
+    DEFAULT_OPTIMAL_STRETCH,
 };
 
 
