@@ -363,10 +363,9 @@ function doMatch (fitRequest, token, useProfile) {
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
-    let [bestMatch] = [];
     if (optFit === 1000) {
         const optStretch = DEFAULT_OPTIMAL_STRETCH;
-        [bestMatch] = fitResults
+        const [bestMatch] = fitResults
             .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
             .reduce(([accSize, fit], [size, res]) => {
                 let matchArr = Object.values(res.matchMap);
@@ -378,8 +377,9 @@ function getRecommendedFit (fitResults, optimalFit) {
                     return [accSize, fit];
                 }
             }, [null, 0]);
+        return bestMatch;
     } else {
-        [bestMatch] = fitResults
+        const [bestMatch] = fitResults
             .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
             .reduce(([accSize, fit], [size, res]) => {
                 const newFit = Math.abs(res.totalFit - optFit);
@@ -389,8 +389,8 @@ function getRecommendedFit (fitResults, optimalFit) {
                     return [accSize, fit];
                 }
             }, [null, 0]);
+        return bestMatch;
     }
-    return bestMatch;
 }
 
 function match (doSelectBestFit = true) {
