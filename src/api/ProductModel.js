@@ -935,15 +935,18 @@ function init(itemTypeArr) {
                         cp2X: -122,
                         cp2Y: 40
                     }]
-                },
-                {
-                    type: "line",
-                    coords: [{X: -235, Y: 160}, {X: -150, Y: 85, cp1X: -190, cp1Y: 160, cp2X: -155, cp2Y: 125}]
-                },
-                {
-                    type: "line",
-                    coords: [{X: 150, Y: 85}, {X: 235, Y: 160, cp1X: 155, cp1Y: 125, cp2X: 190, cp2Y: 160}]
                 });
+            if (itemTypeArr[6] !== 5) {
+                itemDrawing.accents.push(
+                    {
+                        type: "line",
+                        coords: [{X: -235, Y: 160}, {X: -150, Y: 85, cp1X: -190, cp1Y: 160, cp2X: -155, cp2Y: 125}]
+                    },
+                    {
+                        type: "line",
+                        coords: [{X: 150, Y: 85}, {X: 235, Y: 160, cp1X: 155, cp1Y: 125, cp2X: 190, cp2Y: 160}]
+                    });
+            }
             switch (itemTypeArr[6]) { // trouser waistband
                 case 1: // elastic waistband
                     // eslint-disable-next-line
@@ -979,6 +982,18 @@ function init(itemTypeArr) {
                             type: "line",
                             coords: [{X: 9, Y: 49}, {X: 9, Y: 64, cp1X: 11, cp1Y: 54, cp2X: 11, cp2Y: 54}]
                         });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: 3, Y: 69}, {X: -4, Y: 297, cp1X: 3, cp1Y: 134, cp2X: 0, cp2Y: 215}]
+                        });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: -225, Y: 37}, {X: 225, Y: 37, cp1X: -137, cp1Y: 76, cp2X: 129, cp2Y: 76}]
+                        });
+                    break;
+                case 5: // straight waistband, no buttons, no pockets
                     itemDrawing.accents.push(
                         {
                             type: "line",
