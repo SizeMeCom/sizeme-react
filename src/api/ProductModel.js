@@ -830,7 +830,7 @@ function init(itemTypeArr) {
             // eslint-disable-next-line
             const $l = parseInt(itemTypeArr[3]);  // sleeve length basically
             // right sleeve
-            if (itemTypeArr[6] === 1) {     // elastic
+            if (itemTypeArr[4] === 1) {     // elastic
                 itemDrawing.coords.push(
                     {X: (250+($l*9)), Y: (170+($l*135))},
                     {X: (240+($l*9)), Y: (180+($l*135))},
@@ -854,7 +854,7 @@ function init(itemTypeArr) {
             }
             itemDrawing.coords.push({X: 10, Y: 297}, {X: -10, Y: 297});
             // left sleeve (as not mirror)
-            if (itemTypeArr[6] === 1) {     // elastic
+            if (itemTypeArr[4] === 1) {     // elastic
                 itemDrawing.coords.push(
                     {X: (-15-($l*23)), Y: (190+($l*135))},
                     {X: (-25-($l*23)), Y: (200+($l*135))},
@@ -911,7 +911,7 @@ function init(itemTypeArr) {
             }
 
             // leg opening
-            if (itemTypeArr[6] === 1) {     // elastic
+            if (itemTypeArr[4] === 1) {     // elastic
                 arrows.pant_sleeve_width = {
                     mirror: false,
                     coords: [{X: (-250-($l*9)), Y: (170+($l*135))}, {X: (-15-($l*23)), Y: (180+($l*135))}],
