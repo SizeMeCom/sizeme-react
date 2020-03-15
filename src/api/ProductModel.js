@@ -907,20 +907,22 @@ function init(itemTypeArr) {
                         coords: [{X: -281, Y: 626}, {X: -77, Y: 651}],
                         lift: false
                     };
-                    if (itemTypeArr[6] === 1) {     // elastic
-                        arrows.pant_sleeve_width = {
-                            mirror: false,
-                            coords: [{X: (-250-($l*9)), Y: (170+($l*135))}, {X: (-15-($l*23)), Y: (180+($l*135))}],
-                            lift: false
-                        };
-                    } else {
-                        arrows.pant_sleeve_width = {
-                            mirror: false,
-                            coords: [{X: (-250-($l*10)), Y: (170+($l*150))}, {X: (-15-($l*25)), Y: (180+($l*150))}],
-                            lift: false
-                        };
-                    }
                     break;
+            }
+
+            // leg opening
+            if (itemTypeArr[6] === 1) {     // elastic
+                arrows.pant_sleeve_width = {
+                    mirror: false,
+                    coords: [{X: (-250-($l*9)), Y: (170+($l*135))}, {X: (-15-($l*23)), Y: (180+($l*135))}],
+                    lift: false
+                };
+            } else {
+                arrows.pant_sleeve_width = {
+                    mirror: false,
+                    coords: [{X: (-250-($l*10)), Y: (170+($l*150))}, {X: (-15-($l*25)), Y: (180+($l*150))}],
+                    lift: false
+                };
             }
 
             itemDrawing.coords.push({X: -250, Y: 170});
