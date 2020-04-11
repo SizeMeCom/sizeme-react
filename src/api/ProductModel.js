@@ -830,7 +830,7 @@ function init(itemTypeArr) {
             // eslint-disable-next-line
             const $l = parseInt(itemTypeArr[3]);  // sleeve length basically
             // right sleeve
-            if (itemTypeArr[6] === 1) {     // elastic
+            if (itemTypeArr[4] === 1) {     // elastic
                 itemDrawing.coords.push(
                     {X: (250+($l*9)), Y: (170+($l*135))},
                     {X: (240+($l*9)), Y: (180+($l*135))},
@@ -854,7 +854,7 @@ function init(itemTypeArr) {
             }
             itemDrawing.coords.push({X: 10, Y: 297}, {X: -10, Y: 297});
             // left sleeve (as not mirror)
-            if (itemTypeArr[6] === 1) {     // elastic
+            if (itemTypeArr[4] === 1) {     // elastic
                 itemDrawing.coords.push(
                     {X: (-15-($l*23)), Y: (190+($l*135))},
                     {X: (-25-($l*23)), Y: (200+($l*135))},
@@ -907,20 +907,22 @@ function init(itemTypeArr) {
                         coords: [{X: -281, Y: 626}, {X: -77, Y: 651}],
                         lift: false
                     };
-                    if (itemTypeArr[6] === 1) {     // elastic
-                        arrows.pant_sleeve_width = {
-                            mirror: false,
-                            coords: [{X: (-250-($l*9)), Y: (170+($l*135))}, {X: (-15-($l*23)), Y: (180+($l*135))}],
-                            lift: false
-                        };
-                    } else {
-                        arrows.pant_sleeve_width = {
-                            mirror: false,
-                            coords: [{X: (-250-($l*10)), Y: (170+($l*150))}, {X: (-15-($l*25)), Y: (180+($l*150))}],
-                            lift: false
-                        };
-                    }
                     break;
+            }
+
+            // leg opening
+            if (itemTypeArr[4] === 1) {     // elastic
+                arrows.pant_sleeve_width = {
+                    mirror: false,
+                    coords: [{X: (-250-($l*9)), Y: (170+($l*135))}, {X: (-15-($l*23)), Y: (180+($l*135))}],
+                    lift: false
+                };
+            } else {
+                arrows.pant_sleeve_width = {
+                    mirror: false,
+                    coords: [{X: (-250-($l*10)), Y: (170+($l*150))}, {X: (-15-($l*25)), Y: (180+($l*150))}],
+                    lift: false
+                };
             }
 
             itemDrawing.coords.push({X: -250, Y: 170});
@@ -935,15 +937,18 @@ function init(itemTypeArr) {
                         cp2X: -122,
                         cp2Y: 40
                     }]
-                },
-                {
-                    type: "line",
-                    coords: [{X: -235, Y: 160}, {X: -150, Y: 85, cp1X: -190, cp1Y: 160, cp2X: -155, cp2Y: 125}]
-                },
-                {
-                    type: "line",
-                    coords: [{X: 150, Y: 85}, {X: 235, Y: 160, cp1X: 155, cp1Y: 125, cp2X: 190, cp2Y: 160}]
                 });
+            if (itemTypeArr[6] !== 5) {
+                itemDrawing.accents.push(
+                    {
+                        type: "line",
+                        coords: [{X: -235, Y: 160}, {X: -150, Y: 85, cp1X: -190, cp1Y: 160, cp2X: -155, cp2Y: 125}]
+                    },
+                    {
+                        type: "line",
+                        coords: [{X: 150, Y: 85}, {X: 235, Y: 160, cp1X: 155, cp1Y: 125, cp2X: 190, cp2Y: 160}]
+                    });
+            }
             switch (itemTypeArr[6]) { // trouser waistband
                 case 1: // elastic waistband
                     // eslint-disable-next-line
@@ -979,6 +984,18 @@ function init(itemTypeArr) {
                             type: "line",
                             coords: [{X: 9, Y: 49}, {X: 9, Y: 64, cp1X: 11, cp1Y: 54, cp2X: 11, cp2Y: 54}]
                         });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: 3, Y: 69}, {X: -4, Y: 297, cp1X: 3, cp1Y: 134, cp2X: 0, cp2Y: 215}]
+                        });
+                    itemDrawing.accents.push(
+                        {
+                            type: "line",
+                            coords: [{X: -225, Y: 37}, {X: 225, Y: 37, cp1X: -137, cp1Y: 76, cp2X: 129, cp2Y: 76}]
+                        });
+                    break;
+                case 5: // straight waistband, no buttons, no pockets
                     itemDrawing.accents.push(
                         {
                             type: "line",
