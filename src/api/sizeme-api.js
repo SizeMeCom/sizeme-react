@@ -458,6 +458,9 @@ function match (doSelectBestFit = true) {
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));
             }
+        } else {
+            dispatch(actions.resetMatch());
+            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
         }
     };
 }
