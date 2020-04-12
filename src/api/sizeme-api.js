@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH } from "./ProductModel";
+import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, humanMeasurementMap } from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
@@ -412,8 +412,10 @@ function match (doSelectBestFit = true) {
         if (useProfile) {
             subject = profile.id;
         } else {
+            const essentialMeasurements = product.model.essentialMeasurements
+                .map(v => humanMeasurementMap.get(v));
             const localMeasurements = Object.entries(profile.measurements)
-                .filter(([, p]) => !!p)
+                .filter(([m, p]) => (!!p && essentialMeasurements.includes(m)))
                 .map(([k, v]) => ({ [k]: v }));
             if (localMeasurements.length > 0) {
                 subject = Object.assign(...localMeasurements);
@@ -456,6 +458,9 @@ function match (doSelectBestFit = true) {
             } catch (reason) {
                 dispatch(actions.receiveMatch(reason));
             }
+        } else {
+            dispatch(actions.resetMatch());
+            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
         }
     };
 }
