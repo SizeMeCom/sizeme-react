@@ -742,6 +742,7 @@ function init(itemTypeArr) {
                             coords: [{X: -250, Y: 908}, {X: 250, Y: 908}],
                             lift: false
                         };
+                        arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
                     } else {
                         itemDrawing.coords.push({
                             X: 250,
@@ -756,6 +757,7 @@ function init(itemTypeArr) {
                             coords: [{X: -250, Y: 978}, {X: 250, Y: 978}],
                             lift: false
                         };
+                        arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
                     }
                     break;
                 case 4: // hips
