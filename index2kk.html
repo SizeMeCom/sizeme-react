@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" id="top" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" id="top" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" id="top" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" id="top" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="top" class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SHIRT</title>
+    <meta name="description" content="Just a simple shirt with local measurements in the store's own database
+" />
+    <meta name="keywords" content="Magento, Varien, E-commerce" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <link rel="icon" href="https://www.sizemedemo.com/magento19/skin/frontend/base/default/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://www.sizemedemo.com/magento19/skin/frontend/base/default/favicon.ico" type="image/x-icon" />
+    <!--[if lt IE 7]>
+    <script type="text/javascript">
+        //<![CDATA[
+    var BLANK_URL = 'https://www.sizemedemo.com/magento19/js/blank.html';
+    var BLANK_IMG = 'https://www.sizemedemo.com/magento19/js/spacer.gif';
+//]]>
+</script>
+<![endif]-->
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/js/calendar/calendar-win2k-1.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/skin/frontend/base/default/joomlart/jmcategorylist/css/jm.categorylist.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/skin/frontend/base/default/joomlart/jmmegamenu/css/jmmegamenu.css" media="all" />
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/prototype/prototype.js"></script> -->
+    <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/lib/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/lib/jquery/noconflict.js"></script>
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/lib/ccard.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/prototype/validation.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/scriptaculous/builder.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/scriptaculous/effects.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/scriptaculous/dragdrop.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/scriptaculous/controls.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/scriptaculous/slider.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/varien/js.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/varien/form.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/mage/translate.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/mage/cookies.js"></script> -->
+    <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/jquery/jquery.1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/jquery/jquery.noConflict.js"></script>
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/joomlart/lib/jcarousellite_1.0.1.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/varien/product.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/varien/configurable.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/calendar/calendar.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/calendar/calendar-setup.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/varien/product_options.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/modernizr.custom.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/selectivizr.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/matchMedia.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/matchMedia.addListener.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/enquire.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/app.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/jquery.cycle2.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/jquery.cycle2.swipe.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/slideshow.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/imagesloaded.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/minicart.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/base/default/js/bundle.js"></script> -->
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/js/lib/elevatezoom/jquery.elevateZoom-3.0.8.min.js"></script> -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600" />
+    <!--[if  (lte IE 8) & (!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/css/styles-ie8.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/css/madisonisland-ie8.css" media="all" />
+    <![endif]-->
+    <!--[if (gte IE 9) | (IEMobile)]><!-->
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/css/styles.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/css/madisonisland.css" media="all" />
+    <!--<![endif]-->
+
+    <script type="text/javascript">
+        //<![CDATA[
+        Mage.Cookies.path     = '/magento19';
+        Mage.Cookies.domain   = '.www.sizemedemo.com';
+        //]]>
+    </script>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <script type="text/javascript">
+        //<![CDATA[
+        optionalZipCountries = ["HK","IE","MO","PA"];
+        //]]>
+    </script>
+
+    <script type="text/javascript">
+        var baseurl = "https://www.sizemedemo.com/magento19/";
+        var defaultTheme = "";
+    </script>
+
+    <!-- <script type="text/javascript" src="https://www.sizemedemo.com/magento19/js/joomlart/jmbasetheme/jmbasetheme.js"></script> -->
+
+
+    <script type="text/javascript">//<![CDATA[
+    <!-- var Translator = new Translate([]); -->
+    //]]></script></head>
+<body class=" catalog-product-view catalog-product-view product-t-shirt">
+<div class="wrapper">
+    <noscript>
+        <div class="global-site-notice noscript">
+            <div class="notice-inner">
+                <p>
+                    <strong>JavaScript seems to be disabled in your browser.</strong><br />
+                    You must have JavaScript enabled in your browser to utilize the functionality of this website.                </p>
+            </div>
+        </div>
+    </noscript>
+    <div class="page">
+
+        <div class="header-language-background">
+            <div class="header-language-container">
+                <div class="store-language-container">
+                    <div class="form-language">
+                        <label for="select-language">Choose theme:</label>
+                        <select id="select-language" title="Choose theme" onchange="window.location.href=this.value">
+                            <option value="https://www.sizemedemo.com/magento19/t-shirt.html?___store=default&amp;___from_store=rwd">Default Theme</option>
+                            <option value="https://www.sizemedemo.com/magento19/t-shirt.html?___store=default_buttons&amp;___from_store=rwd">Default Theme with Buttons</option>
+                            <option value="https://www.sizemedemo.com/magento19/t-shirt.html?___store=rwd&amp;___from_store=rwd" selected="selected">RWD Theme</option>
+                            <option value="https://www.sizemedemo.com/magento19/t-shirt.html?___store=classy&amp;___from_store=rwd">Fashion theme</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <p class="welcome-msg">Default welcome msg! </p>
+            </div>
+        </div>
+
+        <header id="header" class="page-header">
+            <div class="page-header-container">
+                <a class="logo" href="https://www.sizemedemo.com/magento19/">
+                    <img src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/images/logo.gif" alt="Magento Commerce" class="large" />
+                    <img src="https://www.sizemedemo.com/magento19/skin/frontend/rwd/default/images/logo.gif" alt="Magento Commerce" class="small" />
+                </a>
+
+                <div class="store-language-container"></div>
+
+                <!-- Skip Links -->
+
+                <div class="skip-links">
+                    <a href="#header-nav" class="skip-link skip-nav">
+                        <span class="icon"></span>
+                        <span class="label">Menu</span>
+                    </a>
+
+                    <a href="#header-search" class="skip-link skip-search">
+                        <span class="icon"></span>
+                        <span class="label">Search</span>
+                    </a>
+
+                    <div class="account-cart-wrapper">
+                        <a href="https://www.sizemedemo.com/magento19/customer/account/" data-target-element="#header-account" class="skip-link skip-account">
+                            <span class="icon"></span>
+                            <span class="label">Account</span>
+                        </a>
+
+                        <!-- Cart -->
+
+                        <div class="header-minicart">
+                            <div id="jm-mycart" class="has-toggle">
+
+                                <div class="jm-mycart-loading">&nbsp;</div>
+
+
+                                <div class="block-title btn-toggle">
+                                    <strong><span id="jm-cart-status">My Cart (0 items)</span></strong>
+                                </div>
+                                <div class="block-content inner-toggle">
+                                    <p class="empty">You have no items in your shopping cart.</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Navigation -->
+
+                <div id="header-nav" class="skip-content">
+
+                    <nav id="nav">
+                        <ol class="nav-primary">
+                            <li  class="level0 nav-1 first"><a href="https://www.sizemedemo.com/magento19/shirts.html" class="level0 ">Shirts</a></li><li  class="level0 nav-2 last"><a href="https://www.sizemedemo.com/magento19/shoes.html" class="level0 ">Shoes</a></li>        </ol>
+                    </nav>
+                </div>
+
+                <!-- Search -->
+
+                <div id="header-search" class="skip-content">
+
+                    <form id="search_mini_form" action="https://www.sizemedemo.com/magento19/catalogsearch/result/" method="get">
+                        <div class="input-box">
+                            <label for="search">Search:</label>
+                            <input id="search" type="search" name="q" value="" class="input-text required-entry" maxlength="128" placeholder="Search entire store here..." />
+                            <button type="submit" title="Search" class="button search-button"><span><span>Search</span></span></button>
+                        </div>
+
+                        <div id="search_autocomplete" class="search-autocomplete"></div>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            <!-- var searchForm = new Varien.searchForm('search_mini_form', 'search', ''); -->
+                            <!-- searchForm.initAutocomplete('https://www.sizemedemo.com/magento19/catalogsearch/ajax/suggest/', 'search_autocomplete'); -->
+                            //]]>
+                        </script>
+                    </form>
+                </div>
+
+                <!-- Account -->
+
+                <div id="header-account" class="skip-content">
+                    <div class="links">
+                        <ul>
+                            <li class="first" ><a href="https://www.sizemedemo.com/magento19/customer/account/" title="My Account" >My Account</a></li>
+                            <li ><a href="https://www.sizemedemo.com/magento19/wishlist/" title="My Wishlist" >My Wishlist</a></li>
+                            <li ><a href="https://www.sizemedemo.com/magento19/checkout/cart/" title="My Cart" class="top-link-cart">My Cart</a></li>
+                            <li ><a href="https://www.sizemedemo.com/magento19/checkout/" title="Checkout" class="top-link-checkout">Checkout</a></li>
+                            <li ><a href="https://www.sizemedemo.com/magento19/customer/account/create/" title="Register" >Register</a></li>
+                            <li class=" last" ><a href="https://www.sizemedemo.com/magento19/customer/account/login/" title="Log In" >Log In</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <div class="main-container col1-layout">
+            <div class="main">
+                <div class="breadcrumbs">
+                    <ul>
+                        <li class="home">
+                            <a href="https://www.sizemedemo.com/magento19/" title="Go to Home Page">Home</a>
+                            <span>/ </span>
+                        </li>
+                        <li class="product">
+                            <strong>SHIRT</strong>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-main">
+                    <script type="text/javascript">
+                        <!-- var optionsPrice = new Product.OptionsPrice({"priceFormat":{"pattern":"\u20ac%s","precision":2,"requiredPrecision":2,"decimalSymbol":".","groupSymbol":",","groupLength":3,"integerRequired":1},"includeTax":"false","showIncludeTax":false,"showBothPrices":false,"idSuffix":"","oldPlusDisposition":0,"plusDisposition":0,"plusDispositionTax":0,"oldMinusDisposition":0,"minusDisposition":0,"productId":"1","productPrice":10,"productOldPrice":10,"priceInclTax":10,"priceExclTax":10,"skipCalculate":1,"defaultTax":8.25,"currentTax":0,"tierPrices":[],"tierPricesInclTax":[],"swatchPrices":null}); -->
+                    </script>
+                    <div id="messages_product_view"></div>
+                    <div class="product-view">
+                        <div class="product-essential">
+                            <form action="https://www.sizemedemo.com/magento19/checkout/cart/add/uenc/aHR0cHM6Ly93d3cuc2l6ZW1lZGVtby5jb20vbWFnZW50bzE5L3Qtc2hpcnQuaHRtbD9fX19TSUQ9VQ,,/product/1/form_key/u7QP7dQalgs9oH4N/" method="post" id="product_addtocart_form">
+                                <input name="form_key" type="hidden" value="u7QP7dQalgs9oH4N" />
+                                <div class="no-display">
+                                    <input type="hidden" name="product" value="1" />
+                                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+                                </div>
+
+                                <div class="product-img-box">
+                                    <div class="product-name">
+                                        <h1>SHIRT</h1>
+                                    </div>
+                                    <div class="product-image product-image-zoom">
+                                        <div class="product-image-gallery">
+                                            <img id="image-main"
+                                                 class="gallery-image visible"
+                                                 src="https://www.sizemedemo.com/magento19/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/t/u/tuross17ecom_1200_2003_23_1168_1004_67_4162_2048x2048_1.jpg"
+                                                 alt="SHIRT"
+                                                 title="SHIRT" />
+
+                                            <img id="image-0"
+                                                 class="gallery-image"
+                                                 src="https://www.sizemedemo.com/magento19/media/catalog/product/cache/2/image/1800x/040ec09b1e35df139433887a97daa66f/t/u/tuross17ecom_1200_2003_23_1168_1004_67_4162_2048x2048_1.jpg"
+                                                 data-zoom-image="https://www.sizemedemo.com/magento19/media/catalog/product/cache/2/image/1800x/040ec09b1e35df139433887a97daa66f/t/u/tuross17ecom_1200_2003_23_1168_1004_67_4162_2048x2048_1.jpg" />
+                                        </div>
+                                    </div>
+
+                                    <div class="more-views">
+                                        <h2>More Views</h2>
+                                        <ul class="product-image-thumbs">
+                                            <li>
+                                                <a class="thumb-link" href="#" title="" data-image-index="0">
+                                                    <img src="https://www.sizemedemo.com/magento19/media/catalog/product/cache/2/thumbnail/75x/9df78eab33525d08d6e5fb8d27136e95/t/u/tuross17ecom_1200_2003_23_1168_1004_67_4162_2048x2048_1.jpg"
+                                                         width="75" height="75" alt="" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="product-shop">
+                                    <div class="product-name">
+                                        <span class="h1">SHIRT</span>
+                                    </div>
+
+                                    <div class="price-info">
+
+
+
+                                        <div class="price-box">
+                                                                <span class="regular-price" id="product-price-1">
+                                            <span class="price">€10.00</span>                                    </span>
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="extra-info">
+                                        <p class="availability in-stock">
+                                            <span class="label">Availability:</span>
+                                            <span class="value">In stock</span>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="short-description">
+                                        <div class="std">Just a simple shirt</div>
+                                    </div>
+
+
+
+
+
+                                    <div class="product-options" id="product-options-wrapper">
+
+<div class="js-product-sizes" data-no-sizes-text="Ei kokoja saatavilla"><div class="a-product-sizes">
+  <div class="a-product-sizes__item ">
+      <input type="radio" name="product_id" value="34153107_155_6438390462438" id="product-size-34153107_155_6438390462438" data-name="33" data-available-in-web="true" data-available-in-stores="true" class="u-sr-only">
+      <label for="product-size-34153107_155_6438390462438">33</label>
+  </div>
+  <div class="a-product-sizes__item ">
+      <input type="radio" name="product_id" value="34153107_155_6438390462452" id="product-size-34153107_155_6438390462452" data-name="34" data-available-in-web="false" data-available-in-stores="true" class="u-sr-only">
+      <label for="product-size-34153107_155_6438390462452">34</label>
+  </div>
+  <div class="a-product-sizes__item ">
+      <input type="radio" name="product_id" value="34153107_155_6438390462476" id="product-size-34153107_155_6438390462476" data-name="35" data-available-in-web="false" data-available-in-stores="true" class="u-sr-only">
+      <label for="product-size-34153107_155_6438390462476">35</label>
+  </div>
+</div>
+</div>
+
+                                        <p class="required">* Required Fields</p>
+                                    </div>
+                                    <div class="product-options-bottom">
+
+
+
+                                        <div class="price-box">
+                                                                <span class="regular-price" id="product-price-1_clone">
+                                            <span class="price">€10.00</span>                                    </span>
+
+                                        </div>
+
+                                        <div class="add-to-cart">
+                                            <div class="qty-wrapper">
+                                                <label for="qty">Qty:</label>
+                                                <input type="text" pattern="\d*(\.\d+)?" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty" />
+                                            </div>
+                                            <div class="add-to-cart-buttons">
+                                                <button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span>Add to Cart</span></span></button>
+                                            </div>
+                                        </div>
+
+
+                                        <ul class="add-to-links">
+                                            <li><a href="https://www.sizemedemo.com/magento19/wishlist/index/add/product/1/form_key/u7QP7dQalgs9oH4N/" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist">Add to Wishlist</a></li>
+                                            <li><span class="separator">|</span> <a href="https://www.sizemedemo.com/magento19/catalog/product_compare/add/product/1/uenc/aHR0cHM6Ly93d3cuc2l6ZW1lZGVtby5jb20vbWFnZW50bzE5L3Qtc2hpcnQuaHRtbA,,/form_key/u7QP7dQalgs9oH4N/" class="link-compare">Add to Compare</a></li>
+
+                                        </ul>
+
+
+
+                                        <ul class="sharing-links">
+                                            <li><a href="https://www.sizemedemo.com/magento19/sendfriend/product/send/id/1/" class="link-email-friend" title="Email to a Friend">Email to a Friend</a></li>
+
+                                            <li>
+                                                <a href="http://www.facebook.com/sharer.php?s=100&p[url]=https%3A%2F%2Fwww.sizemedemo.com%2Fmagento19%2Ft-shirt.html%3F___SID%3DU&p[images][0]=https%3A%2F%2Fwww.sizemedemo.com%2Fmagento19%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F2%2Fimage%2F9df78eab33525d08d6e5fb8d27136e95%2Fb%2Fl%2Fblack_tshirt.png&p[title]=T-SHIRT&p[summary]=Just+a+simple+T-shirt" target="_blank" title="Share on Facebook" class="link-facebook">
+                                                    Share Facebook        </a>
+                                            </li>
+                                            <li>
+                                                <a href="http://twitter.com/home?status=T-SHIRT+https%3A%2F%2Fwww.sizemedemo.com%2Fmagento19%2Ft-shirt.html%3F___SID%3DU" target="_blank" title="Share on Twitter" class="link-twitter">Share on Twitter</a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="add-to-cart-wrapper">
+
+
+                                </div>
+
+
+                                <div class="clearer"></div>
+                            </form>
+                        </div>
+
+                        <div class="product-collateral toggle-content tabs">
+                            <dl id="collateral-tabs" class="collateral-tabs">
+                                <dt class="tab"><span>Description</span></dt>
+                                <dd class="tab-container">
+                                    <div class="tab-content">    <h2>Details</h2>
+                                        <div class="std">
+                                            Just a simple shirt with local measurements in the store's own database
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt class="tab"><span>Reviews</span></dt>
+                                <dd class="tab-container">
+                                    <div class="tab-content">
+                                        <div class="box-collateral box-reviews" id="customer-reviews">
+                                            <p class="no-rating"><a href="https://www.sizemedemo.com/magento19/review/product/list/id/1/#review-form">Be the first to review this product</a></p>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="box-collateral box-tags">
+                            <h2>Product Tags</h2>
+                            <form id="addTagForm" action="https://www.sizemedemo.com/magento19/tag/index/save/product/1/uenc/aHR0cHM6Ly93d3cuc2l6ZW1lZGVtby5jb20vbWFnZW50bzE5L3Qtc2hpcnQuaHRtbA,,/" method="get">
+                                <div class="form-add">
+                                    <label for="productTagName">Add Your Tags:</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input-text required-entry" name="productTagName" id="productTagName" />
+                                    </div>
+                                    <button type="button" title="Add Tags" class="button" onclick="submitTagForm()">
+                <span>
+                    <span>Add Tags</span>
+                </span>
+                                    </button>
+                                </div>
+                            </form>
+                            <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
+                        </div>
+
+                    </div>
+
+
+<script type="text/javascript">
+    //<![CDATA[
+    var sizeme_product = {
+					name: "SOFT 5",
+		SKU: "3415302420",
+		item: {
+							"341530242033": "34153107_155_6438390462438",
+							"341530242034": "34153107_155_6438390462452",
+							"341530242035": "34153107_155_6438390462476",
+					}
+	    };
+    //]]>
+</script>
+                </div>
+            </div>
+        </div>
+        <div class="footer-container">
+            <div class="footer">
+                <div class="block block-subscribe">
+                    <div class="block-title">
+                        <strong><span>Newsletter</span></strong>
+                    </div>
+                    <form action="https://www.sizemedemo.com/magento19/newsletter/subscriber/new/" method="post" id="newsletter-validate-detail">
+                        <div class="block-content">
+                            <div class="form-subscribe-header">
+                                <label for="newsletter">Sign Up for Our Newsletter:</label>
+                            </div>
+                            <div class="input-box">
+                                <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="newsletter" title="Sign up for our newsletter" class="input-text required-entry validate-email" />
+                            </div>
+                            <div class="actions">
+                                <button type="submit" title="Subscribe" class="button"><span><span>Subscribe</span></span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="links">
+                    <div class="block-title">
+                        <strong><span>Company</span></strong>
+                    </div>
+                    <ul>
+                        <li><a href="https://www.sizemedemo.com/magento19/about-magento-demo-store/">About Us</a></li>
+                        <li><a href="https://www.sizemedemo.com/magento19/contacts/">Contact Us</a></li>
+                        <li><a href="https://www.sizemedemo.com/magento19/customer-service/">Customer Service</a></li>
+                        <li><a href="https://www.sizemedemo.com/magento19/privacy-policy-cookie-restriction-mode/">Privacy Policy</a></li>
+                    </ul>
+                </div><div class="links">
+                <div class="block-title"><strong><span>Quick Links</span></strong></div>
+                <ul>
+                    <li class="first" ><a href="https://www.sizemedemo.com/magento19/catalog/seo_sitemap/category/" title="Site Map" >Site Map</a></li>
+                    <li ><a href="https://www.sizemedemo.com/magento19/catalogsearch/term/popular/" title="Search Terms" >Search Terms</a></li>
+                    <li class=" last" ><a href="https://www.sizemedemo.com/magento19/catalogsearch/advanced/" title="Advanced Search" >Advanced Search</a></li>
+                </ul>
+            </div>
+                <div class="links">
+                    <div class="block-title"><strong><span>Account</span></strong></div>
+                    <ul>
+                        <li class="first" ><a href="https://www.sizemedemo.com/magento19/customer/account/" title="My Account" >My Account</a></li>
+                        <li class=" last" ><a href="https://www.sizemedemo.com/magento19/sales/guest/form/" title="Orders and Returns" >Orders and Returns</a></li>
+                    </ul>
+                </div>
+                <address class="copyright">&copy; 2016 Magento Demo Store. All Rights Reserved.</address>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var sizeme_options = {
+                serviceStatus: "on",
+                pluginVersion: "CKK-1.0.0",
+                shopType: "crasmanKooKenka",
+                debugState: true,
+                contextAddress: "https://test.sizeme.com",
+                gaTrackingId: "UA-40735596-2",
+                uiOptions: {
+					appendContentTo: ".product-options",
+                }
+            };
+            //]]>
+        </script>
+
+
+<style type="text/css">
+.a-product-sizes__item {
+	margin: 0 2px 4px;
+	position: relative;
+}
+.u-sr-only {
+	border: 0;
+	clip: rect(0,0,0,0);
+	height: 1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+.a-product-sizes__item input:checked + label {
+	background: #1e1e1e;
+	border-color: #1e1e1e;
+	color: #fff;
+}
+.a-product-sizes__item input + label {
+	min-width: 55px;
+}
+.a-product-sizes__item input + label {
+	border: 1px solid #1e1e1e;
+	color: #1e1e1e;
+	cursor: pointer;
+	display: block;
+	font-size: .7778em;
+	line-height: 1.6;
+	margin: 0;
+	min-width: 43px;
+	padding: .35em .4em;
+	text-align: center;
+	white-space: nowrap;
+}
+
+
+</style>
+
+
+    </div>
+</div>
+</body>
+</html>
+
