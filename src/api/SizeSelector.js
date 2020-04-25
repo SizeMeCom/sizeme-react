@@ -263,9 +263,11 @@ class CrasmanForKooKenkaSelect extends AbstractSelect {
     }
 
     clearSelection = () => {
-        const options = element.querySelectorAll("input[type=radio]");
-        for (let i = 0; i < options.length; i++) {
-            options.item(i).checked = false;
+        if (this.el) {
+            const options = this.el.querySelectorAll("input[type=radio]");
+            for (let i = 0; i < options.length; i++) {
+                options.item(i).checked = false;
+            }
         }
     };
 
