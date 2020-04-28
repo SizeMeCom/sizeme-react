@@ -12,13 +12,13 @@ A [React](https://facebook.github.io/react/)-app, build and packaged with [yarn]
 File [_index.html_](http://localhost:8080) is a test file, containing a static copy of a product page at 
 https://www.sizemedemo.com/magento19/t-shirt-db.html.  
 
-## Sizeme Options
+## SizeMe Options
 
 Application expects to find an object named `sizeme_options` (TODO: rename to `SizemeOptions`?) with following properties:
 
 ```javascript
 {
-  serviceStatus: true,
+  serviceStatus: "on",
   pluginVersion: "MAG1-0.1.0",
   contextAddress: "https://test.sizeme.com"
   shopType: "magento",
@@ -27,7 +27,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   additionalTranslations: {}
 }
 ```
-* [serviceStatus] (_Boolean_): is SizeMe enabled. Default: true.
+* [serviceStatus] (_String_): is SizeMe enabled? Default: "on"; other values: "off", "ab".
 
 * [pluginVersion] (_String_): version of the webstore-plugin. Optional.
 
@@ -39,14 +39,14 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 
 * [uiOptions] (_Object_): Optionally override default UI options. Defaults per shopType are specified in [`uiOptions.js`](src/api/uiOptions.js)
   - [lang] (_String_): language to use (fi, sv, en, en is fallback).
-  - [appendContentTo] (_String_):  DOM-element where SizeMe is injected.
-  - [invokeElement] (_String_): DOM-element that handles size changes
+  - [appendContentTo] (_String_):  DOM element where SizeMe is injected.
+  - [invokeElement] (_String_): DOM element that handles size changes
   - [disableSizeGuide] (_Boolean_): disable SizeGuide
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"
-  - [addToCartElement] (_String_): DOM-element to listen to for add-to-cart events
-  - [addToCartEvent] (_String_): DOM-event for add-to-cart
+  - [addToCartElement] (_String_): DOM element to listen to for add-to-cart events
+  - [addToCartEvent] (_String_): DOM event for add-to-cart
   - [maxRecommendationDistance] (_Integer_): maximum difference between optimal fit and total fit for SizeMe to consider the size for pre-selection. Default not set, meaning all sizes that are not too small are considered.
-  - [skinClasses] (_String_): contents will be appended to the class-attribute of SizeMe container element. Empty by default.
+  - [skinClasses] (_String_): contents will be appended to the class attribute of SizeMe container element. Empty by default.
   - [toggler] (_Boolean_): enable/disable functionality that can be used to toggle the visibility of SizeMe content
   
 * [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to 
