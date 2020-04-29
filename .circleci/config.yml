@@ -47,7 +47,7 @@ deploy: &deploy
           --cache-control max-age=31536000,public
           --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers &&
           aws s3 cp docker/dist/sizeme.js s3://sizeme-bucket/store/$SIZEME_REACT_ARTIFACT
-          --cache-control s-maxage=3600,max-age=1800,public
+          --cache-control public,must-revalidate,proxy-revalidate,max-age=0
           --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
     - deploy:
        name: Push image
