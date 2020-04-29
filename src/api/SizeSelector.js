@@ -308,6 +308,8 @@ const initSizeSelector = selectSizeFn => {
     const getInstance = (constructor) => {
         const element = findVisibleElement(uiOptions.invokeElement);
         if (element) {
+            console.log("Initializing SizeMe: Size selector present.");
+            console.log(element);
             return new constructor(element);
         } else {
             console.log("Initializing SizeMe failed: Couldn't find size selector");
