@@ -115,7 +115,7 @@ workflows:
               ignore: /.*/
             branches:
               only:
-                - master
+                - add-crasman-kookenka-support
 
       - deploy_to_prod:
           context: PROD
