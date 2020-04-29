@@ -225,6 +225,81 @@ class HarrysOfLondonSelect extends AbstractSelect {
     }
 }
 
+class CrasmanForKooKenkaSelect extends AbstractSelect {
+    constructor (element) {
+        super(element, { event: "" });
+
+        const options = element.querySelectorAll("input[type=radio]");
+        const mkSelectFn = option => () => option.click();
+
+        for (let i = 0; i < options.length; i++) {
+            const option = options.item(i);
+            const value = option.getAttribute("value");
+            if (value) {
+                this.sizeMapper.push([value, option.labels[0].innerText]);
+                this.selectors[value] = mkSelectFn(option);
+                option.addEventListener("change", e => {
+                    const size = e.target.getAttribute("value");
+                    if (this.sizeMapper.find(([s]) => s === size)) {
+                        selectSize(size);
+                    } else {
+                        selectSize("");
+                    }
+                }, false);
+            }
+        }
+
+        this.getSize = () => {
+            const selected = element.querySelector("input[type=radio]:checked");
+            if (selected) {
+                return selected.dataset.size;
+            } else {
+                return "";
+            }
+        };
+
+        this.getSelectedSize = this.getSize;
+
+    }
+
+    clearSelection = () => {
+        if (this.el) {
+            const options = this.el.querySelectorAll("input[type=radio]");
+            for (let i = 0; i < options.length; i++) {
+                options.item(i).checked = false;
+            }
+        }
+    };
+
+    clone = () => {
+        if (this.el) {
+            const clone = this.el.cloneNode(true);
+            for (let i = 0; i < clone.length; i++) {
+                const option = clone.item(i);
+                option.addEventListener("change", event => {
+                    this.setSelected(event.target.value);
+                    selectSize(event.target.value);
+                }, false);
+            }
+            return clone;
+        } else {
+            return document.createElement("div");
+        }
+    }
+
+    setSelected = val => {
+        if (this.selectors[val]) {
+            this.selectors[val]();
+            trackEvent("sizeRecommended", "Store: Recommended a size based on user input");
+        } else {
+            this.clearSelection();
+            selectSize("");
+            trackEvent("sizeCantRecommend", "Store: We couldnt find a size based on user input");
+        }
+    };
+}
+
+
 const initSizeSelector = selectSizeFn => {
     selectSize = size => {
         selectSizeFn(size);
@@ -247,6 +322,10 @@ const initSizeSelector = selectSizeFn => {
 
         case "harrys":
             selector = getInstance(HarrysOfLondonSelect);
+            break;
+
+        case "crasman-koo":
+            selector = getInstance(CrasmanForKooKenkaSelect);
             break;
 
         default:

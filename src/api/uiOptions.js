@@ -31,6 +31,15 @@ const shops = {
         addToCartEvent: "click",
         firstRecommendation: false,
         sizeSelectorType: "default"
+    },
+    crasmanKooKenka: {
+        appendContentTo: ".js-product-sizes",
+        invokeElement: ".a-product-sizes",
+        invokeEvent: "click",
+        addToCartElement: "button.AddToBasketButton",
+        addToCartEvent: "click",
+        firstRecommendation: true,
+        sizeSelectorType: "crasman-koo"
     }
 };
 
