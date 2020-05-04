@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches:
+  release:
+    types: [published]
+
+env:
+  NODE_VERSION: 12.16.2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install and update dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build artifact
+        run: yarn build-cdn
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    if: (github.ref == 'refs/heads/master' && github.event_name == 'push') || github.event_name == 'release'
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Set Prod artifact name
+        if: github.event_name == 'release'
+        uses: allenevans/set-env@v1.0.0
+        with:
+          SIZEME_REACT_ARTIFACT: 'sizeme.js'
+
+      - name: Set QA artifact name
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: allenevans/set-env@v1.0.0
+        with:
+          SIZEME_REACT_ARTIFACT: 'sizeme-test.js'
+
+      - name: Copy bundle and assets to Amazon S3
+        run: |
+          aws s3 sync dist/ s3://sizeme-bucket/store --exclude sizeme.js --cache-control max-age=31536000,public --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+          aws s3 cp dist/sizeme.js s3://sizeme-bucket/store/$SIZEME_REACT_ARTIFACT --cache-control s-maxage=3600,max-age=1800,public --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
