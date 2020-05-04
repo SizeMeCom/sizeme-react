@@ -45,7 +45,7 @@ jobs:
           path: dist
 
   deploy:
-    if: (github.ref == 'refs/heads/master' && github.event_name == 'push') || github.event_name == 'release'
+    if: (github.ref == 'refs/heads/add-crasman-kookenka-support' && github.event_name == 'push') || github.event_name == 'release'
     needs: [build]
     runs-on: ubuntu-latest
 
@@ -69,7 +69,7 @@ jobs:
           SIZEME_REACT_ARTIFACT: 'sizeme.js'
 
       - name: Set QA artifact name
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.event_name == 'push'
         uses: allenevans/set-env@v1.0.0
         with:
           SIZEME_REACT_ARTIFACT: 'sizeme-test.js'
@@ -77,4 +77,4 @@ jobs:
       - name: Copy bundle and assets to Amazon S3
         run: |
           aws s3 sync dist/ s3://sizeme-bucket/store --exclude sizeme.js --cache-control max-age=31536000,public --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
-          aws s3 cp dist/sizeme.js s3://sizeme-bucket/store/$SIZEME_REACT_ARTIFACT --cache-control s-maxage=3600,max-age=1800,public --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+          aws s3 cp dist/sizeme.js s3://sizeme-bucket/store/$SIZEME_REACT_ARTIFACT --cache-control public,must-revalidate,proxy-revalidate,max-age=0 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
