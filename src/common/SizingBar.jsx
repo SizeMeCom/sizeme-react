@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges } from "../api/ProductModel";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
@@ -127,8 +127,9 @@ class SizingBar extends React.Component {
             let maxStretch = DEFAULT_OPTIMAL_STRETCH;
             let newPos = 50;
             if (matchMap) {
-                let matchArr = Object.values(matchMap);
-                maxStretch = Math.max.apply(null, matchArr.map(o => o.componentStretch));
+                let maxStretchArr = [];
+                Object.entries(matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) );});
+                maxStretch = Math.max.apply(null, maxStretchArr);
                 if (value > 1000) {
                     newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
                 } else if (value === 1000) {
