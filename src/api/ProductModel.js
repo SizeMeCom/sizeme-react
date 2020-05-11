@@ -1231,10 +1231,10 @@ const stretchFactor = (measurement) => {
     let factor = 1;
     switch (measurement) {
         case "pant_waist":
-            factor = 5;
+            factor = 10;
             break;
         case "hips":
-            factor = 2;
+            factor = 8;
             break;
     }
     return factor;
