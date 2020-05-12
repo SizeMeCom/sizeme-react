@@ -72,8 +72,10 @@ const developmentConfig = () => merge([
     parts.page({ template: "local.html", filename: "local.html" }),
     parts.page({ template: "index1.html", filename: "index1.html" }),
     parts.page({ template: "index1b.html", filename: "index1b.html" }),
+    parts.page({ template: "index1c.html", filename: "index1c.html" }),
     parts.page({ template: "index2.html", filename: "index2.html" }),
     parts.page({ template: "index2r.html", filename: "index2r.html" }),
+    parts.page({ template: "index2kk.html", filename: "index2kk.html" }),
     parts.page({ template: "index3.html", filename: "index3.html" }),
     parts.page({ template: "index4.html", filename: "index4.html" }),
     parts.page({ template: "index5.html", filename: "index5.html" }),
@@ -86,7 +88,8 @@ const developmentConfig = () => merge([
     parts.page({ template: "harrysoflondon.html", filename: "harrysoflondon.html" }),
     parts.page({ template: "levelshoes.html", filename: "levelshoes.html" }),
     parts.page({ template: "nosizeme.html", filename: "nosizeme.html" }),
-    parts.page({ template: "no-sku.html", filename: "no-sku.html" })
+    parts.page({ template: "no-sku.html", filename: "no-sku.html" }),
+    parts.page({ template: "no-select.html", filename: "no-select.html" })
 ]);
 
 const productionConfig = env => merge([

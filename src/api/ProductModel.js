@@ -1227,6 +1227,19 @@ const getResult = (measurement, value, matchItem) => {
     };
 };
 
+const stretchFactor = (measurement) => {
+    let factor = 1;
+    switch (measurement) {
+        case "pant_waist":
+            factor = 10;
+            break;
+        case "hips":
+            factor = 8;
+            break;
+    }
+    return factor;
+};
+
 const DEFAULT_OPTIMAL_FIT = 1070;
 const DEFAULT_OPTIMAL_STRETCH = 5;
 
@@ -1234,6 +1247,7 @@ export {
     humanMeasurementMap,
     fitRanges,
     getResult,
+    stretchFactor,
     DEFAULT_OPTIMAL_FIT,
     DEFAULT_OPTIMAL_STRETCH,
 };

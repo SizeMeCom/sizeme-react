@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, humanMeasurementMap } from "./ProductModel";
+import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, humanMeasurementMap, stretchFactor } from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
@@ -370,10 +370,11 @@ function getRecommendedFit (fitResults, optimalFit) {
     if (optFit === 1000) {
         const optStretch = DEFAULT_OPTIMAL_STRETCH;
         const [bestMatch] = fitResults
-            .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
+            .filter(([, res]) => res.accuracy > 0)
             .reduce(([accSize, fit], [size, res]) => {
-                let matchArr = Object.values(res.matchMap);
-                let maxStretch = Math.max.apply(null, matchArr.map(o => o.componentStretch));
+                let maxStretchArr = [];
+                Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) );});
+                let maxStretch = Math.max.apply(null, maxStretchArr);
                 const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
                 if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
                     return [size, newFit];
@@ -460,7 +461,7 @@ function match (doSelectBestFit = true) {
             }
         } else {
             dispatch(actions.resetMatch());
-            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
+            dispatch(actions.setMatchState({ match: null, state: "no-meas" }));
         }
     };
 }
@@ -474,7 +475,7 @@ function setProfileMeasurements (measurements) {
             await dispatch(match());
         } else {
             dispatch(actions.resetMatch());
-            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
+            dispatch(actions.setMatchState({ match: null, state: "no-meas" }));
         }
     };
 }
@@ -521,7 +522,7 @@ function selectSize (size, auto) {
                 state = "no-fit";
             }
         } else {
-            state = "no-fit";
+            state = "no-meas";
         }
         if (firstMatch && matchResult.recommendedFit === currentSize) {
             dispatch(actions.selectSize({auto: true}));
