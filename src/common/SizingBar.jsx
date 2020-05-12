@@ -128,8 +128,8 @@ class SizingBar extends React.Component {
             let minStretchFactor = 1;
             let newPos = 50;
             if (matchMap) {
-                let maxStretchArr = [];
-                let minStretchFactorArr = [];
+                const maxStretchArr = [];
+                const minStretchFactorArr = [];
                 Object.entries(matchMap).forEach(([oKey, oValue]) => {
                     maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) );
                     minStretchFactorArr.push( stretchFactor(oKey) );
