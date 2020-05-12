@@ -461,7 +461,7 @@ function match (doSelectBestFit = true) {
             }
         } else {
             dispatch(actions.resetMatch());
-            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
+            dispatch(actions.setMatchState({ match: null, state: "no-meas" }));
         }
     };
 }
@@ -475,7 +475,7 @@ function setProfileMeasurements (measurements) {
             await dispatch(match());
         } else {
             dispatch(actions.resetMatch());
-            dispatch(actions.setMatchState({ match: null, state: "no-fit" }));
+            dispatch(actions.setMatchState({ match: null, state: "no-meas" }));
         }
     };
 }
@@ -522,7 +522,7 @@ function selectSize (size, auto) {
                 state = "no-fit";
             }
         } else {
-            state = "no-fit";
+            state = "no-meas";
         }
         if (firstMatch && matchResult.recommendedFit === currentSize) {
             dispatch(actions.selectSize({auto: true}));
