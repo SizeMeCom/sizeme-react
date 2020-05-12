@@ -88,7 +88,8 @@ const developmentConfig = () => merge([
     parts.page({ template: "harrysoflondon.html", filename: "harrysoflondon.html" }),
     parts.page({ template: "levelshoes.html", filename: "levelshoes.html" }),
     parts.page({ template: "nosizeme.html", filename: "nosizeme.html" }),
-    parts.page({ template: "no-sku.html", filename: "no-sku.html" })
+    parts.page({ template: "no-sku.html", filename: "no-sku.html" }),
+    parts.page({ template: "no-select.html", filename: "no-select.html" })
 ]);
 
 const productionConfig = env => merge([
