@@ -7,7 +7,12 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, humanMeasurementMap, stretchFactor } from "./ProductModel";
+import SizeGuideModel, {
+    DEFAULT_OPTIMAL_FIT,
+    DEFAULT_OPTIMAL_STRETCH,
+    humanMeasurementMap,
+    stretchFactor
+} from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
@@ -23,23 +28,26 @@ const storeMeasurementsKey = "sizemeMeasurements";
 
 const cookies = new Cookies();
 
-const sizemeStore = (sizemeOpts => {
+const sizemeStore = ((sizemeOpts) => {
     if (!sizemeOpts) {
         return {};
     }
 
-    const store = createStore(rootReducer, applyMiddleware(
-        thunkMiddleware,
-        createLogger({
-            predicate: () => sizemeOpts.debugState,
-            duration: true
-        })
-    ));
+    const store = createStore(
+        rootReducer,
+        applyMiddleware(
+            thunkMiddleware,
+            createLogger({
+                predicate: () => sizemeOpts.debugState,
+                duration: true
+            })
+        )
+    );
 
-    function observeStore (select, onChange) {
+    function observeStore(select, onChange) {
         let currentState;
 
-        function handleChange () {
+        function handleChange() {
             let nextState = select(store.getState());
             if (!equals(nextState, currentState)) {
                 currentState = nextState;
@@ -53,20 +61,20 @@ const sizemeStore = (sizemeOpts => {
     }
 
     observeStore(
-        ({productInfo, selectedProfile, abStatus}) => ({product: productInfo.product, selectedProfile, abStatus}),
-        ({product, selectedProfile, abStatus}) => {
+        ({ productInfo, selectedProfile, abStatus }) => ({ product: productInfo.product, selectedProfile, abStatus }),
+        ({ product, selectedProfile, abStatus }) => {
             let smAction;
             const statusPostFix = abStatus ? "-" + abStatus : "";
             if (!product) {
                 smAction = "noProduct" + statusPostFix;
-            } else if (!Object.values(selectedProfile.measurements).some(item => item)) {
+            } else if (!Object.values(selectedProfile.measurements).some((item) => item)) {
                 smAction = "noHuman";
             } else if (!selectedProfile.id) {
                 smAction = "hasUnsaved";
             } else {
                 smAction = "hasProfile";
             }
-            cookies.set("sm_action", smAction, {path: "/"});
+            cookies.set("sm_action", smAction, { path: "/" });
         }
     );
 
@@ -74,7 +82,7 @@ const sizemeStore = (sizemeOpts => {
 })(window.sizeme_options);
 
 class FitRequest {
-    constructor (subject, item) {
+    constructor(subject, item) {
         if (typeof subject === "string") {
             this.profileId = subject;
         } else {
@@ -89,7 +97,7 @@ class FitRequest {
     }
 }
 
-function createRequest (method, { token, withCredentials, body } = {}) {
+function createRequest(method, { token, withCredentials, body } = {}) {
     const headers = new Headers({
         "X-Sizeme-Pluginversion": pluginVersion,
         "X-Analytics-Enabled": true
@@ -117,35 +125,34 @@ function createRequest (method, { token, withCredentials, body } = {}) {
     return request;
 }
 
-function getEndpointAddress (endpoint) {
+function getEndpointAddress(endpoint) {
     return `${contextAddress}/api/${endpoint}`;
 }
 
 class ApiError extends Error {
-    constructor (message, response) {
+    constructor(message, response) {
         super(message);
         this.response = response;
     }
 
-    isUnauthorized = () => this.response.status === 401 || this.response.status === 403;
+    isUnauthorized = () => this.response.status === 401 || this.response.status === 403
 }
 
-function jsonResponse (response) {
-    return response.json()
-        .then(js => {
-            if (response.ok) {
-                return js;
-            }
+function jsonResponse(response) {
+    return response.json().then((js) => {
+        if (response.ok) {
+            return js;
+        }
 
-            if (js.message) {
-                throw new ApiError(js.message, response);
-            } else {
-                throw new ApiError(`${response.status} - ${response.statusText || "N/A"}`, response);
-            }
-        });
+        if (js.message) {
+            throw new ApiError(js.message, response);
+        } else {
+            throw new ApiError(`${response.status} - ${response.statusText || "N/A"}`, response);
+        }
+    });
 }
 
-function resolveAuthToken (reset = false) {
+function resolveAuthToken(reset = false) {
     return async (dispatch, getState) => {
         if (!reset && getState().authToken.resolved) {
             return true;
@@ -159,8 +166,11 @@ function resolveAuthToken (reset = false) {
             let storedToken;
             try {
                 storedToken = JSON.parse(tokenObj);
-                if (storedToken.token && storedToken.expires &&
-                    Date.parse(storedToken.expires) > new Date().getTime()) {
+                if (
+                    storedToken.token &&
+                    storedToken.expires &&
+                    Date.parse(storedToken.expires) > new Date().getTime()
+                ) {
                     authToken = storedToken.token;
                 }
             } catch (e) {
@@ -174,9 +184,10 @@ function resolveAuthToken (reset = false) {
         } else {
             dispatch(actions.fetchToken());
             try {
-                const tokenResp = await fetch(getEndpointAddress("authToken"),
-                    createRequest("GET", { withCredentials: true }))
-                    .then(jsonResponse);
+                const tokenResp = await fetch(
+                    getEndpointAddress("authToken"),
+                    createRequest("GET", { withCredentials: true })
+                ).then(jsonResponse);
                 sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
                 dispatch(actions.resolveToken(tokenResp.token));
                 return tokenResp.token !== null;
@@ -188,18 +199,19 @@ function resolveAuthToken (reset = false) {
     };
 }
 
-function signup (email) {
+function signup(email) {
     return async (dispatch, getState) => {
         let token;
         dispatch(actions.signup());
         trackEvent("clickSignUp", "Store: Sign up clicked");
         try {
-            const signupResp = await fetch(getEndpointAddress("createAccount"),
+            const signupResp = await fetch(
+                getEndpointAddress("createAccount"),
                 createRequest("POST", {
                     withCredentials: true,
                     body: { email }
-                }))
-                .then(jsonResponse);
+                })
+            ).then(jsonResponse);
             token = signupResp.token;
             if (token) {
                 dispatch(actions.resolveToken(token));
@@ -209,8 +221,10 @@ function signup (email) {
             }
 
             const profile = getState().selectedProfile;
-            profile.id = await fetch(getEndpointAddress("createProfile"),
-                createRequest("POST", { token, body: profile })).then(jsonResponse);
+            profile.id = await fetch(
+                getEndpointAddress("createProfile"),
+                createRequest("POST", { token, body: profile })
+            ).then(jsonResponse);
             dispatch(actions.receiveProfileList([profile]));
             dispatch(setSelectedProfile(profile.id));
             dispatch(actions.signupDone());
@@ -221,7 +235,7 @@ function signup (email) {
     };
 }
 
-function getProfiles () {
+function getProfiles() {
     return async (dispatch, getState) => {
         if (!getState().authToken.loggedIn) {
             return undefined;
@@ -229,8 +243,9 @@ function getProfiles () {
         dispatch(actions.requestProfileList());
         const token = getState().authToken.token;
         try {
-            const profileList = await fetch(getEndpointAddress("profiles"), createRequest("GET", { token }))
-                .then(jsonResponse);
+            const profileList = await fetch(getEndpointAddress("profiles"), createRequest("GET", { token })).then(
+                jsonResponse
+            );
 
             trackEvent("fetchProfiles", "API: fetchProfiles");
             dispatch(actions.receiveProfileList(profileList));
@@ -242,7 +257,7 @@ function getProfiles () {
     };
 }
 
-function getProduct () {
+function getProduct() {
     return async (dispatch, getState) => {
         if (getState().productInfo.resolved) {
             return true;
@@ -273,7 +288,7 @@ function getProduct () {
                 getEndpointAddress(`products/${encodeURIComponent(product.SKU)}`),
                 createRequest("GET")
             )
-                .then(response => {
+                .then((response) => {
                     if (response.status === 204) {
                         throw new ApiError("Product not found", response);
                     } else {
@@ -288,10 +303,7 @@ function getProduct () {
                 .map(([sku, val]) => ({ [skuMap.get(sku)]: val }));
 
             if (measurementEntries.length) {
-                const measurements = Object.assign(
-                    {},
-                    ...measurementEntries
-                );
+                const measurements = Object.assign({}, ...measurementEntries);
                 const item = { ...dbItem, measurements };
                 const model = new SizeGuideModel(item);
                 dispatch(actions.receiveProductInfo({ ...product, item, skuMap, model }));
@@ -307,21 +319,23 @@ function getProduct () {
     };
 }
 
-function setSelectedProfile (profileId) {
+function setSelectedProfile(profileId) {
     return async (dispatch, getState) => {
         if (getState().selectedProfile === profileId) {
             return undefined;
         }
 
         const storedMeasurements = Optional.ofNullable(localStorage.getItem(storeMeasurementsKey))
-            .map(i => JSON.parse(i))
+            .map((i) => JSON.parse(i))
             .orElse({});
 
         if (!getState().authToken.loggedIn) {
-            dispatch(actions.selectProfile({
-                gender: "Female",
-                profileName: "My profile"
-            }));
+            dispatch(
+                actions.selectProfile({
+                    gender: "Female",
+                    profileName: "My profile"
+                })
+            );
             dispatch(actions.selectProfileDone());
             dispatch(setProfileMeasurements(storedMeasurements));
             return undefined;
@@ -336,7 +350,7 @@ function setSelectedProfile (profileId) {
         const storedProfileId = sessionStorage.getItem("sizeme.selectedProfile");
         profileId = profileId || storedProfileId;
         if (profileId) {
-            profile = profileList.find(p => p.id === profileId);
+            profile = profileList.find((p) => p.id === profileId);
         }
 
         if (!profile) {
@@ -358,47 +372,55 @@ function setSelectedProfile (profileId) {
     };
 }
 
-function doMatch (fitRequest, token, useProfile) {
+function doMatch(fitRequest, token, useProfile) {
     const request = createRequest("POST", { token, body: fitRequest });
     const address = getEndpointAddress(useProfile ? "compareSizes" : "compareSizesSansProfile");
     return fetch(address, request).then(jsonResponse);
 }
 
-function getRecommendedFit (fitResults, optimalFit) {
+function getRecommendedFit(fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
     if (optFit === 1000) {
         const optStretch = DEFAULT_OPTIMAL_STRETCH;
         const [bestMatch] = fitResults
             .filter(([, res]) => res.accuracy > 0)
-            .reduce(([accSize, fit], [size, res]) => {
-                let maxStretchArr = [];
-                Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) );});
-                let maxStretch = Math.max.apply(null, maxStretchArr);
-                const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
-                if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
-                    return [size, newFit];
-                } else {
-                    return [accSize, fit];
-                }
-            }, [null, 0]);
+            .reduce(
+                ([accSize, fit], [size, res]) => {
+                    let maxStretchArr = [];
+                    Object.entries(res.matchMap).forEach(([oKey, oValue]) => {
+                        maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
+                    });
+                    let maxStretch = Math.max.apply(null, maxStretchArr);
+                    const newFit = Math.abs(res.totalFit - optFit) * 100 + Math.abs(maxStretch - optStretch);
+                    if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
+                        return [size, newFit];
+                    } else {
+                        return [accSize, fit];
+                    }
+                },
+                [null, 0]
+            );
         return bestMatch;
     } else {
         const [bestMatch] = fitResults
             .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
-            .reduce(([accSize, fit], [size, res]) => {
-                const newFit = Math.abs(res.totalFit - optFit);
-                if (newFit <= maxDist && (!accSize || newFit < fit)) {
-                    return [size, newFit];
-                } else {
-                    return [accSize, fit];
-                }
-            }, [null, 0]);
+            .reduce(
+                ([accSize, fit], [size, res]) => {
+                    const newFit = Math.abs(res.totalFit - optFit);
+                    if (newFit <= maxDist && (!accSize || newFit < fit)) {
+                        return [size, newFit];
+                    } else {
+                        return [accSize, fit];
+                    }
+                },
+                [null, 0]
+            );
         return bestMatch;
     }
 }
 
-function match (doSelectBestFit = true) {
+function match(doSelectBestFit = true) {
     return async (dispatch, getState) => {
         if (!getState().productInfo.resolved) {
             return undefined;
@@ -413,10 +435,9 @@ function match (doSelectBestFit = true) {
         if (useProfile) {
             subject = profile.id;
         } else {
-            const essentialMeasurements = product.model.essentialMeasurements
-                .map(v => humanMeasurementMap.get(v));
+            const essentialMeasurements = product.model.essentialMeasurements.map((v) => humanMeasurementMap.get(v));
             const localMeasurements = Object.entries(profile.measurements)
-                .filter(([m, p]) => (!!p && essentialMeasurements.includes(m)))
+                .filter(([m, p]) => !!p && essentialMeasurements.includes(m))
                 .map(([k, v]) => ({ [k]: v }));
             if (localMeasurements.length > 0) {
                 subject = Object.assign(...localMeasurements);
@@ -424,9 +445,7 @@ function match (doSelectBestFit = true) {
         }
 
         if (subject) {
-            const fitRequest = new FitRequest(
-                subject, product.SKU || product.item
-            );
+            const fitRequest = new FitRequest(subject, product.SKU || product.item);
 
             dispatch(actions.requestMatch());
 
@@ -466,12 +485,12 @@ function match (doSelectBestFit = true) {
     };
 }
 
-function setProfileMeasurements (measurements) {
+function setProfileMeasurements(measurements) {
     return async (dispatch) => {
         localStorage.setItem(storeMeasurementsKey, JSON.stringify(measurements));
         dispatch(actions.setMeasurements(measurements));
         dispatch(saveProfile());
-        if (Object.values(measurements).some(item => item)) {
+        if (Object.values(measurements).some((item) => item)) {
             await dispatch(match());
         } else {
             dispatch(actions.resetMatch());
@@ -480,28 +499,29 @@ function setProfileMeasurements (measurements) {
     };
 }
 
-function saveProfile () {
+function saveProfile() {
     return async (dispatch, getState) => {
         const profile = getState().selectedProfile;
         const token = getState().authToken.token;
         if (profile && token) {
-            await fetch(getEndpointAddress(`updateProfileMeasurements/${profile.id}`),
-                createRequest("PUT", { token, body: profile.measurements }))
-                .then(() => dispatch(actions.savedMeasurements()));
+            await fetch(
+                getEndpointAddress(`updateProfileMeasurements/${profile.id}`),
+                createRequest("PUT", { token, body: profile.measurements })
+            ).then(() => dispatch(actions.savedMeasurements()));
         }
     };
 }
 
-function selectSize (size, auto) {
+function selectSize(size, auto) {
     return (dispatch, getState) => {
         const firstMatch = !uiOptions.firstRecommendation && getState().selectedSize.firstMatch;
         if (!firstMatch) {
             if (auto) {
                 SizeSelector.setSelectedSize(size);
             }
-            dispatch(actions.selectSize({size, auto}));
+            dispatch(actions.selectSize({ size, auto }));
         } else {
-            dispatch(actions.selectSize({size: SizeSelector.getSelectedSize(), auto: false}));
+            dispatch(actions.selectSize({ size: SizeSelector.getSelectedSize(), auto: false }));
         }
 
         let match = null;
@@ -516,7 +536,7 @@ function selectSize (size, auto) {
                 state = "no-fit";
             }
         } else if (matchResult) {
-            if (Object.values(matchResult).some(m => m && m.accuracy > 0)) {
+            if (Object.values(matchResult).some((m) => m && m.accuracy > 0)) {
                 state = "no-size";
             } else {
                 state = "no-fit";
@@ -525,13 +545,13 @@ function selectSize (size, auto) {
             state = "no-meas";
         }
         if (firstMatch && matchResult.recommendedFit === currentSize) {
-            dispatch(actions.selectSize({auto: true}));
+            dispatch(actions.selectSize({ auto: true }));
         }
         dispatch(actions.setMatchState({ match, state }));
     };
 }
 
-function findVisibleElement (selector) {
+function findVisibleElement(selector) {
     const isVisible = (elem) => !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 
     const elementList = document.querySelectorAll(selector);
@@ -545,8 +565,8 @@ function findVisibleElement (selector) {
     return null;
 }
 
-function setSizemeHidden (sizemeHidden) {
-    return dispatch => {
+function setSizemeHidden(sizemeHidden) {
+    return (dispatch) => {
         dispatch(actions.setSizemeHidden(sizemeHidden));
         localStorage.setItem("sizemeToggledVisible", JSON.stringify(!sizemeHidden));
     };
