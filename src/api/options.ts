@@ -1,5 +1,13 @@
-import { UiOptions } from "./types"
-import sizemeOptions from "./sizemeOptions"
+import { LocalProduct, SizemeOptions, SKUProduct, UiOptions } from "./types"
+
+export const sizemeOptions: SizemeOptions = {
+    serviceStatus: "off",
+    contextAddress: "",
+    shopType: "magento",
+    debugState: false,
+    uiOptions: {},
+    ...(window as any).sizeme_options
+}
 
 const general = {
     disableSizeGuide: false,
@@ -46,11 +54,14 @@ const shops = {
     }
 }
 
-const uiOptions: UiOptions = {
+export const uiOptions: UiOptions = {
     shopType: sizemeOptions.shopType,
     ...general,
     ...shops[sizemeOptions.shopType],
     ...sizemeOptions.uiOptions
 }
 
-export default uiOptions
+export const sizemeProduct: SKUProduct | LocalProduct = (window as any).sizeme_product
+export function isSKUProduct(product: SKUProduct | LocalProduct): product is SKUProduct {
+    return "SKU" in product
+}

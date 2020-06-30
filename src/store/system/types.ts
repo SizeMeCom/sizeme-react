@@ -1,8 +1,10 @@
 export const SET_SIZEME_HIDDEN = "SET_SIZEME_HIDDEN"
 export const TOGGLE_SIZEME_HIDDEN = "TOGGLE_SIZEME_HIDDEN"
+export const INITIALIZE_SIZEME = "INITIALIZE_SIZEME"
 
 export interface SystemState {
     sizemeHidden: boolean
+    error?: Error
 }
 
 export interface ToggleSizemeHiddenAction {
@@ -14,4 +16,8 @@ export interface SetSizemeHiddenAction {
     payload: boolean
 }
 
-export type SystemActionTypes = ToggleSizemeHiddenAction | SetSizemeHiddenAction
+export interface InitializeSizemeAction {
+    type: typeof INITIALIZE_SIZEME
+}
+
+export type SystemActionTypes = ToggleSizemeHiddenAction | SetSizemeHiddenAction | InitializeSizemeAction

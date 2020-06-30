@@ -1,6 +1,7 @@
 import i18n from "i18next"
 import { init, fitOrder } from "./ProductModel"
-import { Item } from "./types"
+import { FitResult, Item } from "./types"
+import { uiOptions } from "./options"
 
 interface ArrowsType {
     [key: string]: {
@@ -76,7 +77,7 @@ const pinchedFits = [
 
 const longFits = ["inseam", "outseam", "sleeve", "front_height"]
 
-const humanMeasurementMap = new Map([
+export const humanMeasurementMap = new Map([
     ["sleeve", "sleeve"],
     ["chest", "chest"],
     ["waist", "shirtWaist"],
@@ -132,7 +133,7 @@ export default class SizeGuideModel {
     private measurementOrder: string[] = []
     private readonly arrows: ArrowsType
     private itemDrawing: unknown
-    private essentialMeasurements: string[]
+    public essentialMeasurements: string[]
     private readonly getItemTypeComponent: (index: number) => number
 
     constructor(item: Item) {
@@ -188,6 +189,7 @@ export default class SizeGuideModel {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getResult = (measurement: string, value: number, matchItem: MeasurementResult) => {
     let fitValue
     let fit
@@ -236,3 +238,45 @@ const stretchFactor = (measurement: string) => {
 
 const DEFAULT_OPTIMAL_FIT = 1070
 const DEFAULT_OPTIMAL_STRETCH = 5
+
+export function getRecommendedFit(fitResults: [string, FitResult][], optimalFit: number): string {
+    const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT
+    const maxDist = uiOptions.maxRecommendationDistance || 9999
+    if (optFit === 1000) {
+        const optStretch = DEFAULT_OPTIMAL_STRETCH
+        const [bestMatch] = fitResults
+            .filter(([, res]) => res.accuracy > 0)
+            .reduce(
+                ([accSize, fit]: [string | null, number], [size, res]) => {
+                    let maxStretchArr: number[] = []
+                    Object.entries(res.matchMap).forEach(([oKey, oValue]) => {
+                        maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey))
+                    })
+                    let maxStretch = Math.max.apply(null, maxStretchArr)
+                    const newFit = Math.abs(res.totalFit - optFit) * 100 + Math.abs(maxStretch - optStretch)
+                    if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
+                        return [size, newFit]
+                    } else {
+                        return [accSize, fit]
+                    }
+                },
+                [null, 0]
+            )
+        return bestMatch || ""
+    } else {
+        const [bestMatch] = fitResults
+            .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
+            .reduce(
+                ([accSize, fit]: [string | null, number], [size, res]) => {
+                    const newFit = Math.abs(res.totalFit - optFit)
+                    if (newFit <= maxDist && (!accSize || newFit < fit)) {
+                        return [size, newFit]
+                    } else {
+                        return [accSize, fit]
+                    }
+                },
+                [null, 0]
+            )
+        return bestMatch || ""
+    }
+}

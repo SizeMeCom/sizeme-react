@@ -14,6 +14,7 @@ export interface UiOptions {
     addToCartEvent?: string
     sizeSelectorType?: string
     lang?: string
+    maxRecommendationDistance?: number
 }
 
 export interface SizemeOptions {
@@ -35,9 +36,7 @@ export interface AuthToken {
     expires?: string
 }
 
-export interface Measurements {
-    [key: string]: number
-}
+export type Measurements = Record<string, number>
 
 export interface NewProfile {
     profileName: string
@@ -60,12 +59,23 @@ export interface Item {
     }
 }
 
+export interface SKUProduct {
+    name: string
+    SKU: string
+    item: Record<string, string>
+}
+
+export interface LocalProduct {
+    name: string
+    item: Item
+}
+
 export interface Product {
     name: string
     SKU?: string
-    item: { [key: string]: string } | Item
-    model?: SizeGuideModel
-    skuMap?: Map<string, any>
+    item: Item
+    model: SizeGuideModel
+    skuMap?: Map<string, string>
 }
 
 export interface FitRequest {
@@ -90,3 +100,5 @@ export interface FitResult {
     accuracy: number
     missingMeasurements: [[string, string]]
 }
+
+export type MatchResult = Record<string, FitResult>

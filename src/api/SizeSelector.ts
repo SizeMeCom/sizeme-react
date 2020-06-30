@@ -1,4 +1,4 @@
-import uiOptions from "./uiOptions"
+import { uiOptions } from "./options"
 import { findVisibleElement } from "./utils"
 
 type ConstructorOptions = { event?: keyof HTMLElementEventMap; useCapture?: boolean }
@@ -389,6 +389,6 @@ const getClone = () => {
     return selector ? selector.clone() : null
 }
 const getSizeMapper = () => selector?.sizeMapper
-const getSelectedSize = () => selector?.getSelectedSize()
+const getSelectedSize = (): string => selector?.getSelectedSize() || ""
 
 export default { initSizeSelector, setSelectedSize, getClone, getSizeMapper, getSelectedSize }

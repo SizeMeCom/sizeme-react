@@ -8,10 +8,10 @@ export function* watchFetchToken() {
     yield takeLatest(FETCH_TOKEN, fetchToken)
 }
 
-function* fetchToken({ reset }: FetchTokenAction) {
+function* fetchToken({ payload }: FetchTokenAction) {
     const { auth } = yield select()
 
-    if (!reset && auth.resolved) {
+    if (!payload && auth.resolved) {
         return
     }
 

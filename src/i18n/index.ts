@@ -1,5 +1,4 @@
-import uiOptions from "../api/uiOptions"
-import sizemeOptions from "../api/sizemeOptions"
+import { sizemeOptions, uiOptions } from "../api/options"
 import i18n from "i18next"
 import en from "./en.json"
 import fi from "./fi.json"

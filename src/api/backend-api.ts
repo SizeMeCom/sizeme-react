@@ -1,5 +1,5 @@
-import { AuthToken, FitRequest, FitResult, NewProfile, Product, Profile } from "./types"
-import sizemeOptions from "./sizemeOptions"
+import { AuthToken, FitRequest, MatchResult, NewProfile, Product, Profile } from "./types"
+import { sizemeOptions } from "./options"
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios"
 
 const contextAddress = sizemeOptions.contextAddress || "https://www.sizeme.com"
@@ -18,7 +18,9 @@ export class ApiError extends Error {
 async function request<T>(
     method: Method,
     url: string,
-    { token, body }: { token?: string; body?: any } = {},
+    { withCredentials, token, body }: { withCredentials?: boolean; token?: string; body?: any } = {
+        withCredentials: false
+    },
     handleResp?: (resp: AxiosResponse<T>) => T
 ): Promise<T> {
     const headers: any = {
@@ -34,7 +36,8 @@ async function request<T>(
         method,
         headers,
         baseURL: `${contextAddress}/api/`,
-        url
+        url,
+        withCredentials
     }
 
     if (body) {
@@ -57,7 +60,7 @@ async function request<T>(
 }
 
 export async function getAuthToken(): Promise<AuthToken> {
-    return await request("get", "authToken")
+    return await request("get", "authToken", { withCredentials: true })
 }
 
 export async function createAccount(email: string): Promise<AuthToken> {
@@ -68,7 +71,7 @@ export async function createProfile(token: string, profile: NewProfile): Promise
     return await request("post", "createProfile", { token, body: profile })
 }
 
-export async function getProfiles(token: string): Promise<[Profile]> {
+export async function getProfiles(token: string): Promise<Profile[]> {
     return await request("get", "profiles", { token })
 }
 
@@ -81,6 +84,10 @@ export async function getProductInfo(sku: string): Promise<Product> {
     })
 }
 
-export async function match(fitRequest: FitRequest, token: string, useProfile: boolean): Promise<FitResult> {
+export async function match(
+    fitRequest: FitRequest,
+    token: string | undefined,
+    useProfile: boolean
+): Promise<MatchResult> {
     return await request("post", useProfile ? "compareSizes" : "compareSizesSansProfile", { token, body: fitRequest })
 }

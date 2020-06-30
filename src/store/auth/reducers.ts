@@ -12,9 +12,9 @@ export default function authReducer(state = initialState, action: AuthActionType
 
         case RESOLVE_TOKEN:
             return {
-                loggedIn: !!action.token,
+                loggedIn: !!action.payload,
                 resolved: true,
-                token: action.token
+                token: action.payload
             }
 
         case CLEAR_TOKEN:

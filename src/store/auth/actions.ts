@@ -9,14 +9,14 @@ export function resetToken(): AuthActionTypes {
 export function fetchToken(reset = false): AuthActionTypes {
     return {
         type: FETCH_TOKEN,
-        reset
+        payload: reset
     }
 }
 
 export function resolveToken(token: string): AuthActionTypes {
     return {
         type: RESOLVE_TOKEN,
-        token
+        payload: token
     }
 }
 

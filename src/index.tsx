@@ -1,4 +1,4 @@
-import sizemeOptions from "./api/sizemeOptions"
+import { sizemeOptions } from "./api/options"
 
 //console.log("Initializing SizeMe, version " + VERSION + ", built on " + BUILD_DATE)
 

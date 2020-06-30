@@ -15,12 +15,12 @@ export interface ResetTokenAction {
 
 export interface FetchTokenAction {
     type: typeof FETCH_TOKEN
-    reset: boolean
+    payload: boolean
 }
 
 export interface ResolveTokenAction {
     type: typeof RESOLVE_TOKEN
-    token: string
+    payload: string
 }
 
 export interface ClearTokenAction {
