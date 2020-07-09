@@ -1,10 +1,10 @@
-import { sizemeOptions } from "./api/options"
+import { getSizemeOptions } from "./api/options"
 
 //console.log("Initializing SizeMe, version " + VERSION + ", built on " + BUILD_DATE)
 
 let sizemeDisabled = false
 
-if (sizemeOptions.serviceStatus === "off") {
+if (getSizemeOptions().serviceStatus === "off") {
     sizemeDisabled = true
 }
 

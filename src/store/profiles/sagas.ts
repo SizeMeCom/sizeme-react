@@ -9,30 +9,26 @@ import {
 import { RootState } from "../index"
 import * as api from "../../api/backend-api"
 import { Measurements, Profile } from "../../api/types"
+import { AuthState } from "../auth/types"
+import { setLoggedIn } from "../auth/actions"
 
 const storeMeasurementsKey = "sizemeMeasurements"
-const getLoggedIn = (state: RootState) => state.auth.loggedIn
 
 export function* watchRequestProfileList() {
     yield takeLatest(REQUEST_PROFILE_LIST, getProfileList)
 }
 
 function* getProfileList() {
-    const token = yield select((state) => state.auth.token)
-
-    if (!token) {
-        yield put({
-            type: RECEIVE_PROFILE_LIST,
-            payload: []
-        })
-        return
-    }
-
+    const { resolved }: AuthState = yield select((state: RootState) => state.auth)
     try {
-        const profileList = yield call(api.getProfiles, token)
+        const profileList = yield call(api.getProfiles)
+        const gotAnswer = !!profileList
+        if (!resolved) {
+            yield put(setLoggedIn(gotAnswer))
+        }
         yield put({
             type: RECEIVE_PROFILE_LIST,
-            payload: profileList
+            payload: gotAnswer ? profileList : []
         })
     } catch (reason) {
         yield put({
@@ -65,19 +61,6 @@ function* selectProfile({ payload: profileId }: SelectProfileAction) {
         } catch (error) {
             // no action
         }
-    }
-
-    const loggedIn = yield select(getLoggedIn)
-    if (!loggedIn) {
-        yield put({
-            type: SELECT_PROFILE_DONE,
-            payload: {
-                gender: "Female",
-                profileName: "My profile",
-                measurements: storedMeasurements
-            }
-        })
-        return
     }
 
     const profileList: Profile[] = yield select((state: RootState) => state.profile.profileList)

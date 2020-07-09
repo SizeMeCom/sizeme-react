@@ -1,11 +1,12 @@
-import React, { useEffect, Suspense } from "react"
+import React, { Suspense } from "react"
 import Loading from "./common/Loading"
-import { uiOptions } from "./api/options"
+import { getUiOptions } from "./api/options"
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "./store"
 import { toggleSizemeHidden } from "./store/system/actions"
 
+const uiOptions = getUiOptions()
 const SizeMeApp = React.lazy(() => import("./SizeMeApp"))
 
 type TogglerProps = { sizemeHidden: boolean }
@@ -28,15 +29,12 @@ function SizemeToggler({ sizemeHidden }: TogglerProps) {
 
 export default function SizeMeAppWrapper() {
     const sizemeHidden = useSelector((state: RootState) => state.system.sizemeHidden)
-    const [tokenResolved, productResolved] = useSelector((state: RootState) => [
-        state.auth.resolved,
-        state.productInfo.resolved
-    ])
+    const productResolved = useSelector((state: RootState) => state.productInfo.resolved)
 
-    if (tokenResolved && productResolved) {
+    if (productResolved) {
         return (
             <>
-                {uiOptions && uiOptions.toggler && <SizemeToggler sizemeHidden={sizemeHidden} />}
+                {uiOptions.toggler && <SizemeToggler sizemeHidden={sizemeHidden} />}
                 {!sizemeHidden && (
                     <Suspense fallback={<Loading />}>
                         <SizeMeApp />

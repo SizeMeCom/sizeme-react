@@ -4,13 +4,12 @@ import { all, fork } from "redux-saga/effects"
 import { watchInitializeSizeme, watchToggleSizemeHidden } from "./system/sagas"
 import createSagaMiddleware from "redux-saga"
 import { composeWithDevTools } from "redux-devtools-extension"
-import { sizemeOptions } from "../api/options"
+import { getSizemeOptions } from "../api/options"
 import { createLogger } from "redux-logger"
 import authReducer from "./auth/reducers"
 import sizeReducer from "./size/reducers"
 import productInfoReducer from "./productInfo/reducers"
 import profileReducer from "./profiles/reducers"
-import { watchFetchToken } from "./auth/sagas"
 import { watchRequestProductInfo } from "./productInfo/sagas"
 import { shallowEqual } from "react-redux"
 import Cookies from "universal-cookie"
@@ -41,7 +40,6 @@ function* sagas() {
     yield all([
         fork(watchToggleSizemeHidden),
         fork(watchInitializeSizeme),
-        fork(watchFetchToken),
         fork(watchRequestProductInfo),
         fork(watchRequestProfileList),
         fork(watchSelectProfile),
@@ -58,7 +56,7 @@ const store = createStore(
         applyMiddleware(
             sagaMiddleware,
             createLogger({
-                predicate: () => sizemeOptions.debugState,
+                predicate: () => getSizemeOptions().debugState,
                 duration: true
             })
         )

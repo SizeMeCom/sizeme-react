@@ -1,11 +1,13 @@
 import { select, put, takeLatest } from "redux-saga/effects"
 import { SELECT_SIZE, SET_SELECTED_SIZE, SizeActionTypes } from "./types"
-import { uiOptions } from "../../api/options"
+import { getUiOptions } from "../../api/options"
 import { RootState } from "../index"
 import SizeSelector from "../../api/SizeSelector"
 import { FitResult } from "../../api/types"
 import { MatchState } from "../match/types"
 import { setMatchState } from "../match/actions"
+
+const uiOptions = getUiOptions()
 
 function setSelectedSize(size: string, auto: boolean): SizeActionTypes {
     return {

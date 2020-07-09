@@ -2,7 +2,7 @@ import React from "react"
 import { selectSize } from "./store/size/actions"
 import { findVisibleElement } from "./api/utils"
 import sizemeStore from "./store"
-import { uiOptions } from "./api/options"
+import { getUiOptions } from "./api/options"
 import { render } from "react-dom"
 import { I18nextProvider } from "react-i18next"
 import i18n from "./i18n"
@@ -10,6 +10,8 @@ import { Provider } from "react-redux"
 import SizeSelector from "./api/SizeSelector"
 import SizeMeAppWrapper from "./SizeMeAppWrapper"
 import { initializeSizeme, setSizemeHidden } from "./store/system/actions"
+
+const uiOptions = getUiOptions()
 
 if (uiOptions.toggler) {
     const sizemeToggledVisible = localStorage.getItem("sizemeToggledVisible") || "true"

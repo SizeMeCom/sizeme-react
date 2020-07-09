@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthState, CLEAR_TOKEN, FETCH_TOKEN, RESET_TOKEN, RESOLVE_TOKEN } from "./types"
+import { AuthActionTypes, AuthState, SET_LOGGED_IN } from "./types"
 
 const initialState: AuthState = {
     loggedIn: false,
@@ -7,23 +7,11 @@ const initialState: AuthState = {
 
 export default function authReducer(state = initialState, action: AuthActionTypes): AuthState {
     switch (action.type) {
-        case RESET_TOKEN:
-            return initialState
-
-        case RESOLVE_TOKEN:
+        case SET_LOGGED_IN:
             return {
-                loggedIn: !!action.payload,
-                resolved: true,
-                token: action.payload
-            }
-
-        case CLEAR_TOKEN:
-            return {
-                ...initialState,
+                loggedIn: action.payload,
                 resolved: true
             }
-
-        case FETCH_TOKEN:
         default:
             return state
     }

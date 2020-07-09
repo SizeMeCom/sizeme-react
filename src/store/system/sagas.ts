@@ -2,8 +2,6 @@ import { takeLatest, select, put, take } from "redux-saga/effects"
 import { INITIALIZE_SIZEME, TOGGLE_SIZEME_HIDDEN } from "./types"
 import { setSizemeHidden } from "./actions"
 import { RootState } from "../index"
-import { fetchToken } from "../auth/actions"
-import { RESOLVE_TOKEN } from "../auth/types"
 import { getProfiles, selectProfile } from "../profiles/actions"
 import { RECEIVE_PROFILE_LIST } from "../profiles/types"
 import { requestProductInfo } from "../productInfo/actions"
@@ -25,15 +23,6 @@ export function* watchInitializeSizeme() {
 
 function* initializeSizeme() {
     yield put(requestProductInfo())
-    yield put(fetchToken(true))
-    yield take(RESOLVE_TOKEN)
-
-    const { auth }: RootState = yield select()
-
-    if (!auth.loggedIn) {
-        return
-    }
-
     yield put(getProfiles())
     yield take(RECEIVE_PROFILE_LIST)
     yield put(selectProfile(null))

@@ -1,7 +1,7 @@
 import i18n from "i18next"
 import { init, fitOrder } from "./ProductModel"
 import { FitResult, Item } from "./types"
-import { uiOptions } from "./options"
+import { getUiOptions } from "./options"
 
 interface ArrowsType {
     [key: string]: {
@@ -241,7 +241,7 @@ const DEFAULT_OPTIMAL_STRETCH = 5
 
 export function getRecommendedFit(fitResults: [string, FitResult][], optimalFit: number): string {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT
-    const maxDist = uiOptions.maxRecommendationDistance || 9999
+    const maxDist = getUiOptions().maxRecommendationDistance || 9999
     if (optFit === 1000) {
         const optStretch = DEFAULT_OPTIMAL_STRETCH
         const [bestMatch] = fitResults

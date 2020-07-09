@@ -23,16 +23,18 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^26.0.0",
+    "@types/jest": "^26.0.3",
     "@types/node": "^14.0.13",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
     "@types/react-loadable": "^5.5.3",
     "@types/react-redux": "^7.1.9",
     "@types/redux-logger": "^3.0.8",
+    "@types/redux-saga-tester": "^1.0.2",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "redux-saga-tester": "^1.0.821"
   },
   "scripts": {
     "start": "react-scripts start",

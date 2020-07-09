@@ -29,13 +29,6 @@ export interface SizemeOptions {
     }
 }
 
-export interface AuthToken {
-    login?: string
-    displayName?: string
-    token: string | null
-    expires?: string
-}
-
 export type Measurements = Record<string, number>
 
 export interface NewProfile {

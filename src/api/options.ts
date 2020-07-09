@@ -1,6 +1,6 @@
 import { LocalProduct, SizemeOptions, SKUProduct, UiOptions } from "./types"
 
-export const sizemeOptions: SizemeOptions = {
+const sizemeOptions: SizemeOptions = {
     serviceStatus: "off",
     contextAddress: "",
     shopType: "magento",
@@ -61,7 +61,9 @@ export const uiOptions: UiOptions = {
     ...sizemeOptions.uiOptions
 }
 
-export const sizemeProduct: SKUProduct | LocalProduct = (window as any).sizeme_product
+export const getSizemeOptions = (): SizemeOptions => sizemeOptions
+export const getUiOptions = (): UiOptions => uiOptions
+export const getSizemeProduct = (): SKUProduct | LocalProduct => (window as any).sizeme_product
 export function isSKUProduct(product: SKUProduct | LocalProduct): product is SKUProduct {
     return "SKU" in product
 }

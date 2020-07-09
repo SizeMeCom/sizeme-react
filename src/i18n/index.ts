@@ -1,9 +1,12 @@
-import { sizemeOptions, uiOptions } from "../api/options"
+import { getSizemeOptions, getUiOptions } from "../api/options"
 import i18n from "i18next"
 import en from "./en.json"
 import fi from "./fi.json"
 import sv from "./sv.json"
 import ar from "./ar.json"
+
+const sizemeOptions = getSizemeOptions()
+const uiOptions = getUiOptions()
 
 // noinspection JSIgnoredPromiseFromCall
 i18n.init({

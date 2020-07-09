@@ -1,4 +1,4 @@
-import { uiOptions } from "./options"
+import { getUiOptions } from "./options"
 import { findVisibleElement } from "./utils"
 
 type ConstructorOptions = { event?: keyof HTMLElementEventMap; useCapture?: boolean }
@@ -357,6 +357,7 @@ const initSizeSelector = (selectSizeFn: (size: string) => void) => {
         selectSizeFn(size)
     }
 
+    const uiOptions = getUiOptions()
     const element = findVisibleElement(uiOptions.invokeElement)
     if (element) {
         switch (uiOptions.sizeSelectorType) {

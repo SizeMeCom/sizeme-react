@@ -4,13 +4,14 @@ import { Item, LocalProduct, SKUProduct } from "../../api/types"
 import SizeGuideModel from "../../api/SizeGuideModel"
 import { receiveProductInfo } from "./actions"
 import * as api from "../../api/backend-api"
-import { sizemeProduct, isSKUProduct } from "../../api/options"
+import { getSizemeProduct, isSKUProduct } from "../../api/options"
 
 export function* watchRequestProductInfo() {
     yield takeLatest(REQUEST_PRODUCT_INFO, getProductInfo)
 }
 
 function* getProductInfo() {
+    const sizemeProduct = getSizemeProduct()
     if (!sizemeProduct) {
         yield put({
             type: RECEIVE_PRODUCT_INFO_ERROR,
@@ -18,13 +19,12 @@ function* getProductInfo() {
         })
         return
     }
-
     if (!isSKUProduct(sizemeProduct)) {
         const product = sizemeProduct as LocalProduct
-        if (!product.item.itemType) {
+        if (!product.item?.itemType) {
             yield put({
                 type: RECEIVE_PRODUCT_INFO_ERROR,
-                error: new Error("no product")
+                error: new Error("Local product missing item type")
             })
             return
         }

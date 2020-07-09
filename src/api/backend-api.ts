@@ -1,7 +1,8 @@
-import { AuthToken, FitRequest, MatchResult, NewProfile, Product, Profile } from "./types"
-import { sizemeOptions } from "./options"
+import { FitRequest, Item, MatchResult, NewProfile, Profile } from "./types"
+import { getSizemeOptions } from "./options"
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios"
 
+const sizemeOptions = getSizemeOptions()
 const contextAddress = sizemeOptions.contextAddress || "https://www.sizeme.com"
 const pluginVersion = sizemeOptions.pluginVersion || "UNKNOWN"
 
@@ -14,13 +15,14 @@ export class ApiError extends Error {
 
     isUnauthorized = () => this.response.status === 401 || this.response.status === 403
 }
+export function isApiError(error: ApiError | Error): error is ApiError {
+    return "response" in error
+}
 
 async function request<T>(
     method: Method,
     url: string,
-    { withCredentials, token, body }: { withCredentials?: boolean; token?: string; body?: any } = {
-        withCredentials: false
-    },
+    { body }: { body?: any } = {},
     handleResp?: (resp: AxiosResponse<T>) => T
 ): Promise<T> {
     const headers: any = {
@@ -28,16 +30,12 @@ async function request<T>(
         "X-Analytics-Enabled": true
     }
 
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`
-    }
-
     const request: AxiosRequestConfig = {
         method,
         headers,
         baseURL: `${contextAddress}/api/`,
         url,
-        withCredentials
+        withCredentials: true
     }
 
     if (body) {
@@ -59,23 +57,19 @@ async function request<T>(
     }
 }
 
-export async function getAuthToken(): Promise<AuthToken> {
-    return await request("get", "authToken", { withCredentials: true })
-}
-
-export async function createAccount(email: string): Promise<AuthToken> {
+export async function createAccount(email: string): Promise<any> {
     return await request("post", "createAccount", { body: { email } })
 }
 
 export async function createProfile(token: string, profile: NewProfile): Promise<string> {
-    return await request("post", "createProfile", { token, body: profile })
+    return await request("post", "createProfile", { body: profile })
 }
 
-export async function getProfiles(token: string): Promise<Profile[]> {
-    return await request("get", "profiles", { token })
+export async function getProfiles(): Promise<Profile[]> {
+    return await request("get", "profiles")
 }
 
-export async function getProductInfo(sku: string): Promise<Product> {
+export async function getProductInfo(sku: string): Promise<Item> {
     return await request("get", `products/${encodeURIComponent(sku)}`, {}, (resp) => {
         if (resp.status === 204) {
             throw new ApiError("Product not found", resp)
@@ -84,10 +78,6 @@ export async function getProductInfo(sku: string): Promise<Product> {
     })
 }
 
-export async function match(
-    fitRequest: FitRequest,
-    token: string | undefined,
-    useProfile: boolean
-): Promise<MatchResult> {
-    return await request("post", useProfile ? "compareSizes" : "compareSizesSansProfile", { token, body: fitRequest })
+export async function match(fitRequest: FitRequest): Promise<MatchResult> {
+    return await request("post", "compareSizes", { body: fitRequest })
 }

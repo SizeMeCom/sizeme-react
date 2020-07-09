@@ -1,30 +1,13 @@
-export const RESET_TOKEN = "RESET_TOKEN"
-export const FETCH_TOKEN = "FETCH_TOKEN"
-export const RESOLVE_TOKEN = "RESOLVE_TOKEN"
-export const CLEAR_TOKEN = "CLEAR_TOKEN"
+export const SET_LOGGED_IN = "SET_LOGGED_IN"
 
 export interface AuthState {
     loggedIn: boolean
     resolved: boolean
-    token?: string
 }
 
-export interface ResetTokenAction {
-    type: typeof RESET_TOKEN
-}
-
-export interface FetchTokenAction {
-    type: typeof FETCH_TOKEN
+export interface SetLoggedInAction {
+    type: typeof SET_LOGGED_IN
     payload: boolean
 }
 
-export interface ResolveTokenAction {
-    type: typeof RESOLVE_TOKEN
-    payload: string
-}
-
-export interface ClearTokenAction {
-    type: typeof CLEAR_TOKEN
-}
-
-export type AuthActionTypes = ResetTokenAction | FetchTokenAction | ResolveTokenAction | ClearTokenAction
+export type AuthActionTypes = SetLoggedInAction
