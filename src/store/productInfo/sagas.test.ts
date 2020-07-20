@@ -6,9 +6,8 @@ import SagaTester from "redux-saga-tester"
 import { RECEIVE_PRODUCT_INFO, RECEIVE_PRODUCT_INFO_ERROR } from "./types"
 import systemReducer from "../system/reducers"
 import * as options from "../../api/options"
-import { defaultLocalProduct, defaultSKUItem, defaultSKUProduct } from "../../../fixtures/products"
+import { defaultLocalProduct, defaultSKUItem, defaultSKUProduct, otherSKUProduct } from "../../../fixtures/products"
 import * as api from "../../api/backend-api"
-import { AxiosResponse } from "axios"
 
 describe("ProductInfo saga", () => {
     let sagaTester: SagaTester<Partial<RootState>>
@@ -69,10 +68,18 @@ describe("ProductInfo saga", () => {
         expect(api.getProductInfo).toHaveBeenCalledTimes(1)
     })
 
+    it("fails to resolve SKU product with unknown sub-SKU's", async () => {
+        jest.spyOn(options, "getSizemeProduct").mockReturnValueOnce(otherSKUProduct)
+        jest.spyOn(api, "getProductInfo").mockResolvedValueOnce(defaultSKUItem)
+        sagaTester.start(watchRequestProductInfo)
+        sagaTester.dispatch(requestProductInfo())
+        await sagaTester.waitFor(RECEIVE_PRODUCT_INFO_ERROR)
+        expect(sagaTester.getState().productInfo?.resolved).toBeFalsy()
+        expect(api.getProductInfo).toHaveBeenCalledTimes(1)
+    })
+
     it("fails to resolve unknown SKU product", async () => {
-        const apiError = new api.ApiError("Product not found", {
-            status: 204
-        } as AxiosResponse)
+        const apiError = new Error("Product not found")
         jest.spyOn(options, "getSizemeProduct").mockReturnValueOnce(defaultSKUProduct)
         jest.spyOn(api, "getProductInfo").mockRejectedValueOnce(apiError)
         sagaTester.start(watchRequestProductInfo)

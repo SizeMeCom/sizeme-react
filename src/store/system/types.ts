@@ -5,6 +5,7 @@ export const INITIALIZE_SIZEME = "INITIALIZE_SIZEME"
 export interface SystemState {
     sizemeHidden: boolean
     error?: Error
+    errorMessage?: string
 }
 
 export interface ToggleSizemeHiddenAction {

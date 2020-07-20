@@ -93,6 +93,17 @@ export const defaultSKUProduct: SKUProduct = {
     }
 }
 
+export const otherSKUProduct: SKUProduct = {
+    name: "T-SHIRT",
+    SKU: "WHITE-TEE",
+    item: {
+        WHITE_TEE_S: "7",
+        WHITE_TEE_M: "6",
+        WHITE_TEE_L: "5",
+        WHITE_TEE_XL: "4"
+    }
+}
+
 export const defaultSKUItem: Item = {
     itemType: "1.1.1.3.0.4.0",
     itemLayer: 0,

@@ -19,7 +19,7 @@ export default function systemReducer(state = initialState, action: SystemAction
         default:
             if (isError(action)) {
                 // TODO: better error handling
-                console.error("Error: ", action.error?.message)
+                console.error(`Action ${action.type} failed;`, action.error)
                 return {
                     ...state,
                     error: action.error
