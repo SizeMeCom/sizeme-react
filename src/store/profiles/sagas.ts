@@ -46,10 +46,6 @@ function* selectProfile({ payload: profileId }: SelectProfileAction) {
     const state: RootState = yield select()
 
     if (profileId && state.profile.selectedProfile.id === profileId) {
-        yield put({
-            type: SELECT_PROFILE_DONE,
-            payload: state.profile.selectedProfile
-        })
         return
     }
 
@@ -68,7 +64,8 @@ function* selectProfile({ payload: profileId }: SelectProfileAction) {
         yield put({
             type: SELECT_PROFILE_DONE,
             payload: {
-                gender: "Female",
+                id: null,
+                gender: "female",
                 profileName: "My profile",
                 measurements: storedMeasurements
             }
@@ -80,7 +77,7 @@ function* selectProfile({ payload: profileId }: SelectProfileAction) {
     const storedProfileId = sessionStorage.getItem("sizeme.selectedProfile")
     const effProfileId = profileId || storedProfileId
     if (effProfileId) {
-        profile = profileList.find((p: Profile) => p.id === profileId)
+        profile = profileList.find((p: Profile) => p.id === effProfileId)
     }
 
     if (!profile) {

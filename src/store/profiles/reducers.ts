@@ -28,24 +28,15 @@ export default function profileReducer(state = initialState, action: ProfilesAct
 
         case SELECT_PROFILE:
             return {
-                ...state,
-                selectedProfile: {
-                    selectDone: false,
-                    dirty: false,
-                    measurements: {},
-                    profileName: undefined,
-                    id: action.payload
-                }
+                ...state
             }
 
         case SELECT_PROFILE_DONE:
-            const { profileName, id } = action.payload
             return {
                 ...state,
                 selectedProfile: {
                     ...state.selectedProfile,
-                    profileName,
-                    id,
+                    ...action.payload,
                     selectDone: true
                 }
             }

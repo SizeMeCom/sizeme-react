@@ -46,7 +46,7 @@ export async function createProfile(profile: NewProfile): Promise<string> {
     return await request("post", "createProfile", { body: profile })
 }
 
-export async function getProfiles(): Promise<Profile[]> {
+export async function getProfiles(): Promise<Profile[] | null> {
     return await request("get", "profiles")
 }
 

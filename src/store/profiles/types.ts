@@ -1,4 +1,4 @@
-import { Measurements, Profile } from "../../api/types"
+import { Gender, Measurements, Profile } from "../../api/types"
 import { ErrorAction } from "../index"
 
 export const REQUEST_PROFILE_LIST = "REQUEST_PROFILE_LIST"
@@ -13,6 +13,7 @@ export interface ProfilesState {
     selectedProfile: {
         id: string | null
         profileName?: string
+        gender?: Gender
         selectDone: boolean
         measurements: Measurements
         dirty: boolean

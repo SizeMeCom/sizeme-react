@@ -30,10 +30,11 @@ export interface SizemeOptions {
 }
 
 export type Measurements = Record<string, number>
+export type Gender = "male" | "female"
 
 export interface NewProfile {
     profileName: string
-    gender: "male" | "female"
+    gender: Gender
     measurements: Measurements
 }
 
