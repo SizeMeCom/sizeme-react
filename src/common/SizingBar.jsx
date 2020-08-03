@@ -64,6 +64,7 @@ class SizingBar extends React.Component {
         selectedSize: PropTypes.object,
         fitRecommendation: PropTypes.number,
         matchState: PropTypes.object,
+        matchResult: PropTypes.object,
         t: PropTypes.func
     };
 
@@ -157,15 +158,19 @@ class SizingBar extends React.Component {
     }
 
     render () {
-        const { t, fitRecommendation, selectedSize, matchState } = this.props;
+        const { t, fitRecommendation, selectedSize, matchState, matchResult } = this.props;
         const { size, auto } = selectedSize;
         const { match, state } = matchState;
         const doShowFit = state === "match";
         let placeholderText = "";
         if (state === "match") {
-            placeholderText = t("common.sizingBarSplashMatch", {
-                sizeName: getSizename(size)
-            });
+            if (matchResult.recommendedFit) {
+                placeholderText = t("common.sizingBarSplashMatch", {
+                    sizeName: getSizename(matchResult.recommendedFit)
+                });
+            } else {
+                placeholderText = t("common.sizingBarSplashNoFit");
+            }
         } else if (state === "no-meas") {
             placeholderText = t("common.sizingBarSplashNoMeas");
         } else if (state === "no-fit") {
