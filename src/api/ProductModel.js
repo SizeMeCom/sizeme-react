@@ -104,9 +104,15 @@ function getEssentialMeasurements(itemTypeArr) {
     const arr = [];
     switch (itemTypeArr[0]) {
         case 1:
-            arr.push("chest", "front_height");
+            arr.push("chest");
+            if ( (itemTypeArr[5] > 1) && (itemTypeArr[5] < 6) ) {
+                arr.push("front_height");
+            }
             if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
                 arr.push("sleeve");
+            }
+            if ( (arr.length < 3) && (itemTypeArr[5] > 2) ) {
+                arr.push("hips");
             }
             break;
 

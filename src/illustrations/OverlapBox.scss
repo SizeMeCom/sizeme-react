@@ -34,6 +34,7 @@
       &.hips:hover { transform: scale(2.5) translate(33%, -14%); }
       &.outseam:hover { transform: scale(1.7) translate(-16%, 0%); }
       &.shoe:hover { transform: scale(2) translate(1%, 26%); }
+      &.shirtHips:hover { transform: scale(2.5) translate(29%, 5%); }
 
       .mainLine {
         @include base();
@@ -79,6 +80,9 @@
       &.shoe .arrowsInside { marker-start: url(#triangleInsideShoe); marker-end: url(#triangleInsideShoe); }
       &.shoe .arrowsOutside { marker-start: url(#triangleOutsideShoe); marker-end: url(#triangleOutsideShoe); }
 
+      &.shirtHips .arrowsInside { marker-start: url(#triangleInsideShirtHips); marker-end: url(#triangleInsideShirtHips); }
+      &.shirtHips .arrowsOutside { marker-start: url(#triangleOutsideShirtHips); marker-end: url(#triangleOutsideShirtHips); }
+
       .baseFill {
         @include baseFill();
       }
@@ -121,22 +125,22 @@
   }
 }
 
-.measurement-input.too_small + .overlap-box { 
-  .overlap-svg svg .measurementLine { fill: $too_small; stroke: $too_small; } 
+.measurement-input.too_small + .overlap-box {
+  .overlap-svg svg .measurementLine { fill: $too_small; stroke: $too_small; }
 }
 
-.measurement-input.slim + .overlap-box { 
-  .overlap-svg svg .measurementLine { fill: $slim; stroke: $slim; } 
+.measurement-input.slim + .overlap-box {
+  .overlap-svg svg .measurementLine { fill: $slim; stroke: $slim; }
 }
 
-.measurement-input.regular + .overlap-box { 
-  .overlap-svg svg .measurementLine { fill: $regular; stroke: $regular; } 
+.measurement-input.regular + .overlap-box {
+  .overlap-svg svg .measurementLine { fill: $regular; stroke: $regular; }
 }
 
-.measurement-input.loose + .overlap-box { 
-  .overlap-svg svg .measurementLine { fill: $loose; stroke: $loose; } 
+.measurement-input.loose + .overlap-box {
+  .overlap-svg svg .measurementLine { fill: $loose; stroke: $loose; }
 }
 
-.measurement-input.too_big + .overlap-box { 
-  .overlap-svg svg .measurementLine { fill: $too_big; stroke: $too_big; } 
+.measurement-input.too_big + .overlap-box {
+  .overlap-svg svg .measurementLine { fill: $too_big; stroke: $too_big; }
 }
