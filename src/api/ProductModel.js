@@ -775,8 +775,8 @@ function init(itemTypeArr) {
                 /* falls through */
                 default: {
                     let $baseY = 978;
-                    if (itemTypeArr[5] === 5) {
-                        $baseY = 1038;
+                    if (itemTypeArr[5] > 4) {
+                        $baseY = 978 + ( (itemTypeArr[5] - 4) * 40);
                     }
                     if (itemTypeArr[6] === 1) { // elastic
                         itemDrawing.coords.push({
@@ -798,7 +798,7 @@ function init(itemTypeArr) {
                         arrows.front_height.coords[1].Y = ($baseY + 60);
                         arrows.hips = {
                             mirror: false,
-                            coords: [{X: -250, Y: $baseY}, {X: 250, Y: $baseY}],
+                            coords: [{X: -250, Y: 978}, {X: 250, Y: 978}],
                             lift: false
                         };
                     } else {
@@ -813,7 +813,7 @@ function init(itemTypeArr) {
                         arrows.front_height.coords[1].Y = ($baseY + 60);
                         arrows.hips = {
                             mirror: false,
-                            coords: [{X: -250, Y: ($baseY + 60)}, {X: 250, Y: ($baseY + 60)}],
+                            coords: [{X: -250, Y: (978 + 60)}, {X: 250, Y: (978 + 60)}],
                             lift: false
                         };
                     }
