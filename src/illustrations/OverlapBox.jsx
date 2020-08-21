@@ -7,6 +7,7 @@ import Pinch from "./Pinch";
 import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
 import Chest from "./Chest";
+import ShirtWaist from "./ShirtWaist";
 import PantWaist from "./PantWaist";
 import Hips from "./Hips";
 import ShirtHips from "./ShirtHips";
@@ -31,6 +32,7 @@ const illustration = (measurement, overlap, model) => {
                 return <Hips overlap={overlap}/>;
             }
         case "shirtWaist":
+            return <ShirtWaist overlap={overlap}/>;
         case "thighCircumference":
         case "kneeCircumference":
         case "calfCircumference":

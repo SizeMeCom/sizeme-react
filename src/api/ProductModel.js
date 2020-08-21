@@ -111,6 +111,9 @@ function getEssentialMeasurements(itemTypeArr) {
             if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
                 arr.push("sleeve");
             }
+            if ( (arr.length < 2) && (itemTypeArr[5] > 2) ) {
+                arr.push("waist");
+            }
             if ( (arr.length < 3) && (itemTypeArr[5] > 2) ) {
                 arr.push("hips");
             }

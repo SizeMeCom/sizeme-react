@@ -30,6 +30,7 @@
       &.chest:hover { transform: scale(3.0) translate(26%, 3%); }
       &.frontHeight:hover { transform: scale(1.7) translate(25%, -15%); }
       &.sleeve:hover { transform: scale(1.5) translate(-2%, 10%); }
+      &.shirtWaist:hover { transform: scale(2.5) translate(31%, -18%); }
       &.pantWaist:hover { transform: scale(2.5) translate(31%, 8%); }
       &.hips:hover { transform: scale(2.5) translate(33%, -14%); }
       &.outseam:hover { transform: scale(1.7) translate(-16%, 0%); }
@@ -67,6 +68,9 @@
 
       &.sleeve .arrowsInside { marker-start: url(#triangleInsideSleeve); marker-end: url(#triangleInsideSleeve); }
       &.sleeve .arrowsOutside { marker-start: url(#triangleOutsideSleeve); marker-end: url(#triangleOutsideSleeve); }
+
+      &.shirtWaist .arrowsInside { marker-start: url(#triangleInsideShirtWaist); marker-end: url(#triangleInsideShirtWaist); }
+      &.shirtWaist .arrowsOutside { marker-start: url(#triangleOutsideShirtWaist); marker-end: url(#triangleOutsideShirtWaist); }
 
       &.pantWaist .arrowsInside { marker-start: url(#triangleInsidePantWaist); marker-end: url(#triangleInsidePantWaist); }
       &.pantWaist .arrowsOutside { marker-start: url(#triangleOutsidePantWaist); marker-end: url(#triangleOutsidePantWaist); }
