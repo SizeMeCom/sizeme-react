@@ -70,8 +70,11 @@ class OverlapBox extends React.Component {
     }
 
     render () {
-        const { fit, humanProperty, hover, t } = this.props;
+        const { fit, humanProperty, hover, t, model } = this.props;
         const overlap = fit.overlap / illustrationDivider(humanProperty);
+
+        // here's your productModel:
+        console.log(model.getItemTypeComponent(0));
 
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip"
@@ -94,6 +97,7 @@ OverlapBox.propTypes = {
     fit: PropTypes.object.isRequired,
     humanProperty: PropTypes.string.isRequired,
     hover: PropTypes.func.isRequired,
+    model: PropTypes.object.isRequired,
     t: PropTypes.func
 };
 
