@@ -1171,7 +1171,10 @@ export default class ProductModel {
 
     measurementName = (measurement) => {
         if (this.getItemTypeComponent(0) === 1) {
-            if (measurement === "hips" || measurement === "pantWaist") {
+            if ( (measurement === "hips") && (this.getItemTypeComponent(5) < 5) ) {
+                return i18n.t("measurement.hem");
+            }
+            if ( (measurement === "pantWaist") && (this.getItemTypeComponent(5) < 4) ) {
                 return i18n.t("measurement.hem");
             }
 
