@@ -11,13 +11,19 @@ const getSizename = (selectedSize) =>
     SizeSelector.getSizeMapper().filter(([size]) => size === selectedSize)
         .map(([, sizeName]) => sizeName)[0] || selectedSize;
 
+const getValueBasedFitLabel = (value) => {
+    const labels = ["too_small","slim","regular","loose","too_big","too_big"];
+    let labelKey = Math.floor(value / 20);
+    return (labels[labelKey] !== "undefined" ? labels[labelKey] : "regular");
+};
+
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 9px`;
     const { selectedSize, t } = props;
     return (
         <div>
             <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-                <polygon className={props.fitRange.label} points="5,0 10,10 0,10 5,0"
+                <polygon className={getValueBasedFitLabel(props.value)} points="5,0 10,10 0,10 5,0"
                          data-tip data-for="fitTooltip"/>
             </svg>
             <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
