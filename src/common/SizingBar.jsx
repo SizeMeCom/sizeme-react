@@ -126,7 +126,6 @@ class SizingBar extends React.Component {
         let { fitRecommendation } = this.props;
         if (fitRecommendation === 1000) {
             let maxStretch = DEFAULT_OPTIMAL_STRETCH;
-            let minStretchFactor = 1;
             let newPos = 50;
             if (matchMap) {
                 const maxStretchArr = [];
@@ -136,13 +135,11 @@ class SizingBar extends React.Component {
                     minStretchFactorArr.push( stretchFactor(oKey) );
                 });
                 maxStretch = Math.max.apply(null, maxStretchArr);
-                minStretchFactor = Math.min.apply(null, minStretchFactorArr);
                 if (value > 1000) {
                     newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
                 } else if ((value <= 1000) && (value > 990)) {
                     const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
                     newPos = (maxStretch > stretchBreakpoint) ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint) * 20)) : Math.max(40, 60 - (maxStretch / stretchBreakpoint * 20));
-                    if (minStretchFactor > 1) newPos = Math.max(0, Math.min(100, ((newPos - 50) * minStretchFactor) + 50));
                 } else {
                     newPos = Math.max(0, 20 - ((1000 - value) / 55 * 20));
                 }

@@ -373,9 +373,10 @@ function getRecommendedFit (fitResults, optimalFit) {
             .filter(([, res]) => res.accuracy > 0)
             .reduce(([accSize, fit], [size, res]) => {
                 let maxStretchArr = [];
-                Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) );});
+                Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
                 let maxStretch = Math.max.apply(null, maxStretchArr);
-                const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
+                let normalizedTotalFit = (((res.totalFit <= 1000) && (res.totalFit > 990)) ? 1000 : res.totalFit);
+                const newFit = (Math.abs(normalizedTotalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
                 if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
                     return [size, newFit];
                 } else {
