@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor } from "../api/ProductModel";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor, fitLabelsAndColors } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
@@ -12,9 +12,8 @@ const getSizename = (selectedSize) =>
         .map(([, sizeName]) => sizeName)[0] || selectedSize;
 
 const getValueBasedFitLabel = (value) => {
-    const labels = ["too_small","slim","regular","loose","too_big","too_big"];
-    let labelKey = Math.floor(value / 20);
-    return (labels[labelKey] !== "undefined" ? labels[labelKey] : "regular");
+    let labelKey = Math.min(Math.floor(value / 20), fitLabelsAndColors.length - 1);
+    return (typeof fitLabelsAndColors[labelKey] !== "undefined" ? fitLabelsAndColors[labelKey].label : "regular");
 };
 
 const FitIndicator = (props) => {
