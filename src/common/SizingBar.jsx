@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor } from "../api/ProductModel";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor, fitLabelsAndColors } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
@@ -11,13 +11,18 @@ const getSizename = (selectedSize) =>
     SizeSelector.getSizeMapper().filter(([size]) => size === selectedSize)
         .map(([, sizeName]) => sizeName)[0] || selectedSize;
 
+const getValueBasedFitLabel = (value) => {
+    let labelKey = Math.min(Math.floor(value / 20), fitLabelsAndColors.length - 1);
+    return (typeof fitLabelsAndColors[labelKey] !== "undefined" ? fitLabelsAndColors[labelKey].label : "regular");
+};
+
 const FitIndicator = (props) => {
     const left = `calc(${props.value}% - 9px`;
     const { selectedSize, t } = props;
     return (
         <div>
             <svg className="indicator" style={{ left }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-                <polygon className={props.fitRange.label} points="5,0 10,10 0,10 5,0"
+                <polygon className={getValueBasedFitLabel(props.value)} points="5,0 10,10 0,10 5,0"
                          data-tip data-for="fitTooltip"/>
             </svg>
             <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
@@ -126,7 +131,6 @@ class SizingBar extends React.Component {
         let { fitRecommendation } = this.props;
         if (fitRecommendation === 1000) {
             let maxStretch = DEFAULT_OPTIMAL_STRETCH;
-            let minStretchFactor = 1;
             let newPos = 50;
             if (matchMap) {
                 const maxStretchArr = [];
@@ -136,13 +140,11 @@ class SizingBar extends React.Component {
                     minStretchFactorArr.push( stretchFactor(oKey) );
                 });
                 maxStretch = Math.max.apply(null, maxStretchArr);
-                minStretchFactor = Math.min.apply(null, minStretchFactorArr);
                 if (value > 1000) {
                     newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
                 } else if ((value <= 1000) && (value > 990)) {
                     const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
                     newPos = (maxStretch > stretchBreakpoint) ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint) * 20)) : Math.max(40, 60 - (maxStretch / stretchBreakpoint * 20));
-                    if (minStretchFactor > 1) newPos = Math.max(0, Math.min(100, ((newPos - 50) * minStretchFactor) + 50));
                 } else {
                     newPos = Math.max(0, 20 - ((1000 - value) / 55 * 20));
                 }
