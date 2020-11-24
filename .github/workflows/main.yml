@@ -68,7 +68,7 @@ jobs:
 
       - name: Set QA artifact name
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: echo "SIZEME_REACT_ARTIFACT=sizeme-test.js" >> $GIHUB_ENV
+        run: echo "SIZEME_REACT_ARTIFACT=sizeme-test.js" >> $GITHUB_ENV
 
       - name: Copy bundle and assets to Amazon S3
         run: |
