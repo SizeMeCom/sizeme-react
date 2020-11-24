@@ -64,15 +64,11 @@ jobs:
 
       - name: Set Prod artifact name
         if: github.event_name == 'release'
-        uses: allenevans/set-env@v1.0.0
-        with:
-          SIZEME_REACT_ARTIFACT: 'sizeme.js'
+        run: echo "SIZEME_REACT_ARTIFACT=sizeme.js" >> $GITHUB_ENV
 
       - name: Set QA artifact name
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        uses: allenevans/set-env@v1.0.0
-        with:
-          SIZEME_REACT_ARTIFACT: 'sizeme-test.js'
+        run: echo "SIZEME_REACT_ARTIFACT=sizeme-test.js" >> $GIHUB_ENV
 
       - name: Copy bundle and assets to Amazon S3
         run: |
