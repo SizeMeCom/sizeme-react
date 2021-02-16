@@ -142,7 +142,7 @@ class SizeForm extends React.Component {
                         />
                         {getFit(field).map(f =>
                             <OverlapBox fit={f} humanProperty={humanProperty} hover={() => onOverlapBoxHover(field)}
-                                key={humanProperty}/>
+                                key={humanProperty} model={this.props.product.model}/>
                         ).orElse(null)}
                     </div>
                 ))}

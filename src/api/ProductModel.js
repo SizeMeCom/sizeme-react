@@ -104,9 +104,18 @@ function getEssentialMeasurements(itemTypeArr) {
     const arr = [];
     switch (itemTypeArr[0]) {
         case 1:
-            arr.push("chest", "front_height");
+            arr.push("chest");
+            if ( (itemTypeArr[5] > 1) && (itemTypeArr[5] < 6) ) {
+                arr.push("front_height");
+            }
             if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
                 arr.push("sleeve");
+            }
+            if ( (arr.length < 2) && (itemTypeArr[5] > 5) ) {
+                arr.push("waist");
+            }
+            if ( (arr.length < 3) && (itemTypeArr[5] > 5) ) {
+                arr.push("hips");
             }
             break;
 
@@ -766,8 +775,8 @@ function init(itemTypeArr) {
                 /* falls through */
                 default: {
                     let $baseY = 978;
-                    if (itemTypeArr[5] === 5) {
-                        $baseY = 1038;
+                    if (itemTypeArr[5] > 4) {
+                        $baseY = 978 + ( (itemTypeArr[5] - 4) * 40);
                     }
                     if (itemTypeArr[6] === 1) { // elastic
                         itemDrawing.coords.push({
@@ -789,7 +798,7 @@ function init(itemTypeArr) {
                         arrows.front_height.coords[1].Y = ($baseY + 60);
                         arrows.hips = {
                             mirror: false,
-                            coords: [{X: -250, Y: $baseY}, {X: 250, Y: $baseY}],
+                            coords: [{X: -250, Y: 978}, {X: 250, Y: 978}],
                             lift: false
                         };
                     } else {
@@ -804,7 +813,7 @@ function init(itemTypeArr) {
                         arrows.front_height.coords[1].Y = ($baseY + 60);
                         arrows.hips = {
                             mirror: false,
-                            coords: [{X: -250, Y: ($baseY + 60)}, {X: 250, Y: ($baseY + 60)}],
+                            coords: [{X: -250, Y: (978 + 60)}, {X: 250, Y: (978 + 60)}],
                             lift: false
                         };
                     }
@@ -1162,7 +1171,10 @@ export default class ProductModel {
 
     measurementName = (measurement) => {
         if (this.getItemTypeComponent(0) === 1) {
-            if (measurement === "hips" || measurement === "pantWaist") {
+            if ( (measurement === "hips") && (this.getItemTypeComponent(5) < 5) ) {
+                return i18n.t("measurement.hem");
+            }
+            if ( (measurement === "pantWaist") && (this.getItemTypeComponent(5) < 4) ) {
                 return i18n.t("measurement.hem");
             }
 

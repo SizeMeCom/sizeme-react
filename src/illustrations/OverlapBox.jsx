@@ -7,13 +7,15 @@ import Pinch from "./Pinch";
 import Shoe from "./Shoe";
 import FrontHeight from "./FrontHeight";
 import Chest from "./Chest";
+import ShirtWaist from "./ShirtWaist";
 import PantWaist from "./PantWaist";
 import Hips from "./Hips";
+import ShirtHips from "./ShirtHips";
 import "./OverlapBox.scss";
 import ProductModel from "../api/ProductModel";
 import { withTranslation } from "react-i18next";
 
-const illustration = (measurement, overlap) => {
+const illustration = (measurement, overlap, model) => {
     switch (measurement) {
         case "sleeve":
             return <Sleeve overlap={overlap}/>;
@@ -24,8 +26,13 @@ const illustration = (measurement, overlap) => {
         case "pantWaist":
             return <PantWaist overlap={overlap}/>;
         case "hips":
-            return <Hips overlap={overlap}/>;
+            if (model.getItemTypeComponent(0) === 1) {
+                return <ShirtHips overlap={overlap}/>;
+            } else {
+                return <Hips overlap={overlap}/>;
+            }
         case "shirtWaist":
+            return <ShirtWaist overlap={overlap}/>;
         case "thighCircumference":
         case "kneeCircumference":
         case "calfCircumference":
@@ -70,14 +77,14 @@ class OverlapBox extends React.Component {
     }
 
     render () {
-        const { fit, humanProperty, hover, t } = this.props;
+        const { fit, humanProperty, hover, t, model } = this.props;
         const overlap = fit.overlap / illustrationDivider(humanProperty);
 
         return (
             <div className="overlap-box" data-tip data-for="fit-tooltip"
                  data-effect="solid" data-place="bottom" onMouseEnter={hover}>
                 <div className="overlap-svg">
-                    {illustration(humanProperty, overlap)}
+                    {illustration(humanProperty, overlap, model)}
                 </div>
                 <div className="overlap-text">
                     <div>{overlap > 0 && "+"}{overlap.toFixed(1)} cm</div>
@@ -94,6 +101,7 @@ OverlapBox.propTypes = {
     fit: PropTypes.object.isRequired,
     humanProperty: PropTypes.string.isRequired,
     hover: PropTypes.func.isRequired,
+    model: PropTypes.object.isRequired,
     t: PropTypes.func
 };
 
