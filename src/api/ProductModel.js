@@ -1262,6 +1262,7 @@ export {
     stretchFactor,
     DEFAULT_OPTIMAL_FIT,
     DEFAULT_OPTIMAL_STRETCH,
+    fitLabelsAndColors,
 };
 
 

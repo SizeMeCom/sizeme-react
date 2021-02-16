@@ -40,6 +40,15 @@ const shops = {
         addToCartEvent: "click",
         firstRecommendation: true,
         sizeSelectorType: "crasman-koo"
+    },
+    shopify: {
+        appendContentTo: ".sizeme-container",
+        invokeElement: ".single-option-selector",
+        invokeEvent: "change",
+        addToCartElement: "button.product-form__cart-submit",
+        addToCartEvent: "click",
+        firstRecommendation: true,
+        sizeSelectorType: "default"
     }
 };
 
