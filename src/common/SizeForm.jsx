@@ -38,7 +38,7 @@ class SizeForm extends React.Component {
         this.activeTooltip = null;
     }
 
-    componentWillReceiveProps (nextProps) {
+    UNSAFE_componentWillReceiveProps (nextProps) {
         const measurements = Object.assign(
             ...this.fields.map(f => ({ [f.humanProperty]: null })),
             nextProps.measurements
