@@ -25,7 +25,7 @@ class MeasurementInput extends React.Component {
         };
     }
 
-    componentWillReceiveProps (nextProps) {
+    UNSAFE_componentWillReceiveProps (nextProps) {
         if (nextProps.value !== this.state.modelValue || nextProps.unit !== this.props.unit) {
             const value = this.viewValue(nextProps.value);
             if (value !== this.state.value) {
