@@ -11,7 +11,7 @@
   }
 
   span.fa-cog {
-    font-size: 130%;
+    font-size: 16px;
 
     &:hover {
       color: $default_color;
@@ -67,6 +67,7 @@
         padding-right: 20px;
         position: relative;
         cursor: default;
+        font-size: 12px;
 
         &::after {
           content: "»";
