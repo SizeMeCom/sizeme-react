@@ -66,7 +66,9 @@ class SizeMeApp extends React.Component {
                     {loggedIn && <ProfileMenu profiles={profiles}
                         selectedProfile={selectedProfile.id}
                         setSelectedProfile={setSelectedProfile}/>}
-                    {!loggedIn && (<div className="profile-menu-container">
+                    {(!loggedIn || signupStatus.inProgress) && match &&
+                    <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone}/>}
+                    {!loggedIn && !match && (<div className="profile-menu-container">
                         <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip"
                             ref={el => {this.tooltip = el;}} />
                         <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid">
@@ -75,8 +77,6 @@ class SizeMeApp extends React.Component {
                     </div>)}
                 </div>
                 {measurementInputs && <SizeForm fields={measurementInputs} />}
-                {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match &&
-                <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone}/>}
                 {resolved && !uiOptions.disableSizeGuide && <SizeGuide/>}
                 <FitTooltip/>
                 <LoginFrame id="login-frame" onLogin={this.userLoggedIn}/>

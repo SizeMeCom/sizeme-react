@@ -24,7 +24,6 @@ class SignupBox extends React.Component {
     }
 
     handleChange = (event) => {
-        ReactTooltip.hide(this.tooltip);
         const email = event.target.value;
         const valid = validator.isEmail(email);
         this.setState({ email, valid });
@@ -68,46 +67,22 @@ class SignupBox extends React.Component {
         </>
     );
 
-    tooltipContent = t => () => (
-        <div>
-            <ul>
-                {t("signupBox.tooltipBullets", { returnObjects: true }).map((text, i) => (
-                    <li key={i}>{text}</li>
-                ))}
-            </ul>
-            <div className="policy-link">
-                <div>{t("signupBox.tooltipProvided")}</div>
-                <img alt="SizeMe" src={logo}/>
-                <a onClick={this.openPolicyModal}
-                    onMouseDown={e => {e.preventDefault();}}>{t("signupBox.tooltipPolicyLink")}</a>
-            </div>
-        </div>
-    );
-
-    onBlur = () => {
-        ReactTooltip.hide(this.tooltip);
-    };
-
-    onFocus = () => {
-        ReactTooltip.show(this.tooltip);
-    };
-
     render () {
         const { t, signupDone } = this.props;
         const error = this.state.error;
         const isError = !!error;
         const inputClassName = "signup-email" + (isError ? " error" : "");
         return (
-            <div className="section-signup-box">
-                <div className="sizeme-signup-box">
+            <div className="signup-box-container">
+                <FontAwesome name="save" data-tip data-for="sizeme-signup-box" data-event="click"/>
+                <ReactTooltip id="sizeme-signup-box" className="sizeme-signup-box" clickable={true}
+                              place="bottom" type="light" effect="solid">
                     {!signupDone && (<>
                         <div>{t("signupBox.message")}</div>
+                        <div className="signup-box-header">{t("signupBox.signupChoices")}</div>
                         <div className={inputClassName}>
-                            <span className="tooltip-trigger" data-for="signup-tooltip" data-tip ref={el => {this.tooltip = el;}}
-                                data-place="bottom" data-type="light" data-class="signup-tooltip" data-effect="solid"
-                            />
-                            <input type="email" value={this.state.email} onChange={this.handleChange} onBlur={this.onBlur}
-                                onFocus={this.onFocus} placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
+                            <input type="email" value={this.state.email} onChange={this.handleChange}
+                                placeholder={t("signupBox.emailPlaceholder")} onKeyPress={this.handleEnter}/>
                             <a disabled={!this.state.valid} onClick={this.handleClick}>{t("signupBox.save")}</a>
                         </div>
                     </>)}
@@ -115,8 +90,12 @@ class SignupBox extends React.Component {
                     {isError && <div className="signup-alert">
                         {error}
                     </div>}
-                </div>
-                <ReactTooltip id="signup-tooltip" type="light" getContent={this.tooltipContent(t)}/>
+                    <div className="policy-link">
+                        <img alt="SizeMe" src={logo}/>
+                        <a onClick={this.openPolicyModal}
+                            onMouseDown={e => {e.preventDefault();}}>{t("signupBox.tooltipPolicyLink")}</a>
+                    </div>
+                </ReactTooltip>
                 <Modal isOpen={this.state.policyModalOpen}
                     onRequestClose={this.closePolicyModal}
                     className="policy-modal"
