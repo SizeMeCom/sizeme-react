@@ -69,7 +69,7 @@ class FitTooltip extends React.Component {
         this.state = { fitData: null };
     }
 
-    componentWillReceiveProps (nextProps) {
+    UNSAFE_componentWillReceiveProps (nextProps) {
         const { product, selectedSize, matchResult, measurement } = nextProps;
         if (matchResult) {
             const item = Object.assign({}, product.item, {

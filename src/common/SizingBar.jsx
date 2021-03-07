@@ -86,7 +86,7 @@ class SizingBar extends React.Component {
         this.calculatePlaceholderSize();
     }
 
-    componentWillUpdate (newProps) {
+    UNSAFE_componentWillUpdate (newProps) {
         const { size } = newProps.selectedSize;
         if (size !== this.props.selectedSize.size) {
             clearTimeout(this.timeout);
