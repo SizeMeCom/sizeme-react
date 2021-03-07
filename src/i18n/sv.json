@@ -171,18 +171,14 @@
     "noTopButton": "Översta knappen skjorta kan inte stängas i denna storlek."
   },
   "signupBox": {
-    "duplicateUser": "An account with this email already exists. Try to log in?",
+    "duplicateUser": "Ett konto med det här e-mail finns redan. Försök att logga in?",
     "emailPlaceholder": "myname@example.com",
-    "message": "Save your measurements, so you don't have to remember them ever again.",
+    "message": "Spara dina mått så att vi kommer ihåg dig nästa gång",
     "save": "Ok",
-    "signupPrompt": "Save with email",
-    "tooltipBullets": [
-      "Save your measurements so we will remember you next time",
-      "Have you already saved your measurements? Enter your email here to log in."
-    ],
-    "tooltipProvided": "The size recommendation is provided by",
-    "tooltipPolicyLink": "Privacy policy",
-    "signupDone": "Your measurements have been saved!  You should receive a confirmation email from SizeMe shortly."
+    "signupPrompt": "Spara med e-mail",
+    "signupChoices": "Registrera dig eller logga in",
+    "tooltipPolicyLink": "Integritetspolicy",
+    "signupDone": "Dina mått har sparats! Du bör få ett bekräftelsemeddelande från SizeMe inom kort."
   },
   "sizeGuide": {
     "advertisement": "Denna storleksguide har gjorts för dig av SizeMe",

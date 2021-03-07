@@ -1,13 +1,64 @@
 @import "../scss/variables";
 
+.signup-box-container {
+  img.sizeme-save-icon {
+    margin-left: 7px;
+    cursor: pointer;
+    width: 20px;
+  }
+
+  span.fa-save {
+    margin-left: 13px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      color: $default_color;
+    }
+  }
+}
+
 .sizeme-signup-box {
-  margin-top: 5px;
-  padding: 10px;
-  background-color: $light_bg_color;
-  border-radius: $border_radius;
-  text-align: center;
-  font-weight: bold;
-  position: relative;
+  background-color: $default_color;
+  border: 1px solid $default_color;
+  opacity: 1 !important;
+  pointer-events: all;
+  max-width: 240px;
+  padding: 5px 0 0 0;
+
+  div {
+    margin: 5px 10px;
+  }
+
+  .signup-box-header {
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .policy-link {
+    text-align: center;
+    padding: 4px 0 4px 8px;
+    color: black;
+    background-color: $light_bg_color;
+    border-radius: 0 0 3px 3px;
+    margin: 0;
+    font-size: 80%;
+
+    img {
+      height: 16px;
+      width: auto;
+      vertical-align: baseline;
+      margin: 6px auto;
+      display: block;
+    }
+
+    a {
+      pointer-events: all;
+      cursor: pointer;
+      color: black;
+      text-decoration: underline !important;
+    }
+  }
 
   /* TODO: is needed */
   .fa {
@@ -25,16 +76,13 @@
   }
 
   .signup-alert {
-    margin: 0 30px;
     color: #99171D;
-    font-style: italic;
     text-align: left;
     font-weight: normal;
-    padding-left: 4px;
   }
 
   .signup-email {
-    margin: 10px 30px 0;
+    margin: 5px 10px 15px;
     border: 1px solid $default_color;
     border-radius: $border_radius;
     background-color: $bg_color;
@@ -81,48 +129,6 @@
 
   .signup-email.error {
     border-color: #99171D;
-  }
-}
-
-.__react_component_tooltip.signup-tooltip {
-
-  background-color: $default_color;
-  padding: 1px;
-  opacity: 1;
-  pointer-events: all;
-  margin-left: 15px;
-  max-width: 220px;
-
-  ul {
-    background-color: $bg_color;
-    color: black;
-    padding: 5px 5px 5px 20px;
-    margin: 0;
-    list-style-type: disc;
-    border-radius: $border_radius $border_radius 0 0;
-  }
-
-  .policy-link {
-    text-align: center;
-    padding: 4px 0 4px 8px;
-    color: black;
-    background-color: $light_bg_color;
-    border-radius: 0 0 3px 3px;
-
-    img {
-      height: 16px;
-      width: auto;
-      vertical-align: baseline;
-      margin: 6px auto;
-      display: block;
-    }
-
-    a {
-      pointer-events: all;
-      cursor: pointer;
-      color: black;
-      text-decoration: underline !important;
-    }
   }
 }
 

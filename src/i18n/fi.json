@@ -171,15 +171,11 @@
   },
   "signupBox": {
     "duplicateUser": "Tili tällä sähköpostiosoitteella on jo olemassa.  Kirjaudu sisään siis!",
-	"emailPlaceholder": "oma.nimi@esimerkki.fi",
-    "message": "Tallenna mittasi SizeMe-palveluun",
+    "emailPlaceholder": "oma.nimi@esimerkki.fi",
+    "message": "Tallenna mittasi, niin muistamme sinut seuraavallakin kerralla",
     "save": "Ok",
     "signupPrompt": "Tallenna sähköpostiosoitteella",
-    "tooltipBullets": [
-      "Tallenna mittasi, niin muistamme sinut seuraavallakin kerralla",
-      "Oletko tallentanut jo mittasi? Syötä sähköpostisi, niin pääset kirjautumaan sisään."
-    ],
-    "tooltipProvided": "Kokosuosituksen sinulle tarjoaa",
+    "signupChoices": "Rekisteröidy tai kirjaudu",
     "tooltipPolicyLink": "Tietosuojakäytäntö",
     "signupDone": "Mittasi on tallennettu!  Saat vahvistusviestin SizeMe:lta hetken kuluttua."
   },

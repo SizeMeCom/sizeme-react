@@ -18,7 +18,7 @@ const ProfileMenu = (props) => {
         <div className="profile-menu-container">
             <FontAwesome name="cog" data-tip data-for="profile-menu" data-event="click"/>
             <ReactTooltip id="profile-menu" className="profile-menu" globalEventOff="click"
-                          place="right" type="light" effect="solid">
+                          place="left" type="light" effect="solid">
                 <div className="profile-list">
                     {props.profiles.map(profile =>
                         <div key={profile.id} className="profile" onClick={(e) => selectProfile(e, profile.id)}>
