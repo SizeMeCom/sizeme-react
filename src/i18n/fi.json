@@ -62,14 +62,14 @@
   },
   "humanMeasurements": {
     "chest": "Rinnan ympärys",
-    "shirtWaist": "Vyötärö",
+    "shirtWaist": "Vyötärön ympärys",
     "sleeve": "Käden pituus",
     "shoulderFull": "Hartia",
     "neckCircumference": "Kaulan ympärys",
     "frontHeight": "Etupituus",
     "underbust": "Rinnan alta",
-    "pantWaist": "Housun vyötärö",
-    "hips": "Pakarat",
+    "pantWaist": "Vyötärön ympärys",
+    "hips": "Lantion ympärys",
     "inSeam": "Sisäsauma",
     "outSeam": "Ulkosauma",
     "thighCircumference": "Reiden ympärys",
@@ -92,7 +92,7 @@
     "shoulder_width": "Hartia",
     "front_height": "Etupituus",
     "pant_waist": "Housun vyötärö",
-    "hips": "Pakarat",
+    "hips": "Lantio",
     "inseam": "Sisäsauma",
     "outseam": "Ulkosauma",
     "thigh_width": "Reisi",
@@ -117,7 +117,7 @@
     "shoe_inside_length": "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin kantapää seinässä kiinni.",
     "calf_width": "Mittaa pohkeiden ympärysmitta leveimmästä kohdasta.",
     "hat_width": "Mittaa pään ympärysmitta korvien yläpuolelta.",
-    "hips": "Mittaa pakaroiden ympärysmitta leveimmästä kohdasta."
+    "hips": "Mittaa lantion ympärysmitta leveimmästä kohdasta."
   },
   "measurementTooltips": {
     "linkToGuide": {
@@ -145,7 +145,7 @@
       "Vedä vatsaa vähän sisään"
     ],
     "hips": [
-      "Mittaa pakaroiden ympärysmitta leveimmästä kohdasta"
+      "Mittaa lantion ympärysmitta leveimmästä kohdasta"
     ],
     "outseam": [
       "Mittaa ulkosauman pituus housujen yläsaumasta aloittaen",
