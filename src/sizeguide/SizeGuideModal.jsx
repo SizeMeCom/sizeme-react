@@ -1,7 +1,6 @@
 import React from "react";
 import FontAwesome from "react-fontawesome";
 import SizeGuideItem from "./SizeGuideItem";
-import {contextAddress} from "../api/sizeme-api";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
 import SizeGuideDetails from "./SizeGuideDetails";
@@ -96,8 +95,6 @@ class SizeGuideModal extends React.Component {
 
                 <div className="modal-footer">
                     <span className="sizeme-advertisement">
-                        <a id="sizeme_ad_link" href={contextAddress}
-                            title={t("sizeGuide.advertisement")} target="_blank" rel="noopener noreferrer"/>
                     </span>
                 </div>
             </div>
