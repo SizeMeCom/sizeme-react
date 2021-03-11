@@ -9,11 +9,11 @@ class DetailedFit extends React.Component {
         super(props);
     }
 
-    componentWillMount () {
+    UNSAFE_componentWillMount () {
         this.updateState(this.props);
     }
 
-    componentWillReceiveProps (nextProps) {
+    UNSAFE_componentWillReceiveProps (nextProps) {
         if (nextProps.match !== this.props.match) {
             this.updateState(nextProps);
         }

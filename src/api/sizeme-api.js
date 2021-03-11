@@ -92,7 +92,9 @@ class FitRequest {
 function createRequest (method, { token, withCredentials, body } = {}) {
     const headers = new Headers({
         "X-Sizeme-Pluginversion": pluginVersion,
-        "X-Analytics-Enabled": true
+        "X-Analytics-Enabled": true,
+        "Accept": "application/json",
+        "Csrf-Token": "nocheck"
     });
 
     if (token) {
@@ -137,8 +139,8 @@ function jsonResponse (response) {
                 return js;
             }
 
-            if (js.message) {
-                throw new ApiError(js.message, response);
+            if (js.error) {
+                throw new ApiError(js.error.message, response);
             } else {
                 throw new ApiError(`${response.status} - ${response.statusText || "N/A"}`, response);
             }
