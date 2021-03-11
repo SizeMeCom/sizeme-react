@@ -66,7 +66,7 @@ class SizeMeApp extends React.Component {
                     {loggedIn && <ProfileMenu profiles={profiles}
                         selectedProfile={selectedProfile.id}
                         setSelectedProfile={setSelectedProfile}/>}
-                    {(!loggedIn || signupStatus.inProgress) && match &&
+                    {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match &&
                     <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone}/>}
                     {!loggedIn && !match && (<div className="profile-menu-container">
                         <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip"
