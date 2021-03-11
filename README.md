@@ -29,11 +29,11 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 ```
 * [serviceStatus] (_String_): is SizeMe enabled? Default: "on"; other values: "off", "ab".
 
-* [pluginVersion] (_String_): version of the webstore-plugin. Optional.
+* [pluginVersion] (_String_): version of the webstore plugin. Optional.
 
 * [contextAddress] (_String_): URL to the SizeMe backend service.
 
-* [shopType] (_String_): webstore provider (magento|printmotor|pupeshop|woocommerce)
+* [shopType] (_String_): webstore provider (magento|printmotor|pupeshop|woocommerce|shopify)
 
 * [debugState] (_Boolean_): write debugging info to console. Default: false
 
@@ -48,6 +48,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [maxRecommendationDistance] (_Integer_): maximum difference between optimal fit and total fit for SizeMe to consider the size for pre-selection. Default not set, meaning all sizes that are not too small are considered.
   - [skinClasses] (_String_): contents will be appended to the class attribute of SizeMe container element. Empty by default.
   - [toggler] (_Boolean_): enable/disable functionality that can be used to toggle the visibility of SizeMe content
+  - [flatMeasurements] (_Boolean_): show product circumference measurements (chest, waist etc) as measured on a flat surface in the size guide.  Default: true
   
 * [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to 
 override the Swedish translation for chest:

@@ -1165,6 +1165,7 @@ export default class ProductModel {
         this.arrows = arrows;
         this.itemDrawing = itemDrawing;
         this.essentialMeasurements = getEssentialMeasurements(itemTypeArr);
+        this.pinchedFits = pinchedFits;
 
         this.getItemTypeComponent = index => itemTypeArr[index];
     }
@@ -1263,6 +1264,7 @@ export {
     DEFAULT_OPTIMAL_FIT,
     DEFAULT_OPTIMAL_STRETCH,
     fitLabelsAndColors,
+    pinchedFits
 };
 
 

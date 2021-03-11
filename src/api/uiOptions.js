@@ -1,7 +1,8 @@
 const general = {
     disableSizeGuide: false,
     toggler: false,
-    firstRecommendation: true
+    firstRecommendation: true,
+    flatMeasurements: true
 };
 
 const shops = {

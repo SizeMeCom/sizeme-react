@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SizeGuideModel from "../api/ProductModel";
+import uiOptions from "../api/uiOptions";
 import Optional from "optional-js";
 
 const realCanvasWidth = 350;
@@ -313,7 +314,7 @@ function writeItemCanvas (canvas, options) {
     const { model, highlight, matchMap, measurements, selectedSize, isGuide } = options;
     const measurementArrows = model.arrows;
     const itemDrawing = model.itemDrawing;
-    
+
     const c = canvas.getContext("2d");
 
     // Store the current transformation matrix
@@ -351,7 +352,7 @@ function writeItemCanvas (canvas, options) {
     const plotArrows = (selectedMeasurements) => {
         for (const [measurement, value] of Object.entries(selectedMeasurements)) {
             const arrow = Object.assign({
-                style: isGuide ? "line" : "arc",
+                style: (isGuide && uiOptions.flatMeasurements) ? "line" : "arc",
                 color: isGuide ? arrowColorInfo :
                     Optional.ofNullable(SizeGuideModel.getFit(matchMap.get(measurement)))
                         .map(fit => fit.arrowColor)

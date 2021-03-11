@@ -6,6 +6,7 @@ import { withTranslation } from "react-i18next";
 import HoverContainer from "./HoverContainer.jsx";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
 import { openLoginFrame } from "../common/LoginFrame";
+import uiOptions from "../api/uiOptions";
 
 class SizeGuideProductInfo extends React.Component {
 
@@ -20,11 +21,11 @@ class SizeGuideProductInfo extends React.Component {
 
     render () {
         const { t, measurements, onHover, productModel } = this.props;
-        const { measurementOrder, measurementName } = productModel;
+        const { measurementOrder, measurementName, pinchedFits } = productModel;
 
         const measurementCell = (size, measurement) => (
             <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
-                <td>{(measurements[size][measurement] / 10.0).toFixed(1)} cm</td>
+                <td>{(measurements[size][measurement] / ((!pinchedFits.includes(measurement) || uiOptions.flatMeasurements) ? 10.0 : 5.0)).toFixed(1)} cm</td>
             </HoverContainer>
         );
 
@@ -56,10 +57,12 @@ class SizeGuideProductInfo extends React.Component {
                             ))}
                         </tbody>
                     </table>
-                    {this.isInside() ?
+                    {this.isInside() &&
                         <div className="sizeme-explanation">
                             <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerInside") }}/>
-                        </div> :
+                        </div>
+                    }
+                    {uiOptions.flatMeasurements && !this.isInside() &&
                         <div className="sizeme-explanation">
                             <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimer") }}/>
                             {this.hasNeckOpening() &&
