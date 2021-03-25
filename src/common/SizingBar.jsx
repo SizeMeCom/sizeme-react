@@ -170,8 +170,6 @@ class SizingBar extends React.Component {
                 placeholderText = t("common.sizingBarSplashMatch", {
                     sizeName: getSizename(matchResult.recommendedFit)
                 });
-            } else {
-                placeholderText = t("common.sizingBarSplashNoFit");
             }
         } else if (state === "no-meas") {
             placeholderText = t("common.sizingBarSplashNoMeas");
