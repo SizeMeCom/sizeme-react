@@ -73,6 +73,7 @@ const developmentConfig = () => merge([
     parts.page({ template: "index1.html", filename: "index1.html" }),
     parts.page({ template: "index1b.html", filename: "index1b.html" }),
     parts.page({ template: "index1c.html", filename: "index1c.html" }),
+    parts.page({ template: "index1d.html", filename: "index1d.html" }),
     parts.page({ template: "index2.html", filename: "index2.html" }),
     parts.page({ template: "index2r.html", filename: "index2r.html" }),
     parts.page({ template: "index2kk.html", filename: "index2kk.html" }),

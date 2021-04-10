@@ -519,11 +519,7 @@ function selectSize (size, auto) {
                 state = "no-fit";
             }
         } else if (matchResult) {
-            if (Object.values(matchResult).some(m => m && m.accuracy > 0)) {
-                state = "no-size";
-            } else {
-                state = "no-fit";
-            }
+            state = "no-fit";
         } else {
             state = "no-meas";
         }
