@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
-import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, humanMeasurementMap, stretchFactor } from "./ProductModel";
+import SizeGuideModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, humanMeasurementMap, stretchFactor, useStretchingMath } from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
 import uiOptions from "./uiOptions";
@@ -368,37 +368,32 @@ function doMatch (fitRequest, token, useProfile) {
 
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
+    const optStretch = DEFAULT_OPTIMAL_STRETCH;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
-    if (optFit === 1000) {
-        const optStretch = DEFAULT_OPTIMAL_STRETCH;
-        const [bestMatch] = fitResults
-            .filter(([, res]) => res.accuracy > 0)
-            .reduce(([accSize, fit], [size, res]) => {
+    const [bestMatch] = fitResults
+        .filter(([, res]) => res.accuracy > 0)
+        .reduce(([accSize, fit], [size, res]) => {
+            if (useStretchingMath(res.matchMap, optFit)) {
                 let maxStretchArr = [];
                 Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
-                let maxStretch = Math.max.apply(null, maxStretchArr);
-                let normalizedTotalFit = (((res.totalFit <= 1000) && (res.totalFit > 990)) ? 1000 : res.totalFit);
-                const newFit = (Math.abs(normalizedTotalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
+                const maxStretch = Math.max.apply(null, maxStretchArr);
+                const normalizedTotalFit = (((res.totalFit <= 1000) && (res.totalFit > 990)) ? 1000 : res.totalFit);
+                const newFit = (Math.abs(normalizedTotalFit - 1000) * 100) + Math.abs(maxStretch - optStretch);
                 if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
                     return [size, newFit];
                 } else {
                     return [accSize, fit];
                 }
-            }, [null, 0]);
-        return bestMatch;
-    } else {
-        const [bestMatch] = fitResults
-            .filter(([, res]) => res.totalFit >= 1000 && res.accuracy > 0)
-            .reduce(([accSize, fit], [size, res]) => {
+            } else {
                 const newFit = Math.abs(res.totalFit - optFit);
-                if (newFit <= maxDist && (!accSize || newFit < fit)) {
+                if ((newFit <= maxDist) && (res.totalFit >= 1000) && ((!accSize) || (newFit < fit))) {
                     return [size, newFit];
                 } else {
                     return [accSize, fit];
                 }
-            }, [null, 0]);
-        return bestMatch;
-    }
+            }
+        }, [null, 0]);
+    return bestMatch;
 }
 
 function match (doSelectBestFit = true) {

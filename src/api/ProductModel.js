@@ -1253,6 +1253,22 @@ const stretchFactor = (measurement) => {
     return factor;
 };
 
+const useStretchingMath = (matchMap, fitRecommendation) => {
+    if (fitRecommendation === 1000) return true;
+    if (!matchMap) return false;
+    if (matchMap.pant_waist !== undefined) {
+        let numOfImportantMeasurements = 0;
+        Object.entries(matchMap).forEach(([, oValue]) => {
+            if (oValue.importance === 1) numOfImportantMeasurements++;
+            if ((oValue.importance === -1) && (oValue.componentFit < 1000)) numOfImportantMeasurements++;
+        });
+        if (numOfImportantMeasurements === 1) {
+            return true;
+        }
+    }
+    return false;
+};
+
 const DEFAULT_OPTIMAL_FIT = 1070;
 const DEFAULT_OPTIMAL_STRETCH = 5;
 
@@ -1261,6 +1277,7 @@ export {
     fitRanges,
     getResult,
     stretchFactor,
+    useStretchingMath,
     DEFAULT_OPTIMAL_FIT,
     DEFAULT_OPTIMAL_STRETCH,
     fitLabelsAndColors,

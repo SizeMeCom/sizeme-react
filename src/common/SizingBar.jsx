@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor, fitLabelsAndColors } from "../api/ProductModel";
+import ProductModel, { DEFAULT_OPTIMAL_FIT, DEFAULT_OPTIMAL_STRETCH, fitRanges, stretchFactor, useStretchingMath, fitLabelsAndColors } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
@@ -129,7 +129,7 @@ class SizingBar extends React.Component {
 
     getFitPosition (value,matchMap) {
         let { fitRecommendation } = this.props;
-        if (fitRecommendation === 1000) {
+        if (useStretchingMath(matchMap, fitRecommendation)) {
             let maxStretch = DEFAULT_OPTIMAL_STRETCH;
             let newPos = 50;
             if (matchMap) {
@@ -141,7 +141,11 @@ class SizingBar extends React.Component {
                 });
                 maxStretch = Math.max.apply(null, maxStretchArr);
                 if (value > 1000) {
-                    newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
+                    if (fitRecommendation === 1000) {
+                        newPos = Math.min(100, 60 + ((value - 1000) / 55 * 40));
+                    } else {
+                        newPos = Math.min(100, 60 + ((value - 1000) / 55 * 10));
+                    }
                 } else if ((value <= 1000) && (value > 990)) {
                     const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
                     newPos = (maxStretch > stretchBreakpoint) ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint) * 20)) : Math.max(40, 60 - (maxStretch / stretchBreakpoint * 20));
