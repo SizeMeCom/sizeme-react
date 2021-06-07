@@ -117,6 +117,12 @@ function getEssentialMeasurements(itemTypeArr) {
             if ( (arr.length < 3) && (itemTypeArr[5] > 5) ) {
                 arr.push("hips");
             }
+            if ( (arr.length < 3) && (itemTypeArr[3] < 2) && (itemTypeArr[5] >= 4) ) {
+                arr.push("hips");
+            }
+            if ( (arr.length < 3) && (itemTypeArr[3] < 2) && (itemTypeArr[5] >= 3) ) {
+                arr.push("waist");
+            }
             break;
 
         case 2:
