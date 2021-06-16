@@ -81,9 +81,12 @@ class OverlapBox extends React.Component {
     render () {
         const { fit, humanProperty, hover, t, model } = this.props;
         const overlap = fit.overlap / illustrationDivider(humanProperty);
+        let className = "overlap-box";
+        className += " "+ProductModel.getFit(fit).label;
+        if (overlap <= 0) className += " no-overlap";
 
         return (
-            <div className="overlap-box" data-tip data-for="fit-tooltip"
+            <div className={className} data-tip data-for="fit-tooltip"
                  data-effect="solid" data-place="bottom" onMouseEnter={hover}>
                 <div className="overlap-svg">
                     {illustration(humanProperty, overlap, model)}
