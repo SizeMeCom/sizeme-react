@@ -37,6 +37,7 @@ const illustration = (measurement, overlap, model) => {
         case "kneeCircumference":
         case "calfCircumference":
         case "ankleCircumference":
+        case "headCircumference":
             return <Pinch overlap={overlap}/>;
 
         case "outSeam":
@@ -61,6 +62,7 @@ const illustrationDivider = (measurement) => {
         case "kneeCircumference":
         case "calfCircumference":
         case "ankleCircumference":
+        case "headCircumference":
             return 40;
         default:
             return 10;
