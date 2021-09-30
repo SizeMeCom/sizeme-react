@@ -47,8 +47,7 @@ const pinchedFits = [
     "neck_opening_width",
     "sleeve_top_width",
     "sleeve_top_opening",
-    "wrist_width",
-    "hat_width"
+    "wrist_width"
 ];
 
 const longFits = [
@@ -1113,7 +1112,19 @@ function init(itemTypeArr) {
 
         case 4: // hats off
             switch (itemTypeArr[1]) {
-                case 1: // bucket
+                case 3: // cap
+                    itemDrawing.mirror = false;
+                    itemDrawing.coords = [{X: 300, Y: 0},
+                        {X: 544, Y: 280, cp1X: 452, cp1Y: 17, cp2X: 458, cp2Y: 61},
+                        {X: 63, Y: 280, cp1X: 684, cp1Y: 530, cp2X: -77, cp2Y: 530},
+                        {X: 300, Y: 0, cp1X: 156, cp1Y: 28, cp2X: 186, cp2Y: 16}];
+                    itemDrawing.accents = [
+                        {
+                            type: "line", coords: [{X: 544, Y: 280},
+                                {X: 63, Y: 280, cp1X: 376, cp1Y: 368, cp2X: 209, cp2Y: 373}]
+                        }];
+                    break;
+                default: // bucket
                     itemDrawing.mirror = false;
                     itemDrawing.coords = [{X: 300, Y: 0},
                         {X: 522, Y: 214, cp1X: 452, cp1Y: 17, cp2X: 458, cp2Y: 61},

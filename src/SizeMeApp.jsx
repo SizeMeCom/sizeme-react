@@ -55,12 +55,13 @@ class SizeMeApp extends React.Component {
     render () {
         const { resolved, loggedIn,
             profiles, selectedProfile, setSelectedProfile,
-            measurementInputs, matchState, onSignup, signupStatus, t
+            measurementInputs, matchState, productInfo, onSignup, signupStatus, t
         } = this.props;
         const { match, state } = matchState;
+        let itemTypeClass = "sizeme-item-"+productInfo.product.item.itemType.replace(/\./g,"_");
 
         return (
-            <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state}`}>
+            <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state} ${itemTypeClass}`}>
                 <div className="sizeme-slider-row">
                     <SizingBar/>
                     {loggedIn && <ProfileMenu profiles={profiles}
@@ -93,6 +94,7 @@ SizeMeApp.propTypes = {
     profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedProfile: PropTypes.object.isRequired,
     matchState: PropTypes.object,
+    productInfo: PropTypes.object,
     setSelectedProfile: PropTypes.func.isRequired,
     resolveAuthToken: PropTypes.func.isRequired,
     getProfiles: PropTypes.func.isRequired,
@@ -108,7 +110,8 @@ const mapStateToProps = state => ({
         .map(m => m.essentialMeasurements).orElse(null),
     profiles: state.profileList.profiles,
     selectedProfile: state.selectedProfile,
-    matchState: state.matchState
+    matchState: state.matchState,
+    productInfo: state.productInfo
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
