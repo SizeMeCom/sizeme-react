@@ -35,7 +35,7 @@ class SizeGuideProductInfo extends React.Component {
                     <table className="product-info-table">
                         <thead>
                             <tr>
-                                <th className="size-col">size</th>
+                                <th className="size-col">{t("common.sizeItself")}</th>
                                 {measurementOrder.map((measurement, i) => (
                                     <HoverContainer measurement={measurement} key={measurement}
                                                     onHover={onHover}>
