@@ -105,6 +105,10 @@
     pointer-events: all;
     margin-left: 15px;
 
+    &.place-top {
+      margin-top: -40px;
+    }
+
     ul {
       background-color: $bg_color;
       color: black;
