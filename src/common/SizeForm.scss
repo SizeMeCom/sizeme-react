@@ -151,7 +151,8 @@
   right: auto;
   overflow: auto;
   max-height: 85%;
-  /*transform: translate(-105%, 0);*/
+  min-height: 575px;
+  min-width: 255px;
   background-color: $bg_color;
   -webkit-overflow-scrolling: touch;
   padding: 10px;
