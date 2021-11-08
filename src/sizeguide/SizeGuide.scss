@@ -136,8 +136,9 @@ a.link-btn.size-guide {
       .size-guide-close {
         color: #666;
         text-decoration: none;
-        float: right;
         cursor: pointer;
+        position: absolute;
+        right: 15px;
 
         &:hover {
           color: #000;
