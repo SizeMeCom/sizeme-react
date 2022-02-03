@@ -12,7 +12,8 @@
     "sizingBarRecommendationTooltip": " نوصي بأن يكون مقاسك قريبًا من هذه المنطقة",
     "togglerText": "ابحث عن مقاسي",
     "sizemeTooltip": "يدعم هذا المنتج ”سايزمي” ، وهي خدمة توصي بأفضل حجم مناسب من خلال مقارنة القياسات الفعلية لقياسات هذا المنتج.",
-    "sizemeTooltipLink": "قراءة المزيد"
+    "sizemeTooltipLink": "قراءة المزيد",
+    "sizeItself": "مقاس"
   },
   "detailed": {
     "buttonText": "صورة تفصيلية للمقاس",

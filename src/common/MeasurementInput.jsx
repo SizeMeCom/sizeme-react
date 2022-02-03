@@ -58,6 +58,10 @@ class MeasurementInput extends React.Component {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
+        if (this.tooltipTimeout) {
+            clearTimeout(this.tooltipTimeout);
+            this.tooltipTimeout = null;
+        }
 
         // because isBlur could be an event
         const blur = isBlur === true;
@@ -111,7 +115,7 @@ class MeasurementInput extends React.Component {
 
     onFocus = () => {
         this.props.onFocus();
-        ReactTooltip.show(this.tooltip);
+        this.tooltipTimeout = setTimeout(() => {ReactTooltip.show(this.tooltip);}, 200);
     };
 
     onKeyDown = e => {

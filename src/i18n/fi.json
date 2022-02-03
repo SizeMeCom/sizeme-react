@@ -12,7 +12,8 @@
     "sizingBarRecommendationTooltip": "Tämän tuotteen kohdalla suosittelemme tätä sopivuutta",
     "togglerText": "Löydä oikea kokosi",
     "sizemeTooltip": "Tässä tuotteessa on käytössä SizeMe-palvelu, joka suosittelee sopivinta kokoa vertaamalla mittojasi tämän tuotteen mittoihin.",
-    "sizemeTooltipLink": "Lue lisää"
+    "sizemeTooltipLink": "Lue lisää",
+    "sizeItself": "Koko"
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",
@@ -76,8 +77,8 @@
     "kneeCircumference": "Polven ympärys",
     "ankleCircumference": "Nilkan ympärys",
     "calfCircumference": "Pohkeen ympärys",
-    "footLength": "Jalkateräsi pituus",
-    "footWidth": "Jalkateräsi leveys",
+    "footLength": "Jalkaterän pituus",
+    "footWidth": "Jalkaterän leveys",
     "headCircumference": "Pään ympärys"
   },
   "measurement": {
@@ -91,7 +92,7 @@
     "neck_opening_width": "Kaulus",
     "shoulder_width": "Hartia",
     "front_height": "Etupituus",
-    "pant_waist": "Housun vyötärö",
+    "pant_waist": "Vyötärö",
     "hips": "Lantio",
     "inseam": "Sisäsauma",
     "outseam": "Ulkosauma",
@@ -109,9 +110,9 @@
   "measurementGuide": {
     "title": "Näin mittaat:",
     "chest": "Mittaa rintakehän ympärysmitta kainaloiden alta <b>leveimmästä kohdasta</b> <span class='female'> rintaliivit yllä</span>.<br/><br/><b>Hengitä ulos</b> mittaushetkellä.",
-    "front_height": "Mittaa alas kohdasta, jossa kaula kohtaa hartian suoraan alas housujen yläreunaan.",
+    "front_height": "Mittaa kohdasta, jossa kaula kohtaa hartian suoraan alas housujen yläreunaan.",
     "sleeve": "Mittaa olalta (hartiasaumasta) suoraan alas ranteeseen (värttinäluun päähän). Pidä käsi suorana alaspäin mittauksen aikana.",
-    "pant_waist": "Mittaa ympärysmitta housujen yläreunan kohdalta, noin 6 cm navasta alaspäin.<br/><br/><b>Vedä vatsaa vähän sisään</b> kuten sovittaisit tiukkoja housuja.",
+    "pant_waist": "Mittaa ympärysmitta <b>housujen yläreunan</b> kohdalta.<br/><br/><b>Vedä vatsaa vähän sisään</b> kuten sovittaisit tiukkoja housuja.",
     "waist": "Mittaa ympärysmitta vyötärön kapeimmasta kohdasta.",
     "outseam": "Mittaa jalan pituus ulkosauman puolelta housujen yläreunasta alas nilkkaan asti (pohjeluun päähän tarkalleen ottaen).",
     "shoe_inside_length": "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin kantapää seinässä kiinni.",
@@ -130,7 +131,7 @@
       "Hengitä ulos mitattaessa"
     ],
     "front_height": [
-      "Kohdasta, jossa kaula kohtaa hartian, suoraan alas housujen yläreunaan"
+      "Mittaa kohdasta, jossa kaula kohtaa hartian suoraan alas housujen yläreunaan"
     ],
     "sleeve": [
       "Mittaa olalta (hartiasaumasta) suoraan alas ranteeseen",

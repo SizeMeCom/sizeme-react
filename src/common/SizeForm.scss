@@ -105,6 +105,10 @@
     pointer-events: all;
     margin-left: 15px;
 
+    &.place-top {
+      margin-top: -40px;
+    }
+
     ul {
       background-color: $bg_color;
       color: black;
@@ -147,7 +151,8 @@
   right: auto;
   overflow: auto;
   max-height: 85%;
-  /*transform: translate(-105%, 0);*/
+  min-height: 575px;
+  min-width: 255px;
   background-color: $bg_color;
   -webkit-overflow-scrolling: touch;
   padding: 10px;
@@ -170,6 +175,7 @@
       color: $bg_color;
       line-height: 1em;
       margin-bottom: 10px;
+      font-size: 18px;
     }
 
     .instruction-content {

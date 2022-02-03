@@ -12,7 +12,8 @@
     "sizingBarRecommendationTooltip": "We recommend that your fit is close to this area",
     "togglerText": "Find my size",
     "sizemeTooltip": "This product supports SizeMe, a service that recommends the best fitting size by comparing your physical measurements to the measurements of this product.",
-    "sizemeTooltipLink": "Read more"
+    "sizemeTooltipLink": "Read more",
+    "sizeItself": "Size"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",
