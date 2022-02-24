@@ -140,6 +140,62 @@ class SwatchesSelect extends AbstractSelect {
     };
 }
 
+class SwatchesWoostifySelect extends AbstractSelect {
+    constructor (element) {
+        super(element, { event: "click", useCapture: true });
+
+        this.getSize = e => e.target.dataset.value;
+
+        this.getSelectedSize = () => {
+            const selected = element.querySelector("span.selected");
+            if (selected) {
+                return selected.dataset.value;
+            } else {
+                return "";
+            }
+        };
+
+        this.clearSelection = () => {
+            const selected = element.querySelector("span.selected");
+            if (selected && selected.classList) {
+                selected.classList.remove("selected");
+            }
+        };
+
+        const options = element.querySelectorAll("span.swatch-label");
+        const mkSelectFn = option => () => option.click();
+        for (let i = 0; i < options.length; i++) {
+            const option = options.item(i);
+            const sizeValue = option.dataset.value;
+            this.selectors[sizeValue] = mkSelectFn(option);
+            this.sizeMapper.push([sizeValue, option.innerText.trim()]);
+        }
+    }
+
+    clone = () => {
+        if (this.el) {
+            const clone = this.el.cloneNode(true);
+            const clearSelected = () => {
+                clone.querySelector("span.selected").classList.remove("selected");
+            };
+
+            const links = clone.querySelectorAll("span");
+            const mkEventListener = link => e => {
+                clearSelected();
+                link.classList.add("selected");
+                this.setSelected(e.currentTarget.dataset.value);
+            };
+            for (let i = 0; i < links.length; i++) {
+                const link = links.item(i);
+                link.addEventListener("click", mkEventListener(link), true);
+            }
+            return clone;
+        } else {
+            return document.createElement("div");
+        }
+    };
+}
+
 class KooKenkaSwatchesSelect extends AbstractSelect {
     constructor (element) {
         super(element, { event: "click", useCapture: true });
@@ -326,6 +382,10 @@ const initSizeSelector = selectSizeFn => {
 
         case "crasman-koo":
             selector = getInstance(CrasmanForKooKenkaSelect);
+            break;
+
+        case "swatches-woostify":
+            selector = getInstance(SwatchesWoostifySelect);
             break;
 
         default:
