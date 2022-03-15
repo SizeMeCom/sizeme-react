@@ -146,7 +146,7 @@ class SizingBar extends React.Component {
                     } else {
                         newPos = Math.min(100, 60 + ((value - 1000) / 55 * 10));
                     }
-                } else if ((value <= 1000) && (value > 990)) {
+                } else if (value == 1000) {
                     const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
                     newPos = (maxStretch > stretchBreakpoint) ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint) * 20)) : Math.max(40, 60 - (maxStretch / stretchBreakpoint * 20));
                 } else {
