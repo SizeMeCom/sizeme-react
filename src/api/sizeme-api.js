@@ -373,6 +373,7 @@ function getRecommendedFit (fitResults, optimalFit) {
     const [bestMatch] = fitResults
         .filter(([, res]) => res.accuracy > 0)
         .reduce(([accSize, fit], [size, res]) => {
+            if (res.totalFit < 1000) return [accSize, fit];
             if (useStretchingMath(res.matchMap, optFit)) {
                 let maxStretchArr = [];
                 Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
