@@ -1,0 +1,201 @@
+{
+  "common": {
+    "alreadyUser": "Du nutzt SizeMe bereits?",
+    "closeText": "Schließen",
+    "selectedSize": "Gewählte Größe",
+    "shoppingFor": "Du suchst",
+    "sizingBarSplashNoFit": "Zu deinen Maßangaben wurde keine Größe gefunden",
+    "sizingBarSplashNoMeas": "Gib deine Maße ein, um deine Größe zu finden",
+    "sizingBarSplashNoSize": "Wähle eine Größe, um zu sehen, wie sie dir passt",
+    "sizingBarSplashMatch": "Wir empfehlen dir die Größe <strong>{{- sizeName}}</strong>",
+    "sizingBarFitTooltip": "Hier wird angezeigt, wie dir die Größe <strong>{{- selectedSize}}</strong> passen wird",
+    "sizingBarRecommendationTooltip": "Wir empfehlen dir eine Größe in diesem Bereich",
+    "togglerText": "Finde meine Größe",
+    "sizemeTooltip": "Dieses Produkt unterstützt SizeMe, einen Service, der dir aufgrund deiner Körpermaße die dir am besten  passende Größe vorschlägt - indem deine Maße mit den Maßen des Produktes verglichen werden.",
+    "sizemeTooltipLink": "Lies mehr",
+    "sizeItself": "Größe"
+  },
+  "detailed": {
+    "buttonText": "Detaillierte Ansicht der Passform",
+    "tableTitle": "Genaue Passform - Überschneidungen",
+    "windowTitle": "Detailansicht von"
+  },
+  "fitInfo": {
+    "isSmaller": "Fällt <u>kleiner</u> aus als die von dir gemessenen Maße, um {{value}}{{whenPinched}}",
+    "noMatchItem": "ist {{value}}. {{add}}",
+    "noOverlap": "liegt dir direkt am Körper an, ohne Überschneidungen.",
+    "overallFit": "Generelle Passform",
+    "overlapsYou": "überlappt Sie um",
+    "smConsidersFit": "SizeMe hält diese spezielle Passform für",
+    "stretchedLittle": "Der Artikel dehnt sich ein wenig.",
+    "stretchedMax": "Der Artikel dehnt sich bis zum Maximum.",
+    "stretchedMuch": "Der Artikel dehnt sich stark.",
+    "stretchedSomewhat": "Der Artikel ist dehnbar.",
+    "tooltipDefaultText": "Die Maße {{measurement, lowercase}} des Artikels",
+    "whenPinched": " auf beiden Seiten"
+  },
+  "fitVerdict": {
+    "not_fitted": "Zu klein",
+    "too_small": "Zu klein",
+    "slim": "Schlanke",
+    "regular": "Normale",
+    "loose": "Lockere",
+    "very_loose": "Sehr lockere",
+    "huge": "Sehr groß",
+    "too_big": "Zu groß"
+  },
+  "fitVerdictLong": {
+    "not_fitted": "Zu kurz",
+    "too_small": "Zu kurz",
+    "slim": "Kurz",
+    "regular": "Normal",
+    "loose": "Lang",
+    "very_loose": "Sehr lang",
+    "huge": "Sehr groß",
+    "too_big": "Zu lang"
+  },
+  "sizingBarRangeLabel": {
+    "too_small": "Zu klein",
+    "slim": "Schlank",
+    "regular": "Empfohlen",
+    "loose": "Locker",
+    "too_big": "Groß"
+  },
+  "humanMeasurements": {
+    "chest": "Brust",
+    "shirtWaist": "Taille",
+    "sleeve": "Armlänge",
+    "shoulderFull": "Schulterbreite",
+    "neckCircumference": "Halsumfang",
+    "frontHeight": "Vordere Höhe",
+    "underbust": "Unterbrustumfang",
+    "pantWaist": "Hosenbund",
+    "hips": "Hüften",
+    "inSeam": "Schrittlänge",
+    "outSeam": "Außennaht",
+    "thighCircumference": "Oberschenkelumfang",
+    "kneeCircumference": "Knieumfang",
+    "ankleCircumference": "Knöchelumfang",
+    "calfCircumference": "Wadenumfang",
+    "footLength": "Fußlänge",
+    "footWidth": "Fußbreite",
+    "headCircumference": "Kopfumfang"
+  },
+  "measurement": {
+    "chest": "Brust",
+    "waist": "Taille",
+    "sleeve": "Ärmel",
+    "sleeve_top_width": "Ärmel oben",
+    "sleeve_top_opening": "Öffnung oben am Ärmel",
+    "wrist_width": "Handgelenk",
+    "underbust": "Unterbrustumfang",
+    "neck_opening_width": "Kragen",
+    "shoulder_width": "Schulter",
+    "front_height": "Vordere Höhe",
+    "pant_waist": "Hosenbund",
+    "hips": "Hüften",
+    "inseam": "Schrittlänge",
+    "outseam": "Außennaht",
+    "thigh_width": "Schenkel",
+    "knee_width": "Knie",
+    "calf_width": "Wade",
+    "pant_sleeve_width": "Beinöffnung",
+    "shoe_inside_length": "Schuhlänge",
+    "shoe_inside_width": "Schuhbreite",
+    "hat_width": "Hutumfang",
+    "hood_height": "Höhe der Kapuze",
+    "hem": "Saum",
+    "sleeve_opening": "Ärmelöffnung"
+  },
+  "measurementGuide": {
+    "title": "So messen Sie Ihre",
+    "chest": "Miss unterhalb der Achseln an <b>der stärksten Stelle</b> der Brust<span class='female'>, während du einen BH trägst</span>.<br/><br/><b>Atme während</b> der Messung vollständig aus.",
+    "front_height": "Miss von der Stelle, an der dein Nacken in deine Schulter übergeht, direkt nach unten bis zum Hosenbund (wo er normalerweise bei dir sitzt).",
+    "sleeve": "Miss von der Schulter aus (da, wo normalerweise der Ärmel deines Hemdes ansetzt) bis zum inneren Handgelenk (bis zum Ende des Speichenknochens). Halte deinen Arm beim Messen gerade und zeige mit der Hand nach unten.",
+    "pant_waist": "Miss waagerecht um deinen Körper herum, an der Stelle, an der normalerweise dein Hosenbund sitzt, etwa 6 cm unterhalb des Bauchnabels.<br/><br/><b>Zieh dabei deinen Bauch ein,</b> als würdest du eine enge Hose anziehen.",
+    "waist": "Miss waagerecht um deinen Körper herum, etwa 3 cm oberhalb des Bauchnabels.<br/><br/>Zieh beim Messen den Bauch ein.",
+    "outseam": "Miss die Außenseite deines Beins von der Oberkante des Hosenbunds (wo normalerweise dein Hosenbund sitzt) bis zum äußeren Fußknöchel.",
+    "shoe_inside_length": "Halte ein Maßband an eine Wand und stelle dich mit bloßen Füßen auf das Ende des Bandes.",
+    "calf_width": "Miss um die breiteste Stelle der Wade.",
+    "hat_width": "Miss den größten Umfang deines Kopfes knapp über den Ohren.",
+    "hips": "Miss waagerecht um die stärkste Stelle deiner Hüften."
+  },
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "Klicken",
+      "link": "hier",
+      "end": "für den Leitfaden"
+    },
+    "chest": [
+      "Waagerecht um deinen Körper unterhalb der Achseln an der stärksten Stelle deines Oberkörpers",
+      "Atme vollständig aus"
+    ],
+    "front_height": [
+      "von der Stelle, an der dein Nacken in deine Schulter übergeht, direkt nach unten bis zum Hosenbund"
+    ],
+    "sleeve": [
+      "von deiner Schulter bis zu deinem Handgelenk",
+      "Halte deinen Arm gerade und zeige nach unten"
+    ],
+    "pant_waist": [
+      "Waagerecht um deinen Körper auf der Höhe, auf der normalerweise dein Hosenbund sitzt",
+      "Zieh deinen Bauch ein, als würdest du eine enge Hose anziehen"
+    ],
+    "waist": [
+      "Waagerecht um deinen Körper herum oberhalb des Bauchnabels",
+      "Zieh deinen Bauch ein wenig ein"
+    ],
+    "hips": [
+      "Waagerecht um deinen Körper herum an der stärksten Stelle deiner Hüften"
+    ],
+    "outseam": [
+      "Die Außenseite deines Beines ab dem oberen Rand deines Hosenbundes",
+      "Miss hinunter bis zu deinem Fußknöchel"
+    ],
+    "shoe_inside_length": [
+      "Halte ein Maßband an eine Wand und stelle dich mit bloßen Füßen auf das Ende des Bandes"
+    ],
+    "calf_width": [
+      "Miss um die breiteste Stelle der Wade"
+    ],
+    "hat_width": [
+      "Miss den größten Umfang deines Kopfes knapp über den Ohren"
+    ]
+  },
+  "message": {
+    "addProfiles": "Füge deinem Konto Profile hinzu, um eine Größenempfehlung zu erhalten.",
+    "missingMeasurements": "Füge deinem Profil weitere Maße hinzu, um seine Genauigkeit zu erhöhen",
+    "noMeasurements": "Füge deinem Profil Maße hinzu, um eine Größenempfehlung zu erhalten.",
+    "addThisMeasurement": "Füge dieses Maß deinem Profil hinzu, damit es bei der Passformberechnung berücksichtigt werden kann.",
+    "noProfiles": "Du hast keine Profile in deinem Konto.",
+    "noTopButton": "Der oberste Knopf des Hemdes in dieser Größe wird sich nicht schließen lassen."
+  },
+  "signupBox": {
+    "duplicateUser": "Ein Konto mit dieser E-Mail existiert bereits. Gib dein Passwort ein, um dich anzumelden.",
+    "emailPlaceholder": "meinname@beispiel.com",
+    "message": "Speichere deine Maße, damit wir uns nächstes Mal an dich erinnern",
+    "save": "Ok",
+    "signupPrompt": "Mit E-Mail speichern",
+    "signupChoices": "Anmelden oder Einloggen",
+    "tooltipPolicyLink": "Datenschutzerklärung",
+    "signupDone": "Deine Maße wurden gespeichert! Du solltest in Kürze eine Bestätigungs-E-Mail von SizeMe erhalten."
+  },
+  "sizeGuide": {
+    "advertisement": "Dieser Größenleitfaden wird dir von SizeMe zur Verfügung gestellt",
+    "buttonText": "Größenleitfaden",
+    "measurementDisclaimer": "Diese Maße werden <u>flach an der Außenseite</u> des Artikels gemessen.",
+    "measurementDisclaimerCollar": "Mit Ausnahme der Kragenweite, die rund um die Innenseite des Kragens gemessen wird.",
+    "measurementDisclaimerInside": "Diese Maße werden <u>im Inneren</u> des Artikels gemessen.",
+    "tableTitle": "Tatsächliche Maße des Artikels",
+    "windowTitle": "Größenleitfaden für"
+  },
+  "splash": {
+    "btnLogInLabel": "Einloggen",
+    "btnLogInTitle": "Ich habe bereits ein Konto",
+    "btnNoThanksLabel": "Nein danke",
+    "btnNoThanksTitle": "Vielleicht später",
+    "btnSignUpLabel": "Registrieren",
+    "btnSignUpTitle": "Ja, ich möchte ein kostenloses Konto einrichten",
+    "detailedText": "Nimm ein paar <b>Maße von dir</b> und erhalte persönliche Informationen darüber, wie dieser Artikel <b>dir passen würde</b>. Erstelle ein kostenloses <b>SizeMe</b> Profil und höre auf zu raten!"
+  }
+}
