@@ -373,12 +373,12 @@ function getRecommendedFit (fitResults, optimalFit) {
     const [bestMatch] = fitResults
         .filter(([, res]) => res.accuracy > 0)
         .reduce(([accSize, fit], [size, res]) => {
+            if ((res.totalFit < 1000) && (optFit >= 1000)) return [accSize, fit];
             if (useStretchingMath(res.matchMap, optFit)) {
                 let maxStretchArr = [];
                 Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
                 const maxStretch = Math.max.apply(null, maxStretchArr);
-                const normalizedTotalFit = (((res.totalFit <= 1000) && (res.totalFit > 990)) ? 1000 : res.totalFit);
-                const newFit = (Math.abs(normalizedTotalFit - 1000) * 100) + Math.abs(maxStretch - optStretch);
+                const newFit = (Math.abs(res.totalFit - 1000) * 100) + Math.abs(maxStretch - optStretch);
                 if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
                     return [size, newFit];
                 } else {
