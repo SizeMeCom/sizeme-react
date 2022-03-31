@@ -37,11 +37,11 @@
   "fitVerdict": {
     "not_fitted": "För liten",
     "too_small": "För liten",
-    "slim": "Slim",
+    "slim": "Smal",
     "regular": "Normal",
     "loose": "Lös",
     "very_loose": "Mycket lös",
-    "huge": "3XL",
+    "huge": "Enormt",
     "too_big": "För stor"
   },
   "fitVerdictLong": {
@@ -51,35 +51,35 @@
     "regular": "Normal",
     "loose": "Lång",
     "very_loose": "Mycket lång",
-    "huge": "3XL",
+    "huge": "För lång",
     "too_big": "För lång"
   },
   "sizingBarRangeLabel": {
     "too_small": "För liten",
-    "slim": "Slim",
+    "slim": "Smal",
     "regular": "Rekommenderad",
     "loose": "Lös",
     "too_big": "Stor"
   },
   "humanMeasurements": {
-    "chest": "Chest",
+    "chest": "Bröst",
     "shirtWaist": "Waist",
-    "sleeve": "Arm length",
-    "shoulderFull": "Shoulder width",
-    "neckCircumference": "Neck circumference",
-    "frontHeight": "Front height",
-    "underbust": "Underbust",
-    "pantWaist": "Pant waist",
-    "hips": "Hips",
-    "inSeam": "Inseam",
-    "outSeam": "Outseam",
-    "thighCircumference": "Thigh circumference",
-    "kneeCircumference": "Knee circumference",
-    "ankleCircumference": "Ankle circumference",
-    "calfCircumference": "Calf circumference",
-    "footLength": "Foot length",
-    "footWidth": "Foot width",
-    "headCircumference": "Head circumference"
+    "sleeve": "Armlängd",
+    "shoulderFull": "Skulderbredd",
+    "neckCircumference": "Halsomkrets",
+    "frontHeight": "Framhöjd",
+    "underbust": "Under byst",
+    "pantWaist": "Byx midja",
+    "hips": "Höfter",
+    "inSeam": "Innersöm",
+    "outSeam": "Yttersöm",
+    "thighCircumference": "Låromkrets",
+    "kneeCircumference": "Knä omkrets",
+    "ankleCircumference": "Ankel omkrets",
+    "calfCircumference": "Vadomkrets",
+    "footLength": "Fotlängd",
+    "footWidth": "Fotbredd",
+    "headCircumference": "Huvudets omkrets"
   },
   "measurement": {
     "chest": "Bröst",
@@ -95,7 +95,7 @@
     "pant_waist": "Byxans midja",
     "hips": "Höfter",
     "inseam": "Innersöm",
-    "outseam": "Yttersömm",
+    "outseam": "Yttersöm",
     "thigh_width": "Lår",
     "knee_width": "Knä",
     "calf_width": "Vad",
@@ -108,59 +108,59 @@
     "sleeve_opening": "Ärm öppning"
   },
   "measurementGuide": {
-    "title": "How to measure your",
-    "chest": "Measure around your body under your arms at <b>fullest part</b> of chest<span class='female'> while wearing bra</span>.<br/><br/><b>Breathe out fully</b> while taking this measurement.",
-    "front_height": "Measure down from where your neck meets your shoulder directly down to your waistband (where you normally keep your pants).",
-    "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
-    "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
-    "waist": "Measure around your body about 3 cm above from belly-button height.<br/><br/><b>Pull your stomach in</b> while measuring.",
-    "outseam": "Measure the outside of your leg starting from the top of your waistband (where you normally keep your pants) and measure down to your ankle bone (lateral malleolus to be exact).",
-    "shoe_inside_length": "Place a measuring tape next to a wall and stand on the tape. Use thin socks or no socks at all.",
-    "calf_width": "Measure around widest part of calf.",
-    "hat_width": "Measure the biggest circumference of head at just above top of ears.",
-    "hips": "Measure around your body at the widest part of your hips."
+    "title": "Hur man mäter din",
+    "chest": "Mät runt din kropp under armarna vid <b>fullaste delen</b> av bröstet<span class='female'> medan du bär bh</span>.<br/><br/><b>Andas ut helt< /b> medan du gör denna mätning.",
+    "front_height": "Mät ner från där din nacke möter din axel direkt ner till ditt midjeband (där du normalt har byxorna).",
+    "sleeve": "Mät från din axel (där din skjortans axelsöm vanligtvis är) ner till din handled (till slutet av radiebenet för att vara exakt). Håll armen rak och peka nedåt medan du mäter.",
+    "pant_waist": "Mät runt din kropp från där du normalt har byxorna, cirka 6 cm ner från navelhöjden.<br/><br/><b>Dra magen in</b> som om du passar på ett par passform byxor.",
+    "waist": "Mät runt kroppen cirka 3 cm ovanför från navelhöjd.<br/><br/><b>Dra magen in</b> medan du mäter.",
+    "outseam": "Mät utsidan av benet med början från toppen av ditt midjeband (där du normalt har byxorna) och mät ner till fotleden (lateral malleolus för att vara exakt).",
+    "shoe_inside_length": "Placera ett måttband intill en vägg och ställ dig på den. Använd tunna strumpor eller inga strumpor alls.",
+    "calf_width": "Mät runt den bredaste delen av vaden.",
+    "hat_width": "Mät huvudets största omkrets strax ovanför öronen.",
+    "hips": "Mät runt din kropp på den bredaste delen av dina höfter."
   },
   "measurementTooltips": {
     "linkToGuide": {
-      "start": "Click",
-      "link": "here",
-      "end": "for guide"
+      "start": "Klicka",
+      "link": "här",
+      "end": "för guide"
     },
     "chest": [
-      "Around your body under your arms at fullest part of chest",
-      "Breathe out fully"
+      "Runt din kropp under dina armar på den största delen av bröstet",
+      "Andas ut helt"
     ],
     "front_height": [
-      "From where your neck meets your shoulder directly down to your waistband"
+      "Från där din nacke möter din axel direkt ner till ditt midjeband"
     ],
     "sleeve": [
-      "From your shoulder down to your wrist",
-      "Keep your arm straight and pointing down"
+      "Från axeln ner till handleden",
+      "Håll armen rak och peka nedåt"
     ],
     "pant_waist": [
-      "Around your body from where you normally keep your pants",
-      "Pull your stomach in like you are fitting on a pair of tight pants"
+      "Runt din kropp varifrån du normalt förvarar dina byxor",
+      "Dra in magen som om du passar på ett par tajta byxor"
     ],
     "waist": [
-      "Around your body above your belly-button",
-      "Pull your stomach in a little bit"
+      "Runt kroppen ovanför naveln",
+      "Dra in magen lite"
     ],
     "hips": [
-      "Around your body at the widest part of your hips"
+      "Runt kroppen på den bredaste delen av dina höfter"
     ],
     "outseam": [
-      "The outside of your leg starting from the top of your waistband",
-      "Measure down to your ankle bone"
+      "Utsidan av benet från toppen av linningen",
+      "Mät ner till ankelbenet"
     ],
     "shoe_inside_length": [
-      "Place a measuring tape next to a wall and stand on the tape",
-	  "Use thin socks or no socks at all"
+      "Placera ett måttband intill en vägg och ställ dig på den",
+	  "Använd tunna strumpor eller inga strumpor alls"
     ],
     "calf_width": [
-      "Measure around widest part of calf"
+      "Mät runt den bredaste delen av vaden"
     ],
     "hat_width": [
-      "Measure the biggest circumference of head at just above top of ears"
+      "Mät huvudets största omkrets strax ovanför öronen"
     ]
   },
   "message": {
@@ -173,7 +173,7 @@
   },
   "signupBox": {
     "duplicateUser": "Ett konto med det här e-mail finns redan. Försök att logga in?",
-    "emailPlaceholder": "myname@example.com",
+    "emailPlaceholder": "mittnamn@exempel.com",
     "message": "Spara dina mått så att vi kommer ihåg dig nästa gång",
     "save": "Ok",
     "signupPrompt": "Spara med e-mail",
