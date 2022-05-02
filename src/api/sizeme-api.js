@@ -374,19 +374,18 @@ function getRecommendedFit (fitResults, optimalFit) {
         .filter(([, res]) => res.accuracy > 0)
         .reduce(([accSize, fit], [size, res]) => {
             if ((res.totalFit < 1000) && (optFit >= 1000)) return [accSize, fit];
+            let maxStretchArr = [];
+            Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
+            const maxStretch = Math.max.apply(null, maxStretchArr);
+            const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
             if (useStretchingMath(res.matchMap, optFit)) {
-                let maxStretchArr = [];
-                Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
-                const maxStretch = Math.max.apply(null, maxStretchArr);
-                const newFit = (Math.abs(res.totalFit - 1000) * 100) + Math.abs(maxStretch - optStretch);
-                if (newFit <= (maxDist * 100) && (!accSize || newFit < fit)) {
+                if ((newFit <= (maxDist * 100)) && ((!accSize) || (newFit < fit))) {
                     return [size, newFit];
                 } else {
                     return [accSize, fit];
                 }
             } else {
-                const newFit = Math.abs(res.totalFit - optFit);
-                if ((newFit <= maxDist) && (res.totalFit >= 1000) && ((!accSize) || (newFit < fit))) {
+                if ((newFit <= (maxDist * 100)) && (res.totalFit >= 1000) && ((!accSize) || (newFit < fit))) {
                     return [size, newFit];
                 } else {
                     return [accSize, fit];
