@@ -368,7 +368,7 @@ function doMatch (fitRequest, token, useProfile) {
 
 function getRecommendedFit (fitResults, optimalFit) {
     const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
-    const optStretch = DEFAULT_OPTIMAL_STRETCH;
+    const optStretch = optFit > 1000 ? DEFAULT_OPTIMAL_STRETCH / 5 : DEFAULT_OPTIMAL_STRETCH;
     const maxDist = uiOptions.maxRecommendationDistance || 9999;
     const [bestMatch] = fitResults
         .filter(([, res]) => res.accuracy > 0)
