@@ -3,6 +3,7 @@ import Optional from "optional-js";
 
 const fitStep = 55;
 const norm = 1000;
+let fitRecommendation;
 
 const fitLabelsAndColors = [
     {label: "too_small", arrowColor: "#BB5555"},
@@ -1368,6 +1369,7 @@ export default class ProductModel {
         const {arrows, itemDrawing} = init(itemTypeArr);
 
         this.measurementOrder = [];
+        fitRecommendation = item.fitRecommendation ? item.fitRecommendation : DEFAULT_OPTIMAL_FIT;
 
         const firstSize = Object.entries(item.measurements || {})[0];
         if (firstSize && firstSize[1]) {
@@ -1412,7 +1414,13 @@ export default class ProductModel {
             return null;
         }
         const {componentFit, importance} = measurementResult;
-        let fitRange = fitRanges.find(fr => fr.matches(componentFit));
+        let relativeComponentFit = componentFit;
+        if (fitRecommendation === 1000) {
+            relativeComponentFit = componentFit >= 1000 ? DEFAULT_OPTIMAL_FIT : 990;
+        } else {
+            relativeComponentFit = Math.round((componentFit - 1000) / (fitRecommendation - DEFAULT_OPTIMAL_FIT) * (DEFAULT_OPTIMAL_FIT - 1000)) + 1000;
+        }
+        let fitRange = fitRanges.find(fr => fr.matches(relativeComponentFit));
         if (!fitRange && overflowFits) {
             fitRange = componentFit < norm ? subRange : superRange;
         }
@@ -1501,5 +1509,3 @@ export {
     fitLabelsAndColors,
     pinchedFits
 };
-
-
