@@ -354,7 +354,6 @@ function init(itemTypeArr) {
                         style: "line",
                         lift: false
                     };
-
                     break;
                 case 3: // hood
                     itemDrawing.coords.push({X: 0, Y: -390}, {
@@ -387,6 +386,57 @@ function init(itemTypeArr) {
                         lift: true
                     };
                     break;
+                case 4: // lifted
+                    itemDrawing.coords.push({X: 0, Y: -60}, {
+                        X: 119,
+                        Y: -48,
+                        cp1X: 68,
+                        cp1Y: -60,
+                        cp2X: 106,
+                        cp2Y: -57
+                    }, {X: 128, Y: 0});
+                    itemDrawing.accents.push({
+                        type: "area", coords: [{X: 0, Y: -47},
+                            {X: 104, Y: -34, cp1X: 64, cp1Y: -47, cp2X: 84, cp2Y: -47},
+                            {X: 0, Y: 0, cp1X: 94, cp1Y: -20, cp2X: 64, cp2Y: 0},
+                        ]
+                    });
+                    itemDrawing.accents.push({
+                        type: "line", coords: [{X: 129, Y: 0},
+                            {X: 136, Y: 26, cp1X: 132, cp1Y: 14, cp2X: 133, cp2Y: 18},
+                            {X: 0, Y: 85, cp1X: 123, cp1Y: 43, cp2X: 100, cp2Y: 85}
+                        ]
+                    });
+                    arrows.neck_opening_width = {
+                        mirror: false,
+                        coords: [{X: 0, Y: -47}, {X: 100, Y: -35, cp1X: 64, cp1Y: -48, cp2X: 105, cp2Y: -47},
+                            {X: -5, Y: 59, cp1X: 66, cp1Y: 8, cp2X: 6, cp2Y: 40}, {
+                                X: -104,
+                                Y: -34,
+                                cp1X: -25,
+                                cp1Y: 32,
+                                cp2X: -93,
+                                cp2Y: -12
+                            },
+                            {X: 0, Y: -46, cp1X: -117, cp1Y: -48, cp2X: -52, cp2Y: -48}],
+                        style: "line",
+                        lift: false,
+                        midCircle: {X: 0, Y: -47}
+                    };
+                    arrows.shoulder_width = {
+                        mirror: false,
+                        coords: [{X: -329, Y: 49}, {X: -129, Y: -5}],
+                        style: "line",
+                        lift: true
+                    };
+                    arrows.front_height = {
+                        mirror: false,
+                        coords: [{X: -167, Y: -4}, {X: -167, Y: 978}],
+                        style: "line",
+                        lift: false
+                    };
+                    break;
+
                 case 5: // open high round
                     itemDrawing.coords.push({X: 0, Y: 90}, {X: 189, Y: 0});
                     itemDrawing.accents.push({
