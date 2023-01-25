@@ -100,74 +100,81 @@ const humanMeasurementMap = new Map([
     ["hat_width", "headCircumference"]
 ]);
 
-function getEssentialMeasurements(itemTypeArr) {
+function isInMeas(meas, thisMeas) {
+    if (typeof meas !== "object") return false;
+    if (meas.length === 0) return false;
+    return (Object.values(meas).filter(obj => {return parseInt(obj[thisMeas] ?? null) > 0;}).length > 0);
+}
+
+function getEssentialMeasurements(itemTypeArr, meas) {
     const arr = [];
     switch (itemTypeArr[0]) {
         case 1:
-            arr.push("chest");
+            if (isInMeas(meas, "chest")) arr.push("chest");
             if ( (itemTypeArr[5] > 1) && (itemTypeArr[5] < 6) ) {
-                arr.push("front_height");
+                if (isInMeas(meas, "front_height")) arr.push("front_height");
             }
             if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
-                arr.push("sleeve");
+                if (isInMeas(meas, "sleeve")) arr.push("sleeve");
             }
             if ( (arr.length < 2) && (itemTypeArr[5] > 5) ) {
-                arr.push("waist");
+                if (isInMeas(meas, "waist")) arr.push("waist");
             }
             if ( (arr.length < 3) && (itemTypeArr[5] > 5) ) {
-                arr.push("hips");
+                if (isInMeas(meas, "hips")) arr.push("hips");
             }
             if ( (arr.length < 3) && (itemTypeArr[3] < 2) && (itemTypeArr[5] >= 4) ) {
-                arr.push("hips");
+                if (isInMeas(meas, "hips")) arr.push("hips");
             }
             if ( (arr.length < 3) && (itemTypeArr[3] < 2) && (itemTypeArr[5] >= 3) ) {
-                arr.push("waist");
+                if (isInMeas(meas, "waist")) arr.push("waist");
             }
             break;
 
         case 2:
-            arr.push("pant_waist", "hips");
+            if (isInMeas(meas, "pant_waist")) arr.push("pant_waist");
+            if (isInMeas(meas, "hips")) arr.push("hips");
             if (itemTypeArr[3] >= 6) {
-                arr.push("outseam");
+                if (isInMeas(meas, "outseam")) arr.push("outseam");
             }
             break;
 
         case 3:
-            arr.push("shoe_inside_length");
+            if (isInMeas(meas, "shoe_inside_length")) arr.push("shoe_inside_length");
             if (itemTypeArr[3] > 6) {
-                arr.push("calf_width");
+                if (isInMeas(meas, "calf_width")) arr.push("calf_width");
             }
             if (itemTypeArr[3] > 7) {
-                arr.push("knee_width");
+                if (isInMeas(meas, "knee_width")) arr.push("knee_width");
             }
             break;
 
         case 4:
-            arr.push("hat_width");
+            if (isInMeas(meas, "hat_width")) arr.push("hat_width");
             break;
 
         case 5:
-            arr.push("chest");
+            if (isInMeas(meas, "chest")) arr.push("chest");
             if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
-                arr.push("sleeve");
+                if (isInMeas(meas, "sleeve")) arr.push("sleeve");
             } else {
-                arr.push("waist");
+                if (isInMeas(meas, "waist")) arr.push("waist");
             }
-            arr.push("hips");
+            if (isInMeas(meas, "hips")) arr.push("hips");
             break;
 
         case 6:
-            arr.push("chest");
+            if (isInMeas(meas, "chest")) arr.push("chest");
             if ( (itemTypeArr[3] >= 6) && (itemTypeArr[2] === 1) ) {
-                arr.push("sleeve");
+                if (isInMeas(meas, "sleeve")) arr.push("sleeve");
             } else {
-                arr.push("front_height");
+                if (isInMeas(meas, "front_height")) arr.push("front_height");
             }
             if (itemTypeArr[5] >= 6) {
-                arr.push("outseam");
+                if (isInMeas(meas, "outseam")) arr.push("outseam");
             }
             if (arr.length < 3) {
-                arr.push("hips");
+                if (isInMeas(meas, "hips")) arr.push("hips");
             }
             break;
     }
@@ -1384,7 +1391,7 @@ export default class ProductModel {
         }
         this.arrows = arrows;
         this.itemDrawing = itemDrawing;
-        this.essentialMeasurements = getEssentialMeasurements(itemTypeArr);
+        this.essentialMeasurements = getEssentialMeasurements(itemTypeArr, item.measurements);
         this.pinchedFits = pinchedFits;
 
         this.getItemTypeComponent = index => itemTypeArr[index];
