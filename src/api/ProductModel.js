@@ -1310,9 +1310,7 @@ function init(itemTypeArr) {
 
 export default class ProductModel {
     constructor(item) {
-        const itemTypeArr = Array.from(item.itemType)
-        .filter(a => a !== ".")
-        .map(a => parseInt(a, 10));
+        const itemTypeArr = item.itemType.split(".").map(Number);
         const {arrows, itemDrawing} = init(itemTypeArr);
 
         this.measurementOrder = [];
