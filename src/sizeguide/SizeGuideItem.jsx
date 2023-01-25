@@ -179,7 +179,6 @@ function plotItem (c, data, scale, offsetX, offsetY) {
             );
         } else {
             c.moveTo(pX(accent.coords[0].X), pY(accent.coords[0].Y));
-            //for (let j = 1; j < accent.coords.length; j++) {
             for (const accCoord of accent.coords.slice(1)) {
                 if (typeof accCoord.cp1X !== "undefined") {
                     c.bezierCurveTo(
