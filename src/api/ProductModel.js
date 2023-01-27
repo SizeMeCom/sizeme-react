@@ -1425,7 +1425,7 @@ export default class ProductModel {
         if (fitRecommendation === 1000) {
             relativeComponentFit = componentFit >= 1000 ? DEFAULT_OPTIMAL_FIT : 990;
         } else {
-            relativeComponentFit = Math.round((componentFit - 1000) / (fitRecommendation - DEFAULT_OPTIMAL_FIT) * (DEFAULT_OPTIMAL_FIT - 1000)) + 1000;
+            relativeComponentFit = Math.round((componentFit - fitRecommendation) / (fitRecommendation - 1000) * (DEFAULT_OPTIMAL_FIT - 1000)) + DEFAULT_OPTIMAL_FIT;
         }
         let fitRange = fitRanges.find(fr => fr.matches(relativeComponentFit));
         if (!fitRange && overflowFits) {
