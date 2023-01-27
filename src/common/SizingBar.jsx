@@ -12,7 +12,7 @@ const getSizename = (selectedSize) =>
         .map(([, sizeName]) => sizeName)[0] || selectedSize;
 
 const getValueBasedFitLabel = (value) => {
-    let labelKey = Math.min(Math.floor(value / 20), fitLabelsAndColors.length - 1);
+    let labelKey = Math.min(Math.floor(Math.round(value) / 20), fitLabelsAndColors.length - 1);
     return (typeof fitLabelsAndColors[labelKey] !== "undefined" ? fitLabelsAndColors[labelKey].label : "regular");
 };
 
