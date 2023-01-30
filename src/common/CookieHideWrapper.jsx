@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Cookies from "universal-cookie";
-import { trackEvent } from "../api/ga";
 
 const maxAge = 90 * 24 * 60 * 60; // 90 days
 const cookieName = "sizeme_no_product_splash";
@@ -10,7 +9,6 @@ const listeners = [];
 const cookies = new Cookies();
 
 export const hideSizeMe = () => {
-    trackEvent("noThanks", "Store: SizeMe, no thanks");
     cookies.set(cookieName, "true", { path: "/", maxAge: maxAge });
     for (const wrapper of listeners) {
         wrapper.hide();

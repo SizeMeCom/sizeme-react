@@ -2,7 +2,6 @@ import React from "react";
 import Loadable from "react-loadable";
 import Loading from "./common/Loading";
 import uiOptions from "./api/uiOptions";
-import {trackEvent} from "./api/ga";
 import {withTranslation} from "react-i18next";
 import PropTypes from "prop-types";
 import * as api from "./api/sizeme-api";
@@ -57,17 +56,11 @@ class SizeMeAppWrapper extends React.Component {
     }
 
     componentDidMount () {
-        const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile, sizemeHidden } = this.props;
+        const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } = this.props;
         Promise.all([
             resolveAuthToken().then(resolved => getProfiles().then(() => resolved)),
             getProduct()
-        ]).then(([tokenResolved, productResolved]) => {
-            const pageEvent = productResolved ? ["", "SM product"] : ["NonSM", "Non-SM product"];
-            const logInStatus = tokenResolved ? ["LoggedIn", "logged in"] : ["LoggedOut", "logged out"];
-            const hidden = sizemeHidden ? ["Hidden", ", SM hidden"] : ["", ""];
-
-            trackEvent(`productPage${pageEvent[0]}${logInStatus[0]}${hidden[0]}`,
-                `Store: Product page load, ${pageEvent[1]}, ${logInStatus[1]}${hidden[1]}`);
+        ]).then(() => {
             setSelectedProfile();
         });
     }

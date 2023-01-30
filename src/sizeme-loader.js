@@ -6,31 +6,8 @@ import i18n from "./i18n";
 import {Provider} from "react-redux";
 import SizeSelector from "./api/SizeSelector";
 import React from "react";
-import {trackEvent} from "./api/ga";
 import "./scss/index.scss";
 import SizeMeAppWrapper from "./SizeMeAppWrapper";
-
-const {addToCartElement, addToCartEvent} = uiOptions;
-if (addToCartElement && addToCartEvent) {
-    const elements = document.querySelectorAll(addToCartElement);
-    const fn = () => {
-        const {authToken, productInfo} = sizemeStore.getState();
-        const loggedIn = authToken.loggedIn;
-        const sizemeProductPage = productInfo.product !== null;
-        if (loggedIn && sizemeProductPage) {
-            trackEvent("addToCartSM", "Store: Product added to cart by SizeMe user");
-        } else if (loggedIn && !sizemeProductPage) {
-            trackEvent("addNonSMToCartSM", "Store: Non-SizeMe product added to cart by SizeMe user");
-        } else if (!loggedIn && sizemeProductPage) {
-            trackEvent("addToCart", "Store: Product added to cart");
-        } else {
-            trackEvent("addNonSMToCart", "Store: Non-SizeMe product added to cart");
-        }
-    };
-    for (let i = 0; i < elements.length; i++) {
-        elements.item(i).addEventListener(addToCartEvent, fn);
-    }
-}
 
 if (uiOptions.toggler) {
     const sizemeHidden = !JSON.parse(localStorage.getItem("sizemeToggledVisible"));
