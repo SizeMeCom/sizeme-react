@@ -1,7 +1,6 @@
 /* global sizeme_product */
 
 import "isomorphic-fetch";
-import { trackEvent } from "./ga.js";
 import * as actions from "./actions";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
@@ -194,7 +193,6 @@ function signup (email) {
     return async (dispatch, getState) => {
         let token;
         dispatch(actions.signup());
-        trackEvent("clickSignUp", "Store: Sign up clicked");
         try {
             const signupResp = await fetch(getEndpointAddress("createAccount"),
                 createRequest("POST", {
@@ -234,7 +232,6 @@ function getProfiles () {
             const profileList = await fetch(getEndpointAddress("profiles"), createRequest("GET", { token }))
                 .then(jsonResponse);
 
-            trackEvent("fetchProfiles", "API: fetchProfiles");
             dispatch(actions.receiveProfileList(profileList));
         } catch (reason) {
             sessionStorage.removeItem("sizeme.authtoken");
@@ -347,7 +344,6 @@ function setSelectedProfile (profileId) {
 
         sessionStorage.setItem("sizeme.selectedProfile", profile.id);
         dispatch(actions.selectProfile(profile));
-        trackEvent("activeProfileChanged", "Store: Active profile changed");
 
         if (storedProfileId === profile.id && Object.keys(storedMeasurements).length) {
             dispatch(actions.setMeasurements(Object.assign({}, profile.measurements, storedMeasurements)));
@@ -429,7 +425,6 @@ function match (doSelectBestFit = true) {
 
             try {
                 const matchResult = await doMatch(fitRequest, token, useProfile);
-                trackEvent("match", "API: match");
 
                 let result = matchResult;
                 if (product.SKU) {

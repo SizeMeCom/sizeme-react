@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {setSelectedProfile} from "../api/sizeme-api";
 import ReactTooltip from "react-tooltip";
-import {trackEvent} from "../api/ga";
 import {withTranslation} from "react-i18next";
 import "./SizeGuide.scss";
 import {setTooltip} from "../api/actions";
@@ -45,11 +44,6 @@ class SizeGuide extends React.Component {
 
     openGuide = () => {
         this.setState({ guideIsOpen: true }, () => {
-            if (this.props.loggedIn) {
-                trackEvent("detailedViewOpened", "Store: Detailed view opened");
-            } else {
-                trackEvent("sizeGuideOpened", "Store: Size guide opened");
-            }
         });
     };
 

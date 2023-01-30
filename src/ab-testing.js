@@ -1,6 +1,5 @@
 import {sizemeStore} from "./api/sizeme-api";
 import {setAbStatus} from "./api/actions";
-import {trackEvent} from "./api/ga";
 
 export default () => {
     let sizemeDisabled = false;
@@ -16,12 +15,6 @@ export default () => {
     const abStatus = sizemeDisabled ? "B" : "A";
     console.log("SizeMe A/B testing, status: " + abStatus);
     sizemeStore.dispatch(setAbStatus(abStatus));
-
-    if (sizemeDisabled) {
-        trackEvent("productPageLoggedOutABDenied", "Store: Product page load, logged out, AB SM denied");
-    } else {
-        trackEvent("productPageLoggedOutABEnabled", "Store: Product page load, logged out, AB SM enabled");
-    }
 
     return sizemeDisabled;
 };

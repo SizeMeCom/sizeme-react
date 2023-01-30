@@ -1,5 +1,4 @@
 import uiOptions from "./uiOptions";
-import {trackEvent} from "./ga";
 import { findVisibleElement } from "./sizeme-api";
 
 let selector;
@@ -24,11 +23,9 @@ class AbstractSelect {
     setSelected = val => {
         if (this.selectors[val]) {
             this.selectors[val]();
-            trackEvent("sizeRecommended", "Store: Recommended a size based on user input");
         } else {
             this.clearSelection();
             selectSize("");
-            trackEvent("sizeCantRecommend", "Store: We couldnt find a size based on user input");
         }
     };
 }
@@ -346,11 +343,9 @@ class CrasmanForKooKenkaSelect extends AbstractSelect {
     setSelected = val => {
         if (this.selectors[val]) {
             this.selectors[val]();
-            trackEvent("sizeRecommended", "Store: Recommended a size based on user input");
         } else {
             this.clearSelection();
             selectSize("");
-            trackEvent("sizeCantRecommend", "Store: We couldnt find a size based on user input");
         }
     };
 }
@@ -359,7 +354,6 @@ class CrasmanForKooKenkaSelect extends AbstractSelect {
 const initSizeSelector = selectSizeFn => {
     selectSize = size => {
         selectSizeFn(size);
-        trackEvent("sizeChanged", "Store: Product size changed");
     };
     const getInstance = (constructor) => {
         const element = findVisibleElement(uiOptions.invokeElement);
