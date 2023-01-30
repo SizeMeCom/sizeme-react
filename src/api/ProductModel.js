@@ -193,7 +193,7 @@ function init(itemTypeArr) {
     };
     arrows.waist = {
         mirror: false,
-        coords: [{X: -250, Y: 635}, {X: 250, Y: 635}],
+        coords: [{X: -250, Y: 689}, {X: 250, Y: 689}],
         lift: false
     };
     arrows.front_height = {
@@ -921,8 +921,13 @@ function init(itemTypeArr) {
                     default: {
                         let $baseY = 978;
                         if (itemTypeArr[5] > 4) {
-                            $baseY = 978 + ( (itemTypeArr[5] - 4) * 40);
+                            $baseY = 978 + ( (itemTypeArr[5] - 4) * 160);
                         }
+                        arrows.hips = {
+                            mirror: false,
+                            coords: [{X: -250, Y: 978}, {X: 250, Y: 978}],
+                            lift: false
+                        };
                         if (itemTypeArr[6] === 1) { // elastic
                             itemDrawing.coords.push({
                                 X: 250,
@@ -941,11 +946,6 @@ function init(itemTypeArr) {
                                 });
                             }
                             arrows.front_height.coords[1].Y = ($baseY + 60);
-                            arrows.hips = {
-                                mirror: false,
-                                coords: [{X: -250, Y: 978}, {X: 250, Y: 978}],
-                                lift: false
-                            };
                         } else {
                             itemDrawing.coords.push({
                                 X: 250,
@@ -956,11 +956,6 @@ function init(itemTypeArr) {
                                 cp2Y: $baseY
                             }, {X: 0, Y: ($baseY + 60)});
                             arrows.front_height.coords[1].Y = ($baseY + 60);
-                            arrows.hips = {
-                                mirror: false,
-                                coords: [{X: -250, Y: (978 + 60)}, {X: 250, Y: (978 + 60)}],
-                                lift: false
-                            };
                         }
                         // define just in case
                         arrows.pant_waist = {
