@@ -11,7 +11,6 @@ import SignupBox from "./common/SignupBox";
 import "./SizeMeApp.scss";
 import uiOptions from "./api/uiOptions";
 import ProfileMenu from "./common/ProfileMenu";
-import {trackEvent} from "./api/ga";
 import FitTooltip from "./common/FitTooltip";
 import LoginFrame from "./common/LoginFrame";
 import sizemeIcon from "./images/sizeme_icon.png";
@@ -38,7 +37,6 @@ class SizeMeApp extends React.Component {
 
     userLoggedIn = () => {
         const { resolveAuthToken, getProfiles, setSelectedProfile } = this.props;
-        trackEvent("apiLogin", "API: login");
         resolveAuthToken(true)
             .then(() => getProfiles())
             .then(() => setSelectedProfile());
