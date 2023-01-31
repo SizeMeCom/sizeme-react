@@ -261,6 +261,10 @@ function getProduct () {
                 dispatch(actions.receiveProductInfo(new Error("no product")));
                 return false;
             }
+            if (parseInt(product.item.itemType[0]) === 0) {
+                dispatch(actions.receiveProductInfo(new Error("bad product")));
+                return false;
+            }
             const model = new SizeGuideModel(sizeme_product.item);
             // eslint-disable-next-line camelcase
             dispatch(actions.receiveProductInfo({ ...sizeme_product, model }));
@@ -280,6 +284,11 @@ function getProduct () {
                     }
                 })
                 .then(jsonResponse);
+
+            if (parseInt(dbItem.itemType[0]) === 0) {
+                dispatch(actions.receiveProductInfo(new Error("bad product")));
+                return false;
+            }
 
             const skuMap = new Map(Object.entries(product.item));
             const measurementEntries = Object.entries(dbItem.measurements)
