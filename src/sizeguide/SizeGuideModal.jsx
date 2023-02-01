@@ -75,7 +75,7 @@ class SizeGuideModal extends React.Component {
                 <div className="modal-header">
                     <span className="size-guide-title">
                         {loggedIn ? t("detailed.windowTitle") : t("sizeGuide.windowTitle")} <span
-                        className="item-name">{product.name}</span>
+                        className="item-name" dangerouslySetInnerHTML={{ __html: product.name }} />
                     </span>
                     <a className="size-guide-close" role="button" onClick={closeGuide}>
                         <FontAwesome name="times" title={t("common.closeText")}/>
