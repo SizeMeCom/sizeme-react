@@ -9,6 +9,7 @@
     "start": "webpack --config webpack.config.js -d --progress",
     "watch": "nodemon --watch webpack.config.js --watch webpack.parts.js --watch package.json ./node_modules/.bin/webpack-dev-server -- --config webpack.config.js -d --env development --progress",
     "build": "webpack -p --env.environment=production --progress",
+    "dev": "webpack -p --env.environment=development --progress",
     "build-local": "webpack -p --env.environment=production --progress --env.cdn=dist/",
     "build-cdn": "webpack -p --env.environment=production --progress --env.cdn=https://cdn.sizeme.com/store/",
     "stats": "webpack --env production --profile --json > stats.json"
