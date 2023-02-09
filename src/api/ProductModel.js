@@ -160,7 +160,12 @@ function getEssentialMeasurements(itemTypeArr, meas) {
             } else {
                 if (isInMeas(meas, "waist")) arr.push("waist");
             }
-            if (isInMeas(meas, "hips")) arr.push("hips");
+            if (arr.length < 3) {
+                if (isInMeas(meas, "pant_waist")) arr.push("pant_waist");
+            }
+            if (arr.length < 3) {
+                if (isInMeas(meas, "hips")) arr.push("hips");
+            }
             break;
 
         case 6:
@@ -172,6 +177,9 @@ function getEssentialMeasurements(itemTypeArr, meas) {
             }
             if (itemTypeArr[5] >= 6) {
                 if (isInMeas(meas, "outseam")) arr.push("outseam");
+            }
+            if (arr.length < 3) {
+                if (isInMeas(meas, "pant_waist")) arr.push("pant_waist");
             }
             if (arr.length < 3) {
                 if (isInMeas(meas, "hips")) arr.push("hips");
