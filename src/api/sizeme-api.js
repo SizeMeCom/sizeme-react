@@ -382,14 +382,15 @@ function getRecommendedFit (fitResults, optimalFit) {
             let maxStretchArr = [];
             Object.entries(res.matchMap).forEach(([oKey, oValue]) => { maxStretchArr.push( oValue.componentStretch / stretchFactor(oKey) ); });
             const maxStretch = Math.max.apply(null, maxStretchArr);
-            const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
             if (useStretchingMath(res.matchMap, optFit)) {
+                const newFit = (Math.abs(res.totalFit - 1000) * 100) + Math.abs(maxStretch - DEFAULT_OPTIMAL_STRETCH);
                 if ((newFit <= (maxDist * 100)) && ((!accSize) || (newFit < fit))) {
                     return [size, newFit];
                 } else {
                     return [accSize, fit];
                 }
             } else {
+                const newFit = (Math.abs(res.totalFit - optFit) * 100) + Math.abs(maxStretch - optStretch);
                 if ((newFit <= (maxDist * 100)) && (res.totalFit >= 1000) && ((!accSize) || (newFit < fit))) {
                     return [size, newFit];
                 } else {
