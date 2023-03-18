@@ -968,7 +968,7 @@ function init(itemTypeArr) {
                         // define just in case
                         arrows.pant_waist = {
                             mirror: false,
-                            coords: [{X: -250, Y: 958}, {X: 250, Y: 958}],
+                            coords: [{X: -250, Y: 838}, {X: 250, Y: 838}],
                             lift: false
                         };
                     }
