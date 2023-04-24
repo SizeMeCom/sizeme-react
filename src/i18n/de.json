@@ -118,7 +118,8 @@
     "shoe_inside_length": "Halte ein Maßband an eine Wand und stelle dich mit bloßen Füßen auf das Ende des Bandes.",
     "calf_width": "Miss um die breiteste Stelle der Wade.",
     "hat_width": "Miss den größten Umfang deines Kopfes knapp über den Ohren.",
-    "hips": "Miss waagerecht um die stärkste Stelle deiner Hüften."
+    "hips": "Miss waagerecht um die stärkste Stelle deiner Hüften.",
+    "neck_opening_width": "Messen Sie so tief wie möglich um Ihren Hals. Halten Sie das Maß fest."
   },
   "measurementTooltips": {
     "linkToGuide": {
@@ -160,6 +161,10 @@
     ],
     "hat_width": [
       "Miss den größten Umfang deines Kopfes knapp über den Ohren"
+    ],
+    "neck_opening_width": [
+      "Messen Sie so tief wie möglich um Ihren Hals",
+      "Halten Sie das Maß fest"
     ]
   },
   "message": {

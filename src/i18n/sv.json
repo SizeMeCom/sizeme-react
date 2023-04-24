@@ -118,7 +118,8 @@
     "shoe_inside_length": "Placera ett måttband intill en vägg och ställ dig på den. Använd tunna strumpor eller inga strumpor alls.",
     "calf_width": "Mät runt den bredaste delen av vaden.",
     "hat_width": "Mät huvudets största omkrets strax ovanför öronen.",
-    "hips": "Mät runt din kropp på den bredaste delen av dina höfter."
+    "hips": "Mät runt din kropp på den bredaste delen av dina höfter.",
+    "neck_opening_width": "Mät runt halsen så lågt som möjligt. Håll måttet tätt."
   },
   "measurementTooltips": {
     "linkToGuide": {
@@ -161,6 +162,10 @@
     ],
     "hat_width": [
       "Mät huvudets största omkrets strax ovanför öronen"
+    ],
+    "neck_opening_width": [
+      "Mät runt halsen så lågt som möjligt",
+      "Håll måttet tätt"
     ]
   },
   "message": {

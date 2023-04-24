@@ -123,6 +123,9 @@ function getEssentialMeasurements(itemTypeArr, meas) {
             if ( (arr.length < 3) && (itemTypeArr[5] >= 3) ) {
                 if (isInMeas(meas, "waist")) arr.push("waist");
             }
+            if ( (arr.length < 3) && (itemTypeArr[1] === 2) ) {
+                if (isInMeas(meas, "neck_opening_width")) arr.push("neck_opening_width");
+            }
             break;
 
         case 2:
@@ -974,7 +977,7 @@ function init(itemTypeArr) {
                 itemDrawing.coords.push({X: 160, Y: 2210});
                 itemDrawing.coords.push({X: 20, Y: 1200});
                 itemDrawing.coords.push({X: 0, Y: 1200});
-                
+
                 if ( (itemTypeArr[0] === 6) && (itemTypeArr[4] === 1) ) {
                     // eslint-disable-next-line
                     for (let $i = 0; $i < 15; $i++) {
