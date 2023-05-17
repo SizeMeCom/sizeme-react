@@ -61,8 +61,8 @@ class MeasurementInput extends React.Component {
             error: false,
             pending: false,
             value: currValue,
-            valueWholeInches: this.props.value ? this.getInchesWhole(this.props.value) : 0,
-            valuePartialInches: this.props.value ? this.getInchesPartial(this.props.value) : 0,
+            valueWholeInches: this.props.value ? this.getInchesWhole(this.props.value) : "",
+            valuePartialInches: this.props.value ? this.getInchesPartial(this.props.value) : "",
             modelValue: this.modelValue(currValue),
             showUnitSelector: true,
         };
@@ -83,8 +83,11 @@ class MeasurementInput extends React.Component {
     }
 
     getInchesWhole = (value) => {
-        const precision = this.props.inchFractionsPrecision;
-        return Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
+        if (value > 0) {
+            const precision = this.props.inchFractionsPrecision;
+            return Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
+        } 
+        else return;
     }
 
     getInchesPartial = (value) => {
