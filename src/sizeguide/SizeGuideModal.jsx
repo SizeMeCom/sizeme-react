@@ -48,7 +48,7 @@ class SizeGuideModal extends React.Component {
         const measurements = new Map(Object.entries(product.item.measurements));
 
         const detailSection = () => {
-            if (!loggedIn) {
+            if (loggedIn) {
                 return (
                     <SizeGuideDetails onSelectProfile={onSelectProfile}
                         selectedProfile={selectedProfile ? selectedProfile.id : ""}
