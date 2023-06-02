@@ -61,7 +61,7 @@ class MeasurementInput extends React.Component {
             error: false,
             pending: false,
             value: currValue,
-            valueWholeInches: this.props.value ? this.getInchesWhole(this.props.value) : 0,
+            valueWholeInches: this.props.value ? this.getInchesWhole(this.props.value) : "",
             valuePartialInches: this.props.value ? this.getInchesPartial(this.props.value) : 0,
             modelValue: this.modelValue(currValue),
             showUnitSelector: true,
@@ -83,12 +83,14 @@ class MeasurementInput extends React.Component {
     }
 
     getInchesWhole = (value) => {
+        if (isNaN(parseFloat(value))) return "";
         const precision = this.props.inchFractionsPrecision;
         return Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
         
     }
 
     getInchesPartial = (value) => {
+        if (isNaN(parseFloat(value))) return 0;
         const precision = this.props.inchFractionsPrecision;
         let inchesWhole = Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
         let inchesPartial = Math.round(parseFloat(value)/25.4*precision)-(inchesWhole*precision);
@@ -228,11 +230,34 @@ class MeasurementInput extends React.Component {
         }
     };
 
+    isKeyAllowed(keyCode) {
+        return (keyCode >= 48 && keyCode <= 57) // regular number keys
+        || (keyCode >= 96 && keyCode <= 105) // numpad number keys
+        || (keyCode === 8 || keyCode === 46) // backspace and delete keys
+        || (keyCode === 37 || keyCode === 39) // left and right arrow keys
+        || (keyCode === 9 || keyCode === 13); // tab and enter
+    }
+
+    onKeyDown2 = e => {
+        console.log(e.keyCode);
+        if (e.keyCode === 13) {
+            this.input.blur();
+            this.input_in.blur();
+        }
+        if (!this.isKeyAllowed(e.keyCode)) {
+            e.preventDefault();
+        }
+    };
+
     handleUnitChange = (e, unit) => {
         this.props.chooseUnit(unit);
     };
 
     handleWholeInchesChange = (event) => {
+        if (event.target.value == "" || isNaN(parseInt(event.target.value))) {
+            this.setState({ valueWholeInches: 0}, () => this.valueChanged(true));
+            return;
+        }
         let eventValue = parseInt(event.target.value);
         if (eventValue > 0) {
             this.setState({ valueWholeInches: eventValue}, () => this.valueChanged(true));
@@ -252,6 +277,11 @@ class MeasurementInput extends React.Component {
         else {
             this.setState({ valuePartialInches: 0}, () => this.valueChanged(true));
         }
+    };
+
+    hideIfZero = (value) => {
+        if (value == 0) return "";
+        return value;
     };
 
     render () {
@@ -296,10 +326,10 @@ class MeasurementInput extends React.Component {
                 )}
                 {this.props.unit == 1 && this.state && (
                     <span>
-                        <input className={className + " input_in"} type="text" defaultValue={valueWholeInches} onChange={this.handleWholeInchesChange} 
-                        onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input_in = el;}}
+                        <input className={className + " input_in"} type="text" defaultValue={this.hideIfZero(valueWholeInches)} onChange={this.handleWholeInchesChange} 
+                        onKeyDown={this.onKeyDown2} onBlur={this.onBlur} ref={el => {this.input_in = el;}}
                         onFocus={this.onFocus} autoComplete="off" id="inputInches" />
-                        <select className={className + " input_in_partial"} defaultValue={valuePartialInches || ""} onChange={this.handlePartialInchesChange}> 
+                        <select className={className + " input_in_partial"} defaultValue={valuePartialInches} onChange={this.handlePartialInchesChange}> 
                             {(inchFractionOptions || []).map((fractionOption) => (
                                 <option key={fractionOption.id} value={fractionOption.id}>{fractionOption.name}</option>
                             ))}
