@@ -68,6 +68,8 @@ class SizeForm extends React.Component {
         this.setState({ guideModalOpen: false });
     };
 
+    // TODO: Fix display-name
+    // eslint-disable-next-line react/display-name
     tooltipContent = t => () => {
         const linkTexts = t("measurementTooltips.linkToGuide", { returnObjects: true });
         const tooltips = this.activeTooltip ?
