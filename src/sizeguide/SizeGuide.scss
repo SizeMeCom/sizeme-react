@@ -242,11 +242,21 @@ a.link-btn.size-guide {
 
             .header-right {
               text-align: right;
-              cursor: pointer;
             }
+
+            .unit-selector {
+              cursor: pointer;
+              text-transform: none;
+              padding: 1px 6px;
+              background-color: $light_bg_color;
+              &:hover {
+                background-color: $lighter_bg_color;
+              }
+            }
+
           }
-        }  
-  
+        }
+
         h2 {
           text-transform: uppercase;
           background-color: #ccc;
@@ -256,7 +266,7 @@ a.link-btn.size-guide {
           justify-content: space-between;
           justify-items: stretch;
         }
-      }   
+      }
     }
   }
 

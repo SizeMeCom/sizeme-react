@@ -112,22 +112,24 @@ a.link-btn {
     &.place-top {
       &::before {
         border-top: 6px solid $default_color;
-        bottom: -6px;
+        bottom: -5px;
       }
       &::after {
         border-top-color: $bg_color;
         padding-top: 1px;
+                bottom: -5px;
       }
     }
 
     &.place-bottom {
       &::before {
         border-bottom: 6px solid $default_color;
-        top: -6px;
+        top: -5px;
       }
       &::after {
         border-bottom-color: $bg_color;
         padding-bottom: 1px;
+                top: -5px;
       }
     }
 
