@@ -22,7 +22,7 @@ const measurementUnits = [
 ];
 
 const inchFractionOptions = [
-    {id: 0, name: "-/-"},
+    {id: 0, name: "-"},
     {id: 1, name: "1/8"},
     {id: 2, name: "1/4"},
     {id: 3, name: "3/8"},
@@ -31,27 +31,6 @@ const inchFractionOptions = [
     {id: 6, name: "3/4"},
     {id: 7, name: "7/8"},
 ];
-/*
-const inchFractions = {
-    0: "-/-",
-    1: "1/8",
-    2: "1/4",
-    3: "3/8",
-    4: "1/2",
-    5: "5/8",
-    6: "3/4",
-    7: "7/8",
-};
-const inchFractionOptions = [
-    {id: 0, name: "-/-"},
-    {id: 1, name: "⅛"},
-    {id: 2, name: "¼"},
-    {id: 3, name: "⅜"},
-    {id: 4, name: "½"},
-    {id: 5, name: "⅝"},
-    {id: 6, name: "¾"},
-    {id: 7, name: "⅞"},
-];*/
 
 class MeasurementInput extends React.Component {
     constructor (props) {

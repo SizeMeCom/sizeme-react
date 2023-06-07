@@ -16,17 +16,6 @@ const inchFractionOptions = {
     7: "⅞"
 };
 
-/*const inchFractionOptions = {
-    0: "-/-",
-    1: "1/8",
-    2: "1/4",
-    3: "3/8",
-    4: "1/2",
-    5: "5/8",
-    6: "3/4",
-    7: "7/8",
-};*/
-
 const convertToInches = (size, inchFractionsPrecision) => {
     let precision = parseInt(inchFractionsPrecision);
     let inchesWhole = Math.floor(Math.round(size/2.54*precision)/precision);
