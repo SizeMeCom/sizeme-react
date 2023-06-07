@@ -74,13 +74,14 @@
         font-weight: bold;
         text-align: center;
         color: #333;
-        background-color: #ffffff;
+        background-color: $lightest_bg_color;
         box-sizing: border-box;
         appearance: none;
-      }
 
-      .input_in_partial:hover {
-        cursor: pointer;
+        &:hover {
+          cursor: pointer;
+          background-color: $lighter_bg_color;
+        }
       }
 
       .units {
@@ -91,20 +92,14 @@
         line-height: 22px;
         text-align: center;
         margin-left: 0;
-      }
+        background-color: $lighter_bg_color;
 
-      .units:hover {
-        cursor: pointer;
-      }
-
-      .units-not-clickable {
-        display: block;
-        float: right;
-        width: 24px;
-        height: 22px;
-        line-height: 22px;
-        text-align: center;
-        margin-left: 0;
+        &.yes-clickable {
+          cursor: pointer;
+          &:hover {
+            background-color: $light_bg_color;
+          }
+        }
       }
 
       .tooltip-trigger {
@@ -112,10 +107,6 @@
         left: 40%;
         bottom: 4px;
       }
-    }
-
-    .measurement-input.measurement-input-ok {
-      /*background-color: #c7eace;*/
     }
 
     .measurement-input.measurement-input-pending input {
