@@ -75,6 +75,7 @@
 
       .profile-name.selected {
         font-weight: bold;
+        background-color: $selection_selected_bg_color !important;
 
         &::after {
           content: "";
@@ -95,7 +96,7 @@
       }
 
       &:hover {
-        background-color: $loose !important;
+        background-color: $selection_hover_bg_color !important;
       }
     }
   }

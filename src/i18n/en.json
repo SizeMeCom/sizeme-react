@@ -18,7 +18,7 @@
     "cm_short": "cm",
     "in_long": "inches",
     "in_short": "in",
-    "select_unit": "Select measurement unit",
+    "select_unit": "cm ↔ in",
     "measurement_unit": "Measurement unit: "
   },
   "detailed": {

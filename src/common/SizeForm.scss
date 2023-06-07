@@ -289,6 +289,11 @@
       height: 26px;
       cursor: pointer;
 
+      &.selected {
+        font-weight: bold;
+        background-color: $selection_selected_bg_color;
+      }
+
       .unit-name {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -299,22 +304,13 @@
         font-size: 12px;
 
         &::after {
-          //content: "»";
           position: absolute;
           right: 12px;
         }
       }
 
-      .unit-name.selected {
-        font-weight: bold;
-
-        &::after {
-          content: "";
-        }
-      }
-
       &:hover {
-        background-color: $loose !important;
+        background-color: $selection_hover_bg_color !important;
       }
     }
   }
