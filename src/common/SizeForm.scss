@@ -173,7 +173,7 @@
       padding: 4px 0 4px 8px;
       color: black;
       background-color: $light_bg_color;
-      border-radius: 0 0 3px 3px;
+      border-radius: 0 0 $border_radius $border_radius;
 
       a {
         pointer-events: all;
