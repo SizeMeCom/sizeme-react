@@ -157,7 +157,7 @@ SizeGuideProductInfo.propTypes = {
     chooseUnit: PropTypes.func,
     loggedIn: PropTypes.bool.isRequired,
     inchFractionsPrecision: PropTypes.number,
-    unitChoiceDisallowed: PropTypes.number
+    unitChoiceDisallowed: PropTypes.bool
 };
 
 export default withTranslation()(SizeGuideProductInfo);

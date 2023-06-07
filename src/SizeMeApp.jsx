@@ -35,7 +35,7 @@ class SizeMeApp extends React.Component {
         this.shopType = Optional.ofNullable(uiOptions.shopType).map((s) => `sizeme-${s}`).orElse("");
         this.skinClasses = uiOptions.skinClasses || "";
         this.inchFractionsPrecision = 8;
-        this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ? uiOptions.measurementUnitChoiceDisallowed : 0;
+        this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ? uiOptions.measurementUnitChoiceDisallowed : false;
     }
 
     userLoggedIn = () => {

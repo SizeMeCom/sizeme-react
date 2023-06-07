@@ -280,7 +280,7 @@ class MeasurementInput extends React.Component {
         }
         return (
             <div className={className}>
-                { unitChoiceDisallowed == 0 && (<>
+                { !unitChoiceDisallowed && (<>
                 <span className={"units yes-clickable"} data-for="unit-tooltip-1" data-tip="custom show" data-event="click focus">{unitMarks[unit]}</span>
                 <ReactTooltip id="unit-tooltip-1" className="unit-menu" globalEventOff="click"
                     place="right" type="light" effect="solid" clickable>
@@ -293,7 +293,7 @@ class MeasurementInput extends React.Component {
                     </div>
                 </ReactTooltip>
                 </>)}
-                { unitChoiceDisallowed == 1 && (<span className={"units not-clickable"}>{unitMarks[unit]}</span>)}
+                { unitChoiceDisallowed && (<span className={"units not-clickable"}>{unitMarks[unit]}</span>)}
                 <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
                    data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid" 
                 />

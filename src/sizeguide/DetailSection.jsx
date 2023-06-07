@@ -17,13 +17,13 @@ const DetailSection = ({ title, children, unitProp, loggedIn, showUnitSelector, 
             <div className="size-guide-header-title">
                 <h2 className="header-h2">
                     <span className="header-left">{title}</span>
-                    { unitChoiceDisallowed == 0 && (!loggedIn || showUnitSelector) && (<span className={"header-right unit-selector"} data-for="unit-tooltip" data-tip="custom show" data-event="click focus">
+                    { !unitChoiceDisallowed && (!loggedIn || showUnitSelector) && (<span className={"header-right unit-selector"} data-for="unit-tooltip" data-tip="custom show" data-event="click focus">
                         {i18n.t("common.select_unit")}
                     </span>) }
                 </h2>
                 <ReactTooltip id="unit-tooltip" className="unit-menu" globalEventOff="click"
                     place="left" type="light" effect="solid" clickable >
-                    {/*i18n.t("common.select_unit")*/}
+                    {}
                     <div className="unit-list">
                         {measurementUnits.map(unit =>
                             <div id="unit-item" key={unit.id} value={unit.id} className={"unit-item" + (unit.id === unitProp ? " selected" : "")} onClick={(e) => handleUnitChange(e, unit.id)}>

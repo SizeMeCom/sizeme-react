@@ -100,7 +100,7 @@ SizeGuideDetails.propTypes = {
     chooseUnit: PropTypes.func,
     showUnitSelector: PropTypes.bool,
     inchFractionsPrecision: PropTypes.number,
-    unitChoiceDisallowed: PropTypes.number
+    unitChoiceDisallowed: PropTypes.bool
 };
 
 export default withTranslation()(SizeGuideDetails);

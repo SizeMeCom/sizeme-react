@@ -96,7 +96,7 @@ SizeGuide.propTypes = {
     unit: PropTypes.number,
     chooseUnit: PropTypes.func,
     inchFractionsPrecision: PropTypes.number,
-    unitChoiceDisallowed: PropTypes.number
+    unitChoiceDisallowed: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({

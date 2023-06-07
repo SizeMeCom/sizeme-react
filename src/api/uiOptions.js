@@ -4,7 +4,7 @@ const general = {
     firstRecommendation: true,
     flatMeasurements: true,
     measurementUnit: 0,
-    measurementUnitChoiceDisallowed: 0
+    measurementUnitChoiceDisallowed: false
 };
 
 const shops = {
