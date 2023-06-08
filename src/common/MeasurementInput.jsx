@@ -22,7 +22,7 @@ const measurementUnits = [
 ];
 
 const inchFractionOptions = [
-    {id: 0, name: "-"},
+    {id: 0, name: "0/0"},
     {id: 1, name: "1/8"},
     {id: 2, name: "1/4"},
     {id: 3, name: "3/8"},
@@ -65,7 +65,7 @@ class MeasurementInput extends React.Component {
         if (isNaN(parseFloat(value))) return "";
         const precision = this.props.inchFractionsPrecision;
         return Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
-        
+
     }
 
     getInchesPartial = (value) => {
@@ -85,12 +85,12 @@ class MeasurementInput extends React.Component {
         if (value.toString().includes(",")) {
             fixedValue = value.replace(",", ".");
         }
-        else { 
+        else {
             fixedValue = value;
         }
         if (fixedValue === ".") {
             return 0;
-        } 
+        }
         else if (fixedValue.length > 0 && this.props.unit == 0) {
             return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
         }
@@ -244,7 +244,7 @@ class MeasurementInput extends React.Component {
         else {
             this.setState({ valueWholeInches: 0}, () => this.valueChanged(true));
         }
-        
+
     };
 
     handlePartialInchesChange = (event) => {
@@ -295,7 +295,7 @@ class MeasurementInput extends React.Component {
                 </>)}
                 { unitChoiceDisallowed && (<span className={"units not-clickable"}>{unitMarks[unit]}</span>)}
                 <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
-                   data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid" 
+                   data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid"
                 />
                 {this.props.unit == 0 && this.state && (
                     <input className={className + " input_cm"} type="text" value={value} onChange={this.valueChanged}
@@ -305,15 +305,17 @@ class MeasurementInput extends React.Component {
                 )}
                 {this.props.unit == 1 && this.state && (
                     <span>
-                        <input className={className + " input_in"} type="text" defaultValue={this.hideIfZero(valueWholeInches)} onChange={this.handleWholeInchesChange} 
+                        <input className={className + " input_in"} type="text" defaultValue={this.hideIfZero(valueWholeInches)} onChange={this.handleWholeInchesChange}
                         onKeyDown={this.onKeyDown2} onBlur={this.onBlur} ref={el => {this.input_in = el;}}
                         onFocus={this.onFocus} autoComplete="off" id="inputInches" />
-                        <select className={className + " input_in_partial"} defaultValue={valuePartialInches} onChange={this.handlePartialInchesChange}> 
-                            {(inchFractionOptions || []).map((fractionOption) => (
-                                <option key={fractionOption.id} value={fractionOption.id}>{fractionOption.name}</option>
-                            ))}
-                        </select>
-                    </span>   
+                        {(valueWholeInches > 0) && (
+                            <select className={className + " input_in_partial"} defaultValue={valuePartialInches} onChange={this.handlePartialInchesChange}>
+                                {(inchFractionOptions || []).map((fractionOption) => (
+                                    <option key={fractionOption.id} value={fractionOption.id}>{fractionOption.name}</option>
+                                ))}
+                            </select>
+                        )}
+                    </span>
                 )}
             </div>
         );

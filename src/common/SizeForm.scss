@@ -74,14 +74,26 @@
         font-weight: bold;
         text-align: center;
         color: #333;
-        background-color: $lightest_bg_color;
+        background-color: transparent;
+        transition: background-color 0.2s ease-in-out;
         box-sizing: border-box;
         appearance: none;
+        border-radius: $border_radius;
 
         &:hover {
           cursor: pointer;
-          background-color: $lighter_bg_color;
+          background-color: rgba(0,0,0,$hover_darken_percentage);
         }
+
+        option {
+          background-color: white;
+
+          &:checked {
+            background-color: $light_bg_color;
+          }
+
+        }
+
       }
 
       .units {
@@ -92,12 +104,13 @@
         line-height: 22px;
         text-align: center;
         margin-left: 0;
-        background-color: $lighter_bg_color;
+        background-color: transparent;
+        transition: background-color 0.2s linear;
 
         &.yes-clickable {
           cursor: pointer;
           &:hover {
-            background-color: $light_bg_color;
+            background-color: rgba(0,0,0,$hover_darken_percentage);
           }
         }
       }
