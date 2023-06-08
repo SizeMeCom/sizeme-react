@@ -95,7 +95,7 @@ class MeasurementInput extends React.Component {
             return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
         }
         else if (fixedValue.length > 0 && this.props.unit == 1 && this.state) {
-            let modelValueFromInches = parseInt(this.state.valueWholeInches) * unitFactors[this.props.unit] + parseInt(this.state.valuePartialInches) * 0.3175;
+            let modelValueFromInches = (parseInt(this.state.valueWholeInches) + (parseInt(this.state.valuePartialInches) / 8)) * unitFactors[this.props.unit];
             return Math.round(modelValueFromInches);
         }
         else {
