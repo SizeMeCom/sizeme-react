@@ -30,7 +30,7 @@ class SizeMeApp extends React.Component {
         super(props);
         this.state = {
             loginModalOpen: false,
-            unit: localStorage.getItem("sizemeMeasurementUnit") ? parseInt(localStorage.getItem("sizemeMeasurementUnit")) : uiOptions.measurementUnit
+            unit: parseInt(localStorage.getItem("sizemeMeasurementUnit")) || uiOptions.measurementUnit
         };
         this.shopType = Optional.ofNullable(uiOptions.shopType).map((s) => `sizeme-${s}`).orElse("");
         this.skinClasses = uiOptions.skinClasses || "";

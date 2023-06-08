@@ -249,11 +249,14 @@ a.link-btn.size-guide {
               text-transform: none;
               padding: 1px 6px;
               background-color: $light_bg_color;
+              transition: transform 0.5s ease-in-out;
               &:hover {
                 background-color: $lighter_bg_color;
               }
+              &:active {
+                transform: rotate3d(0,1,0,180deg);
+              }
             }
-
           }
         }
 

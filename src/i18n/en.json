@@ -14,12 +14,10 @@
     "sizemeTooltip": "This product supports SizeMe, a service that recommends the best fitting size by comparing your physical measurements to the measurements of this product.",
     "sizemeTooltipLink": "Read more",
     "sizeItself": "Size",
-    "cm_long": "centimeters",
     "cm_short": "cm",
-    "in_long": "inches",
     "in_short": "in",
-    "select_unit": "cm ↔ in",
-    "measurement_unit": "Measurement unit: "
+    "select_unit_from_cm": "cm ↔ in",
+    "select_unit_from_in": "in ↔ cm"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",

@@ -5,7 +5,6 @@ import { withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import "./SizeForm.scss";
 
-
 const unitMarks = {
     0: i18n.t("common.cm_short"),
     1: i18n.t("common.in_short")
@@ -15,11 +14,6 @@ const unitFactors = {
     0: 10.0,
     1: 25.4
 };
-
-const measurementUnits = [
-    {id: parseInt(0), name: i18n.t("common.cm_long")},
-    {id: parseInt(1), name: i18n.t("common.in_long")}
-];
 
 const inchFractionOptions = [
     {id: 0, name: "0/0"},
@@ -228,8 +222,8 @@ class MeasurementInput extends React.Component {
         }
     };
 
-    handleUnitChange = (e, unit) => {
-        this.props.chooseUnit(unit);
+    handleUnitChange = (newUnit) => {
+        this.props.chooseUnit(newUnit);
     };
 
     handleWholeInchesChange = (event) => {
@@ -280,30 +274,20 @@ class MeasurementInput extends React.Component {
         }
         return (
             <div className={className}>
-                { !unitChoiceDisallowed && (<>
-                <span className={"units yes-clickable"} data-for="unit-tooltip-1" data-tip="custom show" data-event="click focus">{unitMarks[unit]}</span>
-                <ReactTooltip id="unit-tooltip-1" className="unit-menu" globalEventOff="click"
-                    place="right" type="light" effect="solid" clickable>
-                    <div className="unit-list">
-                        {measurementUnits.map(unit =>
-                            <div id="unit-item" key={unit.id} value={unit.id} className={"unit-item" + (unit.id === this.props.unit ? " selected" : "")} onClick={(e) => this.handleUnitChange(e, unit.id)}>
-                                <span className={"unit-name" + (unit.id === this.props.unit ? " selected" : "")}>{unit.name}</span>
-                            </div>
-                        )}
-                    </div>
-                </ReactTooltip>
-                </>)}
+                { !unitChoiceDisallowed && (
+                    <span className={"units yes-clickable"} onClick={() => this.handleUnitChange(1 - unit)}>{unitMarks[unit]}</span>
+                )}
                 { unitChoiceDisallowed && (<span className={"units not-clickable"}>{unitMarks[unit]}</span>)}
                 <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
                    data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid"
                 />
-                {this.props.unit == 0 && this.state && (
+                {unit === 0 && this.state && (
                     <input className={className + " input_cm"} type="text" value={value} onChange={this.valueChanged}
                         onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input = el;}}
                         onFocus={this.onFocus} autoComplete="off" id="inputCentimeters"
                     />
                 )}
-                {this.props.unit == 1 && this.state && (
+                {unit === 1 && this.state && (
                     <span>
                         <input className={className + " input_in"} type="text" defaultValue={this.hideIfZero(valueWholeInches)} onChange={this.handleWholeInchesChange}
                         onKeyDown={this.onKeyDown2} onBlur={this.onBlur} ref={el => {this.input_in = el;}}

@@ -52,7 +52,7 @@ class SizeGuideProductInfo extends React.Component {
         this.props.chooseUnit(parseInt(event.target.value));
     };
 
-    handleUnitChange = (e, unit) => {
+    handleUnitChange = (unit) => {
         this.props.chooseUnit(parseInt(unit));
     };
 

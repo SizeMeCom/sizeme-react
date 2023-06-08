@@ -36,7 +36,7 @@ class SizeGuideDetails extends React.Component {
         ReactTooltip.rebuild();
     }
 
-    handleUnitChange = (e, unit) => {
+    handleUnitChange = (unit) => {
         this.props.chooseUnit(unit);
     };
 
