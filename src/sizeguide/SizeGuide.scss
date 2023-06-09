@@ -245,17 +245,66 @@ a.link-btn.size-guide {
             }
 
             .unit-selector {
-              cursor: pointer;
               text-transform: none;
-              padding: 1px 6px;
-              background-color: $light_bg_color;
-              transition: transform 0.5s ease-in-out;
-              &:hover {
+              position: relative;
+              right: 10px;
+              width: 76px;
+
+              .unit-selector-label {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 1px 4px;
+                font-size: 12px;
+                line-height: 12px;
+
+                &:hover {
+                  background-color: rgba(255,255,255,$hover_opacity_percentage);
+                }
+                &:last-child {
+                  left: auto;
+                  right: 0;
+                }
+
+              }
+
+              .unit-selector-slider {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 20px;
+                right: 0;
+                bottom: 0;
                 background-color: $lighter_bg_color;
+                transition: .4s;
+                display: inline-block;
+                margin: 1px 6px;
+                height: 14px;
+                width: 30px;
+                border-radius: 7px;
+
+                &:before {
+                  position: absolute;
+                  content: "";
+                  height: 8px;
+                  width: 8px;
+                  left: 3px;
+                  bottom: 3px;
+                  background-color: black;
+                  transition: .3s;
+                  border-radius: 50%;
+                }
+
+                &:hover {
+                  background-color: $light_bg_color;
+                }
+
               }
-              &:active {
-                transform: rotate3d(0,1,0,180deg);
+              &.unit-selector-selected-1 .unit-selector-slider:before {
+                transform: translateX(16px);
               }
+
             }
           }
         }

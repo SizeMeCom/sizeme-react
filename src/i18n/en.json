@@ -16,8 +16,6 @@
     "sizeItself": "Size",
     "cm_short": "cm",
     "in_short": "in",
-    "select_unit_from_cm": "cm ↔ in",
-    "select_unit_from_in": "in ↔ cm"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",

@@ -5,8 +5,8 @@ import { withTranslation } from "react-i18next";
 import "../common/SizeForm.scss";
 
 const unitTexts = {
-    0: i18n.t("common.select_unit_from_cm"),
-    1: i18n.t("common.select_unit_from_in")
+    0: i18n.t("common.cm_short"),
+    1: i18n.t("common.in_short")
 };
 
 const DetailSection = ({ title, children, unitProp, loggedIn, showUnitSelector, handleUnitChange, unitChoiceDisallowed }) => (
@@ -15,9 +15,13 @@ const DetailSection = ({ title, children, unitProp, loggedIn, showUnitSelector, 
             <div className="size-guide-header-title">
                 <h2 className="header-h2">
                     <span className="header-left">{title}</span>
-                    { !unitChoiceDisallowed && (!loggedIn || showUnitSelector) && (<span className={"header-right unit-selector"} onClick={() => handleUnitChange(1 - unitProp)}>
-                        {unitTexts[unitProp]}
-                    </span>) }
+                    { !unitChoiceDisallowed && (!loggedIn || showUnitSelector) && (
+                        <span className={"header-right unit-selector" + " unit-selector-selected-"+unitProp}>
+                            <span className="unit-selector-label" onClick={() => handleUnitChange(0)}>{unitTexts[0]}</span>
+                            <span className="unit-selector-slider" onClick={() => handleUnitChange(1 - unitProp)}></span>
+                            <span className="unit-selector-label" onClick={() => handleUnitChange(1)}>{unitTexts[1]}</span>
+                        </span>
+                    )}
                 </h2>
             </div>
         </div>

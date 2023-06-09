@@ -82,7 +82,7 @@
 
         &:hover {
           cursor: pointer;
-          background-color: rgba(0,0,0,$hover_darken_percentage);
+          background-color: rgba(0,0,0,$hover_opacity_percentage);
         }
 
         option {
@@ -110,7 +110,7 @@
         &.yes-clickable {
           cursor: pointer;
           &:hover {
-            background-color: rgba(0,0,0,$hover_darken_percentage);
+            background-color: rgba(0,0,0,$hover_opacity_percentage);
           }
         }
       }
