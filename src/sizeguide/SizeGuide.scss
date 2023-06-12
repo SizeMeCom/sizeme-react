@@ -16,7 +16,7 @@ a.link-btn.size-guide {
   color: $default_color;
   display: inline-block;
 
-  span.fa {
+  .fa-solid {
     display: inline-block;
     float: right;
     line-height: 24px;
@@ -144,7 +144,7 @@ a.link-btn.size-guide {
           color: #000;
         }
 
-        span.fa {
+        .fa-solid {
           font-size: 18px;
         }
       }

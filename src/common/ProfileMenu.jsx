@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import FontAwesome from "react-fontawesome";
 import { contextAddress } from "../api/sizeme-api";
 import "./ProfileMenu.scss";
 
@@ -16,7 +15,7 @@ const ProfileMenu = (props) => {
 
     return (
         <div className="profile-menu-container">
-            <FontAwesome name="cog" data-tip data-for="profile-menu" data-event="click"/>
+            <i className="fa-solid fa-cog" data-tip data-for="profile-menu" data-event="click"/>
             <ReactTooltip id="profile-menu" className="profile-menu" globalEventOff="click"
                           place="left" type="light" effect="solid">
                 <div className="profile-list">
@@ -25,8 +24,8 @@ const ProfileMenu = (props) => {
                             <span
                                 className={"profile-name" + (profile.id === props.selectedProfile ? " selected" : "")}>
                                 {profile.profileName}</span>
-                            <a href={profileAddress(profile.id)} target="_blank" rel="noopener noreferrer"><FontAwesome
-                                name="pencil"/></a>
+                            <a href={profileAddress(profile.id)} target="_blank" rel="noopener noreferrer"><i
+                                className="fa-solid fa-pencil"/></a>
                         </div>
                     )}
                     <div className="profile">

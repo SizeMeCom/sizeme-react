@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
 import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
 import MeasurementInput from "./MeasurementInput.jsx";
-import FontAwesome from "react-fontawesome";
 import ReactTooltip from "react-tooltip";
 import Modal from "react-modal";
 import VideoGuide from "./VideoGuide.jsx";
@@ -85,7 +84,7 @@ class SizeForm extends React.Component {
                     <span>{linkTexts.start} </span>
                     <a onClick={this.openGuideModal} onMouseDown={e => {e.preventDefault();}}>{linkTexts.link}</a>
                     <span> {linkTexts.end} </span>
-                    <FontAwesome name="play-circle" />
+                    <i className="fa-solid fa-play-circle" />
                 </div>
             </div>
         );
@@ -100,7 +99,7 @@ class SizeForm extends React.Component {
         return (
             <div>
                 <div className="measurement-instruction-box">
-                    <FontAwesome name="times" onClick={this.closeGuideModal}/>
+                    <i className="fa-solid fa-times" onClick={this.closeGuideModal}/>
                     <h2 className="instruction-title">
                         {t("measurementGuide.title")} {humanMeasurementName.toLowerCase()}
                     </h2>

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FontAwesome from "react-fontawesome";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {setSelectedProfile} from "../api/sizeme-api";
@@ -75,7 +74,7 @@ class SizeGuide extends React.Component {
         return (
             <div className="section-size-guide">
                 <a className="link-btn size-guide"
-                    onClick={this.openGuide}>{button} <FontAwesome name="caret-right"/></a>
+                    onClick={this.openGuide}>{button} <i className="fa-solid fa-caret-right"/></a>
                 {guideIsOpen && <SizeGuideModal {...modalProps}/>}
             </div>);
     }

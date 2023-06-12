@@ -1,5 +1,4 @@
 import React from "react";
-import FontAwesome from "react-fontawesome";
 import SizeGuideItem from "./SizeGuideItem";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
@@ -78,7 +77,7 @@ class SizeGuideModal extends React.Component {
                         className="item-name" dangerouslySetInnerHTML={{ __html: product.name }} />
                     </span>
                     <a className="size-guide-close" role="button" onClick={closeGuide}>
-                        <FontAwesome name="times" title={t("common.closeText")}/>
+                        <i className="fa-solid fa-times" title={t("common.closeText")}/>
                     </a>
                 </div>
 

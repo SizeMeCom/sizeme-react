@@ -7,7 +7,6 @@ import { withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import logo from "../images/sizeme_logo_plain_h22.png";
 import Modal from "react-modal";
-import FontAwesome from "react-fontawesome";
 import uiOptions from "../api/uiOptions";
 
 Modal.setAppElement(uiOptions.appendContentTo + " div");
@@ -62,7 +61,7 @@ class SignupBox extends React.Component {
 
     modalContent = () => (
         <>
-            <FontAwesome name="times" onClick={this.closePolicyModal}/>
+            <i className="fa-solid fa-times" onClick={this.closePolicyModal}/>
             <iframe src="https://sizeme.com/privacy_clean.html"/>
         </>
     );
@@ -74,7 +73,7 @@ class SignupBox extends React.Component {
         const inputClassName = "signup-email" + (isError ? " error" : "");
         return (
             <div className="signup-box-container">
-                <FontAwesome name="save" data-tip data-for="sizeme-signup-box" data-event="click"/>
+                <i className="fa-solid fa-save" data-tip data-for="sizeme-signup-box" data-event="click"/>
                 <ReactTooltip id="sizeme-signup-box" className="sizeme-signup-box" clickable={true}
                               place="bottom" type="light" effect="solid">
                     {!signupDone && (<>

@@ -25,11 +25,6 @@ const devConfig: Configuration = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer,
-  ignoreWarnings: [
-    {
-      module: /sass-loader/
-    }
-  ],
   plugins: [
     new webpack.DefinePlugin({
       VERSION: JSON.stringify('dev'),
