@@ -6,7 +6,7 @@ import Loadable from "react-loadable";
 import Loading from "./Loading";
 
 const Video = Loadable({
-    loader: () => import("react-html5video"),
+    loader: () => import(/* webpackChunkName: "html5video" */ "react-html5video"),
     loading () {
         return <Loading/>;
     },

@@ -21,7 +21,7 @@
         // postpone execution of this block to wait for the shop UI to finish rendering. At least
         // with KooKenka accordion component this was needed
         setTimeout(() => {
-            import("./sizeme-loader");
+            import(/* webpackChunkName: "loader" */ "./sizeme-loader");
         });
     }
 })(window.sizeme_options);

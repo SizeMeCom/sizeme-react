@@ -19,7 +19,7 @@ import Loadable from "react-loadable";
 import Loading from "./common/Loading";
 
 const SizeForm = Loadable({
-    loader: () => import("./common/SizeForm.jsx"),
+    loader: () => import(/* webpackChunkName: "form" */ "./common/SizeForm.jsx"),
     loading() {
         return <Loading/>;
     }

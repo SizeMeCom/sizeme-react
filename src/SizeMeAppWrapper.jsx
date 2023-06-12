@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import { bindActionCreators } from "redux";
 
 const SizeMeApp = Loadable({
-    loader: () => import("./SizeMeApp"),
+    loader: () => import(/* webpackChunkName: "app" */"./SizeMeApp"),
     loading() {
         return <Loading/>;
     }
