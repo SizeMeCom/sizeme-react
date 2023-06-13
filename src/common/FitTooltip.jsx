@@ -5,16 +5,7 @@ import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import { getResult } from "../api/ProductModel";
 
-const inchFractionOptions = {
-    0: "",
-    1: "⅛",
-    2: "¼",
-    3: "⅜",
-    4: "½",
-    5: "⅝",
-    6: "¾",
-    7: "⅞"
-};
+const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
 
 const convertToInches = (size, inchFractionsPrecision) => {
     let precision = parseInt(inchFractionsPrecision);
