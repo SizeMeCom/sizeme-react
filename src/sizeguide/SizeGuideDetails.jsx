@@ -11,87 +11,102 @@ import ReactTooltip from "react-tooltip";
 import { withTranslation } from "react-i18next";
 
 class DetailsSizeSelector extends React.Component {
+  componentDidMount() {
+    this.select = SizeSelector.getClone();
+    this.container.appendChild(this.select);
+  }
 
-    componentDidMount () {
-        this.select = SizeSelector.getClone();
-        this.container.appendChild(this.select);
-    }
+  componentDidUpdate() {
+    this.select.value = this.props.selectedSize || "";
+  }
 
-    componentDidUpdate () {
-        this.select.value = this.props.selectedSize || "";
-    }
-
-    render () {
-        return <div ref={(container) => { this.container = container; }} />;
-    }
+  render() {
+    return (
+      <div
+        ref={(container) => {
+          this.container = container;
+        }}
+      />
+    );
+  }
 }
 
 DetailsSizeSelector.propTypes = {
-    selectedSize: PropTypes.string
+  selectedSize: PropTypes.string,
 };
 
 class SizeGuideDetails extends React.Component {
+  componentDidMount() {
+    ReactTooltip.rebuild();
+  }
 
-    componentDidMount () {
-        ReactTooltip.rebuild();
-    }
+  render() {
+    const {
+      product,
+      onHover,
+      selectedSize,
+      matchResult,
+      onSelectProfile,
+      selectedProfile,
+      profiles,
+      t,
+    } = this.props;
 
-    render () {
-        const { product, onHover, selectedSize, matchResult,
-            onSelectProfile, selectedProfile, profiles, t } = this.props;
+    const item = Object.assign({}, product.item, {
+      measurements: product.item.measurements[selectedSize],
+    });
+    const match = Optional.ofNullable(selectedSize)
+      .flatMap((size) => Optional.ofNullable(matchResult).map((r) => r[size]))
+      .orElse(null);
 
-        const item = Object.assign({}, product.item, {
-            measurements: product.item.measurements[selectedSize]
-        });
-        const match = Optional.ofNullable(selectedSize)
-            .flatMap(size => Optional.ofNullable(matchResult)
-                .map(r => r[size]))
-            .orElse(null);
-
-        return (
-            <div className="size-guide-data size-guide-details">
-                <DetailSection title={t("common.shoppingFor")}>
-                    <ProfileSelect onSelectProfile={onSelectProfile}
-                                   selectedProfile={selectedProfile}
-                                   profiles={profiles}
+    return (
+      <div className="size-guide-data size-guide-details">
+        <DetailSection title={t("common.shoppingFor")}>
+          <ProfileSelect
+            onSelectProfile={onSelectProfile}
+            selectedProfile={selectedProfile}
+            profiles={profiles}
+          />
+        </DetailSection>
+        <DetailSection title={t("common.selectedSize")}>
+          <DetailsSizeSelector selectedSize={selectedSize} />
+        </DetailSection>
+        <DetailSection title={t("fitInfo.overallFit")}>
+          <SizingBar />
+        </DetailSection>
+        <DetailSection title={t("detailed.tableTitle")}>
+          <div className="fit-table">
+            {product.model.measurementOrder.map((measurement, i) => (
+              <HoverContainer measurement={measurement} onHover={onHover} key={i}>
+                <div className="fit-wrapper" data-tip data-for="fit-tooltip">
+                  {selectedSize && (
+                    <DetailedFit
+                      measurement={measurement}
+                      num={i + 1}
+                      item={item}
+                      measurementName={product.model.measurementName}
+                      match={match}
                     />
-                </DetailSection>
-                <DetailSection title={t("common.selectedSize")}>
-                    <DetailsSizeSelector selectedSize={selectedSize}/>
-                </DetailSection>
-                <DetailSection title={t("fitInfo.overallFit")}>
-                    <SizingBar/>
-                </DetailSection>
-                <DetailSection title={t("detailed.tableTitle")}>
-                    <div className="fit-table">
-                        {product.model.measurementOrder.map((measurement, i) => (
-                            <HoverContainer measurement={measurement} onHover={onHover} key={i}>
-                                <div className="fit-wrapper" data-tip data-for="fit-tooltip">
-                                    {selectedSize && (
-                                        <DetailedFit measurement={measurement} num={i + 1}
-                                                 item={item} measurementName={product.model.measurementName}
-                                                 match={match}
-                                        />
-                                    )}
-                                </div>
-                            </HoverContainer>
-                        ))}
-                    </div>
-                </DetailSection>
-            </div>
-        );
-    }
+                  )}
+                </div>
+              </HoverContainer>
+            ))}
+          </div>
+        </DetailSection>
+      </div>
+    );
+  }
 }
 
 SizeGuideDetails.propTypes = {
-    onSelectProfile: PropTypes.func.isRequired,
-    selectedProfile: PropTypes.string.isRequired,
-    profiles: PropTypes.arrayOf(PropTypes.object),
-    selectedSize: PropTypes.string,
-    onHover: PropTypes.func.isRequired,
-    matchResult: PropTypes.object,
-    product: PropTypes.object.isRequired,
-    t: PropTypes.func
+  onSelectProfile: PropTypes.func.isRequired,
+  selectedProfile: PropTypes.string.isRequired,
+  profiles: PropTypes.arrayOf(PropTypes.object),
+  selectedSize: PropTypes.string,
+  onHover: PropTypes.func.isRequired,
+  matchResult: PropTypes.object,
+  product: PropTypes.object.isRequired,
+  t: PropTypes.func,
 };
 
 export default withTranslation()(SizeGuideDetails);

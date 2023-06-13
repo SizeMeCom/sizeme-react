@@ -9,51 +9,51 @@ import ar from "./i18n/ar.json";
 import de from "./i18n/de.json";
 
 i18n.init({
-    lng: uiOptions.lang || document.documentElement.lang || "en",
-    fallbackLng: "en",
-    debug: false,
-    interpolation: {
-        format: (value, format) => {
-            switch (format) {
-                case "lowercase":
-                    return value.toLowerCase();
+  lng: uiOptions.lang || document.documentElement.lang || "en",
+  fallbackLng: "en",
+  debug: false,
+  interpolation: {
+    format: (value, format) => {
+      switch (format) {
+        case "lowercase":
+          return value.toLowerCase();
 
-                case "capitalize":
-                    return value.replace(/^(.)/, "\\u$1");
+        case "capitalize":
+          return value.replace(/^(.)/, "\\u$1");
 
-                default:
-                    return value;
-            }
-        }
+        default:
+          return value;
+      }
     },
-    resources: {
-        en: {
-            translation: en
-        },
-        fi: {
-            translation: fi
-        },
-        sv: {
-            translation: sv
-        },
-        ar: {
-            translation: ar
-        },
-        de: {
-            translation: de
-        }
-    }
+  },
+  resources: {
+    en: {
+      translation: en,
+    },
+    fi: {
+      translation: fi,
+    },
+    sv: {
+      translation: sv,
+    },
+    ar: {
+      translation: ar,
+    },
+    de: {
+      translation: de,
+    },
+  },
 });
 
 const additionalTranslations = window.sizeme_options ? sizeme_options.additionalTranslations : null;
 
 if (additionalTranslations) {
-    const addtr = additionalTranslations;
-    ["en", "fi", "sv", "ar", "de"].forEach(lng => {
-        if (addtr[lng]) {
-            i18n.addResourceBundle(lng, "translation", addtr[lng], true, true);
-        }
-    });
+  const addtr = additionalTranslations;
+  ["en", "fi", "sv", "ar", "de"].forEach((lng) => {
+    if (addtr[lng]) {
+      i18n.addResourceBundle(lng, "translation", addtr[lng], true, true);
+    }
+  });
 }
 
 export default i18n;

@@ -127,10 +127,7 @@
       "link": "tästä",
       "end": ""
     },
-    "chest": [
-      "Mittaa rintakehän ympärysmitta leveimmästä kohdasta",
-      "Hengitä ulos mitattaessa"
-    ],
+    "chest": ["Mittaa rintakehän ympärysmitta leveimmästä kohdasta", "Hengitä ulos mitattaessa"],
     "front_height": [
       "Mittaa kohdasta, jossa kaula kohtaa hartian suoraan alas housujen yläreunaan"
     ],
@@ -142,28 +139,15 @@
       "Mittaa ympärysmitta housujen yläreunan kohdalta",
       "Vedä vatsaa vähän sisään kuten sovittaisit tiukkoja housuja"
     ],
-    "waist": [
-      "Mittaa ympärysmitta vyötärön kapeimmasta kohdasta"
-    ],
-    "hips": [
-      "Mittaa lantion ympärysmitta leveimmästä kohdasta"
-    ],
-    "outseam": [
-      "Mittaa ulkosauman pituus housujen yläreunasta alas nilkkaan asti"
-    ],
+    "waist": ["Mittaa ympärysmitta vyötärön kapeimmasta kohdasta"],
+    "hips": ["Mittaa lantion ympärysmitta leveimmästä kohdasta"],
+    "outseam": ["Mittaa ulkosauman pituus housujen yläreunasta alas nilkkaan asti"],
     "shoe_inside_length": [
       "Aseta mittanauha lattialle seinän viereen ja astu nauhan päälle paljain jaloin kantapää seinässä kiinni"
     ],
-    "calf_width": [
-      "Mittaa pohkeiden ympärysmitta leveimmästä kohdasta"
-    ],
-    "hat_width": [
-      "Mittaa pään ympärysmitta korvien yläpuolelta"
-    ],
-    "neck_opening_width": [
-      "Mittaa kaulan ympäriltä mahdollisimman alhaalta",
-      "Pidä mitta tiukkana"
-    ]
+    "calf_width": ["Mittaa pohkeiden ympärysmitta leveimmästä kohdasta"],
+    "hat_width": ["Mittaa pään ympärysmitta korvien yläpuolelta"],
+    "neck_opening_width": ["Mittaa kaulan ympäriltä mahdollisimman alhaalta", "Pidä mitta tiukkana"]
   },
   "message": {
     "addProfiles": "Lisää mittaprofiili kokosuositusta varten.",
