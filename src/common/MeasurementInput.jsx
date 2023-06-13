@@ -15,16 +15,7 @@ const unitFactors = {
     1: 25.4
 };
 
-const inchFractionOptions = [
-    {id: 0, name: "0/0"},
-    {id: 1, name: "1/8"},
-    {id: 2, name: "1/4"},
-    {id: 3, name: "3/8"},
-    {id: 4, name: "1/2"},
-    {id: 5, name: "5/8"},
-    {id: 6, name: "3/4"},
-    {id: 7, name: "7/8"},
-];
+const inchFractionOptions = ["0/0", "1/8", "1/4", "3/8", "1/2", "5/8", "3/4", "7/8"];
 
 class MeasurementInput extends React.Component {
     constructor (props) {
@@ -65,8 +56,8 @@ class MeasurementInput extends React.Component {
     getInchesPartial = (value) => {
         if (isNaN(parseFloat(value))) return 0;
         const precision = this.props.inchFractionsPrecision;
-        let inchesWhole = Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
-        let inchesPartial = Math.round(parseFloat(value)/25.4*precision)-(inchesWhole*precision);
+        const inchesWhole = Math.floor(Math.round(parseFloat(value)/25.4*precision)/precision);
+        const inchesPartial = Math.round(parseFloat(value)/25.4*precision)-(inchesWhole*precision);
         return inchesPartial;
     }
 
@@ -294,8 +285,8 @@ class MeasurementInput extends React.Component {
                         onFocus={this.onFocus} autoComplete="off" id="inputInches" />
                         {(valueWholeInches > 0) && (
                             <select className={className + " input_in_partial"} defaultValue={valuePartialInches} onChange={this.handlePartialInchesChange}>
-                                {(inchFractionOptions || []).map((fractionOption) => (
-                                    <option key={fractionOption.id} value={fractionOption.id}>{fractionOption.name}</option>
+                                {(inchFractionOptions || []).map((fractionOptionName, fractionOptionKey) => (
+                                    <option key={fractionOptionKey} value={fractionOptionKey}>{fractionOptionName}</option>
                                 ))}
                             </select>
                         )}

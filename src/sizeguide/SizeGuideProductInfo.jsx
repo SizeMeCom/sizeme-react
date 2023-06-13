@@ -8,27 +8,7 @@ import { openLoginFrame } from "../common/LoginFrame";
 import DetailSection from "./DetailSection.jsx";
 import HoverContainer from "./HoverContainer.jsx";
 
-/*const inchFractionOptions = {
-    0: "",
-    1: "1/8",
-    2: "1/4",
-    3: "3/8",
-    4: "1/2",
-    5: "5/8",
-    6: "3/4",
-    7: "7/8",
-};*/
-
-const inchFractionOptions = {
-    0: "",
-    1: "⅛",
-    2: "¼",
-    3: "⅜",
-    4: "½",
-    5: "⅝",
-    6: "¾",
-    7: "⅞"
-};
+const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
 
 class SizeGuideProductInfo extends React.Component {
 
@@ -43,9 +23,9 @@ class SizeGuideProductInfo extends React.Component {
 
     convertToInches = (size) => {
         const precision = this.props.inchFractionsPrecision;
-        let inchesWhole = Math.floor(Math.round(size/2.54*precision)/precision);
-        let inchesPartial = Math.round(size/2.54*precision)-(inchesWhole*precision);
-        return inchesWhole > 0 ? inchesWhole + " " + inchFractionOptions[inchesPartial] : inchFractionOptions[inchesPartial];
+        const inchesWhole = Math.floor(Math.round(size/2.54*precision)/precision);
+        const inchesPartial = Math.round(size/2.54*precision)-(inchesWhole*precision);
+        return inchesWhole > 0 ? `${inchesWhole} ${inchFractionOptions[inchesPartial]}` : inchFractionOptions[inchesPartial];
     };
 
     changeMeasurementUnit = (event) => {
@@ -66,8 +46,8 @@ class SizeGuideProductInfo extends React.Component {
             </HoverContainer>
         );
         const measurementCellInches = (size, measurement) => {
-            let originalSizeToShow = measurements[size][measurement] / ((!pinchedFits.includes(measurement) || uiOptions.flatMeasurements) ? 10.0 : 5.0);
-            let sizeInInches = this.convertToInches(originalSizeToShow);
+            const originalSizeToShow = measurements[size][measurement] / ((!pinchedFits.includes(measurement) || uiOptions.flatMeasurements) ? 10.0 : 5.0);
+            const sizeInInches = this.convertToInches(originalSizeToShow);
             return (<HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
                 <td>{sizeInInches} {t("common.in_short")}</td>
             </HoverContainer>);

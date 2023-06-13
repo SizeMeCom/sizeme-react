@@ -35,7 +35,7 @@ class SizeMeApp extends React.Component {
         this.shopType = Optional.ofNullable(uiOptions.shopType).map((s) => `sizeme-${s}`).orElse("");
         this.skinClasses = uiOptions.skinClasses || "";
         this.inchFractionsPrecision = 8;
-        this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false
+        this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false;
     }
 
     userLoggedIn = () => {
@@ -64,7 +64,7 @@ class SizeMeApp extends React.Component {
             measurementInputs, matchState, productInfo, onSignup, signupStatus, t
         } = this.props;
         const { match, state } = matchState;
-        let itemTypeClass = "sizeme-item-"+productInfo.product.item.itemType.replace(/\./g,"_");
+        const itemTypeClass = "sizeme-item-"+productInfo.product.item.itemType.replace(/\./g,"_");
 
         return (
             <div className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state} ${itemTypeClass}`}>

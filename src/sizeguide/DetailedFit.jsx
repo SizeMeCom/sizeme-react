@@ -4,27 +4,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import { getResult } from "../api/ProductModel";
 
-/*const inchFractionOptions = {
-    0: "",
-    1: "1/8",
-    2: "1/4",
-    3: "3/8",
-    4: "1/2",
-    5: "5/8",
-    6: "3/4",
-    7: "7/8",
-};*/
-
-const inchFractionOptions = {
-    0: "",
-    1: "⅛",
-    2: "¼",
-    3: "⅜",
-    4: "½",
-    5: "⅝",
-    6: "¾",
-    7: "⅞"
-};
+const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
 
 class DetailedFit extends React.Component {
     constructor (props) {
@@ -70,8 +50,8 @@ class DetailedFit extends React.Component {
         textHolder = textHolder.replace(" cm", "");
         textHolder = parseFloat(textHolder);
         
-        let inchesWhole = Math.floor(Math.round(parseFloat(textHolder)/2.54*precision)/precision);
-        let inchesPartial = Math.round((textHolder)/2.54*precision)-(inchesWhole*precision);
+        const inchesWhole = Math.floor(Math.round(parseFloat(textHolder)/2.54*precision)/precision);
+        const inchesPartial = Math.round((textHolder)/2.54*precision)-(inchesWhole*precision);
 
         if (inchesWhole == 0 && inchesPartial == 0) {
             return "0 " + t("common.in_short");
