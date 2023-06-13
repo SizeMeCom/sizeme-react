@@ -3,7 +3,7 @@ const general = {
     toggler: false,
     firstRecommendation: true,
     flatMeasurements: true,
-    measurementUnit: 0,
+    measurementUnit: "cm",
     measurementUnitChoiceDisallowed: false
 };
 

@@ -29,11 +29,11 @@ class SizeGuideProductInfo extends React.Component {
     };
 
     changeMeasurementUnit = (event) => {
-        this.props.chooseUnit(parseInt(event.target.value));
+        this.props.chooseUnit(event.target.value);
     };
 
     handleUnitChange = (unit) => {
-        this.props.chooseUnit(parseInt(unit));
+        this.props.chooseUnit(unit);
     };
 
     render () {
@@ -70,7 +70,7 @@ class SizeGuideProductInfo extends React.Component {
                                 ))}
                             </tr>
                         </thead>
-                        {this.props.unit == 0 && (<tbody>
+                        {this.props.unit === "cm" && (<tbody>
                             {SizeSelector.getSizeMapper()
                             .filter(([size]) => !!measurements[size])
                             .map(([size, sizeName]) => (
@@ -80,7 +80,7 @@ class SizeGuideProductInfo extends React.Component {
                                 </tr>
                             ))}
                         </tbody>)}
-                        {this.props.unit == 1 && (<tbody>
+                        {this.props.unit === "in" && (<tbody>
                             {SizeSelector.getSizeMapper()
                             .filter(([size]) => !!measurements[size])
                             .map(([size, sizeName]) => (
@@ -133,7 +133,7 @@ SizeGuideProductInfo.propTypes = {
     productModel: PropTypes.object.isRequired,
     onHover: PropTypes.func.isRequired,
     t: PropTypes.func,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     chooseUnit: PropTypes.func,
     loggedIn: PropTypes.bool.isRequired,
     inchFractionsPrecision: PropTypes.number,

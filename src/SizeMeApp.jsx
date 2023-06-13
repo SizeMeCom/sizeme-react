@@ -28,9 +28,11 @@ const SizeForm = Loadable({
 class SizeMeApp extends React.Component {
     constructor (props) {
         super(props);
+        let selectedUnit = localStorage.getItem("sizemeMeasurementUnit");
+        selectedUnit = ["cm", "in"].includes(selectedUnit) ? selectedUnit : uiOptions.measurementUnit;
         this.state = {
             loginModalOpen: false,
-            unit: parseInt(localStorage.getItem("sizemeMeasurementUnit")) || uiOptions.measurementUnit
+            unit: selectedUnit
         };
         this.shopType = Optional.ofNullable(uiOptions.shopType).map((s) => `sizeme-${s}`).orElse("");
         this.skinClasses = uiOptions.skinClasses || "";
@@ -54,8 +56,8 @@ class SizeMeApp extends React.Component {
     }
 
     chooseUnit = (chosenUnit) => {
-        localStorage.setItem("sizemeMeasurementUnit", parseInt(chosenUnit));
-        this.setState({ unit: parseInt(chosenUnit)});
+        localStorage.setItem("sizemeMeasurementUnit", chosenUnit);
+        this.setState({ unit: chosenUnit });
     }
 
     render () {
@@ -109,7 +111,7 @@ SizeMeApp.propTypes = {
     onSignup: PropTypes.func.isRequired,
     t: PropTypes.func,
     chooseUnit: PropTypes.func,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     inchFractionsPrecision: PropTypes.number
 };
 

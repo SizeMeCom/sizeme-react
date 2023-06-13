@@ -96,7 +96,7 @@ SizeGuideDetails.propTypes = {
     matchResult: PropTypes.object,
     product: PropTypes.object.isRequired,
     t: PropTypes.func,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     chooseUnit: PropTypes.func,
     showUnitSelector: PropTypes.bool,
     inchFractionsPrecision: PropTypes.number,

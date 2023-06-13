@@ -71,8 +71,8 @@ class DetailedFit extends React.Component {
                     <span className="num">{num}</span>{measurementName(measurement)}
                 </div>
 
-                { unit == 0 && (<div className="overlap">{fitText}</div>) }
-                { unit == 1 && (<div className="overlap">{this.convertToInches(fitText)}</div>)}
+                { unit === "cm" && (<div className="overlap">{fitText}</div>) }
+                { unit === "in" && (<div className="overlap">{this.convertToInches(fitText)}</div>)}
 
                 {fit ? (
                     <div className={`fit-label ${fit.label}`}>
@@ -92,7 +92,7 @@ DetailedFit.propTypes = {
     item: PropTypes.object.isRequired,
     t: PropTypes.func,
     measurementName: PropTypes.func.isRequired,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     inchFractionsPrecision: PropTypes.number
 };
 

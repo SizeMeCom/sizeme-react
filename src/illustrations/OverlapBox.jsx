@@ -105,10 +105,10 @@ class OverlapBox extends React.Component {
                 <div className="overlap-svg">
                     {illustration(humanProperty, overlap, model)}
                 </div>
-                {this.props.unit == 0 && (<div className="overlap-text">
+                {this.props.unit === "cm" && (<div className="overlap-text">
                     <div>{overlap > 0 && "+"}{overlap.toFixed(1)} {t("common.cm_short")}</div>
                 </div>)}
-                {this.props.unit == 1 && (<div className="overlap-text">
+                {this.props.unit === "in" && (<div className="overlap-text">
                     <div>{overlap > 0 && "+"}{overlapInches} {t("common.in_short")}</div>
                 </div>)}
                 <div className="overlap-verdict">
@@ -125,7 +125,7 @@ OverlapBox.propTypes = {
     hover: PropTypes.func.isRequired,
     model: PropTypes.object.isRequired,
     t: PropTypes.func,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     inchFractionsPrecision: PropTypes.number
 };
 

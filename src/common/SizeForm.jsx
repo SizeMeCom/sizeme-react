@@ -177,10 +177,10 @@ SizeForm.propTypes = {
     product: PropTypes.object,
     selectedSize: PropTypes.string,
     t: PropTypes.func,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     chooseUnit: PropTypes.func,
     inchFractionsPrecision: PropTypes.number,
-    unitChoiceDisallowed: PropTypes.number
+    unitChoiceDisallowed: PropTypes.bool
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

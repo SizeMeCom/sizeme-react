@@ -6,13 +6,13 @@ import ReactTooltip from "react-tooltip";
 import "./SizeForm.scss";
 
 const unitMarks = {
-    0: i18n.t("common.cm_short"),
-    1: i18n.t("common.in_short")
+    "cm": i18n.t("common.cm_short"),
+    "in": i18n.t("common.in_short")
 };
 
 const unitFactors = {
-    0: 10.0,
-    1: 25.4
+    "cm": 10.0,
+    "in": 25.4
 };
 
 const inchFractionOptions = ["0/0", "1/8", "1/4", "3/8", "1/2", "5/8", "3/4", "7/8"];
@@ -76,10 +76,10 @@ class MeasurementInput extends React.Component {
         if (fixedValue === ".") {
             return 0;
         }
-        else if (fixedValue.length > 0 && this.props.unit == 0) {
+        else if (fixedValue.length > 0 && this.props.unit === "cm") {
             return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
         }
-        else if (fixedValue.length > 0 && this.props.unit == 1 && this.state) {
+        else if (fixedValue.length > 0 && this.props.unit === "in" && this.state) {
             let modelValueFromInches = (parseInt(this.state.valueWholeInches) + (parseInt(this.state.valuePartialInches) / 8)) * unitFactors[this.props.unit];
             return Math.round(modelValueFromInches);
         }
@@ -104,7 +104,7 @@ class MeasurementInput extends React.Component {
 
         let newValue = "";
 
-        if (this.props.unit == 0) {
+        if (this.props.unit === "cm") {
             newValue = this.input.value;
             if (newValue === this.state.value && !blur) {
                 return;
@@ -122,7 +122,7 @@ class MeasurementInput extends React.Component {
             this.setState({ valueWholeInches: this.getInchesWhole(newValueAsNumber) });
             this.setState({ valuePartialInches: this.getInchesPartial(newValueAsNumber) });
         }
-        else if (this.props.unit == 1) {
+        else if (this.props.unit === "in") {
             const wholeInches = this.state.valueWholeInches;
             const partialInches = this.state.valuePartialInches;
             newValue = wholeInches * 2.54 + partialInches * 0.3175;
@@ -148,10 +148,10 @@ class MeasurementInput extends React.Component {
         }
 
         this.setState(newState, () => {
-            if (blur && this.props.unit == 0) {
+            if (blur && this.props.unit === "cm") {
                 this.dispatchChange(true);
             }
-            else if (blur && this.props.unit == 1){
+            else if (blur && this.props.unit === "in"){
                 this.timeout = setTimeout(this.dispatchChange, 700);
             } else {
                 this.timeout = setTimeout(this.dispatchChange, 1000);
@@ -177,7 +177,7 @@ class MeasurementInput extends React.Component {
 
     onBlur = () => {
         ReactTooltip.hide(this.tooltip);
-        if (this.props.unit == 0) {
+        if (this.props.unit === "cm") {
             this.valueChanged(true);
         }
     };
@@ -266,19 +266,19 @@ class MeasurementInput extends React.Component {
         return (
             <div className={className}>
                 { !unitChoiceDisallowed && (
-                    <span className={"units yes-clickable"} onClick={() => this.handleUnitChange(1 - unit)}>{unitMarks[unit]}</span>
+                    <span className={"units yes-clickable"} onClick={() => this.handleUnitChange(unit === "cm" ? "in" : "cm")}>{unitMarks[unit]}</span>
                 )}
                 { unitChoiceDisallowed && (<span className={"units not-clickable"}>{unitMarks[unit]}</span>)}
                 <span className="tooltip-trigger" data-for="input-tooltip" data-tip ref={el => {this.tooltip = el;}}
                    data-place="bottom" data-type="light" data-class="measurement-tooltip" data-effect="solid"
                 />
-                {unit === 0 && this.state && (
+                {unit === "cm" && this.state && (
                     <input className={className + " input_cm"} type="text" value={value} onChange={this.valueChanged}
                         onKeyDown={this.onKeyDown} onBlur={this.onBlur} ref={el => {this.input = el;}}
                         onFocus={this.onFocus} autoComplete="off" id="inputCentimeters"
                     />
                 )}
-                {unit === 1 && this.state && (
+                {unit === "in" && this.state && (
                     <span>
                         <input className={className + " input_in"} type="text" defaultValue={this.hideIfZero(valueWholeInches)} onChange={this.handleWholeInchesChange}
                         onKeyDown={this.onKeyDown2} onBlur={this.onBlur} ref={el => {this.input_in = el;}}
@@ -301,16 +301,16 @@ MeasurementInput.propTypes = {
     value: PropTypes.number,
     onChange: PropTypes.func.isRequired,
     onFocus: PropTypes.func.isRequired,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     fitRange: PropTypes.string,
     t: PropTypes.func.isRequired,
     chooseUnit: PropTypes.func,
     inchFractionsPrecision: PropTypes.number,
-    unitChoiceDisallowed: PropTypes.number
+    unitChoiceDisallowed: PropTypes.bool
 };
 
 MeasurementInput.defaultProps = {
-    unit: 0
+    unit: "cm"
 };
 
 export default withTranslation()(MeasurementInput);

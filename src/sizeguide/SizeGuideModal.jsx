@@ -26,10 +26,10 @@ class SizeGuideModal extends React.Component {
         onSelectProfile: PropTypes.func.isRequired,
         profiles: PropTypes.arrayOf(PropTypes.object),
         onHover: PropTypes.func.isRequired,
-        unit: PropTypes.number,
+        unit: PropTypes.string,
         chooseUnit: PropTypes.func,
         inchFractionsPrecision: PropTypes.number,
-        unitChoiceDisallowed: PropTypes.number
+        unitChoiceDisallowed: PropTypes.bool
     };
 
     constructor(props) {

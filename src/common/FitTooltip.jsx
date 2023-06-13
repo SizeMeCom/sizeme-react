@@ -117,8 +117,8 @@ class FitTooltip extends React.Component {
                 <ReactTooltip id="fit-tooltip" type="light"
                               place="right" className={`fit-tooltip ${measurement}`}>
                     {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
-                    {unit == 0 && (overlap(fitData, t))}
-                    {unit == 1 && (overlapInches(fitData, t, inchFractionsPrecision))}
+                    {unit === "cm" && (overlap(fitData, t))}
+                    {unit === "in" && (overlapInches(fitData, t, inchFractionsPrecision))}
                     {noOverlap(fitData, t)}
                     {noMatchItem(fitData, t)}
                 </ReactTooltip>
@@ -133,7 +133,7 @@ FitTooltip.propTypes = {
     selectedSize: PropTypes.string,
     matchResult: PropTypes.object,
     t: PropTypes.func.isRequired,
-    unit: PropTypes.number,
+    unit: PropTypes.string,
     inchFractionsPrecision: PropTypes.number
 };
 
