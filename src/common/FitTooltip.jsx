@@ -11,8 +11,8 @@ const convertToInches = (size, inchFractionsPrecision) => {
     let precision = parseInt(inchFractionsPrecision);
     let inchesWhole = Math.floor(Math.round(size/2.54*precision)/precision);
     let inchesPartial = Math.round(size/2.54*precision)-(inchesWhole*precision);
-    return inchesWhole > 0 ? inchesWhole + " " + inchFractionOptions[inchesPartial] : inchFractionOptions[inchesPartial];
-};
+    return inchesWhole > 0 ? `${inchesWhole} ${inchFractionOptions[inchesPartial]}` : inchFractionOptions[inchesPartial];
+}
 
 
 const getStretchedTxt = (stretchValue, t) => {
