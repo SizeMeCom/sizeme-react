@@ -232,13 +232,31 @@ a.link-btn.size-guide {
       margin-top: 10px;
       padding-bottom: 5px;
 
-      h2 {
-        text-transform: uppercase;
-        background-color: #ccc;
-        padding: 3px 6px;
-        margin-bottom: 15px;
-        font-size: 12px;
-      }
+      .size-guide-header-container {
+
+        .size-guide-header-title {
+
+          .header-h2 {
+            display: flex;
+            justify-content: space-between;
+
+            .header-right {
+              text-align: right;
+              cursor: pointer;
+            }
+          }
+        }  
+  
+        h2 {
+          text-transform: uppercase;
+          background-color: #ccc;
+          padding: 3px 6px;
+          margin: 0 auto 15px auto;
+          font-size: 12px;
+          justify-content: space-between;
+          justify-items: stretch;
+        }
+      }   
     }
   }
 

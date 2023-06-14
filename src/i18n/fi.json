@@ -13,7 +13,13 @@
     "togglerText": "Löydä oikea kokosi",
     "sizemeTooltip": "Tässä tuotteessa on käytössä SizeMe-palvelu, joka suosittelee sopivinta kokoa vertaamalla mittojasi tämän tuotteen mittoihin.",
     "sizemeTooltipLink": "Lue lisää",
-    "sizeItself": "Koko"
+    "sizeItself": "Koko",
+    "cm_long": "senttimetri",
+    "cm_short": "cm",
+    "in_long": "tuuma",
+    "in_short": "in",
+    "select_unit": "Valitse mittayksikkö",
+    "measurement_unit": "Mittayksikkö: "
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",
