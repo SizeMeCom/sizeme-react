@@ -7,10 +7,10 @@ A [React](https://facebook.github.io/react/)-app, build and packaged with [yarn]
 1. `yarn install`
 2. `yarn start` to build dev version once
 3. `yarn watch` to serve dev version on http://localhost:8080 and build automatically on file change
-3. `yarn build` to build prod version
+4. `yarn build` to build prod version
 
-File [_index.html_](http://localhost:8080) is a test file, containing a static copy of a product page at 
-https://www.sizemedemo.com/magento19/t-shirt-db.html.  
+File [_index.html_](http://localhost:8080) is a test file, containing a static copy of a product page at
+https://www.sizemedemo.com/magento19/t-shirt-db.html.
 
 ## SizeMe Options
 
@@ -27,19 +27,20 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   additionalTranslations: {}
 }
 ```
-* [serviceStatus] (_String_): is SizeMe enabled? Default: "on"; other values: "off", "ab".
 
-* [pluginVersion] (_String_): version of the webstore plugin. Optional.
+- [serviceStatus] (_String_): is SizeMe enabled? Default: "on"; other values: "off", "ab".
 
-* [contextAddress] (_String_): URL to the SizeMe backend service.
+- [pluginVersion] (_String_): version of the webstore plugin. Optional.
 
-* [shopType] (_String_): webstore provider (magento|printmotor|pupeshop|woocommerce|shopify)
+- [contextAddress] (_String_): URL to the SizeMe backend service.
 
-* [debugState] (_Boolean_): write debugging info to console. Default: false
+- [shopType] (_String_): webstore provider (magento|printmotor|pupeshop|woocommerce|shopify)
 
-* [uiOptions] (_Object_): Optionally override default UI options. Defaults per shopType are specified in [`uiOptions.js`](src/api/uiOptions.js)
+- [debugState] (_Boolean_): write debugging info to console. Default: false
+
+- [uiOptions] (_Object_): Optionally override default UI options. Defaults per shopType are specified in [`uiOptions.js`](src/api/uiOptions.js)
   - [lang] (_String_): language to use (fi, sv, en, en is fallback).
-  - [appendContentTo] (_String_):  DOM element where SizeMe is injected.
+  - [appendContentTo] (_String_): DOM element where SizeMe is injected.
   - [invokeElement] (_String_): DOM element that handles size changes
   - [disableSizeGuide] (_Boolean_): disable SizeGuide
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"
@@ -48,10 +49,10 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [maxRecommendationDistance] (_Integer_): maximum difference between optimal fit and total fit for SizeMe to consider the size for pre-selection. Default not set, meaning all sizes that are not too small are considered.
   - [skinClasses] (_String_): contents will be appended to the class attribute of SizeMe container element. Empty by default.
   - [toggler] (_Boolean_): enable/disable functionality that can be used to toggle the visibility of SizeMe content
-  - [flatMeasurements] (_Boolean_): show product circumference measurements (chest, waist etc) as measured on a flat surface in the size guide.  Default: true
-  
-* [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to 
-override the Swedish translation for chest:
+  - [flatMeasurements] (_Boolean_): show product circumference measurements (chest, waist etc) as measured on a flat surface in the size guide. Default: true
+- [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to
+  override the Swedish translation for chest:
+
 ```javascript
 {
   sv: {
@@ -61,4 +62,5 @@ override the Swedish translation for chest:
   }
 }
 ```
+
 Similarly override any other key in any other language (en, fi, sv).

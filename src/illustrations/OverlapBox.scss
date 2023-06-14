@@ -20,22 +20,42 @@
       min-width: 100%;
       border-radius: $border_radius 0 0 $border_radius;
       transform: scale(1);
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
 
       &:hover {
         transform: scale(1.5);
       }
 
-      &.shoe:hover { transform: scale(2.0) translate(0, 14%); }
-      &.chest:hover { transform: scale(3.0) translate(26%, 3%); }
-      &.frontHeight:hover { transform: scale(1.7) translate(25%, -15%); }
-      &.sleeve:hover { transform: scale(1.5) translate(-2%, 10%); }
-      &.shirtWaist:hover { transform: scale(2.5) translate(31%, -18%); }
-      &.pantWaist:hover { transform: scale(2.5) translate(31%, 8%); }
-      &.hips:hover { transform: scale(2.5) translate(33%, -14%); }
-      &.outseam:hover { transform: scale(1.7) translate(-16%, 0%); }
-      &.shoe:hover { transform: scale(2) translate(1%, 26%); }
-      &.shirtHips:hover { transform: scale(2.5) translate(29%, 5%); }
+      &.shoe:hover {
+        transform: scale(2) translate(0, 14%);
+      }
+      &.chest:hover {
+        transform: scale(3) translate(26%, 3%);
+      }
+      &.frontHeight:hover {
+        transform: scale(1.7) translate(25%, -15%);
+      }
+      &.sleeve:hover {
+        transform: scale(1.5) translate(-2%, 10%);
+      }
+      &.shirtWaist:hover {
+        transform: scale(2.5) translate(31%, -18%);
+      }
+      &.pantWaist:hover {
+        transform: scale(2.5) translate(31%, 8%);
+      }
+      &.hips:hover {
+        transform: scale(2.5) translate(33%, -14%);
+      }
+      &.outseam:hover {
+        transform: scale(1.7) translate(-16%, 0%);
+      }
+      &.shoe:hover {
+        transform: scale(2) translate(1%, 26%);
+      }
+      &.shirtHips:hover {
+        transform: scale(2.5) translate(29%, 5%);
+      }
 
       .mainLine {
         @include base();
@@ -50,7 +70,7 @@
       .measurementLine {
         @include base();
         @include measurementLine();
-        transition: all .5s ease-in-out;
+        transition: all 0.5s ease-in-out;
         opacity: 0;
         fill-opacity: 0;
       }
@@ -60,32 +80,86 @@
         fill-opacity: 1;
       }
 
-      &.chest .arrowsInside { marker-start: url(#triangleInsideChest); marker-end: url(#triangleInsideChest); }
-      &.chest .arrowsOutside { marker-start: url(#triangleOutsideChest); marker-end: url(#triangleOutsideChest); }
+      &.chest .arrowsInside {
+        marker-start: url(#triangleInsideChest);
+        marker-end: url(#triangleInsideChest);
+      }
+      &.chest .arrowsOutside {
+        marker-start: url(#triangleOutsideChest);
+        marker-end: url(#triangleOutsideChest);
+      }
 
-      &.frontHeight .arrowsInside { marker-start: url(#triangleInsideFrontHeight); marker-end: url(#triangleInsideFrontHeight); }
-      &.frontHeight .arrowsOutside { marker-start: url(#triangleOutsideFrontHeight); marker-end: url(#triangleOutsideFrontHeight); }
+      &.frontHeight .arrowsInside {
+        marker-start: url(#triangleInsideFrontHeight);
+        marker-end: url(#triangleInsideFrontHeight);
+      }
+      &.frontHeight .arrowsOutside {
+        marker-start: url(#triangleOutsideFrontHeight);
+        marker-end: url(#triangleOutsideFrontHeight);
+      }
 
-      &.sleeve .arrowsInside { marker-start: url(#triangleInsideSleeve); marker-end: url(#triangleInsideSleeve); }
-      &.sleeve .arrowsOutside { marker-start: url(#triangleOutsideSleeve); marker-end: url(#triangleOutsideSleeve); }
+      &.sleeve .arrowsInside {
+        marker-start: url(#triangleInsideSleeve);
+        marker-end: url(#triangleInsideSleeve);
+      }
+      &.sleeve .arrowsOutside {
+        marker-start: url(#triangleOutsideSleeve);
+        marker-end: url(#triangleOutsideSleeve);
+      }
 
-      &.shirtWaist .arrowsInside { marker-start: url(#triangleInsideShirtWaist); marker-end: url(#triangleInsideShirtWaist); }
-      &.shirtWaist .arrowsOutside { marker-start: url(#triangleOutsideShirtWaist); marker-end: url(#triangleOutsideShirtWaist); }
+      &.shirtWaist .arrowsInside {
+        marker-start: url(#triangleInsideShirtWaist);
+        marker-end: url(#triangleInsideShirtWaist);
+      }
+      &.shirtWaist .arrowsOutside {
+        marker-start: url(#triangleOutsideShirtWaist);
+        marker-end: url(#triangleOutsideShirtWaist);
+      }
 
-      &.pantWaist .arrowsInside { marker-start: url(#triangleInsidePantWaist); marker-end: url(#triangleInsidePantWaist); }
-      &.pantWaist .arrowsOutside { marker-start: url(#triangleOutsidePantWaist); marker-end: url(#triangleOutsidePantWaist); }
+      &.pantWaist .arrowsInside {
+        marker-start: url(#triangleInsidePantWaist);
+        marker-end: url(#triangleInsidePantWaist);
+      }
+      &.pantWaist .arrowsOutside {
+        marker-start: url(#triangleOutsidePantWaist);
+        marker-end: url(#triangleOutsidePantWaist);
+      }
 
-      &.hips .arrowsInside { marker-start: url(#triangleInsideHips); marker-end: url(#triangleInsideHips); }
-      &.hips .arrowsOutside { marker-start: url(#triangleOutsideHips); marker-end: url(#triangleOutsideHips); }
+      &.hips .arrowsInside {
+        marker-start: url(#triangleInsideHips);
+        marker-end: url(#triangleInsideHips);
+      }
+      &.hips .arrowsOutside {
+        marker-start: url(#triangleOutsideHips);
+        marker-end: url(#triangleOutsideHips);
+      }
 
-      &.outseam .arrowsInside { marker-start: url(#triangleInsideOutseam); marker-end: url(#triangleInsideOutseam); }
-      &.outseam .arrowsOutside { marker-start: url(#triangleOutsideOutseam); marker-end: url(#triangleOutsideOutseam); }
+      &.outseam .arrowsInside {
+        marker-start: url(#triangleInsideOutseam);
+        marker-end: url(#triangleInsideOutseam);
+      }
+      &.outseam .arrowsOutside {
+        marker-start: url(#triangleOutsideOutseam);
+        marker-end: url(#triangleOutsideOutseam);
+      }
 
-      &.shoe .arrowsInside { marker-start: url(#triangleInsideShoe); marker-end: url(#triangleInsideShoe); }
-      &.shoe .arrowsOutside { marker-start: url(#triangleOutsideShoe); marker-end: url(#triangleOutsideShoe); }
+      &.shoe .arrowsInside {
+        marker-start: url(#triangleInsideShoe);
+        marker-end: url(#triangleInsideShoe);
+      }
+      &.shoe .arrowsOutside {
+        marker-start: url(#triangleOutsideShoe);
+        marker-end: url(#triangleOutsideShoe);
+      }
 
-      &.shirtHips .arrowsInside { marker-start: url(#triangleInsideShirtHips); marker-end: url(#triangleInsideShirtHips); }
-      &.shirtHips .arrowsOutside { marker-start: url(#triangleOutsideShirtHips); marker-end: url(#triangleOutsideShirtHips); }
+      &.shirtHips .arrowsInside {
+        marker-start: url(#triangleInsideShirtHips);
+        marker-end: url(#triangleInsideShirtHips);
+      }
+      &.shirtHips .arrowsOutside {
+        marker-start: url(#triangleOutsideShirtHips);
+        marker-end: url(#triangleOutsideShirtHips);
+      }
 
       .baseFill {
         @include baseFill();
@@ -109,7 +183,8 @@
     }
   }
 
-  .overlap-text, .overlap-verdict {
+  .overlap-text,
+  .overlap-verdict {
     background-color: $default_color;
     color: $bg_color;
     width: 50%;
@@ -130,21 +205,36 @@
 }
 
 .measurement-input.too_small + .overlap-box {
-  .overlap-svg svg .measurementLine { fill: $too_small; stroke: $too_small; }
+  .overlap-svg svg .measurementLine {
+    fill: $too_small;
+    stroke: $too_small;
+  }
 }
 
 .measurement-input.slim + .overlap-box {
-  .overlap-svg svg .measurementLine { fill: $slim; stroke: $slim; }
+  .overlap-svg svg .measurementLine {
+    fill: $slim;
+    stroke: $slim;
+  }
 }
 
 .measurement-input.regular + .overlap-box {
-  .overlap-svg svg .measurementLine { fill: $regular; stroke: $regular; }
+  .overlap-svg svg .measurementLine {
+    fill: $regular;
+    stroke: $regular;
+  }
 }
 
 .measurement-input.loose + .overlap-box {
-  .overlap-svg svg .measurementLine { fill: $loose; stroke: $loose; }
+  .overlap-svg svg .measurementLine {
+    fill: $loose;
+    stroke: $loose;
+  }
 }
 
 .measurement-input.too_big + .overlap-box {
-  .overlap-svg svg .measurementLine { fill: $too_big; stroke: $too_big; }
+  .overlap-svg svg .measurementLine {
+    fill: $too_big;
+    stroke: $too_big;
+  }
 }

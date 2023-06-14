@@ -9,51 +9,46 @@ const listeners = [];
 const cookies = new Cookies();
 
 export const hideSizeMe = () => {
-    cookies.set(cookieName, "true", { path: "/", maxAge: maxAge });
-    for (const wrapper of listeners) {
-        wrapper.hide();
-    }
+  cookies.set(cookieName, "true", { path: "/", maxAge: maxAge });
+  for (const wrapper of listeners) {
+    wrapper.hide();
+  }
 };
 
-export const isSizeMeHidden = () => !!(cookies.get(cookieName));
+export const isSizeMeHidden = () => !!cookies.get(cookieName);
 
 class CookieHideWrapper extends React.Component {
-    constructor (props) {
-        super(props);
-        let noThanks = isSizeMeHidden();
-        this.state = {
-            hidden: noThanks
-        };
-        listeners.push(this);
-    }
-
-    componentWillUnmount () {
-        const idx = listeners.indexOf(this);
-        if (idx >= 0) {
-            listeners.splice(idx, 1);
-        }
-    }
-
-    hide = () => {
-        this.setState({ hidden: true });
+  constructor(props) {
+    super(props);
+    const noThanks = isSizeMeHidden();
+    this.state = {
+      hidden: noThanks,
     };
+    listeners.push(this);
+  }
 
-    render () {
-        if (this.state.hidden) {
-            return null;
-        } else {
-            return (
-                <div>
-                    {this.props.children}
-                </div>
-            );
-        }
+  componentWillUnmount() {
+    const idx = listeners.indexOf(this);
+    if (idx >= 0) {
+      listeners.splice(idx, 1);
     }
+  }
+
+  hide = () => {
+    this.setState({ hidden: true });
+  };
+
+  render() {
+    if (this.state.hidden) {
+      return null;
+    } else {
+      return <div>{this.props.children}</div>;
+    }
+  }
 }
 
 CookieHideWrapper.propTypes = {
-    children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default CookieHideWrapper;
-

@@ -32,7 +32,8 @@
     height: 26px;
   }
 
-  svg.recommendation, svg.indicator {
+  svg.recommendation,
+  svg.indicator {
     position: absolute;
     height: 18px;
     width: 18px;
@@ -46,7 +47,7 @@
       fill: #ff0000;
       fill-opacity: 1;
       stroke-width: 0.2px;
-      stroke: rgba(0,0,0,0.5);
+      stroke: rgba(0, 0, 0, 0.5);
     }
 
     polygon.too_small {
@@ -76,27 +77,29 @@
   }
 
   svg.recommendation {
-	bottom: 0;
+    bottom: 0;
     width: 36px;
     path {
       fill: $recommendation_color;
       fill-opacity: 0.75;
     }
   }
-  
+
   span.size-recommendation strong {
     text-transform: uppercase;
   }
 }
 
-.no-meas .sizeme-slider, .no-fit .sizeme-slider, .no-size .sizeme-slider {
+.no-meas .sizeme-slider,
+.no-fit .sizeme-slider,
+.no-size .sizeme-slider {
   .slider-placeholder {
     opacity: 1;
-    transition-delay:0s;
+    transition-delay: 0s;
   }
   .fit-area {
     visibility: hidden;
-	transition-delay:0.2s;
+    transition-delay: 0.2s;
   }
 }
 

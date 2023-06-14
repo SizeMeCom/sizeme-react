@@ -9,96 +9,119 @@ import { openLoginFrame } from "../common/LoginFrame";
 import uiOptions from "../api/uiOptions";
 
 class SizeGuideProductInfo extends React.Component {
+  hasNeckOpening = () => this.props.productModel.measurementOrder.includes("neck_opening_width");
 
-    hasNeckOpening = () => this.props.productModel.measurementOrder.includes("neck_opening_width");
+  isInside = () => {
+    const zero = this.props.productModel.getItemTypeComponent(0);
+    return zero === 3 || zero === 4;
+  };
 
-    isInside = () => {
-        const zero = this.props.productModel.getItemTypeComponent(0);
-        return zero === 3 || zero === 4;
-    };
+  loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
 
-    loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
+  render() {
+    const { t, measurements, onHover, productModel } = this.props;
+    const { measurementOrder, measurementName, pinchedFits } = productModel;
 
-    render () {
-        const { t, measurements, onHover, productModel } = this.props;
-        const { measurementOrder, measurementName, pinchedFits } = productModel;
+    const measurementCell = (size, measurement) => (
+      <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
+        <td>
+          {(
+            measurements[size][measurement] /
+            (!pinchedFits.includes(measurement) || uiOptions.flatMeasurements ? 10.0 : 5.0)
+          ).toFixed(1)}{" "}
+          cm
+        </td>
+      </HoverContainer>
+    );
 
-        const measurementCell = (size, measurement) => (
-            <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
-                <td>{(measurements[size][measurement] / ((!pinchedFits.includes(measurement) || uiOptions.flatMeasurements) ? 10.0 : 5.0)).toFixed(1)} cm</td>
-            </HoverContainer>
-        );
-
-        return (
-            <div className="size-guide-data size-guide-product-info">
-                <DetailSection title={t("sizeGuide.tableTitle")}>
-                    <table className="product-info-table">
-                        <thead>
-                            <tr>
-                                <th className="size-col">{t("common.sizeItself")}</th>
-                                {measurementOrder.map((measurement, i) => (
-                                    <HoverContainer measurement={measurement} key={measurement}
-                                                    onHover={onHover}>
-                                        <th className="measurement-head">
-                                            <span className="num">{i + 1}</span>{measurementName(measurement)}
-                                        </th>
-                                    </HoverContainer>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {SizeSelector.getSizeMapper()
-                            .filter(([size]) => !!measurements[size])
-                            .map(([size, sizeName]) => (
-                                <tr key={sizeName}>
-                                    <td className="size-col">{sizeName}</td>
-                                    {measurementOrder.map(measurement => measurementCell(size, measurement))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {this.isInside() &&
-                        <div className="sizeme-explanation">
-                            <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerInside") }}/>
-                        </div>
-                    }
-                    {uiOptions.flatMeasurements && !this.isInside() &&
-                        <div className="sizeme-explanation">
-                            <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimer") }}/>
-                            {this.hasNeckOpening() &&
-                            <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerCollar") }}/>
-                            }
-                        </div>
-                    }
-
-                </DetailSection>
-
-                <CookieHideWrapper>
-                    <div className="size-guide-splash">
-                        <p dangerouslySetInnerHTML={{ __html: t("splash.detailedText") }}/>
-                        <div className="splash-choices">
-                            <a onClick={this.loginFrameOpener("signup")} className="sign-up link-btn"
-                               title={t("splash.btnSignUpTitle")}>{t("splash.btnSignUpLabel")}</a>
-
-                            <a onClick={this.loginFrameOpener("login")} className="log-in link-btn"
-                               title={t("splash.btnLogInTitle")}>{t("splash.btnLogInLabel")}</a>
-
-                            <a href="#" className="no-thanks link-btn" onClick={hideSizeMe}
-                               title={t("splash.btnNoThanksTitle")}>{t("splash.btnNoThanksLabel")}</a>
-
-                        </div>
-                    </div>
-                </CookieHideWrapper>
+    return (
+      <div className="size-guide-data size-guide-product-info">
+        <DetailSection title={t("sizeGuide.tableTitle")}>
+          <table className="product-info-table">
+            <thead>
+              <tr>
+                <th className="size-col">{t("common.sizeItself")}</th>
+                {measurementOrder.map((measurement, i) => (
+                  <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
+                    <th className="measurement-head">
+                      <span className="num">{i + 1}</span>
+                      {measurementName(measurement)}
+                    </th>
+                  </HoverContainer>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {SizeSelector.getSizeMapper()
+                .filter(([size]) => !!measurements[size])
+                .map(([size, sizeName]) => (
+                  <tr key={sizeName}>
+                    <td className="size-col">{sizeName}</td>
+                    {measurementOrder.map((measurement) => measurementCell(size, measurement))}
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          {this.isInside() && (
+            <div className="sizeme-explanation">
+              <div
+                dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerInside") }}
+              />
             </div>
-        );
-    }
+          )}
+          {uiOptions.flatMeasurements && !this.isInside() && (
+            <div className="sizeme-explanation">
+              <div dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimer") }} />
+              {this.hasNeckOpening() && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: t("sizeGuide.measurementDisclaimerCollar") }}
+                />
+              )}
+            </div>
+          )}
+        </DetailSection>
+
+        <CookieHideWrapper>
+          <div className="size-guide-splash">
+            <p dangerouslySetInnerHTML={{ __html: t("splash.detailedText") }} />
+            <div className="splash-choices">
+              <a
+                onClick={this.loginFrameOpener("signup")}
+                className="sign-up link-btn"
+                title={t("splash.btnSignUpTitle")}
+              >
+                {t("splash.btnSignUpLabel")}
+              </a>
+
+              <a
+                onClick={this.loginFrameOpener("login")}
+                className="log-in link-btn"
+                title={t("splash.btnLogInTitle")}
+              >
+                {t("splash.btnLogInLabel")}
+              </a>
+
+              <a
+                href="#"
+                className="no-thanks link-btn"
+                onClick={hideSizeMe}
+                title={t("splash.btnNoThanksTitle")}
+              >
+                {t("splash.btnNoThanksLabel")}
+              </a>
+            </div>
+          </div>
+        </CookieHideWrapper>
+      </div>
+    );
+  }
 }
 
 SizeGuideProductInfo.propTypes = {
-    measurements: PropTypes.objectOf(PropTypes.object),
-    productModel: PropTypes.object.isRequired,
-    onHover: PropTypes.func.isRequired,
-    t: PropTypes.func
+  measurements: PropTypes.objectOf(PropTypes.object),
+  productModel: PropTypes.object.isRequired,
+  onHover: PropTypes.func.isRequired,
+  t: PropTypes.func,
 };
 
 export default withTranslation()(SizeGuideProductInfo);

@@ -4,33 +4,48 @@ import PropTypes from "prop-types";
 const cmFactor = 5;
 
 const ShirtHips = (props) => {
-    const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
-    const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
-    return (
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="shirtHips"
-             viewBox="158 290 237.5 210" preserveAspectRatio="xMidYMin meet">
+  const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
+  const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
+  return (
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shirtHips"
+      viewBox="158 290 237.5 210"
+      preserveAspectRatio="xMidYMin meet"
+    >
+      <defs>
+        <marker
+          id="triangleInsideShirtHips"
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="6"
+          markerHeight="6"
+          className="measurementLine"
+          orient="auto-start-reverse"
+        >
+          <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+        <marker
+          id="triangleOutsideShirtHips"
+          viewBox="0 0 10 10"
+          refX="1"
+          refY="5"
+          markerWidth="6"
+          markerHeight="6"
+          className="measurementLine"
+          orient="auto-start-reverse"
+        >
+          <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
+        </marker>
+      </defs>
 
-            <defs>
-                <marker id="triangleInsideShirtHips"
-                        viewBox="0 0 10 10" refX="9" refY="5"
-                        markerWidth="6" markerHeight="6"
-                        className="measurementLine"
-                        orient="auto-start-reverse">
-                    <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
-                </marker>
-                <marker id="triangleOutsideShirtHips"
-                        viewBox="0 0 10 10" refX="1" refY="5"
-                        markerWidth="6" markerHeight="6"
-                        className="measurementLine"
-                        orient="auto-start-reverse">
-                    <path className="noStroke" d="M 0 5 L 10 0 L 10 10 z" />
-                </marker>
-            </defs>
-
-            <g>
-                {/* torso */}
-                <path className="mainLine baseFill"
-                      d="m349.03101,309.17599c-0.10501,-23.21799 -5.164,-88.552 -0.42102,-158.20599c51.11301,
+      <g>
+        {/* torso */}
+        <path
+          className="mainLine baseFill"
+          d="m349.03101,309.17599c-0.10501,-23.21799 -5.164,-88.552 -0.42102,-158.20599c51.11301,
                 -1.62 90.423,2.16 106.33603,4.644c15.91397,2.48401 34.46198,7.343 76.30099,-0.756c41.73401,
                 -7.991 77.88202,-3.34801 84.83698,-2.916c1.68701,0.108 5.90204,2.48399 10.85504,5.616c5.47998,
                 3.347 8.85297,6.479 13.91095,9.179c7.79901,4.319 15.28204,6.371 7.48303,-4.42799c-1.47504,
@@ -72,27 +87,20 @@ const ShirtHips = (props) => {
                 0.75598 16.01898,-1.51202 18.65402,-2.70001s9.27399,-9.17902 1.89691,-17.17102c-7.483,
                 -7.99097 -18.65399,-17.16998 -17.495,-41.25195c1.16,-24.08203 16.336,-80.56 11.909,
                 -110.69c-4.42593,-30.12903 -9.27399,-58.42297 -7.79794,-77.42902c1.47501,-19.11401 7.79794,
-                -65.44199 9.06302,-74.83701c1.47501,-12.203 5.79599,-62.095 -0.42206,-100.323z"/>
+                -65.44199 9.06302,-74.83701c1.47501,-12.203 5.79599,-62.095 -0.42206,-100.323z"
+        />
 
-                {/* nipples */}
-                <circle className="mainLine noFill"
-                        cx="229.47"
-                        cy="180"
-                        r="4.906"/>
-                <circle className="mainLine noFill"
-                        cx="322.43"
-                        cy="180"
-                        r="4.906"/>
+        {/* nipples */}
+        <circle className="mainLine noFill" cx="229.47" cy="180" r="4.906" />
+        <circle className="mainLine noFill" cx="322.43" cy="180" r="4.906" />
 
-                {/* belly button */}
-                <circle className="mainLine noFill"
-                        cx="276.331"
-                        cy="308.234"
-                        r="2.534"/>
+        {/* belly button */}
+        <circle className="mainLine noFill" cx="276.331" cy="308.234" r="2.534" />
 
-                {/* pants with pockets and button */}
-                <path className="mainLine otherBaseFill"
-                      d="
+        {/* pants with pockets and button */}
+        <path
+          className="mainLine otherBaseFill"
+          d="
                          M 356.76001,685.56201
                          l -1.819,-292.09702
                          l -2.7225,-53.91998
@@ -102,19 +110,15 @@ const ShirtHips = (props) => {
                          l 47.26199,0
                          l 33.063,-249.94302
                          l 9.69101,0
-                         l 25.50998,251.19302z"/>
-                <path className="mainLine noFill"
-                      d="M230.208,364.504c0,0-3.344,24.618-27.826,25.548"/>
-                <path className="mainLine noFill"
-                      d="M317.346,365.795c0,0,3.346,24.618,27.826,25.548"/>
-                <circle className="mainLine noFill"
-                        cx="276.331"
-                        cy="355.234"
-                        r="5.906"/>
-
-            </g>
-            <path className="mainLine overlayFill"
-                  d={`
+                         l 25.50998,251.19302z"
+        />
+        <path className="mainLine noFill" d="M230.208,364.504c0,0-3.344,24.618-27.826,25.548" />
+        <path className="mainLine noFill" d="M317.346,365.795c0,0,3.346,24.618,27.826,25.548" />
+        <circle className="mainLine noFill" cx="276.331" cy="355.234" r="5.906" />
+      </g>
+      <path
+        className="mainLine overlayFill"
+        d={`
                 M ${186.75 - widthPlus} 537.89999
                 q  0 -120 10 -381.23331
                 l -232.00002 10.33331
@@ -124,24 +128,26 @@ const ShirtHips = (props) => {
                 l ${256.33336 + widthPlus} 43.66669
                 l -1.66667 33
                 l -232.00002 -10.33331
-                q 10 260 10 381.23331 z`}/>
+                q 10 260 10 381.23331 z`}
+      />
 
-            {/* measurement arrow line */}
-            <path
-                className={`measurementLine noFill ${arrowPositions}`}
-                d={`
+      {/* measurement arrow line */}
+      <path
+        className={`measurementLine noFill ${arrowPositions}`}
+        d={`
                 M ${188 - widthPlus},385
-                L 194, 385`} />
-        </svg>
-    );
+                L 194, 385`}
+      />
+    </svg>
+  );
 };
 
 ShirtHips.propTypes = {
-    overlap: PropTypes.number
+  overlap: PropTypes.number,
 };
 
 ShirtHips.defaultProps = {
-    overlap: 0
+  overlap: 0,
 };
 
 export default ShirtHips;

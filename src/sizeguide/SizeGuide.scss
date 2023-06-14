@@ -16,7 +16,7 @@ a.link-btn.size-guide {
   color: $default_color;
   display: inline-block;
 
-  span.fa {
+  .fa-solid {
     display: inline-block;
     float: right;
     line-height: 24px;
@@ -74,7 +74,6 @@ a.link-btn.size-guide {
     }
   }
 }
-
 
 .size-guide-overlay {
   position: fixed;
@@ -144,7 +143,7 @@ a.link-btn.size-guide {
           color: #000;
         }
 
-        span.fa {
+        .fa-solid {
           font-size: 18px;
         }
       }
@@ -255,7 +254,8 @@ a.link-btn.size-guide {
         border-spacing: 3px;
         width: 100%;
 
-        td, th {
+        td,
+        th {
           color: black;
           padding: 3px;
           text-align: center;
@@ -317,19 +317,19 @@ a.link-btn.size-guide {
         }
 
         a.sign-up {
-          background-color: #7DCC5D;
-          border: 1px solid #76DC4C;
-          color: #fff!important;
+          background-color: #7dcc5d;
+          border: 1px solid #76dc4c;
+          color: #fff !important;
         }
 
         a.log-in {
-          background-color: #CFCFCF;
+          background-color: #cfcfcf;
         }
 
         a.no-thanks {
           background-color: #333333;
           border: 1px solid #888888;
-          color: #ccc!important;
+          color: #ccc !important;
           padding: 3px 8px;
         }
       }
@@ -354,7 +354,9 @@ a.link-btn.size-guide {
         text-align: center;
         font-size: 10px;
 
-        .overlap, .fit-label, .measurement-head {
+        .overlap,
+        .fit-label,
+        .measurement-head {
           border: 1.5px solid #fff;
           white-space: nowrap;
         }
@@ -370,11 +372,21 @@ a.link-btn.size-guide {
           padding: 5px;
         }
 
-        .fit-label.too_small { background-color: $too_small; }
-        .fit-label.slim      { background-color: $slim; }
-        .fit-label.regular   { background-color: $regular; }
-        .fit-label.loose     { background-color: $loose; }
-        .fit-label.too_big   { background-color: $too_big; }
+        .fit-label.too_small {
+          background-color: $too_small;
+        }
+        .fit-label.slim {
+          background-color: $slim;
+        }
+        .fit-label.regular {
+          background-color: $regular;
+        }
+        .fit-label.loose {
+          background-color: $loose;
+        }
+        .fit-label.too_big {
+          background-color: $too_big;
+        }
       }
     }
   }

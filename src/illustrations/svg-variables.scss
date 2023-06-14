@@ -16,24 +16,24 @@
 }
 
 @mixin measurementLine() {
-  stroke: #9E509F;
-  fill: #9E509F;
+  stroke: #9e509f;
+  fill: #9e509f;
   stroke-width: 2;
   stroke-linecap: butt;
   stroke-linejoin: miter;
 }
 
 @mixin baseFill() {
-  fill: #CCCCCC;
+  fill: #cccccc;
   fill-opacity: 1;
 }
 
 @mixin otherBaseFill() {
-  fill: #BBBBBB;
+  fill: #bbbbbb;
   fill-opacity: 1;
 }
 
 @mixin overlayFill() {
-  fill: #FFFFFF;
+  fill: #ffffff;
   fill-opacity: 0.7;
 }

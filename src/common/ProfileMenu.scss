@@ -1,7 +1,8 @@
 @import "../scss/variables";
 
 .profile-menu-container {
-  img, span.fa-cog {
+  img,
+  .fa-cog {
     margin-left: 7px;
     cursor: pointer;
   }
@@ -10,17 +11,13 @@
     width: 20px;
   }
 
-  span.fa-cog {
-    font-size: 16px;
-
-    &:hover {
-      color: $default_color;
-    }
+  .fa-cog:hover {
+    color: $default_color;
   }
 
   .__react_component_tooltip#sizeme-tooltip {
     border: 1px solid $default_color;
-    opacity: 1.0 !important;
+    opacity: 1 !important;
     width: 200px;
     padding: 0;
     pointer-events: all;
@@ -33,7 +30,7 @@
 
 .__react_component_tooltip.profile-menu {
   border: 1px solid $default_color;
-  opacity: 1.0 !important;
+  opacity: 1 !important;
   padding: 0;
   width: 200px;
 
@@ -47,7 +44,7 @@
       background: $light_bg_color url(../images/sizeme_logo_plain_h22.png) no-repeat 97% center;
       width: 100%;
       height: 30px;
-	  border-radius: 0 0 $border_radius $border_radius;
+      border-radius: 0 0 $border_radius $border_radius;
     }
 
     .profile {
@@ -103,4 +100,3 @@
     }
   }
 }
-
