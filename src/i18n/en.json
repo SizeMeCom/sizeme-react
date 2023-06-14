@@ -13,7 +13,8 @@
     "togglerText": "Find my size",
     "sizemeTooltip": "This product supports SizeMe, a service that recommends the best fitting size by comparing your physical measurements to the measurements of this product.",
     "sizemeTooltipLink": "Read more",
-    "sizeItself": "Size"
+    "sizeItself": "Size",
+    "defaultProfileName": "My profile"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",

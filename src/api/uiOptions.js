@@ -3,6 +3,7 @@ const general = {
   toggler: false,
   firstRecommendation: true,
   flatMeasurements: true,
+  matchGenderFromNameMale: "",
 };
 
 const shops = {
