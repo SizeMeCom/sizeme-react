@@ -12,7 +12,7 @@
     "build-local": "yarn build --env cdn=dist/",
     "build-cdn": "yarn build --env cdn=https://cdn.sizeme.com/store/",
     "stats": "webpack --mode production --profile --json > stats.json && webpack-bundle-analyzer stats.json dist",
-    "lint": "prettier -c . && eslint ."
+    "lint": "prettier -c . && eslint --ext .js,.jsx,.ts,.tsx ."
   },
   "browserslist": [
     "> 5%",
@@ -67,7 +67,9 @@
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-react": "^1.1.7",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "git-revision-webpack-plugin": "^5.0.0",
     "nodemon": "^1.12.1",
     "prettier": "^2.8.8",

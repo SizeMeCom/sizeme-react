@@ -51,9 +51,8 @@ class SizeGuide extends React.Component {
     });
   };
 
-  componentDidCatch(_, info) {
+  componentDidCatch() {
     this.setState({ guideIsOpen: false });
-    console.error("Occured ", info.componentStack);
   }
 
   render() {

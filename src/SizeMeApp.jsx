@@ -67,7 +67,7 @@ class SizeMeApp extends React.Component {
       t,
     } = this.props;
     const { match, state } = matchState;
-    let itemTypeClass = "sizeme-item-" + productInfo.product.item.itemType.replace(/\./g, "_");
+    const itemTypeClass = "sizeme-item-" + productInfo.product.item.itemType.replace(/\./g, "_");
 
     return (
       <div

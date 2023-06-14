@@ -2,7 +2,7 @@
 
 import "isomorphic-fetch";
 import * as actions from "./actions";
-import { createStore, applyMiddleware } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "./reducers";
@@ -10,8 +10,8 @@ import SizeGuideModel, {
   DEFAULT_OPTIMAL_FIT,
   DEFAULT_OPTIMAL_STRETCH,
   humanMeasurementMap,
+  isStretching,
   stretchFactor,
-  useStretchingMath,
 } from "./ProductModel";
 import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
@@ -48,14 +48,14 @@ const sizemeStore = ((sizemeOpts) => {
     let currentState;
 
     function handleChange() {
-      let nextState = select(store.getState());
+      const nextState = select(store.getState());
       if (!equals(nextState, currentState)) {
         currentState = nextState;
         onChange(currentState);
       }
     }
 
-    let unsubscribe = store.subscribe(handleChange);
+    const unsubscribe = store.subscribe(handleChange);
     handleChange();
     return unsubscribe;
   }
@@ -323,6 +323,7 @@ function getProduct() {
         dispatch(actions.receiveProductInfo({ ...product, item, skuMap, model }));
         return true;
       } else {
+        // eslint-disable-next-line no-console
         console.log("Initializing SizeMe failed: Couldn't map product measurements");
         dispatch(actions.requestProductInfo(new ApiError("Couldn't map product measurements")));
       }
@@ -401,13 +402,15 @@ function getRecommendedFit(fitResults, optimalFit) {
     .filter(([, res]) => res.accuracy > 0)
     .reduce(
       ([accSize, fit], [size, res]) => {
-        if (res.totalFit < 1000 && optFit >= 1000) return [accSize, fit];
-        let maxStretchArr = [];
+        if (res.totalFit < 1000 && optFit >= 1000) {
+          return [accSize, fit];
+        }
+        const maxStretchArr = [];
         Object.entries(res.matchMap).forEach(([oKey, oValue]) => {
           maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
         });
         const maxStretch = Math.max.apply(null, maxStretchArr);
-        if (useStretchingMath(res.matchMap, optFit)) {
+        if (isStretching(res.matchMap, optFit)) {
           const newFit =
             Math.abs(res.totalFit - 1000) * 100 + Math.abs(maxStretch - DEFAULT_OPTIMAL_STRETCH);
           if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
@@ -557,21 +560,6 @@ function selectSize(size, auto) {
   };
 }
 
-function findVisibleElement(selector) {
-  const isVisible = (elem) =>
-    !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
-
-  const elementList = document.querySelectorAll(selector);
-
-  for (let el of elementList) {
-    if (isVisible(el)) {
-      return el;
-    }
-  }
-
-  return null;
-}
-
 function setSizemeHidden(sizemeHidden) {
   return (dispatch) => {
     dispatch(actions.setSizemeHidden(sizemeHidden));
@@ -591,6 +579,5 @@ export {
   selectSize,
   contextAddress,
   cdnLocation,
-  findVisibleElement,
   setSizemeHidden,
 };

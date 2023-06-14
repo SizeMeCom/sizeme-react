@@ -20,7 +20,7 @@ export const isSizeMeHidden = () => !!cookies.get(cookieName);
 class CookieHideWrapper extends React.Component {
   constructor(props) {
     super(props);
-    let noThanks = isSizeMeHidden();
+    const noThanks = isSizeMeHidden();
     this.state = {
       hidden: noThanks,
     };

@@ -1,12 +1,12 @@
-import webpack from "webpack";
-import path from "path";
-import { glob } from "glob";
-import { PurgeCSSPlugin } from "purgecss-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import merge from "webpack-merge";
+import { GitRevisionPlugin } from "git-revision-webpack-plugin";
+import { glob } from "glob";
+import path from "path";
+import { PurgeCSSPlugin } from "purgecss-webpack-plugin";
+import webpack from "webpack";
 import type { Configuration } from "webpack";
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
-import { GitRevisionPlugin } from "git-revision-webpack-plugin";
+import merge from "webpack-merge";
 
 const PATHS = {
   app: path.resolve(__dirname, "src"),

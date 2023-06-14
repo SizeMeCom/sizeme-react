@@ -4,6 +4,7 @@
     return;
   }
 
+  // eslint-disable-next-line no-console
   console.log("Initializing SizeMe, version " + VERSION + ", built on " + BUILD_DATE);
 
   let sizemeDisabled = false;

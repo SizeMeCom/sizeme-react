@@ -8,7 +8,7 @@ import ProductModel, {
   DEFAULT_OPTIMAL_STRETCH,
   fitRanges,
   stretchFactor,
-  useStretchingMath,
+  isStretching,
   fitLabelsAndColors,
 } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
@@ -20,7 +20,7 @@ const getSizename = (selectedSize) =>
     .map(([, sizeName]) => sizeName)[0] || selectedSize;
 
 const getValueBasedFitLabel = (value) => {
-  let labelKey = Math.min(Math.floor(Math.round(value) / 20), fitLabelsAndColors.length - 1);
+  const labelKey = Math.min(Math.floor(Math.round(value) / 20), fitLabelsAndColors.length - 1);
   return typeof fitLabelsAndColors[labelKey] !== "undefined"
     ? fitLabelsAndColors[labelKey].label
     : "regular";
@@ -155,8 +155,8 @@ class SizingBar extends React.Component {
   }
 
   getFitPosition(value, matchMap) {
-    let { fitRecommendation } = this.props;
-    if (useStretchingMath(matchMap, fitRecommendation)) {
+    const { fitRecommendation } = this.props;
+    if (isStretching(matchMap, fitRecommendation)) {
       let maxStretch = DEFAULT_OPTIMAL_STRETCH;
       let newPos = 50;
       if (matchMap) {

@@ -96,8 +96,12 @@ const humanMeasurementMap = new Map([
 ]);
 
 function isInMeas(meas, thisMeas) {
-  if (typeof meas !== "object") return false;
-  if (meas.length === 0) return false;
+  if (typeof meas !== "object") {
+    return false;
+  }
+  if (meas.length === 0) {
+    return false;
+  }
   return (
     Object.values(meas).filter((obj) => {
       return parseInt(obj[thisMeas] ?? null) > 0;
@@ -109,76 +113,124 @@ function getEssentialMeasurements(itemTypeArr, meas) {
   const arr = [];
   switch (itemTypeArr[0]) {
     case 1:
-      if (isInMeas(meas, "chest")) arr.push("chest");
+      if (isInMeas(meas, "chest")) {
+        arr.push("chest");
+      }
       if (itemTypeArr[5] > 1 && itemTypeArr[5] < 5) {
-        if (isInMeas(meas, "front_height")) arr.push("front_height");
+        if (isInMeas(meas, "front_height")) {
+          arr.push("front_height");
+        }
       }
       if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1) {
-        if (isInMeas(meas, "sleeve")) arr.push("sleeve");
+        if (isInMeas(meas, "sleeve")) {
+          arr.push("sleeve");
+        }
       }
       if (arr.length < 3 && itemTypeArr[5] >= 4 && itemTypeArr[6] !== 3 && itemTypeArr[6] !== 6) {
-        if (isInMeas(meas, "hips")) arr.push("hips");
+        if (isInMeas(meas, "hips")) {
+          arr.push("hips");
+        }
       }
       if (arr.length < 3 && itemTypeArr[5] >= 3) {
-        if (isInMeas(meas, "waist")) arr.push("waist");
+        if (isInMeas(meas, "waist")) {
+          arr.push("waist");
+        }
       }
       if (arr.length < 3 && itemTypeArr[1] === 2) {
-        if (isInMeas(meas, "neck_opening_width")) arr.push("neck_opening_width");
+        if (isInMeas(meas, "neck_opening_width")) {
+          arr.push("neck_opening_width");
+        }
       }
       break;
 
     case 2:
-      if (isInMeas(meas, "pant_waist")) arr.push("pant_waist");
-      if (isInMeas(meas, "hips")) arr.push("hips");
+      if (isInMeas(meas, "pant_waist")) {
+        arr.push("pant_waist");
+      }
+      if (isInMeas(meas, "hips")) {
+        arr.push("hips");
+      }
       if (itemTypeArr[3] >= 6) {
-        if (isInMeas(meas, "outseam")) arr.push("outseam");
+        if (isInMeas(meas, "outseam")) {
+          arr.push("outseam");
+        }
       }
       break;
 
     case 3:
-      if (isInMeas(meas, "shoe_inside_length")) arr.push("shoe_inside_length");
+      if (isInMeas(meas, "shoe_inside_length")) {
+        arr.push("shoe_inside_length");
+      }
       if (itemTypeArr[3] > 6) {
-        if (isInMeas(meas, "calf_width")) arr.push("calf_width");
+        if (isInMeas(meas, "calf_width")) {
+          arr.push("calf_width");
+        }
       }
       if (itemTypeArr[3] > 7) {
-        if (isInMeas(meas, "knee_width")) arr.push("knee_width");
+        if (isInMeas(meas, "knee_width")) {
+          arr.push("knee_width");
+        }
       }
       break;
 
     case 4:
-      if (isInMeas(meas, "hat_width")) arr.push("hat_width");
+      if (isInMeas(meas, "hat_width")) {
+        arr.push("hat_width");
+      }
       break;
 
     case 5:
-      if (isInMeas(meas, "chest")) arr.push("chest");
+      if (isInMeas(meas, "chest")) {
+        arr.push("chest");
+      }
       if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1) {
-        if (isInMeas(meas, "sleeve")) arr.push("sleeve");
+        if (isInMeas(meas, "sleeve")) {
+          arr.push("sleeve");
+        }
       } else {
-        if (isInMeas(meas, "waist")) arr.push("waist");
+        if (isInMeas(meas, "waist")) {
+          arr.push("waist");
+        }
       }
       if (arr.length < 3) {
-        if (isInMeas(meas, "pant_waist")) arr.push("pant_waist");
+        if (isInMeas(meas, "pant_waist")) {
+          arr.push("pant_waist");
+        }
       }
       if (arr.length < 3) {
-        if (isInMeas(meas, "hips")) arr.push("hips");
+        if (isInMeas(meas, "hips")) {
+          arr.push("hips");
+        }
       }
       break;
 
     case 6:
-      if (isInMeas(meas, "chest")) arr.push("chest");
+      if (isInMeas(meas, "chest")) {
+        arr.push("chest");
+      }
       if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1) {
-        if (isInMeas(meas, "sleeve")) arr.push("sleeve");
+        if (isInMeas(meas, "sleeve")) {
+          arr.push("sleeve");
+        }
       } else {
-        if (isInMeas(meas, "front_height")) arr.push("front_height");
+        if (isInMeas(meas, "front_height")) {
+          arr.push("front_height");
+        }
       }
       if (itemTypeArr[5] >= 6) {
-        if (isInMeas(meas, "outseam")) arr.push("outseam");
+        if (isInMeas(meas, "outseam")) {
+          arr.push("outseam");
+        }
       }
       if (arr.length < 3) {
-        if (isInMeas(meas, "pant_waist")) arr.push("pant_waist");
+        if (isInMeas(meas, "pant_waist")) {
+          arr.push("pant_waist");
+        }
       }
       if (arr.length < 3) {
-        if (isInMeas(meas, "hips")) arr.push("hips");
+        if (isInMeas(meas, "hips")) {
+          arr.push("hips");
+        }
       }
       break;
   }
@@ -1994,14 +2046,22 @@ const stretchFactor = (measurement) => {
   return factor;
 };
 
-const useStretchingMath = (matchMap, fitRecommendation) => {
-  if (fitRecommendation === 1000) return true;
-  if (!matchMap) return false;
+const isStretching = (matchMap, fitRecommendation) => {
+  if (fitRecommendation === 1000) {
+    return true;
+  }
+  if (!matchMap) {
+    return false;
+  }
   if (matchMap.pant_waist !== undefined) {
     let numOfImportantMeasurements = 0;
     Object.entries(matchMap).forEach(([, oValue]) => {
-      if (oValue.importance === 1) numOfImportantMeasurements++;
-      if (oValue.importance === -1 && oValue.componentFit < 1000) numOfImportantMeasurements++;
+      if (oValue.importance === 1) {
+        numOfImportantMeasurements++;
+      }
+      if (oValue.importance === -1 && oValue.componentFit < 1000) {
+        numOfImportantMeasurements++;
+      }
     });
     if (numOfImportantMeasurements === 1) {
       return true;
@@ -2018,7 +2078,7 @@ export {
   fitRanges,
   getResult,
   stretchFactor,
-  useStretchingMath,
+  isStretching,
   DEFAULT_OPTIMAL_FIT,
   DEFAULT_OPTIMAL_STRETCH,
   fitLabelsAndColors,

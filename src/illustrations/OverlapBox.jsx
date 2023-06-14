@@ -84,7 +84,9 @@ class OverlapBox extends React.Component {
     const overlap = fit.overlap / illustrationDivider(humanProperty);
     let className = "overlap-box";
     className += " " + ProductModel.getFit(fit).label;
-    if (overlap <= 0) className += " no-overlap";
+    if (overlap <= 0) {
+      className += " no-overlap";
+    }
 
     return (
       <div

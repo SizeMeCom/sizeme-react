@@ -41,7 +41,7 @@ class MeasurementInput extends React.Component {
   }
 
   modelValue(value) {
-    let fixedValue = value.replace(",", ".");
+    const fixedValue = value.replace(",", ".");
     if (fixedValue === ".") {
       return 0;
     } else if (fixedValue.length > 0) {

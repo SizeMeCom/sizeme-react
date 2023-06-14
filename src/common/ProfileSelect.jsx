@@ -7,7 +7,9 @@ class ProfileSelect extends React.Component {
   }
 
   handleChange = (event) => {
-    if (this.props.onSelectProfile) this.props.onSelectProfile(event.target.value);
+    if (this.props.onSelectProfile) {
+      this.props.onSelectProfile(event.target.value);
+    }
   };
 
   render() {

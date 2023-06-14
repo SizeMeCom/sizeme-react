@@ -13,6 +13,7 @@ export default () => {
   }
 
   const abStatus = sizemeDisabled ? "B" : "A";
+  // eslint-disable-next-line no-console
   console.log("SizeMe A/B testing, status: " + abStatus);
   sizemeStore.dispatch(setAbStatus(abStatus));
 
