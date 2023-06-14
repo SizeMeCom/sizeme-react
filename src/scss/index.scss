@@ -1,28 +1,3 @@
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
-
-//noinspection CssNoGenericFontName
-.sizeme-toggler {
-  a {
-    cursor: pointer;
-
-    i {
-      @extend %fa-icon;
-      @extend .fa-solid;
-
-      &::after {
-        padding-left: 0.5em;
-        vertical-align: middle;
-      }
-    }
-  }
-
-  &.sm-hidden a i::after {
-    content: fa-content($fa-var-arrow-down);
-  }
-
-  &.sm-visible a i::after {
-    content: fa-content($fa-var-arrow-up);
-  }
-}

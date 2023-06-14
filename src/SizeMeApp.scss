@@ -1,5 +1,16 @@
 @import "./scss/variables";
 
+.sizeme-toggler {
+  a {
+    cursor: pointer;
+
+    i::before {
+      padding-left: 0.5em;
+      vertical-align: middle;
+    }
+  }
+}
+
 a.link-btn {
   background-color: $bg_color;
   color: #000 !important;

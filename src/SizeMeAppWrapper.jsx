@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import * as api from "./api/sizeme-api";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import clsx from "clsx";
+import "./SizeMeApp.scss";
 
 const SizeMeApp = Loadable({
   loader: () => import(/* webpackChunkName: "app" */ "./SizeMeApp"),
@@ -30,9 +32,13 @@ class SizeMeTogglerComp extends React.Component {
   render() {
     const { t, sizemeHidden } = this.props;
     return (
-      <div className={`sizeme-toggler ${sizemeHidden ? "sm-hidden" : "sm-visible"}`}>
+      <div className="sizeme-toggler">
         <a onClick={this.toggle}>
-          {t("common.togglerText")} <i className="fa" aria-hidden />
+          {t("common.togglerText")}{" "}
+          <i
+            className={clsx("fa", { "fa-arrow-down": sizemeHidden, "fa-arrow-up": !sizemeHidden })}
+            aria-hidden
+          />
         </a>
       </div>
     );

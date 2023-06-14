@@ -16,7 +16,7 @@ const ProfileMenu = (props) => {
 
   return (
     <div className="profile-menu-container">
-      <i className="fa-solid fa-cog" data-tip data-for="profile-menu" data-event="click" />
+      <i className="fa-solid fa-cog fa-lg" data-tip data-for="profile-menu" data-event="click" />
       <ReactTooltip
         id="profile-menu"
         className="profile-menu"

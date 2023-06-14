@@ -12,7 +12,10 @@
     "build-local": "yarn build --env cdn=dist/",
     "build-cdn": "yarn build --env cdn=https://cdn.sizeme.com/store/",
     "stats": "webpack --mode production --profile --json > stats.json && webpack-bundle-analyzer stats.json dist",
-    "lint": "prettier -c . && eslint --ext .js,.jsx,.ts,.tsx ."
+    "prettier": "prettier -c .",
+    "prettier:fix": "prettier -w .",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint": "yarn run prettier && yarn run eslint"
   },
   "browserslist": [
     "> 5%",
@@ -23,6 +26,7 @@
   ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
+    "clsx": "^1.2.1",
     "core-js": "2",
     "font-awesome": "^4.7.0",
     "i18next": "^15.0.8",

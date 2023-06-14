@@ -11,12 +11,8 @@
     width: 20px;
   }
 
-  .fa-cog {
-    font-size: 16px;
-
-    &:hover {
-      color: $default_color;
-    }
+  .fa-cog:hover {
+    color: $default_color;
   }
 
   .__react_component_tooltip#sizeme-tooltip {
