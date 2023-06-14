@@ -82,7 +82,7 @@
 
         &:hover {
           cursor: pointer;
-          background-color: rgba(0,0,0,$hover_opacity_percentage);
+          background-color: rgba(0, 0, 0, $hover_opacity_percentage);
         }
 
         option {
@@ -91,9 +91,7 @@
           &:checked {
             background-color: $light_bg_color;
           }
-
         }
-
       }
 
       .units {
@@ -110,7 +108,7 @@
         &.yes-clickable {
           cursor: pointer;
           &:hover {
-            background-color: rgba(0,0,0,$hover_opacity_percentage);
+            background-color: rgba(0, 0, 0, $hover_opacity_percentage);
           }
         }
       }
@@ -152,7 +150,6 @@
   }
 
   .__react_component_tooltip.measurement-tooltip {
-
     background-color: $default_color;
     padding: 1px;
     opacity: 1;
@@ -267,13 +264,19 @@
     display: none;
   }
 }
-.sizeme-vilkas .measurement-input-table .measurement-cell { max-width: 240px; }
-.sizeme-shopify .measurement-input-table .measurement-cell .measurement-input input { min-height: 24px; }
-.sizeme-shopify .sizeme-signup-box .signup-email input { min-height: 24px; }
+.sizeme-vilkas .measurement-input-table .measurement-cell {
+  max-width: 240px;
+}
+.sizeme-shopify .measurement-input-table .measurement-cell .measurement-input input {
+  min-height: 24px;
+}
+.sizeme-shopify .sizeme-signup-box .signup-email input {
+  min-height: 24px;
+}
 
 .__react_component_tooltip.unit-menu {
   border: 1px solid $default_color;
-  opacity: 1.0 !important;
+  opacity: 1 !important;
   padding: 0;
   width: 200px;
   z-index: 100;

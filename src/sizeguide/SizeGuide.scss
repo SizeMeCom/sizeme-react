@@ -233,9 +233,7 @@ a.link-btn.size-guide {
       padding-bottom: 5px;
 
       .size-guide-header-container {
-
         .size-guide-header-title {
-
           .header-h2 {
             display: flex;
             justify-content: space-between;
@@ -260,13 +258,12 @@ a.link-btn.size-guide {
                 line-height: 12px;
 
                 &:hover {
-                  background-color: rgba(255,255,255,$hover_opacity_percentage);
+                  background-color: rgba(255, 255, 255, $hover_opacity_percentage);
                 }
                 &:last-child {
                   left: auto;
                   right: 0;
                 }
-
               }
 
               .unit-selector-slider {
@@ -277,7 +274,7 @@ a.link-btn.size-guide {
                 right: 0;
                 bottom: 0;
                 background-color: $lightest_bg_color;
-                transition: .4s;
+                transition: 0.4s;
                 display: inline-block;
                 margin: 1px 6px;
                 height: 8px;
@@ -292,8 +289,8 @@ a.link-btn.size-guide {
                   left: -4px;
                   bottom: -3px;
                   background-color: black;
-                  box-shadow: 0 0 2px rgba(0,0,0,0.5);
-                  transition: .3s;
+                  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                  transition: 0.3s;
                   border-radius: 50%;
                 }
 
@@ -301,15 +298,14 @@ a.link-btn.size-guide {
                   background-color: white;
                 }
 
-                &:hover::before, &:active::before {
-                  box-shadow: 0 0 6px rgba(0,0,0,0.75);
+                &:hover::before,
+                &:active::before {
+                  box-shadow: 0 0 6px rgba(0, 0, 0, 0.75);
                 }
-
               }
               &.unit-selector-selected-in .unit-selector-slider:before {
                 transform: translateX(12px);
               }
-
             }
           }
         }
