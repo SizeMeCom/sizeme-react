@@ -33,7 +33,7 @@ module.exports = {
       },
     ],
     "import/order": [
-      "warn",
+      "error",
       {
         alphabetize: {
           order: "asc",
@@ -51,6 +51,7 @@ module.exports = {
       files: ["webpack.config.ts"],
       rules: {
         "import/no-extraneous-dependencies": "off",
+        "import/no-default-export": "off",
       },
     },
     {

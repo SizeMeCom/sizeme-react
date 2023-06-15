@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { handleAction, handleActions } from "redux-actions";
+
 import * as actions from "./actions";
 
 function resolvePayload(action, payloadKey, errorPayload = null) {

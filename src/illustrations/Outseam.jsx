@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const cmFactor = 9.0;
 const baseHeight = 330; // ankle bone line Y

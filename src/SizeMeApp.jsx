@@ -6,6 +6,7 @@ import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
+
 import "./SizeMeApp.scss";
 import * as api from "./api/sizeme-api";
 import uiOptions from "./api/uiOptions";

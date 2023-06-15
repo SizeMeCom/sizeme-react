@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import Cookies from "universal-cookie";
 
 const maxAge = 90 * 24 * 60 * 60; // 90 days

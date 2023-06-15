@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const cmFactor = 5;
 const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;

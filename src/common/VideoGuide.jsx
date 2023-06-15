@@ -1,8 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
 import MobileDetect from "mobile-detect";
-import { cdnLocation } from "../api/sizeme-api";
+import PropTypes from "prop-types";
+import React from "react";
 import Loadable from "react-loadable";
+
+import { cdnLocation } from "../api/sizeme-api";
+
 import Loading from "./Loading";
 
 const Video = Loadable({

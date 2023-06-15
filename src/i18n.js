@@ -1,12 +1,13 @@
 /* global sizeme_options */
 
-import uiOptions from "./api/uiOptions";
 import i18n from "i18next";
+
+import uiOptions from "./api/uiOptions";
+import ar from "./i18n/ar.json";
+import de from "./i18n/de.json";
 import en from "./i18n/en.json";
 import fi from "./i18n/fi.json";
 import sv from "./i18n/sv.json";
-import ar from "./i18n/ar.json";
-import de from "./i18n/de.json";
 
 i18n.init({
   lng: uiOptions.lang || document.documentElement.lang || "en",

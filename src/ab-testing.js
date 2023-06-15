@@ -1,5 +1,5 @@
-import { sizemeStore } from "./api/sizeme-api";
 import { setAbStatus } from "./api/actions";
+import { sizemeStore } from "./api/sizeme-api";
 
 export default () => {
   let sizemeDisabled = false;

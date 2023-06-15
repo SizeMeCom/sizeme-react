@@ -1,7 +1,8 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { contextAddress } from "../api/sizeme-api";
+import React from "react";
 import Modal from "react-modal";
+
+import { contextAddress } from "../api/sizeme-api";
 import "./LoginFrame.scss";
 import uiOptions from "../api/uiOptions";
 

@@ -6,11 +6,13 @@ import Modal from "react-modal";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
+
 import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
 import { setTooltip } from "../api/actions";
 import { setProfileMeasurements } from "../api/sizeme-api";
 import uiOptions from "../api/uiOptions";
 import OverlapBox from "../illustrations/OverlapBox";
+
 import MeasurementInput from "./MeasurementInput.jsx";
 import "./SizeForm.scss";
 import VideoGuide from "./VideoGuide.jsx";

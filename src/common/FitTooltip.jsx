@@ -3,6 +3,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
+
 import { getResult } from "../api/ProductModel";
 
 const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];

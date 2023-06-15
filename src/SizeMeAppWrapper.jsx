@@ -1,13 +1,14 @@
-import React from "react";
-import Loadable from "react-loadable";
-import Loading from "./common/Loading";
-import uiOptions from "./api/uiOptions";
-import { withTranslation } from "react-i18next";
+import clsx from "clsx";
 import PropTypes from "prop-types";
-import * as api from "./api/sizeme-api";
+import React from "react";
+import { withTranslation } from "react-i18next";
+import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import clsx from "clsx";
+
+import * as api from "./api/sizeme-api";
+import uiOptions from "./api/uiOptions";
+import Loading from "./common/Loading";
 import "./SizeMeApp.scss";
 
 const SizeMeApp = Loadable({

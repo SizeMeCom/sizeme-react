@@ -1,8 +1,9 @@
-import React from "react";
+import Optional from "optional-js";
 import PropTypes from "prop-types";
+import React from "react";
+
 import SizeGuideModel from "../api/ProductModel";
 import uiOptions from "../api/uiOptions";
-import Optional from "optional-js";
 
 const realCanvasWidth = 350;
 const realCanvasHeight = 480;

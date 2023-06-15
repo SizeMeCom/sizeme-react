@@ -2,7 +2,9 @@ import PropTypes from "prop-types";
 import React from "react";
 import { withTranslation } from "react-i18next";
 import Modal from "react-modal";
+
 import uiOptions from "../api/uiOptions";
+
 import SizeGuideDetails from "./SizeGuideDetails";
 import SizeGuideItem from "./SizeGuideItem";
 import SizeGuideProductInfo from "./SizeGuideProductInfo";

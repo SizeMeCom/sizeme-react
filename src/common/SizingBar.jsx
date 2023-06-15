@@ -1,8 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
+import PropTypes from "prop-types";
+import React from "react";
+import { withTranslation } from "react-i18next";
+import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
+
 import ProductModel, {
   DEFAULT_OPTIMAL_FIT,
   DEFAULT_OPTIMAL_STRETCH,
@@ -11,7 +13,6 @@ import ProductModel, {
   isStretching,
   fitLabelsAndColors,
 } from "../api/ProductModel";
-import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
 const getSizename = (selectedSize) =>

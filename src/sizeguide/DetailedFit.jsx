@@ -2,6 +2,7 @@ import Optional from "optional-js";
 import PropTypes from "prop-types";
 import React from "react";
 import { withTranslation } from "react-i18next";
+
 import { getResult } from "../api/ProductModel";
 
 const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];

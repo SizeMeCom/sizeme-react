@@ -1,13 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { openLoginFrame } from "./LoginFrame.jsx";
 import "./SignupBox.scss";
-import validator from "validator";
+import PropTypes from "prop-types";
+import React from "react";
 import { withTranslation } from "react-i18next";
-import ReactTooltip from "react-tooltip";
-import logo from "../images/sizeme_logo_plain_h22.png";
 import Modal from "react-modal";
+import ReactTooltip from "react-tooltip";
+import validator from "validator";
+
 import uiOptions from "../api/uiOptions";
+import logo from "../images/sizeme_logo_plain_h22.png";
+
+import { openLoginFrame } from "./LoginFrame.jsx";
 
 Modal.setAppElement(uiOptions.appendContentTo + " div");
 

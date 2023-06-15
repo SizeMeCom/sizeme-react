@@ -1,14 +1,16 @@
-import { selectSize, setSizemeHidden, sizemeStore } from "./api/sizeme-api";
-import uiOptions from "./api/uiOptions";
+import React from "react";
 import { render } from "react-dom";
 import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n";
 import { Provider } from "react-redux";
-import SizeSelector from "./api/SizeSelector";
-import React from "react";
-import "./scss/index.scss";
+
 import SizeMeAppWrapper from "./SizeMeAppWrapper";
+import SizeSelector from "./api/SizeSelector";
+import { selectSize, setSizemeHidden, sizemeStore } from "./api/sizeme-api";
+import uiOptions from "./api/uiOptions";
 import { findVisibleElement } from "./common/utils";
+import i18n from "./i18n";
+
+import "./scss/index.scss";
 
 if (uiOptions.toggler) {
   const sizemeHidden = !JSON.parse(localStorage.getItem("sizemeToggledVisible"));
