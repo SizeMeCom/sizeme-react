@@ -75,7 +75,6 @@ class SizeGuideModal extends React.Component {
             loggedIn={loggedIn}
             unit={unit}
             chooseUnit={chooseUnit}
-            showUnitSelector={false}
             inchFractionsPrecision={inchFractionsPrecision}
             unitChoiceDisallowed={unitChoiceDisallowed}
           />

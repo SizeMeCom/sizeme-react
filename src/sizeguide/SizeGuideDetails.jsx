@@ -68,22 +68,22 @@ class SizeGuideDetails extends React.Component {
 
     return (
       <div className="size-guide-data size-guide-details">
-        <DetailSection title={t("common.shoppingFor")} showUnitSelector={false}>
+        <DetailSection title={t("common.shoppingFor")} writeUnitSelectorInHeader={false}>
           <ProfileSelect
             onSelectProfile={onSelectProfile}
             selectedProfile={selectedProfile}
             profiles={profiles}
           />
         </DetailSection>
-        <DetailSection title={t("common.selectedSize")} showUnitSelector={false}>
+        <DetailSection title={t("common.selectedSize")} writeUnitSelectorInHeader={false}>
           <DetailsSizeSelector selectedSize={selectedSize} />
         </DetailSection>
-        <DetailSection title={t("fitInfo.overallFit")} showUnitSelector={false}>
+        <DetailSection title={t("fitInfo.overallFit")} writeUnitSelectorInHeader={false}>
           <SizingBar />
         </DetailSection>
         <DetailSection
           title={t("detailed.tableTitle")}
-          showUnitSelector={true}
+          writeUnitSelectorInHeader={true}
           handleUnitChange={this.handleUnitChange}
           unitProp={unit}
           inchFractionsPrecision={inchFractionsPrecision}
@@ -125,7 +125,6 @@ SizeGuideDetails.propTypes = {
   t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
-  showUnitSelector: PropTypes.bool,
   inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };

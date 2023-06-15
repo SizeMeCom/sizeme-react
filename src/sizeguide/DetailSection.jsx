@@ -14,7 +14,7 @@ const DetailSection = ({
   children,
   unitProp,
   loggedIn,
-  showUnitSelector,
+  writeUnitSelectorInHeader,
   handleUnitChange,
   unitChoiceDisallowed,
 }) => (
@@ -23,7 +23,7 @@ const DetailSection = ({
       <div className="size-guide-header-title">
         <h2 className="header-h2">
           <span className="header-left">{title}</span>
-          {!unitChoiceDisallowed && (!loggedIn || showUnitSelector) && (
+          {!unitChoiceDisallowed && writeUnitSelectorInHeader && (
             <span className={"header-right unit-selector" + " unit-selector-selected-" + unitProp}>
               <span className="unit-selector-label" onClick={() => handleUnitChange("cm")}>
                 {unitTexts["cm"]}
@@ -49,7 +49,7 @@ DetailSection.propTypes = {
   children: PropTypes.node,
   unitProp: PropTypes.string,
   loggedIn: PropTypes.bool,
-  showUnitSelector: PropTypes.bool,
+  writeUnitSelectorInHeader: PropTypes.bool,
   handleUnitChange: PropTypes.func,
   inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,

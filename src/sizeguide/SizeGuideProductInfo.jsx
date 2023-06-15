@@ -74,6 +74,7 @@ class SizeGuideProductInfo extends React.Component {
           handleUnitChange={this.handleUnitChange}
           unitProp={unit}
           loggedIn={loggedIn}
+          writeUnitSelectorInHeader={true}
           unitChoiceDisallowed={unitChoiceDisallowed}
         >
           <table className="product-info-table">
