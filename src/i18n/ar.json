@@ -14,6 +14,8 @@
     "sizemeTooltip": "يدعم هذا المنتج ”سايزمي” ، وهي خدمة توصي بأفضل حجم مناسب من خلال مقارنة القياسات الفعلية لقياسات هذا المنتج.",
     "sizemeTooltipLink": "قراءة المزيد",
     "sizeItself": "مقاس",
+    "cm_short": "cm",
+    "in_short": "in",
     "defaultProfileName": "ملفي"
   },
   "detailed": {
