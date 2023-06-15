@@ -33,7 +33,7 @@
       background-color: $bg_color;
       position: relative;
 
-      input {
+      .input_cm {
         display: block;
         border: none;
         width: calc(100% - 24px);
@@ -48,6 +48,52 @@
         box-sizing: border-box;
       }
 
+      .input_in {
+        display: inline-block;
+        border: none;
+        width: calc(73% - 24px);
+        padding: 0 7px 0 0;
+        margin: 0;
+        height: 22px;
+        line-height: 22px;
+        font-weight: bold;
+        text-align: right;
+        color: #333;
+        background-color: transparent;
+        box-sizing: border-box;
+      }
+
+      .input_in_partial {
+        display: inline-block;
+        border: none;
+        width: calc(27%);
+        padding: 0 3px 0 0;
+        margin: 0;
+        height: 22px;
+        line-height: 22px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        background-color: transparent;
+        transition: background-color 0.2s ease-in-out;
+        box-sizing: border-box;
+        appearance: none;
+        border-radius: $border_radius;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, $hover_opacity_percentage);
+        }
+
+        option {
+          background-color: white;
+
+          &:checked {
+            background-color: $light_bg_color;
+          }
+        }
+      }
+
       .units {
         display: block;
         float: right;
@@ -55,6 +101,16 @@
         height: 22px;
         line-height: 22px;
         text-align: center;
+        margin-left: 0;
+        background-color: transparent;
+        transition: background-color 0.2s linear;
+
+        &.yes-clickable {
+          cursor: pointer;
+          &:hover {
+            background-color: rgba(0, 0, 0, $hover_opacity_percentage);
+          }
+        }
       }
 
       .tooltip-trigger {
@@ -62,10 +118,6 @@
         left: 40%;
         bottom: 4px;
       }
-    }
-
-    .measurement-input.measurement-input-ok {
-      /*background-color: #c7eace;*/
     }
 
     .measurement-input.measurement-input-pending input {
@@ -122,7 +174,7 @@
       padding: 4px 0 4px 8px;
       color: black;
       background-color: $light_bg_color;
-      border-radius: 0 0 3px 3px;
+      border-radius: 0 0 $border_radius $border_radius;
 
       a {
         pointer-events: all;
@@ -189,7 +241,7 @@
       display: none;
     }
 
-    .fa-solid {
+    .fa {
       position: absolute;
       right: 6px;
       top: 5px;
@@ -220,4 +272,62 @@
 }
 .sizeme-shopify .sizeme-signup-box .signup-email input {
   min-height: 24px;
+}
+
+.__react_component_tooltip.unit-menu {
+  border: 1px solid $default_color;
+  opacity: 1 !important;
+  padding: 0;
+  width: 200px;
+  z-index: 100;
+
+  .unit-list {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: relative;
+      display: block;
+      background-color: $light_bg_color;
+      width: 100%;
+      max-height: max-content;
+      border-radius: 0 0 $border_radius $border_radius;
+    }
+
+    .unit-item {
+      pointer-events: auto;
+      white-space: nowrap;
+      padding: 2px 8px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      height: 26px;
+      cursor: pointer;
+
+      &.selected {
+        font-weight: bold;
+        background-color: $selection_selected_bg_color;
+      }
+
+      .unit-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: bottom;
+        padding-right: 20px;
+        position: relative;
+        cursor: pointer;
+        font-size: 12px;
+
+        &::after {
+          position: absolute;
+          right: 12px;
+        }
+      }
+
+      &:hover {
+        background-color: $selection_hover_bg_color !important;
+      }
+    }
+  }
 }

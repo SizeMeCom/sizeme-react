@@ -1,14 +1,14 @@
-import React from "react";
+import Optional from "optional-js";
 import PropTypes from "prop-types";
+import React from "react";
+import { withTranslation } from "react-i18next";
+import ReactTooltip from "react-tooltip";
+import SizeSelector from "../api/SizeSelector";
 import ProfileSelect from "../common/ProfileSelect.jsx";
 import SizingBar from "../common/SizingBar.jsx";
-import SizeSelector from "../api/SizeSelector";
 import DetailSection from "./DetailSection.jsx";
 import DetailedFit from "./DetailedFit.jsx";
 import HoverContainer from "./HoverContainer.jsx";
-import Optional from "optional-js";
-import ReactTooltip from "react-tooltip";
-import { withTranslation } from "react-i18next";
 
 class DetailsSizeSelector extends React.Component {
   componentDidMount() {
@@ -40,6 +40,10 @@ class SizeGuideDetails extends React.Component {
     ReactTooltip.rebuild();
   }
 
+  handleUnitChange = (unit) => {
+    this.props.chooseUnit(unit);
+  };
+
   render() {
     const {
       product,
@@ -50,6 +54,9 @@ class SizeGuideDetails extends React.Component {
       selectedProfile,
       profiles,
       t,
+      unit,
+      inchFractionsPrecision,
+      unitChoiceDisallowed,
     } = this.props;
 
     const item = Object.assign({}, product.item, {
@@ -61,20 +68,27 @@ class SizeGuideDetails extends React.Component {
 
     return (
       <div className="size-guide-data size-guide-details">
-        <DetailSection title={t("common.shoppingFor")}>
+        <DetailSection title={t("common.shoppingFor")} showUnitSelector={false}>
           <ProfileSelect
             onSelectProfile={onSelectProfile}
             selectedProfile={selectedProfile}
             profiles={profiles}
           />
         </DetailSection>
-        <DetailSection title={t("common.selectedSize")}>
+        <DetailSection title={t("common.selectedSize")} showUnitSelector={false}>
           <DetailsSizeSelector selectedSize={selectedSize} />
         </DetailSection>
-        <DetailSection title={t("fitInfo.overallFit")}>
+        <DetailSection title={t("fitInfo.overallFit")} showUnitSelector={false}>
           <SizingBar />
         </DetailSection>
-        <DetailSection title={t("detailed.tableTitle")}>
+        <DetailSection
+          title={t("detailed.tableTitle")}
+          showUnitSelector={true}
+          handleUnitChange={this.handleUnitChange}
+          unitProp={unit}
+          inchFractionsPrecision={inchFractionsPrecision}
+          unitChoiceDisallowed={unitChoiceDisallowed}
+        >
           <div className="fit-table">
             {product.model.measurementOrder.map((measurement, i) => (
               <HoverContainer measurement={measurement} onHover={onHover} key={i}>
@@ -86,6 +100,8 @@ class SizeGuideDetails extends React.Component {
                       item={item}
                       measurementName={product.model.measurementName}
                       match={match}
+                      unit={unit}
+                      inchFractionsPrecision={inchFractionsPrecision}
                     />
                   )}
                 </div>
@@ -107,6 +123,11 @@ SizeGuideDetails.propTypes = {
   matchResult: PropTypes.object,
   product: PropTypes.object.isRequired,
   t: PropTypes.func,
+  unit: PropTypes.string,
+  chooseUnit: PropTypes.func,
+  showUnitSelector: PropTypes.bool,
+  inchFractionsPrecision: PropTypes.number,
+  unitChoiceDisallowed: PropTypes.bool,
 };
 
 export default withTranslation()(SizeGuideDetails);

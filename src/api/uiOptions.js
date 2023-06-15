@@ -3,6 +3,8 @@ const general = {
   toggler: false,
   firstRecommendation: true,
   flatMeasurements: true,
+  measurementUnit: "cm",
+  measurementUnitChoiceDisallowed: false,
   matchGenderFromNameMale: "",
 };
 
@@ -10,7 +12,6 @@ const shops = {
   magento: {
     appendContentTo: ".product-options",
     invokeElement: "select.super-attribute-select",
-    invokeEvent: "change",
     addToCartElement: "button.btn-cart",
     addToCartEvent: "click",
     firstRecommendation: true,
@@ -19,7 +20,6 @@ const shops = {
   woocommerce: {
     appendContentTo: ".sizeme-container",
     invokeElement: ".sizeme-selection-container select",
-    invokeEvent: "change",
     addToCartElement: "button.single_add_to_cart_button",
     addToCartEvent: "click",
     firstRecommendation: true,
@@ -28,7 +28,6 @@ const shops = {
   vilkas: {
     appendContentTo: ".PriceContainer",
     invokeElement: "#SelectedVariation0",
-    invokeEvent: "change",
     addToCartElement: "button.AddToBasketButton",
     addToCartEvent: "click",
     firstRecommendation: false,
@@ -37,7 +36,6 @@ const shops = {
   crasmanKooKenka: {
     appendContentTo: ".js-product-sizes",
     invokeElement: ".a-product-sizes",
-    invokeEvent: "click",
     addToCartElement: "button.AddToBasketButton",
     addToCartEvent: "click",
     firstRecommendation: true,
@@ -46,7 +44,6 @@ const shops = {
   shopify: {
     appendContentTo: ".sizeme-container",
     invokeElement: ".single-option-selector",
-    invokeEvent: "change",
     addToCartElement: "button.product-form__cart-submit",
     addToCartEvent: "click",
     firstRecommendation: true,

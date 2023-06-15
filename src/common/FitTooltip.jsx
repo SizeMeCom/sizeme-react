@@ -1,9 +1,20 @@
-import React from "react";
 import PropTypes from "prop-types";
-import ReactTooltip from "react-tooltip";
+import React from "react";
 import { withTranslation } from "react-i18next";
-import { getResult } from "../api/ProductModel";
 import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
+import { getResult } from "../api/ProductModel";
+
+const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
+
+const convertToInches = (size, inchFractionsPrecision) => {
+  const precision = parseInt(inchFractionsPrecision);
+  const inchesWhole = Math.floor(Math.round((size / 2.54) * precision) / precision);
+  const inchesPartial = Math.round((size / 2.54) * precision) - inchesWhole * precision;
+  return inchesWhole > 0
+    ? `${inchesWhole} ${inchFractionOptions[inchesPartial]}`
+    : inchFractionOptions[inchesPartial];
+};
 
 const getStretchedTxt = (stretchValue, t) => {
   if (stretchValue > 0) {
@@ -27,6 +38,24 @@ const overlap = (fitData, t) => {
       <span>
         {t("fitInfo.overlapsYou")}
         <strong> {fitText}</strong>
+        {isPinched && t("fitInfo.whenPinched")}.
+      </span>
+    );
+  } else {
+    return null;
+  }
+};
+
+const overlapInches = (fitData, t, inchFractionsPrecision) => {
+  const { matchItem, isPinched } = fitData;
+  if (matchItem && matchItem.overlap > 0) {
+    return (
+      <span>
+        {t("fitInfo.overlapsYou")}
+        <strong>
+          {" "}
+          {convertToInches(fitData.fitValue, inchFractionsPrecision)} {t("common.in_short")}
+        </strong>
         {isPinched && t("fitInfo.whenPinched")}.
       </span>
     );
@@ -105,7 +134,7 @@ class FitTooltip extends React.Component {
   }
 
   render() {
-    const { t, measurement, product } = this.props;
+    const { t, measurement, product, unit, inchFractionsPrecision } = this.props;
     const { measurementName } = product.model;
     const { fitData } = this.state;
     if (!fitData || !measurement) {
@@ -119,7 +148,8 @@ class FitTooltip extends React.Component {
           className={`fit-tooltip ${measurement}`}
         >
           {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
-          {overlap(fitData, t)}
+          {unit === "cm" && overlap(fitData, t)}
+          {unit === "in" && overlapInches(fitData, t, inchFractionsPrecision)}
           {noOverlap(fitData, t)}
           {noMatchItem(fitData, t)}
         </ReactTooltip>
@@ -134,6 +164,8 @@ FitTooltip.propTypes = {
   selectedSize: PropTypes.string,
   matchResult: PropTypes.object,
   t: PropTypes.func.isRequired,
+  unit: PropTypes.string,
+  inchFractionsPrecision: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({

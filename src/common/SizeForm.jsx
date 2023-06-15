@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setProfileMeasurements } from "../api/sizeme-api";
-import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
-import MeasurementInput from "./MeasurementInput.jsx";
-import ReactTooltip from "react-tooltip";
-import Modal from "react-modal";
-import VideoGuide from "./VideoGuide.jsx";
 import Optional from "optional-js";
-import OverlapBox from "../illustrations/OverlapBox";
-import "./SizeForm.scss";
+import PropTypes from "prop-types";
+import React from "react";
 import { withTranslation } from "react-i18next";
+import Modal from "react-modal";
+import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
+import { bindActionCreators } from "redux";
+import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
 import { setTooltip } from "../api/actions";
+import { setProfileMeasurements } from "../api/sizeme-api";
 import uiOptions from "../api/uiOptions";
+import OverlapBox from "../illustrations/OverlapBox";
+import MeasurementInput from "./MeasurementInput.jsx";
+import "./SizeForm.scss";
+import VideoGuide from "./VideoGuide.jsx";
 
 Modal.setAppElement(uiOptions.appendContentTo + " div");
 
@@ -68,7 +68,6 @@ class SizeForm extends React.Component {
     this.setState({ guideModalOpen: false });
   };
 
-  // TODO: Fix display-name
   // eslint-disable-next-line react/display-name
   tooltipContent = (t) => () => {
     const linkTexts = t("measurementTooltips.linkToGuide", { returnObjects: true });
@@ -141,7 +140,8 @@ class SizeForm extends React.Component {
         .map((res) => ProductModel.getFit(res).label)
         .orElse(null);
     const measurementCellWidth = 100 / this.fields.length + "%";
-    const { t, onOverlapBoxHover } = this.props;
+    const { t, onOverlapBoxHover, unit, chooseUnit, inchFractionsPrecision, unitChoiceDisallowed } =
+      this.props;
 
     return (
       <div
@@ -155,8 +155,11 @@ class SizeForm extends React.Component {
             <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
             <MeasurementInput
               onChange={this.valueChanged(humanProperty)}
-              unit="cm"
               value={this.state.measurements[humanProperty]}
+              unit={unit}
+              chooseUnit={chooseUnit}
+              inchFractionsPrecision={inchFractionsPrecision}
+              unitChoiceDisallowed={unitChoiceDisallowed}
               fitRange={fitRange(field)}
               onFocus={() => {
                 this.setActiveTooltip(field);
@@ -170,6 +173,8 @@ class SizeForm extends React.Component {
                   hover={() => onOverlapBoxHover(field)}
                   key={humanProperty}
                   model={this.props.product.model}
+                  unit={unit}
+                  inchFractionsPrecision={inchFractionsPrecision}
                 />
               ))
               .orElse(null)}
@@ -210,6 +215,10 @@ SizeForm.propTypes = {
   product: PropTypes.object,
   selectedSize: PropTypes.string,
   t: PropTypes.func,
+  unit: PropTypes.string,
+  chooseUnit: PropTypes.func,
+  inchFractionsPrecision: PropTypes.number,
+  unitChoiceDisallowed: PropTypes.bool,
 };
 
 const mapDispatchToProps = (dispatch) =>

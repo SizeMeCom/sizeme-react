@@ -1,12 +1,14 @@
-import React from "react";
 import PropTypes from "prop-types";
-import DetailSection from "./DetailSection.jsx";
-import SizeSelector from "../api/SizeSelector";
+import React from "react";
 import { withTranslation } from "react-i18next";
-import HoverContainer from "./HoverContainer.jsx";
+import SizeSelector from "../api/SizeSelector";
+import uiOptions from "../api/uiOptions";
 import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
 import { openLoginFrame } from "../common/LoginFrame";
-import uiOptions from "../api/uiOptions";
+import DetailSection from "./DetailSection.jsx";
+import HoverContainer from "./HoverContainer.jsx";
+
+const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
 
 class SizeGuideProductInfo extends React.Component {
   hasNeckOpening = () => this.props.productModel.measurementOrder.includes("neck_opening_width");
@@ -18,25 +20,62 @@ class SizeGuideProductInfo extends React.Component {
 
   loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
 
+  convertToInches = (size) => {
+    const precision = this.props.inchFractionsPrecision;
+    const inchesWhole = Math.floor(Math.round((size / 2.54) * precision) / precision);
+    const inchesPartial = Math.round((size / 2.54) * precision) - inchesWhole * precision;
+    return inchesWhole > 0
+      ? `${inchesWhole} ${inchFractionOptions[inchesPartial]}`
+      : inchFractionOptions[inchesPartial];
+  };
+
+  changeMeasurementUnit = (event) => {
+    this.props.chooseUnit(event.target.value);
+  };
+
+  handleUnitChange = (unit) => {
+    this.props.chooseUnit(unit);
+  };
+
   render() {
-    const { t, measurements, onHover, productModel } = this.props;
+    const { t, measurements, onHover, productModel, unit, loggedIn, unitChoiceDisallowed } =
+      this.props;
     const { measurementOrder, measurementName, pinchedFits } = productModel;
 
-    const measurementCell = (size, measurement) => (
+    const measurementCellCm = (size, measurement) => (
       <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
         <td>
           {(
             measurements[size][measurement] /
             (!pinchedFits.includes(measurement) || uiOptions.flatMeasurements ? 10.0 : 5.0)
           ).toFixed(1)}{" "}
-          cm
+          {t("common.cm_short")}
         </td>
       </HoverContainer>
     );
+    const measurementCellInches = (size, measurement) => {
+      const originalSizeToShow =
+        measurements[size][measurement] /
+        (!pinchedFits.includes(measurement) || uiOptions.flatMeasurements ? 10.0 : 5.0);
+      const sizeInInches = this.convertToInches(originalSizeToShow);
+      return (
+        <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
+          <td>
+            {sizeInInches} {t("common.in_short")}
+          </td>
+        </HoverContainer>
+      );
+    };
 
     return (
       <div className="size-guide-data size-guide-product-info">
-        <DetailSection title={t("sizeGuide.tableTitle")}>
+        <DetailSection
+          title={t("sizeGuide.tableTitle")}
+          handleUnitChange={this.handleUnitChange}
+          unitProp={unit}
+          loggedIn={loggedIn}
+          unitChoiceDisallowed={unitChoiceDisallowed}
+        >
           <table className="product-info-table">
             <thead>
               <tr>
@@ -51,16 +90,32 @@ class SizeGuideProductInfo extends React.Component {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {SizeSelector.getSizeMapper()
-                .filter(([size]) => !!measurements[size])
-                .map(([size, sizeName]) => (
-                  <tr key={sizeName}>
-                    <td className="size-col">{sizeName}</td>
-                    {measurementOrder.map((measurement) => measurementCell(size, measurement))}
-                  </tr>
-                ))}
-            </tbody>
+            {this.props.unit === "cm" && (
+              <tbody>
+                {SizeSelector.getSizeMapper()
+                  .filter(([size]) => !!measurements[size])
+                  .map(([size, sizeName]) => (
+                    <tr key={sizeName}>
+                      <td className="size-col">{sizeName}</td>
+                      {measurementOrder.map((measurement) => measurementCellCm(size, measurement))}
+                    </tr>
+                  ))}
+              </tbody>
+            )}
+            {this.props.unit === "in" && (
+              <tbody>
+                {SizeSelector.getSizeMapper()
+                  .filter(([size]) => !!measurements[size])
+                  .map(([size, sizeName]) => (
+                    <tr key={sizeName}>
+                      <td className="size-col">{sizeName}</td>
+                      {measurementOrder.map((measurement) =>
+                        measurementCellInches(size, measurement)
+                      )}
+                    </tr>
+                  ))}
+              </tbody>
+            )}
           </table>
           {this.isInside() && (
             <div className="sizeme-explanation">
@@ -122,6 +177,11 @@ SizeGuideProductInfo.propTypes = {
   productModel: PropTypes.object.isRequired,
   onHover: PropTypes.func.isRequired,
   t: PropTypes.func,
+  unit: PropTypes.string,
+  chooseUnit: PropTypes.func,
+  loggedIn: PropTypes.bool.isRequired,
+  inchFractionsPrecision: PropTypes.number,
+  unitChoiceDisallowed: PropTypes.bool,
 };
 
 export default withTranslation()(SizeGuideProductInfo);

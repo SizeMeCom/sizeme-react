@@ -14,6 +14,8 @@
     "sizemeTooltip": "Tässä tuotteessa on käytössä SizeMe-palvelu, joka suosittelee sopivinta kokoa vertaamalla mittojasi tämän tuotteen mittoihin.",
     "sizemeTooltipLink": "Lue lisää",
     "sizeItself": "Koko",
+    "cm_short": "cm",
+    "in_short": "in",
     "defaultProfileName": "Minun mittani"
   },
   "detailed": {

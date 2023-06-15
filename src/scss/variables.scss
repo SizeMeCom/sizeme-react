@@ -6,11 +6,18 @@ $too_big: #b55;
 
 $default_color: #666;
 $bg_color: #fff;
-$light_bg_color: #e2e2e2;
+$light_bg_color: #e1e1e1;
+$lighter_bg_color: #efefef;
+$lightest_bg_color: #f6f6f6;
+
+$hover_opacity_percentage: 0.1;
 
 $recommendation_color: #5fc153;
 
-$border_radius: 4px;
+$selection_selected_bg_color: #e2e2e2;
+$selection_hover_bg_color: #dc9ddd;
+
+$border_radius: 0px;
 
 $base_z_index: 10100; /* kookenkä's header has z-index of 10020.. */
 

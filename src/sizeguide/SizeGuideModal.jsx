@@ -1,11 +1,11 @@
-import React from "react";
-import SizeGuideItem from "./SizeGuideItem";
-import Modal from "react-modal";
 import PropTypes from "prop-types";
-import SizeGuideDetails from "./SizeGuideDetails";
-import SizeGuideProductInfo from "./SizeGuideProductInfo";
+import React from "react";
 import { withTranslation } from "react-i18next";
+import Modal from "react-modal";
 import uiOptions from "../api/uiOptions";
+import SizeGuideDetails from "./SizeGuideDetails";
+import SizeGuideItem from "./SizeGuideItem";
+import SizeGuideProductInfo from "./SizeGuideProductInfo";
 
 Modal.setAppElement(uiOptions.appendContentTo + " div");
 
@@ -24,6 +24,10 @@ class SizeGuideModal extends React.Component {
     onSelectProfile: PropTypes.func.isRequired,
     profiles: PropTypes.arrayOf(PropTypes.object),
     onHover: PropTypes.func.isRequired,
+    unit: PropTypes.string,
+    chooseUnit: PropTypes.func,
+    inchFractionsPrecision: PropTypes.number,
+    unitChoiceDisallowed: PropTypes.bool,
   };
 
   constructor(props) {
@@ -45,6 +49,10 @@ class SizeGuideModal extends React.Component {
       selectedProfile,
       profiles,
       matchState,
+      unit,
+      chooseUnit,
+      inchFractionsPrecision,
+      unitChoiceDisallowed,
     } = this.props;
 
     const selectedMatchResult = matchResult ? matchResult[selectedSize] : null;
@@ -64,6 +72,12 @@ class SizeGuideModal extends React.Component {
             onHover={onHover}
             matchResult={matchResult}
             product={product}
+            loggedIn={loggedIn}
+            unit={unit}
+            chooseUnit={chooseUnit}
+            showUnitSelector={false}
+            inchFractionsPrecision={inchFractionsPrecision}
+            unitChoiceDisallowed={unitChoiceDisallowed}
           />
         );
       } else {
@@ -72,6 +86,11 @@ class SizeGuideModal extends React.Component {
             measurements={product.item.measurements}
             productModel={product.model}
             onHover={onHover}
+            loggedIn={loggedIn}
+            unit={unit}
+            chooseUnit={chooseUnit}
+            inchFractionsPrecision={inchFractionsPrecision}
+            unitChoiceDisallowed={unitChoiceDisallowed}
           />
         );
       }

@@ -14,6 +14,8 @@
     "sizemeTooltip": "Dieses Produkt unterstützt SizeMe, einen Service, der dir aufgrund deiner Körpermaße die dir am besten  passende Größe vorschlägt - indem deine Maße mit den Maßen des Produktes verglichen werden.",
     "sizemeTooltipLink": "Lies mehr",
     "sizeItself": "Größe",
+    "cm_short": "cm",
+    "in_short": "in",
     "defaultProfileName": "Mein Profil"
   },
   "detailed": {

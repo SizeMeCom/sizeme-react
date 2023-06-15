@@ -1,17 +1,17 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setSelectedProfile } from "../api/sizeme-api";
-import ReactTooltip from "react-tooltip";
+import React from "react";
 import { withTranslation } from "react-i18next";
-import "./SizeGuide.scss";
-import { setTooltip } from "../api/actions";
 import Loadable from "react-loadable";
+import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
+import { bindActionCreators } from "redux";
+import { setTooltip } from "../api/actions";
+import { setSelectedProfile } from "../api/sizeme-api";
 import Loading from "../common/Loading";
+import "./SizeGuide.scss";
 
 const SizeGuideModal = Loadable({
-  loader: () => import(/* webpackChunkName: "sizeguide" */ "./SizeGuideModal"),
+  loader: () => import("./SizeGuideModal"),
   loading() {
     return <Loading />;
   },
@@ -56,7 +56,8 @@ class SizeGuide extends React.Component {
   }
 
   render() {
-    const { t, loggedIn } = this.props;
+    const { t, loggedIn, unit, chooseUnit, inchFractionsPrecision, unitChoiceDisallowed } =
+      this.props;
     const { guideIsOpen } = this.state;
     const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
 
@@ -72,7 +73,15 @@ class SizeGuide extends React.Component {
         <a className="link-btn size-guide" onClick={this.openGuide}>
           {button} <i className="fa-solid fa-caret-right" />
         </a>
-        {guideIsOpen && <SizeGuideModal {...modalProps} />}
+        {guideIsOpen && (
+          <SizeGuideModal
+            {...modalProps}
+            unit={unit}
+            chooseUnit={chooseUnit}
+            inchFractionsPrecision={inchFractionsPrecision}
+            unitChoiceDisallowed={unitChoiceDisallowed}
+          />
+        )}
       </div>
     );
   }
@@ -89,6 +98,10 @@ SizeGuide.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   matchState: PropTypes.object,
   t: PropTypes.func,
+  unit: PropTypes.string,
+  chooseUnit: PropTypes.func,
+  inchFractionsPrecision: PropTypes.number,
+  unitChoiceDisallowed: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

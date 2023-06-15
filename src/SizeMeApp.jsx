@@ -1,25 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withTranslation } from "react-i18next";
-import { connect } from "react-redux";
-import SizeGuide from "./sizeguide/SizeGuide.jsx";
-import SizingBar from "./common/SizingBar.jsx";
-import * as api from "./api/sizeme-api";
 import Optional from "optional-js";
-import { bindActionCreators } from "redux";
-import SignupBox from "./common/SignupBox";
-import "./SizeMeApp.scss";
-import uiOptions from "./api/uiOptions";
-import ProfileMenu from "./common/ProfileMenu";
-import FitTooltip from "./common/FitTooltip";
-import LoginFrame from "./common/LoginFrame";
-import sizemeIcon from "./images/sizeme_icon.png";
-import ReactTooltip from "react-tooltip";
+import PropTypes from "prop-types";
+import React from "react";
+import { withTranslation } from "react-i18next";
 import Loadable from "react-loadable";
+import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
+import { bindActionCreators } from "redux";
+import "./SizeMeApp.scss";
+import * as api from "./api/sizeme-api";
+import uiOptions from "./api/uiOptions";
+import FitTooltip from "./common/FitTooltip";
 import Loading from "./common/Loading";
+import LoginFrame from "./common/LoginFrame";
+import ProfileMenu from "./common/ProfileMenu";
+import SignupBox from "./common/SignupBox";
+import SizingBar from "./common/SizingBar.jsx";
+import sizemeIcon from "./images/sizeme_icon.png";
+import SizeGuide from "./sizeguide/SizeGuide.jsx";
 
 const SizeForm = Loadable({
-  loader: () => import(/* webpackChunkName: "form" */ "./common/SizeForm.jsx"),
+  loader: () => import("./common/SizeForm.jsx"),
   loading() {
     return <Loading />;
   },
@@ -28,13 +28,18 @@ const SizeForm = Loadable({
 class SizeMeApp extends React.Component {
   constructor(props) {
     super(props);
+    let selectedUnit = localStorage.getItem("sizemeMeasurementUnit");
+    selectedUnit = ["cm", "in"].includes(selectedUnit) ? selectedUnit : uiOptions.measurementUnit;
     this.state = {
       loginModalOpen: false,
+      unit: selectedUnit,
     };
     this.shopType = Optional.ofNullable(uiOptions.shopType)
       .map((s) => `sizeme-${s}`)
       .orElse("");
     this.skinClasses = uiOptions.skinClasses || "";
+    this.inchFractionsPrecision = 8;
+    this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false;
   }
 
   userLoggedIn = () => {
@@ -51,6 +56,11 @@ class SizeMeApp extends React.Component {
   componentWillUnmount() {
     document.body.classList.remove("sizeme-active");
   }
+
+  chooseUnit = (chosenUnit) => {
+    localStorage.setItem("sizemeMeasurementUnit", chosenUnit);
+    this.setState({ unit: chosenUnit });
+  };
 
   render() {
     const {
@@ -102,9 +112,24 @@ class SizeMeApp extends React.Component {
             </div>
           )}
         </div>
-        {measurementInputs && <SizeForm fields={measurementInputs} />}
-        {resolved && !uiOptions.disableSizeGuide && <SizeGuide />}
-        <FitTooltip />
+        {measurementInputs && (
+          <SizeForm
+            fields={measurementInputs}
+            unit={this.state.unit}
+            chooseUnit={this.chooseUnit}
+            inchFractionsPrecision={this.inchFractionsPrecision}
+            unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
+          />
+        )}
+        {resolved && !uiOptions.disableSizeGuide && (
+          <SizeGuide
+            unit={this.state.unit}
+            chooseUnit={this.chooseUnit}
+            inchFractionsPrecision={this.inchFractionsPrecision}
+            unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
+          />
+        )}
+        <FitTooltip unit={this.state.unit} inchFractionsPrecision={this.inchFractionsPrecision} />
         <LoginFrame id="login-frame" onLogin={this.userLoggedIn} />
       </div>
     );
@@ -125,6 +150,9 @@ SizeMeApp.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   onSignup: PropTypes.func.isRequired,
   t: PropTypes.func,
+  chooseUnit: PropTypes.func,
+  unit: PropTypes.string,
+  inchFractionsPrecision: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({

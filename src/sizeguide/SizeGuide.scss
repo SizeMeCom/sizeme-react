@@ -232,12 +232,93 @@ a.link-btn.size-guide {
       margin-top: 10px;
       padding-bottom: 5px;
 
-      h2 {
-        text-transform: uppercase;
-        background-color: #ccc;
-        padding: 3px 6px;
-        margin-bottom: 15px;
-        font-size: 12px;
+      .size-guide-header-container {
+        .size-guide-header-title {
+          .header-h2 {
+            display: flex;
+            justify-content: space-between;
+
+            .header-right {
+              text-align: right;
+            }
+
+            .unit-selector {
+              text-transform: none;
+              position: relative;
+              right: 10px;
+              width: 69px;
+
+              .unit-selector-label {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 1px 4px;
+                font-size: 12px;
+                line-height: 12px;
+
+                &:hover {
+                  background-color: rgba(255, 255, 255, $hover_opacity_percentage);
+                }
+                &:last-child {
+                  left: auto;
+                  right: 0;
+                }
+              }
+
+              .unit-selector-slider {
+                cursor: pointer;
+                position: absolute;
+                top: 2px;
+                left: 24px;
+                right: 0;
+                bottom: 0;
+                background-color: $lightest_bg_color;
+                transition: 0.4s;
+                display: inline-block;
+                margin: 1px 6px;
+                height: 8px;
+                width: 16px;
+                border-radius: 4px;
+
+                &::before {
+                  position: absolute;
+                  content: "";
+                  height: 13px;
+                  width: 13px;
+                  left: -4px;
+                  bottom: -3px;
+                  background-color: black;
+                  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                  transition: 0.3s;
+                  border-radius: 50%;
+                }
+
+                &:hover {
+                  background-color: white;
+                }
+
+                &:hover::before,
+                &:active::before {
+                  box-shadow: 0 0 6px rgba(0, 0, 0, 0.75);
+                }
+              }
+              &.unit-selector-selected-in .unit-selector-slider:before {
+                transform: translateX(12px);
+              }
+            }
+          }
+        }
+
+        h2 {
+          text-transform: uppercase;
+          background-color: #ccc;
+          padding: 3px 6px;
+          margin: 0 auto 15px auto;
+          font-size: 12px;
+          justify-content: space-between;
+          justify-items: stretch;
+        }
       }
     }
   }
