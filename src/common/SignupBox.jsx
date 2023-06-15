@@ -89,9 +89,7 @@ class SignupBox extends React.Component {
           {!signupDone && (
             <>
               <div>{t("signupBox.message")}</div>
-              <div className="signup-box-header">
-                {t("signupBox.signupChoices")}
-              </div>
+              <div className="signup-box-header">{t("signupBox.signupChoices")}</div>
               <div className={inputClassName}>
                 <input
                   type="email"
