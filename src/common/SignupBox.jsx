@@ -72,7 +72,12 @@ class SignupBox extends React.Component {
     const inputClassName = "signup-email" + (isError ? " error" : "");
     return (
       <div className="signup-box-container">
-        <i className="fa-regular fa-save" data-tip data-for="sizeme-signup-box" data-event="click" />
+        <i
+          className="fa-regular fa-save"
+          data-tip
+          data-for="sizeme-signup-box"
+          data-event="click"
+        />
         <ReactTooltip
           id="sizeme-signup-box"
           className="sizeme-signup-box"
@@ -84,7 +89,9 @@ class SignupBox extends React.Component {
           {!signupDone && (
             <>
               <div>{t("signupBox.message")}</div>
-              <div className="signup-box-header">{t("signupBox.signupChoices")}</div>
+              <div className="signup-box-header">
+                {t("signupBox.signupChoices")}
+              </div>
               <div className={inputClassName}>
                 <input
                   type="email"
