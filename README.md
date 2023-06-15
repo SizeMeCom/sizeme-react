@@ -50,6 +50,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [skinClasses] (_String_): contents will be appended to the class attribute of SizeMe container element. Empty by default.
   - [toggler] (_Boolean_): enable/disable functionality that can be used to toggle the visibility of SizeMe content
   - [flatMeasurements] (_Boolean_): show product circumference measurements (chest, waist etc) as measured on a flat surface in the size guide. Default: true
+  - [matchGenderFromNameMale] (_String_): a reg exp string to match that product is for (real) men. Otherwise measuring videos etc. default to women. Default: ""
 - [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to
   override the Swedish translation for chest:
 

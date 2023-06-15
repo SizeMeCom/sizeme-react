@@ -13,7 +13,8 @@
     "togglerText": "Löydä oikea kokosi",
     "sizemeTooltip": "Tässä tuotteessa on käytössä SizeMe-palvelu, joka suosittelee sopivinta kokoa vertaamalla mittojasi tämän tuotteen mittoihin.",
     "sizemeTooltipLink": "Lue lisää",
-    "sizeItself": "Koko"
+    "sizeItself": "Koko",
+    "defaultProfileName": "Minun mittani"
   },
   "detailed": {
     "windowTitle": "Sopivuustiedot tuotteelle",

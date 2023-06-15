@@ -13,7 +13,8 @@
     "togglerText": "Finde meine Größe",
     "sizemeTooltip": "Dieses Produkt unterstützt SizeMe, einen Service, der dir aufgrund deiner Körpermaße die dir am besten  passende Größe vorschlägt - indem deine Maße mit den Maßen des Produktes verglichen werden.",
     "sizemeTooltipLink": "Lies mehr",
-    "sizeItself": "Größe"
+    "sizeItself": "Größe",
+    "defaultProfileName": "Mein Profil"
   },
   "detailed": {
     "buttonText": "Detaillierte Ansicht der Passform",
