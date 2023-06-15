@@ -19,7 +19,6 @@ const el = findVisibleElement(uiOptions.appendContentTo);
 
 if (el) {
   const section = el.appendChild(document.createElement("div"));
-  //noinspection RequiredAttributes
   render(
     <I18nextProvider i18n={i18n}>
       <Provider store={sizemeStore}>
