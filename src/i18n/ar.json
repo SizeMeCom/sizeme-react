@@ -13,7 +13,8 @@
     "togglerText": "ابحث عن مقاسي",
     "sizemeTooltip": "يدعم هذا المنتج ”سايزمي” ، وهي خدمة توصي بأفضل حجم مناسب من خلال مقارنة القياسات الفعلية لقياسات هذا المنتج.",
     "sizemeTooltipLink": "قراءة المزيد",
-    "sizeItself": "مقاس"
+    "sizeItself": "مقاس",
+    "defaultProfileName": "ملفي"
   },
   "detailed": {
     "buttonText": "صورة تفصيلية للمقاس",

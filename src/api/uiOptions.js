@@ -5,6 +5,7 @@ const general = {
   flatMeasurements: true,
   measurementUnit: "cm",
   measurementUnitChoiceDisallowed: false,
+  matchGenderFromNameMale: "",
 };
 
 const shops = {

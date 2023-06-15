@@ -1,11 +1,14 @@
 /* global sizeme_product */
 
 import "isomorphic-fetch";
-import * as actions from "./actions";
+import i18n from "i18next";
+import Optional from "optional-js";
 import { applyMiddleware, createStore } from "redux";
-import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
-import rootReducer from "./reducers";
+import thunkMiddleware from "redux-thunk";
+import equals from "shallow-equals";
+import Cookies from "universal-cookie";
+
 import SizeGuideModel, {
   DEFAULT_OPTIMAL_FIT,
   DEFAULT_OPTIMAL_STRETCH,
@@ -13,11 +16,10 @@ import SizeGuideModel, {
   isStretching,
   stretchFactor,
 } from "./ProductModel";
-import Optional from "optional-js";
 import SizeSelector from "./SizeSelector";
+import * as actions from "./actions";
+import rootReducer from "./reducers";
 import uiOptions from "./uiOptions";
-import equals from "shallow-equals";
-import Cookies from "universal-cookie";
 
 const sizemeOptions = () => window.sizeme_options || {};
 
@@ -334,6 +336,18 @@ function getProduct() {
   };
 }
 
+function guessGenderFromProductName() {
+  if (uiOptions.matchGenderFromNameMale) {
+    const regexpForMale = new RegExp(uiOptions.matchGenderFromNameMale, "i");
+    const productNameCombo =
+      (sizeme_product.name ?? "") + (sizeme_product.SKU ? ",SKU:" + sizeme_product.SKU : "");
+    if (regexpForMale.test(productNameCombo)) {
+      return "Male";
+    }
+  }
+  return "Female";
+}
+
 function setSelectedProfile(profileId) {
   return async (dispatch, getState) => {
     if (getState().selectedProfile === profileId) {
@@ -347,8 +361,8 @@ function setSelectedProfile(profileId) {
     if (!getState().authToken.loggedIn) {
       dispatch(
         actions.selectProfile({
-          gender: "Female",
-          profileName: "My profile",
+          gender: guessGenderFromProductName(),
+          profileName: i18n.t("common.defaultProfileName"),
         })
       );
       dispatch(actions.selectProfileDone());

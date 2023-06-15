@@ -53,6 +53,8 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [flatMeasurements] (_Boolean_): show product circumference measurements (chest, waist etc) as measured on a flat surface in the size guide. Default: true
   - [measurementUnit] (_String_): default measurement unit. Possible values: "cm" for metric, "in" for imperials. Default: "cm"
   - [measurementUnitChoiceDisallowed] (_Boolean_): disallow user from switching measurement unit. Default: false
+  - [matchGenderFromNameMale] (_String_): a reg exp string to match that product is for (real) men. Otherwise measuring videos etc. default to women. Default: ""
+
 - [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to
   override the Swedish translation for chest:
 

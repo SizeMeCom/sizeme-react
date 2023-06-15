@@ -13,7 +13,8 @@
     "togglerText": "Hitta min storlek",
     "sizemeTooltip": "Denna produkt stöder SizeMe, en tjänst som rekommenderar den bästa passningsstorleken genom att jämföra dina fysiska mätningar med mätningarna på denna produkt.",
     "sizemeTooltipLink": "Läs mer",
-    "sizeItself": "Storlek"
+    "sizeItself": "Storlek",
+    "defaultProfileName": "Min profil"
   },
   "detailed": {
     "windowTitle": "Detaljerad Bild för",

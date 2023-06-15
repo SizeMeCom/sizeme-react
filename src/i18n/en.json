@@ -16,6 +16,7 @@
     "sizeItself": "Size",
     "cm_short": "cm",
     "in_short": "in"
+    "defaultProfileName": "My profile"
   },
   "detailed": {
     "buttonText": "Detailed view of fit",
