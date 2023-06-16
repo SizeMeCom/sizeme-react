@@ -38,8 +38,7 @@ class SizeGuideProductInfo extends React.Component {
   };
 
   render() {
-    const { t, measurements, onHover, productModel, unit, unitChoiceDisallowed } =
-      this.props;
+    const { t, measurements, onHover, productModel, unit, unitChoiceDisallowed } = this.props;
     const { measurementOrder, measurementName, pinchedFits } = productModel;
 
     const measurementCellCm = (size, measurement) => (
