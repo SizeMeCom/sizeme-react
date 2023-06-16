@@ -85,7 +85,6 @@ class SizeGuideModal extends React.Component {
             measurements={product.item.measurements}
             productModel={product.model}
             onHover={onHover}
-            loggedIn={loggedIn}
             unit={unit}
             chooseUnit={chooseUnit}
             inchFractionsPrecision={inchFractionsPrecision}

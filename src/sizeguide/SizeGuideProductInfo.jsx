@@ -38,7 +38,7 @@ class SizeGuideProductInfo extends React.Component {
   };
 
   render() {
-    const { t, measurements, onHover, productModel, unit, loggedIn, unitChoiceDisallowed } =
+    const { t, measurements, onHover, productModel, unit, unitChoiceDisallowed } =
       this.props;
     const { measurementOrder, measurementName, pinchedFits } = productModel;
 
@@ -179,7 +179,6 @@ SizeGuideProductInfo.propTypes = {
   t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
-  loggedIn: PropTypes.bool.isRequired,
   inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
