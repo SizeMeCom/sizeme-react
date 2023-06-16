@@ -73,7 +73,6 @@ class SizeGuideProductInfo extends React.Component {
           title={t("sizeGuide.tableTitle")}
           handleUnitChange={this.handleUnitChange}
           unitProp={unit}
-          loggedIn={loggedIn}
           writeUnitSelectorInHeader={true}
           unitChoiceDisallowed={unitChoiceDisallowed}
         >

@@ -13,7 +13,6 @@ const DetailSection = ({
   title,
   children,
   unitProp,
-  loggedIn,
   writeUnitSelectorInHeader,
   handleUnitChange,
   unitChoiceDisallowed,
