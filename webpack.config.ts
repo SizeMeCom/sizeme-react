@@ -79,7 +79,7 @@ const config = (env: Record<string, unknown>, argv: Record<string, unknown>): Co
         sizeme: path.resolve(PATHS.app, "index"),
       },
       resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
       },
       output: {
         path: PATHS.build,
@@ -88,7 +88,7 @@ const config = (env: Record<string, unknown>, argv: Record<string, unknown>): Co
       module: {
         rules: [
           {
-            test: /\.jsx?$/,
+            test: /\.[jt]sx?$/,
             include: PATHS.app,
             loader: "swc-loader",
           },

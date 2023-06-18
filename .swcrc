@@ -1,23 +1,64 @@
-{
-  "$schema": "https://json.schemastore.org/swcrc",
-  "jsc": {
-    "parser": {
-      "syntax": "ecmascript",
-      "jsx": true
-    },
-    "target": "esnext",
-    "externalHelpers": true,
-    "transform": {
-      "react": {
-        "runtime": "automatic"
+[
+  {
+    "$schema": "https://json.schemastore.org/swcrc",
+    "test": ".jsx?$",
+    "jsc": {
+      "parser": {
+        "syntax": "ecmascript",
+        "jsx": true,
+        "dynamicImport": true
       },
-      "optimizer": {
-        "simplify": true
+      "target": "esnext",
+      "externalHelpers": true,
+      "transform": {
+        "react": {
+          "runtime": "automatic"
+        },
+        "optimizer": {
+          "simplify": true
+        }
       }
+    },
+    "minify": false,
+    "env": {
+      "targets": [
+        "> 5%",
+        "not dead",
+        "last 2 versions",
+        "not ie < 11",
+        "not ie_mob < 11"
+      ]
     }
   },
-  "minify": false,
-  "env": {
-    "targets": ["> 5%", "not dead", "last 2 versions", "not ie < 11", "not ie_mob < 11"]
+  {
+    "$schema": "https://json.schemastore.org/swcrc",
+    "test": ".tsx?$",
+    "jsc": {
+      "parser": {
+        "syntax": "typescript",
+        "tsx": true,
+        "dynamicImport": true
+      },
+      "target": "esnext",
+      "externalHelpers": true,
+      "transform": {
+        "react": {
+          "runtime": "automatic"
+        },
+        "optimizer": {
+          "simplify": true
+        }
+      }
+    },
+    "minify": false,
+    "env": {
+      "targets": [
+        "> 5%",
+        "not dead",
+        "last 2 versions",
+        "not ie < 11",
+        "not ie_mob < 11"
+      ]
+    }
   }
-}
+]

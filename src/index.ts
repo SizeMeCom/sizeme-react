@@ -1,5 +1,4 @@
-/* global VERSION, BUILD_DATE */
-(async (sizemeOptions) => {
+void (async (sizemeOptions) => {
   if (!sizemeOptions) {
     return;
   }
@@ -10,7 +9,7 @@
   let sizemeDisabled = false;
 
   if (sizemeOptions.serviceStatus === "ab") {
-    const abTesting = await import("./ab-testing");
+    const abTesting = (await import("./ab-testing")).default;
     sizemeDisabled = abTesting();
   }
 
