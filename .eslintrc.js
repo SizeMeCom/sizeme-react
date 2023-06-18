@@ -32,17 +32,6 @@ module.exports = {
         devDependencies: true,
       },
     ],
-    "import/order": [
-      "warn",
-      {
-        alphabetize: {
-          order: "asc",
-        },
-        groups: [["builtin", "external"], "internal", "parent", ["sibling", "index"]],
-        "newlines-between": "always",
-      },
-    ],
-    "import/no-default-export": "warn",
     "react-hooks/exhaustive-deps": "error",
     "no-console": "error",
   },
