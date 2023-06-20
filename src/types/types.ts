@@ -37,3 +37,10 @@ export interface SizemeOptions {
   uiOptions: UIOptions;
   additionalTranslations: Record<string, string>;
 }
+
+export interface MeasurementResult {
+  overlap: number;
+  componentFit: number;
+  importance: number;
+  componentStretch: number;
+}
