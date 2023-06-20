@@ -3,7 +3,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import SizeSelector from "../api/SizeSelector";
 import uiOptions from "../api/uiOptions";
-import CookieHideWrapper, { hideSizeMe } from "../common/CookieHideWrapper.jsx";
+import { CookieHideWrapper, hideSizeMe } from "../common/CookieHideWrapper";
 import { openLoginFrame } from "../common/LoginFrame";
 import DetailSection from "./DetailSection.jsx";
 import HoverContainer from "./HoverContainer.jsx";

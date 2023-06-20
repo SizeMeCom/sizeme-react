@@ -1,6 +1,6 @@
 import React from "react";
 import Loadable from "react-loadable";
-import Loading from "./common/Loading";
+import { Loading } from "./common/Loading";
 import uiOptions from "./api/uiOptions";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";

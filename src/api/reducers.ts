@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { handleAction, handleActions } from "redux-actions";
+import { Action, handleAction, handleActions } from "redux-actions";
 import * as actions from "./actions";
 
-function resolvePayload(action, payloadKey, errorPayload = null) {
+function resolvePayload<A>(action: Action<A>, payloadKey: string, errorPayload: unknown = null) {
   return {
     [payloadKey]: action.error ? errorPayload : action.payload,
     error: action.error ? action.payload : null,
@@ -40,7 +40,14 @@ const authToken = handleActions(
   }
 );
 
-const signupStatus = handleActions(
+interface SignupStatus {
+  signupDone?: boolean;
+  inProgress: boolean;
+  error: unknown | null;
+  message?: string;
+}
+
+const signupStatus = handleActions<SignupStatus>(
   {
     [actions.SIGNUP]: () => ({ error: null, inProgress: true }),
 
@@ -147,9 +154,21 @@ const match = handleActions(
   }
 );
 
-const tooltip = handleAction(actions.SET_TOOLTIP, (state, action) => action.payload, null);
+const tooltip = handleAction<string | null, string | null>(
+  actions.SET_TOOLTIP,
+  (state, action) => action.payload,
+  null
+);
 
-const selectedSize = handleAction(
+interface SelectedSizePayload {
+  size: string;
+  auto?: boolean;
+}
+
+const selectedSize = handleAction<
+  SelectedSizePayload & { firstMatch: boolean },
+  SelectedSizePayload
+>(
   actions.SELECT_SIZE,
   (state, action) => ({
     ...state,
@@ -163,14 +182,26 @@ const selectedSize = handleAction(
   }
 );
 
-const abStatus = handleAction(actions.SET_AB_STATUS, (state, action) => action.payload, null);
+const abStatus = handleAction<string | null, string | null>(
+  actions.SET_AB_STATUS,
+  (state, action) => action.payload,
+  null
+);
 
-const matchState = handleAction(actions.SET_MATCH_STATE, (state, action) => action.payload, {
-  match: null,
-  state: "no-meas",
-});
+interface MatchStateAction {
+  match: string | null;
+  state: string;
+}
+const matchState = handleAction<MatchStateAction, MatchStateAction>(
+  actions.SET_MATCH_STATE,
+  (state, action) => action.payload,
+  {
+    match: null,
+    state: "no-meas",
+  }
+);
 
-const sizemeHidden = handleAction(
+const sizemeHidden = handleAction<boolean, boolean>(
   actions.SET_SIZEME_HIDDEN,
   (state, action) => action.payload,
   false

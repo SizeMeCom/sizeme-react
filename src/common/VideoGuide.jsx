@@ -1,9 +1,8 @@
-import React from "react";
 import PropTypes from "prop-types";
 import MobileDetect from "mobile-detect";
 import { cdnLocation } from "../api/sizeme-api";
 import Loadable from "react-loadable";
-import Loading from "./Loading";
+import { Loading } from "./Loading";
 
 const Video = Loadable({
   loader: () => import(/* webpackChunkName: "html5video" */ "react-html5video"),

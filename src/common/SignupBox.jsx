@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { openLoginFrame } from "./LoginFrame.jsx";
+import { openLoginFrame } from "./LoginFrame";
 import "./SignupBox.scss";
 import validator from "validator";
 import { withTranslation } from "react-i18next";

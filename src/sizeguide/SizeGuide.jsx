@@ -7,7 +7,7 @@ import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
 import { setTooltip } from "../api/actions";
 import { setSelectedProfile } from "../api/sizeme-api";
-import Loading from "../common/Loading";
+import { Loading } from "../common/Loading";
 import "./SizeGuide.scss";
 
 const SizeGuideModal = Loadable({

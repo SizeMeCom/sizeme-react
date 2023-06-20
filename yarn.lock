@@ -599,6 +599,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-modal@npm:^3.16.0":
+  version: 3.16.0
+  resolution: "@types/react-modal@npm:3.16.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: 975c0238d81cea234a2318a7cfcb95a8e6beb7fc5341ca2311651535c6476881e8d2f2f2e1c679ca6e416c04505c748071a1fab0d3fb3e88b0a9e43060b012fe
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.2.13":
   version: 18.2.13
   resolution: "@types/react@npm:18.2.13"
@@ -607,6 +616,13 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f7c15f19c164a29262993ea2aae2085fa38cddd9b8359fd8fefabfced91010b515a3abe2042b2b7f2f86e6b38a25b191415aa9313a9027175e3a000883c858cc
+  languageName: node
+  linkType: hard
+
+"@types/redux-actions@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "@types/redux-actions@npm:2.6.2"
+  checksum: 61388ab6f590b61037c5366ddd030c1445c86d61314554488cf62cc3a79a0a4d76da5b61cf4e5fcd40b83d07d40a428a2eff0b2f4f8433f9c620db2b88061b2d
   languageName: node
   linkType: hard
 
@@ -6010,7 +6026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-modal@npm:^3.8.1":
+"react-modal@npm:^3.16.1":
   version: 3.16.1
   resolution: "react-modal@npm:3.16.1"
   dependencies:
@@ -6744,6 +6760,8 @@ __metadata:
     "@types/node": ^20.2.5
     "@types/react": ^18.2.13
     "@types/react-loadable": ^5.5.7
+    "@types/react-modal": ^3.16.0
+    "@types/redux-actions": ^2.6.2
     "@types/webpack": ^5.28.1
     "@typescript-eslint/eslint-plugin": ^5.59.11
     "@typescript-eslint/parser": ^5.59.11
@@ -6772,7 +6790,7 @@ __metadata:
     react-html5video: ^2.2.0
     react-i18next: ^13.0.0
     react-loadable: ^5.5.0
-    react-modal: ^3.8.1
+    react-modal: ^3.16.1
     react-redux: ^6.0.1
     react-tooltip: ^3.10.0
     redux: ^4.0.1

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment */
+// TODO: fix types
 import { createActions } from "redux-actions";
 
 export const CHECK_TOKEN = "CHECK_TOKEN";
