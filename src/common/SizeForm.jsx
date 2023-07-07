@@ -140,8 +140,7 @@ class SizeForm extends React.Component {
         .map((res) => ProductModel.getFit(res).label)
         .orElse(null);
     const measurementCellWidth = 100 / this.fields.length + "%";
-    const { t, onOverlapBoxHover, unit, chooseUnit, inchFractionsPrecision, unitChoiceDisallowed } =
-      this.props;
+    const { t, onOverlapBoxHover, unit, chooseUnit, unitChoiceDisallowed } = this.props;
 
     return (
       <div
@@ -158,7 +157,6 @@ class SizeForm extends React.Component {
               value={this.state.measurements[humanProperty]}
               unit={unit}
               chooseUnit={chooseUnit}
-              inchFractionsPrecision={inchFractionsPrecision}
               unitChoiceDisallowed={unitChoiceDisallowed}
               fitRange={fitRange(field)}
               onFocus={() => {
@@ -174,7 +172,6 @@ class SizeForm extends React.Component {
                   key={humanProperty}
                   model={this.props.product.model}
                   unit={unit}
-                  inchFractionsPrecision={inchFractionsPrecision}
                 />
               ))
               .orElse(null)}
@@ -217,7 +214,6 @@ SizeForm.propTypes = {
   t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
-  inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
 

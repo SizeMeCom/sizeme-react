@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { getResult } from "../api/ProductModel";
-
-const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
+import { convertToInches as toInches, INCH_FRACTION_OPTIONS } from "../common/unit-convertions";
 
 class DetailedFit extends React.Component {
   constructor(props) {
@@ -37,7 +36,6 @@ class DetailedFit extends React.Component {
   }
 
   convertToInches = (text) => {
-    const precision = this.props.inchFractionsPrecision;
     const t = this.props.t;
     let textHolder = text;
     let prefixHolder = "";
@@ -48,12 +46,9 @@ class DetailedFit extends React.Component {
     textHolder = textHolder.replace(" cm", "");
     textHolder = parseFloat(textHolder);
 
-    const inchesWhole = Math.floor(
-      Math.round((parseFloat(textHolder) / 2.54) * precision) / precision
-    );
-    const inchesPartial = Math.round((textHolder / 2.54) * precision) - inchesWhole * precision;
+    const [inchesWhole, inchesPartial] = toInches(textHolder);
 
-    if (inchesWhole == 0 && inchesPartial == 0) {
+    if (inchesWhole === 0 && inchesPartial === 0) {
       return "0 " + t("common.in_short");
     }
     if (inchesWhole > 0) {
@@ -61,12 +56,12 @@ class DetailedFit extends React.Component {
         prefixHolder +
         inchesWhole +
         " " +
-        inchFractionOptions[inchesPartial] +
+        INCH_FRACTION_OPTIONS[inchesPartial] +
         " " +
         t("common.in_short")
       );
     }
-    return prefixHolder + inchFractionOptions[inchesPartial] + " " + t("common.in_short");
+    return prefixHolder + INCH_FRACTION_OPTIONS[inchesPartial] + " " + t("common.in_short");
   };
 
   render() {
@@ -102,7 +97,6 @@ DetailedFit.propTypes = {
   t: PropTypes.func,
   measurementName: PropTypes.func.isRequired,
   unit: PropTypes.string,
-  inchFractionsPrecision: PropTypes.number,
 };
 
 export default withTranslation()(DetailedFit);

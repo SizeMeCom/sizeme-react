@@ -1,6 +1,5 @@
 import i18n from "i18next";
 import PropTypes from "prop-types";
-import React from "react";
 import { withTranslation } from "react-i18next";
 import "../common/SizeForm.scss";
 
@@ -50,7 +49,6 @@ DetailSection.propTypes = {
   loggedIn: PropTypes.bool,
   writeUnitSelectorInHeader: PropTypes.bool,
   handleUnitChange: PropTypes.func,
-  inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
 

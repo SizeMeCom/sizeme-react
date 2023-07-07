@@ -55,7 +55,6 @@ class SizeGuideDetails extends React.Component {
       profiles,
       t,
       unit,
-      inchFractionsPrecision,
       unitChoiceDisallowed,
     } = this.props;
 
@@ -86,7 +85,6 @@ class SizeGuideDetails extends React.Component {
           writeUnitSelectorInHeader={true}
           handleUnitChange={this.handleUnitChange}
           unitProp={unit}
-          inchFractionsPrecision={inchFractionsPrecision}
           unitChoiceDisallowed={unitChoiceDisallowed}
         >
           <div className="fit-table">
@@ -101,7 +99,6 @@ class SizeGuideDetails extends React.Component {
                       measurementName={product.model.measurementName}
                       match={match}
                       unit={unit}
-                      inchFractionsPrecision={inchFractionsPrecision}
                     />
                   )}
                 </div>
@@ -125,7 +122,6 @@ SizeGuideDetails.propTypes = {
   t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
-  inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
 

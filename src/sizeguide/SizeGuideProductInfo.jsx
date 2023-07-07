@@ -7,8 +7,7 @@ import { CookieHideWrapper, hideSizeMe } from "../common/CookieHideWrapper";
 import { openLoginFrame } from "../common/LoginFrame";
 import DetailSection from "./DetailSection.jsx";
 import HoverContainer from "./HoverContainer.jsx";
-
-const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
+import { convertToInches as toInches, INCH_FRACTION_OPTIONS } from "../common/unit-convertions";
 
 class SizeGuideProductInfo extends React.Component {
   hasNeckOpening = () => this.props.productModel.measurementOrder.includes("neck_opening_width");
@@ -21,12 +20,10 @@ class SizeGuideProductInfo extends React.Component {
   loginFrameOpener = (mode) => () => openLoginFrame("login-frame", mode);
 
   convertToInches = (size) => {
-    const precision = this.props.inchFractionsPrecision;
-    const inchesWhole = Math.floor(Math.round((size / 2.54) * precision) / precision);
-    const inchesPartial = Math.round((size / 2.54) * precision) - inchesWhole * precision;
+    const [inchesWhole, inchesPartial] = toInches(size);
     return inchesWhole > 0
-      ? `${inchesWhole} ${inchFractionOptions[inchesPartial]}`
-      : inchFractionOptions[inchesPartial];
+      ? `${inchesWhole} ${INCH_FRACTION_OPTIONS[inchesPartial]}`
+      : INCH_FRACTION_OPTIONS[inchesPartial];
   };
 
   changeMeasurementUnit = (event) => {
@@ -178,7 +175,6 @@ SizeGuideProductInfo.propTypes = {
   t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
-  inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
 

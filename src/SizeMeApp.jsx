@@ -39,7 +39,6 @@ class SizeMeApp extends React.Component {
       .map((s) => `sizeme-${s}`)
       .orElse("");
     this.skinClasses = uiOptions.skinClasses || "";
-    this.inchFractionsPrecision = 8;
     this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false;
   }
 
@@ -118,7 +117,6 @@ class SizeMeApp extends React.Component {
             fields={measurementInputs}
             unit={this.state.unit}
             chooseUnit={this.chooseUnit}
-            inchFractionsPrecision={this.inchFractionsPrecision}
             unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
           />
         )}
@@ -126,11 +124,10 @@ class SizeMeApp extends React.Component {
           <SizeGuide
             unit={this.state.unit}
             chooseUnit={this.chooseUnit}
-            inchFractionsPrecision={this.inchFractionsPrecision}
             unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
           />
         )}
-        <FitTooltip unit={this.state.unit} inchFractionsPrecision={this.inchFractionsPrecision} />
+        <FitTooltip unit={this.state.unit} />
         <LoginFrame id="login-frame" onLogin={this.userLoggedIn} />
       </div>
     );
@@ -153,7 +150,6 @@ SizeMeApp.propTypes = {
   t: PropTypes.func,
   chooseUnit: PropTypes.func,
   unit: PropTypes.string,
-  inchFractionsPrecision: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({

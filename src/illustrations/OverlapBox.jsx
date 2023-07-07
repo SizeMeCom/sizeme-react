@@ -16,8 +16,7 @@ import ShirtHips from "./ShirtHips";
 import ShirtWaist from "./ShirtWaist";
 import Shoe from "./Shoe";
 import Sleeve from "./Sleeve";
-
-const inchFractionOptions = ["", "⅛", "¼", "⅜", "½", "⅝", "¾", "⅞"];
+import { convertToInches as toInches, INCH_FRACTION_OPTIONS } from "../common/unit-convertions";
 
 const illustration = (measurement, overlap, model) => {
   switch (measurement) {
@@ -83,15 +82,13 @@ class OverlapBox extends React.Component {
   }
 
   convertToInches = (size) => {
-    const precision = this.props.inchFractionsPrecision;
-    const inchesWhole = Math.floor(Math.round((size / 2.54) * precision) / precision);
-    const inchesPartial = Math.round((size / 2.54) * precision) - inchesWhole * precision;
-    if (inchesWhole == 0 && inchesPartial == 0) {
-      return 0;
+    const [inchesWhole, inchesPartial] = toInches(size);
+    if (inchesWhole === 0 && inchesPartial === 0) {
+      return "0";
     } else {
       return inchesWhole > 0
-        ? inchesWhole + inchFractionOptions[inchesPartial]
-        : inchFractionOptions[inchesPartial];
+        ? inchesWhole + INCH_FRACTION_OPTIONS[inchesPartial]
+        : INCH_FRACTION_OPTIONS[inchesPartial];
     }
   };
 
@@ -146,7 +143,6 @@ OverlapBox.propTypes = {
   model: PropTypes.object.isRequired,
   t: PropTypes.func,
   unit: PropTypes.string,
-  inchFractionsPrecision: PropTypes.number,
 };
 
 export default withTranslation()(OverlapBox);

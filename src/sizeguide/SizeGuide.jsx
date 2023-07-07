@@ -56,8 +56,7 @@ class SizeGuide extends React.Component {
   }
 
   render() {
-    const { t, loggedIn, unit, chooseUnit, inchFractionsPrecision, unitChoiceDisallowed } =
-      this.props;
+    const { t, loggedIn, unit, chooseUnit, unitChoiceDisallowed } = this.props;
     const { guideIsOpen } = this.state;
     const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
 
@@ -78,7 +77,6 @@ class SizeGuide extends React.Component {
             {...modalProps}
             unit={unit}
             chooseUnit={chooseUnit}
-            inchFractionsPrecision={inchFractionsPrecision}
             unitChoiceDisallowed={unitChoiceDisallowed}
           />
         )}
@@ -100,7 +98,6 @@ SizeGuide.propTypes = {
   t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
-  inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
 

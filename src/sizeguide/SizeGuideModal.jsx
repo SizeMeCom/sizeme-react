@@ -26,7 +26,6 @@ class SizeGuideModal extends React.Component {
     onHover: PropTypes.func.isRequired,
     unit: PropTypes.string,
     chooseUnit: PropTypes.func,
-    inchFractionsPrecision: PropTypes.number,
     unitChoiceDisallowed: PropTypes.bool,
   };
 
@@ -51,7 +50,6 @@ class SizeGuideModal extends React.Component {
       matchState,
       unit,
       chooseUnit,
-      inchFractionsPrecision,
       unitChoiceDisallowed,
     } = this.props;
 
@@ -75,7 +73,6 @@ class SizeGuideModal extends React.Component {
             loggedIn={loggedIn}
             unit={unit}
             chooseUnit={chooseUnit}
-            inchFractionsPrecision={inchFractionsPrecision}
             unitChoiceDisallowed={unitChoiceDisallowed}
           />
         );
@@ -87,7 +84,6 @@ class SizeGuideModal extends React.Component {
             onHover={onHover}
             unit={unit}
             chooseUnit={chooseUnit}
-            inchFractionsPrecision={inchFractionsPrecision}
             unitChoiceDisallowed={unitChoiceDisallowed}
           />
         );

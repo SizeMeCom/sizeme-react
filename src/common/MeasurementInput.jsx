@@ -1,202 +1,130 @@
-import i18n from "i18next";
 import PropTypes from "prop-types";
-import React from "react";
-import { withTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation, withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import "./SizeForm.scss";
-
-const unitMarks = {
-  cm: i18n.t("common.cm_short"),
-  in: i18n.t("common.in_short"),
-};
-
-const unitFactors = {
-  cm: 10.0,
-  in: 25.4,
-};
+import clsx from "clsx";
+import { INCH_FRACTION_PRECISION, UNIT_FACTORS, convertToInches } from "./unit-convertions";
 
 const inchFractionOptions = ["0/0", "1/8", "1/4", "3/8", "1/2", "5/8", "3/4", "7/8"];
 
-class MeasurementInput extends React.Component {
-  constructor(props) {
-    super(props);
-    const currValue = this.viewValue(this.props.value);
-    this.state = {
-      error: false,
-      pending: false,
-      value: currValue,
-      valueWholeInches: this.props.value ? this.getInchesWhole(this.props.value) : "",
-      valuePartialInches: this.props.value ? this.getInchesPartial(this.props.value) : 0,
-      modelValue: this.modelValue(currValue),
-      showUnitSelector: true,
-    };
+const hideIfZero = (value) => {
+  if (value === 0) {
+    return "";
   }
+  return value.toString();
+};
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.state.modelValue || nextProps.unit !== this.props.unit) {
-      const value = this.viewValue(nextProps.value);
-      if (value !== this.state.value) {
-        this.setState({
-          value,
-          modelValue: this.modelValue(value),
-          valueWholeInches: this.getInchesWhole(nextProps.value),
-          valuePartialInches: this.getInchesPartial(nextProps.value),
-        });
-      }
-    }
+const modelToInches = (value) => {
+  if (!value) {
+    return [0, 0];
   }
+  return convertToInches(value);
+};
 
-  getInchesWhole = (value) => {
-    if (isNaN(parseFloat(value))) {
-      return "";
-    }
-    const precision = this.props.inchFractionsPrecision;
-    return Math.floor(Math.round((parseFloat(value) / 25.4) * precision) / precision);
+const inchesToModel = (wholeValue, partialValue) => {
+  if (wholeValue === 0) {
+    return undefined;
+  }
+  return Math.round((wholeValue + partialValue / INCH_FRACTION_PRECISION) * UNIT_FACTORS.in);
+};
+
+const modelToCm = (value) => (value ? (value / UNIT_FACTORS.cm).toFixed(1) : "");
+
+const cmToModel = (value) =>
+  value ? Math.floor(parseFloat(value.replace(",", ".")) * UNIT_FACTORS.cm) : undefined;
+
+const MeasurementInput = ({
+  unit = "cm",
+  chooseUnit,
+  onFocus: parentOnFocus,
+  onChange,
+  fitRange,
+  unitChoiceDisallowed,
+  value,
+}) => {
+  const { t } = useTranslation();
+
+  const [pending, setPending] = useState(false);
+  const [viewValue, setViewValue] = useState(modelToCm(value));
+
+  const [[wholeInches, partialInches], setInchValue] = useState(modelToInches(value));
+  const [wholeInchesViewValue, setWholeInchesViewValue] = useState(hideIfZero(wholeInches));
+
+  const tooltip = useRef();
+  const timeout = useRef();
+  const tooltipTimeout = useRef();
+  const input = useRef();
+  const inputIn = useRef();
+
+  useEffect(() => {
+    setViewValue(modelToCm(value));
+    const inches = modelToInches(value);
+    setInchValue(inches);
+    setWholeInchesViewValue(hideIfZero(inches[0]));
+  }, [value]);
+
+  const hideTooltip = () => {
+    ReactTooltip.hide(tooltip.current);
+    clearTimeout(timeout.current);
+    timeout.current = undefined;
+    clearTimeout(tooltipTimeout.current);
+    tooltipTimeout.current = undefined;
   };
 
-  getInchesPartial = (value) => {
-    if (isNaN(parseFloat(value))) {
-      return 0;
+  const dispatchValue = (modelValue) => {
+    setPending(false);
+    setViewValue(modelToCm(modelValue));
+    if (modelValue !== value) {
+      onChange(modelValue);
     }
-    const precision = this.props.inchFractionsPrecision;
-    const inchesWhole = Math.floor(Math.round((parseFloat(value) / 25.4) * precision) / precision);
-    const inchesPartial =
-      Math.round((parseFloat(value) / 25.4) * precision) - inchesWhole * precision;
-    return inchesPartial;
   };
 
-  viewValue(value) {
-    return value ? (parseInt(value, 10) / 10.0).toFixed(1) : "";
-  }
-
-  modelValue(value) {
-    let fixedValue = "";
-    if (value.toString().includes(",")) {
-      fixedValue = value.replace(",", ".");
+  const cmValueChanged = (isBlur) => {
+    hideTooltip();
+    const newValue = input.current.value;
+    setViewValue(newValue);
+    const modelValue = cmToModel(newValue);
+    setPending(true);
+    if (isBlur) {
+      dispatchValue(modelValue);
     } else {
-      fixedValue = value;
+      timeout.current = setTimeout(() => {
+        dispatchValue(modelValue);
+      }, 1000);
     }
-    if (fixedValue === ".") {
-      return 0;
-    } else if (fixedValue.length > 0 && this.props.unit === "cm") {
-      return Math.round(parseFloat(fixedValue) * unitFactors[this.props.unit]);
-    } else if (fixedValue.length > 0 && this.props.unit === "in" && this.state) {
-      const modelValueFromInches =
-        (parseInt(this.state.valueWholeInches) + parseInt(this.state.valuePartialInches) / 8) *
-        unitFactors[this.props.unit];
-      return Math.round(modelValueFromInches);
-    } else {
-      return null;
-    }
-  }
+  };
 
-  valueChanged = (isBlur) => {
-    ReactTooltip.hide(this.tooltip);
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-    }
-    if (this.tooltipTimeout) {
-      clearTimeout(this.tooltipTimeout);
-      this.tooltipTimeout = null;
-    }
-
-    // because isBlur could be an event
-    const blur = isBlur === true;
-
-    let newValue = "";
-
-    if (this.props.unit === "cm") {
-      newValue = this.input.value;
-      if (newValue === this.state.value && !blur) {
-        return;
-      } else if (newValue.length > 0 && !newValue.match(/^\d*[,.]?\d*$/)) {
-        return;
-      }
-      let newValueAsNumber = 0;
-      if (newValue.includes(",")) {
-        newValueAsNumber = parseFloat(newValue.replace(",", "."));
-        newValueAsNumber = newValueAsNumber * 10;
+  const inchValueChanged = (wholeValue, partialValue) => {
+    hideTooltip();
+    setInchValue([wholeValue, partialValue]);
+    setPending(true);
+    timeout.current = setTimeout(() => {
+      if (wholeValue === 0) {
+        setWholeInchesViewValue("");
+        setInchValue([0, 0]);
       } else {
-        newValueAsNumber = parseFloat(newValue);
-        newValueAsNumber = newValueAsNumber * 10;
+        setWholeInchesViewValue(wholeValue);
       }
-      this.setState({ valueWholeInches: this.getInchesWhole(newValueAsNumber) });
-      this.setState({ valuePartialInches: this.getInchesPartial(newValueAsNumber) });
-    } else if (this.props.unit === "in") {
-      const wholeInches = this.state.valueWholeInches;
-      const partialInches = this.state.valuePartialInches;
-      newValue = wholeInches * 2.54 + partialInches * 0.3175;
-
-      if (isNaN(newValue)) {
-        newValue = 0;
-      }
-      newValue = parseFloat(newValue).toFixed(1);
-      newValue = newValue.toString();
-      if (newValue === this.state.value && !blur) {
-        return;
-      }
-    }
-
-    const newState = {
-      pending: true,
-    };
-
-    if (isNaN(this.modelValue(newValue))) {
-      newState.error = true;
-    } else {
-      newState.value = newValue;
-    }
-
-    this.setState(newState, () => {
-      if (blur && this.props.unit === "cm") {
-        this.dispatchChange(true);
-      } else if (blur && this.props.unit === "in") {
-        this.timeout = setTimeout(this.dispatchChange, 700);
-      } else {
-        this.timeout = setTimeout(this.dispatchChange, 1000);
-      }
-    });
+      dispatchValue(wholeValue === 0 ? 0 : inchesToModel(wholeValue, partialValue));
+    }, 700);
   };
 
-  dispatchChange = (setValue) => {
-    if (!this.state.error) {
-      const modelValue = this.modelValue(this.state.value);
-      const doDispatch = modelValue !== this.state.modelValue;
-      const state = { pending: false, modelValue };
-      if (setValue) {
-        state.value = this.viewValue(modelValue);
-      }
-      this.setState(state, () => {
-        if (doDispatch) {
-          this.props.onChange(modelValue);
-        }
-      });
-    }
-  };
-
-  onBlur = () => {
-    ReactTooltip.hide(this.tooltip);
-    if (this.props.unit === "cm") {
-      this.valueChanged(true);
-    }
-  };
-
-  onFocus = () => {
-    this.props.onFocus();
-    this.tooltipTimeout = setTimeout(() => {
-      ReactTooltip.show(this.tooltip);
+  const onFocus = () => {
+    parentOnFocus();
+    tooltipTimeout.current = setTimeout(() => {
+      ReactTooltip.show(tooltip.current);
     }, 200);
   };
 
-  onKeyDown = (e) => {
+  const onKeyDown = (e) => {
     if (e.keyCode === 13) {
-      this.input.blur();
-      this.input_in.blur();
+      input.current?.blur();
+      inputIn.current?.blur();
     }
   };
 
-  isKeyAllowed(keyCode) {
+  const isKeyAllowed = (keyCode) => {
     return (
       (keyCode >= 48 && keyCode <= 57) || // regular number keys
       (keyCode >= 96 && keyCode <= 105) || // numpad number keys
@@ -207,140 +135,108 @@ class MeasurementInput extends React.Component {
       keyCode === 9 ||
       keyCode === 13
     ); // tab and enter
-  }
+  };
 
-  onKeyDown2 = (e) => {
-    if (e.keyCode === 13) {
-      this.input.blur();
-      this.input_in.blur();
-    }
-    if (!this.isKeyAllowed(e.keyCode)) {
+  const onWholeInchesKeyDown = (e) => {
+    onKeyDown(e);
+    if (!isKeyAllowed(e.keyCode)) {
       e.preventDefault();
     }
   };
 
-  handleUnitChange = (newUnit) => {
-    this.props.chooseUnit(newUnit);
+  const handleUnitChange = (newUnit) => {
+    chooseUnit(newUnit);
   };
 
-  handleWholeInchesChange = (event) => {
-    if (event.target.value == "" || isNaN(parseInt(event.target.value))) {
-      this.setState({ valueWholeInches: 0 }, () => this.valueChanged(true));
-      return;
-    }
-    const eventValue = parseInt(event.target.value);
-    if (eventValue > 0) {
-      this.setState({ valueWholeInches: eventValue }, () => this.valueChanged(true));
-    } else {
-      this.setState({ valueWholeInches: 0 }, () => this.valueChanged(true));
-    }
+  const handleWholeInchesChange = (event) => {
+    setWholeInchesViewValue(event.target.value);
+    const eventValue = event.target.value ? parseInt(event.target.value, 10) : 0;
+    inchValueChanged(eventValue, partialInches);
   };
 
-  handlePartialInchesChange = (event) => {
-    const eventValue = parseInt(event.target.value);
-    if (eventValue > 0) {
-      this.setState({ valuePartialInches: eventValue }, () => this.valueChanged(true));
-    } else {
-      this.setState({ valuePartialInches: 0 }, () => this.valueChanged(true));
-    }
+  const handlePartialInchesChange = (event) => {
+    const eventValue = parseInt(event.target.value, 10);
+    inchValueChanged(wholeInches, eventValue);
   };
 
-  hideIfZero = (value) => {
-    if (value == 0) {
-      return "";
-    }
-    return value;
-  };
+  const classes = clsx(
+    "measurement-input",
+    {
+      "measurement-input-ok": value,
+      "measurement-input-pending": pending,
+    },
+    fitRange
+  );
 
-  render() {
-    const { unit, unitChoiceDisallowed } = this.props;
-    const { value, valueWholeInches, valuePartialInches } = this.state;
-    let className = "measurement-input";
-    if (this.state.error) {
-      className += " measurement-input-error";
-    } else if (this.props.value) {
-      className += " measurement-input-ok";
-    }
-    if (this.state.pending) {
-      className += " measurement-input-pending";
-    }
-    if (this.props.fitRange) {
-      className += ` ${this.props.fitRange}`;
-    }
-    return (
-      <div className={className}>
-        {!unitChoiceDisallowed && (
-          <span
-            className={"units yes-clickable"}
-            onClick={() => this.handleUnitChange(unit === "cm" ? "in" : "cm")}
-          >
-            {unitMarks[unit]}
-          </span>
-        )}
-        {unitChoiceDisallowed && <span className={"units not-clickable"}>{unitMarks[unit]}</span>}
+  const unitMark = t(`common.${unit}_short`);
+
+  return (
+    <div className={classes}>
+      {!unitChoiceDisallowed && (
         <span
-          className="tooltip-trigger"
-          data-for="input-tooltip"
-          data-tip
-          ref={(el) => {
-            this.tooltip = el;
-          }}
-          data-place="bottom"
-          data-type="light"
-          data-class="measurement-tooltip"
-          data-effect="solid"
+          className="units yes-clickable"
+          onClick={() => handleUnitChange(unit === "cm" ? "in" : "cm")}
+        >
+          {unitMark}
+        </span>
+      )}
+      {unitChoiceDisallowed && <span className="units not-clickable">{unitMark}</span>}
+      <span
+        className="tooltip-trigger"
+        data-for="input-tooltip"
+        data-tip
+        ref={tooltip}
+        data-place="bottom"
+        data-type="light"
+        data-class="measurement-tooltip"
+        data-effect="solid"
+      />
+      {unit === "cm" && (
+        <input
+          className="input_cm"
+          type="text"
+          value={viewValue}
+          onChange={() => cmValueChanged(false)}
+          onKeyDown={onKeyDown}
+          onBlur={() => cmValueChanged(true)}
+          ref={input}
+          onFocus={onFocus}
+          autoComplete="off"
+          id="inputCentimeters"
         />
-        {unit === "cm" && this.state && (
+      )}
+      {unit === "in" && (
+        <span>
           <input
-            className={className + " input_cm"}
+            className="input_in"
             type="text"
-            value={value}
-            onChange={this.valueChanged}
-            onKeyDown={this.onKeyDown}
-            onBlur={this.onBlur}
-            ref={(el) => {
-              this.input = el;
-            }}
-            onFocus={this.onFocus}
+            value={wholeInchesViewValue}
+            onChange={handleWholeInchesChange}
+            onKeyDown={onWholeInchesKeyDown}
+            onBlur={hideTooltip}
+            ref={inputIn}
+            onFocus={onFocus}
             autoComplete="off"
-            id="inputCentimeters"
+            id="inputInches"
           />
-        )}
-        {unit === "in" && this.state && (
-          <span>
-            <input
-              className={className + " input_in"}
-              type="text"
-              defaultValue={this.hideIfZero(valueWholeInches)}
-              onChange={this.handleWholeInchesChange}
-              onKeyDown={this.onKeyDown2}
-              onBlur={this.onBlur}
-              ref={(el) => {
-                this.input_in = el;
-              }}
-              onFocus={this.onFocus}
-              autoComplete="off"
-              id="inputInches"
-            />
-            {valueWholeInches > 0 && (
-              <select
-                className={className + " input_in_partial"}
-                defaultValue={valuePartialInches}
-                onChange={this.handlePartialInchesChange}
-              >
-                {(inchFractionOptions || []).map((fractionOptionName, fractionOptionKey) => (
-                  <option key={fractionOptionKey} value={fractionOptionKey}>
-                    {fractionOptionName}
-                  </option>
-                ))}
-              </select>
-            )}
-          </span>
-        )}
-      </div>
-    );
-  }
-}
+          {wholeInches > 0 && (
+            <select
+              className="input_in_partial"
+              value={partialInches}
+              onChange={handlePartialInchesChange}
+            >
+              {inchFractionOptions.map((fractionOptionName, fractionOptionKey) => (
+                <option key={fractionOptionKey} value={fractionOptionKey}>
+                  {fractionOptionName}
+                </option>
+              ))}
+            </select>
+          )}
+        </span>
+      )}
+    </div>
+  );
+};
 
 MeasurementInput.propTypes = {
   value: PropTypes.number,
@@ -348,9 +244,7 @@ MeasurementInput.propTypes = {
   onFocus: PropTypes.func.isRequired,
   unit: PropTypes.string,
   fitRange: PropTypes.string,
-  t: PropTypes.func.isRequired,
   chooseUnit: PropTypes.func,
-  inchFractionsPrecision: PropTypes.number,
   unitChoiceDisallowed: PropTypes.bool,
 };
 
