@@ -3,11 +3,9 @@ import ReactTooltip from "react-tooltip";
 import { contextAddress } from "../api/sizeme-api";
 import "./ProfileMenu.scss";
 
-const ProfileMenu = (props) => {
+const ProfileMenu = ({ profiles, selectedProfile, setSelectedProfile }) => {
   const selectProfile = (e, profileId) => {
-    if (e.target.classList.contains("profile") || e.target.classList.contains("profile-name")) {
-      props.setSelectedProfile(profileId);
-    }
+    setSelectedProfile(profileId);
   };
 
   const profileAddress = (profileId) =>
@@ -25,16 +23,21 @@ const ProfileMenu = (props) => {
         effect="solid"
       >
         <div className="profile-list">
-          {props.profiles.map((profile) => (
+          {profiles.map((profile) => (
             <div key={profile.id} className="profile" onClick={(e) => selectProfile(e, profile.id)}>
               <span
-                className={
-                  "profile-name" + (profile.id === props.selectedProfile ? " selected" : "")
-                }
+                className={"profile-name" + (profile.id === selectedProfile ? " selected" : "")}
               >
                 {profile.profileName}
               </span>
-              <a href={profileAddress(profile.id)} target="_blank" rel="noopener noreferrer">
+              <a
+                href={profileAddress(profile.id)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <i className="fa-solid fa-pencil" />
               </a>
             </div>
