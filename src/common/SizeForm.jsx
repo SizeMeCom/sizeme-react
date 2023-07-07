@@ -1,7 +1,7 @@
 import Optional from "optional-js";
 import PropTypes from "prop-types";
-import React from "react";
-import { withTranslation } from "react-i18next";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation, withTranslation } from "react-i18next";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
@@ -17,62 +17,65 @@ import VideoGuide from "./VideoGuide.jsx";
 
 Modal.setAppElement(uiOptions.appendContentTo + " div");
 
-class SizeForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.fields = props.fields.map((field) => ({
-      field,
-      humanProperty: humanMeasurementMap.get(field),
-    }));
-    const measurements = Object.assign(
-      ...this.fields.map((f) => ({ [f.humanProperty]: null })),
-      props.measurements
-    );
-    this.state = {
-      guideModalOpen: false,
-      measurements,
-      fitTooltip: {
-        measurement: null,
-        fitData: null,
-      },
-    };
-    this.activeTooltip = null;
-  }
+const SizeForm = ({
+  unit,
+  chooseUnit,
+  fields: propFields,
+  gender,
+  matchResult,
+  measurements: propMeasurements,
+  onChange,
+  onOverlapBoxHover,
+  product,
+  unitChoiceDisallowed,
+}) => {
+  const { t } = useTranslation();
+  const [guideModalOpen, setGuideModalOpen] = useState(false);
+  const [measurements, setMeasurements] = useState({});
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const measurements = Object.assign(
-      ...this.fields.map((f) => ({ [f.humanProperty]: null })),
-      nextProps.measurements
-    );
-    this.setState({ measurements });
-  }
+  const activeTooltip = useRef();
+  const elem = useRef();
 
-  valueChanged(humanProperty) {
+  const fields = useMemo(
+    () =>
+      propFields.map((field) => ({
+        field,
+        humanProperty: humanMeasurementMap.get(field),
+      })),
+    [propFields]
+  );
+
+  useEffect(() => {
+    setMeasurements(
+      Object.assign(...fields.map((f) => ({ [f.humanProperty]: null })), propMeasurements)
+    );
+  }, [fields, propMeasurements]);
+
+  const valueChanged = (humanProperty) => {
     return (value) => {
-      const measurements = Object.assign(this.state.measurements, { [humanProperty]: value });
-      this.setState({ measurements }, () => {
-        this.props.onChange(this.state.measurements);
-      });
+      const newMeasurements = { ...measurements, [humanProperty]: value };
+      setMeasurements(newMeasurements);
+      onChange(newMeasurements);
     };
-  }
-
-  setActiveTooltip = (field) => {
-    this.activeTooltip = field;
   };
 
-  openGuideModal = () => {
-    this.setState({ guideModalOpen: true });
+  const setActiveTooltip = (field) => {
+    activeTooltip.current = field;
   };
 
-  closeGuideModal = () => {
-    this.setState({ guideModalOpen: false });
+  const openGuideModal = () => {
+    setGuideModalOpen(true);
+  };
+
+  const closeGuideModal = () => {
+    setGuideModalOpen(false);
   };
 
   // eslint-disable-next-line react/display-name
-  tooltipContent = (t) => () => {
+  const tooltipContent = () => () => {
     const linkTexts = t("measurementTooltips.linkToGuide", { returnObjects: true });
-    const tooltips = this.activeTooltip
-      ? t(`measurementTooltips.${this.activeTooltip}`, { returnObjects: true })
+    const tooltips = activeTooltip.current
+      ? t(`measurementTooltips.${activeTooltip.current}`, { returnObjects: true })
       : [];
     return (
       <div>
@@ -84,7 +87,7 @@ class SizeForm extends React.Component {
         <div className="measurement-guide-link">
           <span>{linkTexts.start} </span>
           <a
-            onClick={this.openGuideModal}
+            onClick={openGuideModal}
             onMouseDown={(e) => {
               e.preventDefault();
             }}
@@ -98,109 +101,101 @@ class SizeForm extends React.Component {
     );
   };
 
-  modalContent = (t) => {
-    if (!this.activeTooltip) {
+  const modalContent = () => {
+    if (!activeTooltip.current) {
       return null;
     }
-    const humanMeasurement = humanMeasurementMap.get(this.activeTooltip);
+    const humanMeasurement = humanMeasurementMap.get(activeTooltip.current);
     const humanMeasurementName = t(`humanMeasurements.${humanMeasurement}`);
     return (
       <div>
         <div className="measurement-instruction-box">
-          <i className="fa-solid fa-times" onClick={this.closeGuideModal} />
+          <i className="fa-solid fa-times" onClick={closeGuideModal} />
           <h2 className="instruction-title">
             {t("measurementGuide.title")} {humanMeasurementName.toLowerCase()}
           </h2>
           <div
-            className={`instruction-content gender-${this.props.gender}`}
-            dangerouslySetInnerHTML={{ __html: t(`measurementGuide.${this.activeTooltip}`) }}
+            className={`instruction-content gender-${gender}`}
+            dangerouslySetInnerHTML={{ __html: t(`measurementGuide.${activeTooltip.current}`) }}
           />
         </div>
-        <VideoGuide measurement={humanMeasurement} gender={this.props.gender} />
+        <VideoGuide measurement={humanMeasurement} gender={gender} />
       </div>
     );
   };
 
-  getLeftPosition = () => {
-    if (!this.elem) {
+  const getLeftPosition = () => {
+    if (!elem.current) {
       return "50%";
     } else {
-      const left = Math.max(0, this.elem.getBoundingClientRect().left - 300);
+      const left = Math.max(0, elem.current.getBoundingClientRect().left - 300);
       return `${left}px`;
     }
   };
 
-  render() {
-    const getFit = (field) =>
-      Optional.ofNullable(this.props.matchResult).flatMap((r) =>
-        Optional.ofNullable(r.matchMap[field])
-      );
-    const fitRange = (field) =>
-      getFit(field)
-        .map((res) => ProductModel.getFit(res).label)
-        .orElse(null);
-    const measurementCellWidth = 100 / this.fields.length + "%";
-    const { t, onOverlapBoxHover, unit, chooseUnit, unitChoiceDisallowed } = this.props;
+  const getFit = (field) =>
+    Optional.ofNullable(matchResult).flatMap((r) => Optional.ofNullable(r.matchMap[field]));
 
-    return (
-      <div
-        className="measurement-input-table"
-        ref={(el) => {
-          this.elem = el;
+  const fitRange = (field) =>
+    getFit(field)
+      .map((res) => ProductModel.getFit(res).label)
+      .orElse(null);
+
+  const measurementCellWidth = 100 / fields.length + "%";
+
+  return (
+    <div className="measurement-input-table" ref={elem}>
+      {fields.map(({ field, humanProperty }) => (
+        <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
+          <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
+          <MeasurementInput
+            onChange={valueChanged(humanProperty)}
+            value={measurements[humanProperty]}
+            unit={unit}
+            chooseUnit={chooseUnit}
+            unitChoiceDisallowed={unitChoiceDisallowed}
+            fitRange={fitRange(field)}
+            onFocus={() => {
+              setActiveTooltip(field);
+            }}
+          />
+          {getFit(field)
+            .map((f) => (
+              <OverlapBox
+                fit={f}
+                humanProperty={humanProperty}
+                hover={() => onOverlapBoxHover(field)}
+                key={humanProperty}
+                model={product.model}
+                unit={unit}
+              />
+            ))
+            .orElse(null)}
+        </div>
+      ))}
+      <ReactTooltip
+        id="input-tooltip"
+        type="light"
+        resizeHide={false}
+        getContent={tooltipContent()}
+      />
+      <Modal
+        isOpen={guideModalOpen}
+        onRequestClose={closeGuideModal}
+        className="measurement-guide-modal"
+        overlayClassName="measurement-guide-overlay"
+        contentLabel="SizeMe Measurement Guide"
+        style={{
+          content: {
+            left: getLeftPosition(),
+          },
         }}
       >
-        {this.fields.map(({ field, humanProperty }) => (
-          <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
-            <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
-            <MeasurementInput
-              onChange={this.valueChanged(humanProperty)}
-              value={this.state.measurements[humanProperty]}
-              unit={unit}
-              chooseUnit={chooseUnit}
-              unitChoiceDisallowed={unitChoiceDisallowed}
-              fitRange={fitRange(field)}
-              onFocus={() => {
-                this.setActiveTooltip(field);
-              }}
-            />
-            {getFit(field)
-              .map((f) => (
-                <OverlapBox
-                  fit={f}
-                  humanProperty={humanProperty}
-                  hover={() => onOverlapBoxHover(field)}
-                  key={humanProperty}
-                  model={this.props.product.model}
-                  unit={unit}
-                />
-              ))
-              .orElse(null)}
-          </div>
-        ))}
-        <ReactTooltip
-          id="input-tooltip"
-          type="light"
-          resizeHide={false}
-          getContent={this.tooltipContent(t)}
-        />
-        <Modal
-          isOpen={this.state.guideModalOpen}
-          onRequestClose={this.closeGuideModal}
-          className="measurement-guide-modal"
-          overlayClassName="measurement-guide-overlay"
-          contentLabel="SizeMe Measurement Guide"
-          style={{
-            content: {
-              left: this.getLeftPosition(),
-            },
-          }}
-        >
-          {this.modalContent(t)}
-        </Modal>
-      </div>
-    );
-  }
-}
+        {modalContent()}
+      </Modal>
+    </div>
+  );
+};
 
 SizeForm.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -210,8 +205,6 @@ SizeForm.propTypes = {
   matchResult: PropTypes.object,
   measurements: PropTypes.object,
   product: PropTypes.object,
-  selectedSize: PropTypes.string,
-  t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
   unitChoiceDisallowed: PropTypes.bool,
@@ -241,7 +234,6 @@ export default withTranslation()(
         .map((p) => p.measurements)
         .orElse({}),
       product: state.productInfo.product,
-      selectedSize: state.selectedSize.size,
     }),
     mapDispatchToProps
   )(SizeForm)
