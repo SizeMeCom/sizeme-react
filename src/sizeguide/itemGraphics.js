@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import SizeGuideModel from "../api/ProductModel";
 import uiOptions from "../api/uiOptions";
 import Optional from "optional-js";
+import SizeGuideModel from "../api/ProductModel";
 
 const realCanvasWidth = 350;
 const realCanvasHeight = 480;
@@ -311,7 +309,7 @@ function plotItem(c, data, scale, offsetX, offsetY) {
   } // end for accents
 }
 
-function writeItemCanvas(canvas, options) {
+export function writeItemCanvas(canvas, options) {
   if (!canvas.getContext) {
     return;
   }
@@ -386,42 +384,3 @@ function writeItemCanvas(canvas, options) {
     plotArrows(measurements.get(selectedSize) || measurements.values().next().value);
   }
 }
-
-const SizeGuideItem = (props) => {
-  const [profile, setProfile] = useState();
-  const [size, setSize] = useState();
-  const [highlight, setHighlight] = useState();
-
-  const canvas = useRef();
-
-  useEffect(() => {
-    if (
-      props.highlight !== highlight ||
-      (props.selectedProfile.selectDone &&
-        (props.selectedProfile.id !== profile || props.selectedSize !== size))
-    ) {
-      setProfile(props.selectedProfile.id);
-      setSize(props.selectedSize);
-      setHighlight(props.highlight);
-      writeItemCanvas(canvas.current, props);
-    }
-  }, [highlight, profile, props, size]);
-
-  return (
-    <div className="size-guide-item">
-      <canvas id="sizeme-item-view" width={350} height={480} ref={canvas} />
-    </div>
-  );
-};
-
-SizeGuideItem.propTypes = {
-  highlight: PropTypes.string,
-  matchMap: PropTypes.instanceOf(Map).isRequired,
-  measurements: PropTypes.instanceOf(Map).isRequired,
-  selectedSize: PropTypes.string,
-  selectedProfile: PropTypes.object.isRequired,
-  model: PropTypes.instanceOf(SizeGuideModel).isRequired,
-  isGuide: PropTypes.bool.isRequired,
-};
-
-export default SizeGuideItem;

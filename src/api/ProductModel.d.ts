@@ -1,15 +1,11 @@
-import { FitItem, MeasurementResult } from "../types/types";
-
-interface FitRange {
-  label: string;
-  start: number;
-  end: number;
-  arrowColor: string;
-  matches: (value: number) => boolean;
-}
+import { FitItem, FitResult, MeasurementResult } from "../types/types";
+import { Arrow, FitRange, ItemDrawing } from "../types/productModel";
 
 declare class ProductModelClass {
   constructor(item: FitItem);
+  arrows: Record<string, Arrow>;
+  itemDrawing: ItemDrawing;
+  static getFit: (measurementResult: FitResult, overflowFits?: boolean) => FitRange | null;
 }
 
 declare namespace ProductModel {
