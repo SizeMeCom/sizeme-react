@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import SizeGuideModel from "../api/ProductModel";
 import uiOptions from "../api/uiOptions";
@@ -387,50 +387,32 @@ function writeItemCanvas(canvas, options) {
   }
 }
 
-class SizeGuideItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const SizeGuideItem = (props) => {
+  const [profile, setProfile] = useState();
+  const [size, setSize] = useState();
+  const [highlight, setHighlight] = useState();
 
-  componentDidMount() {
-    this.draw();
-  }
+  const canvas = useRef();
 
-  componentDidUpdate() {
+  useEffect(() => {
     if (
-      this.props.highlight !== this.state.highlight ||
-      (this.props.selectedProfile.selectDone &&
-        (this.props.selectedProfile.id !== this.state.profile ||
-          this.props.selectedSize !== this.state.size))
+      props.highlight !== highlight ||
+      (props.selectedProfile.selectDone &&
+        (props.selectedProfile.id !== profile || props.selectedSize !== size))
     ) {
-      this.draw();
+      setProfile(props.selectedProfile.id);
+      setSize(props.selectedSize);
+      setHighlight(props.highlight);
+      writeItemCanvas(canvas.current, props);
     }
-  }
+  }, [highlight, profile, props, size]);
 
-  draw() {
-    this.setState({
-      profile: this.props.selectedProfile.id,
-      size: this.props.selectedSize,
-      highlight: this.props.highlight,
-    });
-    writeItemCanvas(this.canvas, this.props);
-  }
-
-  render() {
-    return (
-      <div className="size-guide-item">
-        <canvas
-          id="sizeme-item-view"
-          width={350}
-          height={480}
-          ref={(c) => {
-            this.canvas = c;
-          }}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="size-guide-item">
+      <canvas id="sizeme-item-view" width={350} height={480} ref={canvas} />
+    </div>
+  );
+};
 
 SizeGuideItem.propTypes = {
   highlight: PropTypes.string,

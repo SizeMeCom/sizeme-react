@@ -109,7 +109,7 @@ NoMatchItem.propTypes = {
   matchItem: object,
 };
 
-const FitTooltip = ({ measurement, product, unit, selectedSize, matchResult }) => {
+const FitTooltip = ({ measurement, product, unit = "cm", selectedSize, matchResult }) => {
   const [fitData, setFitData] = useState(null);
   const { t } = useTranslation();
 

@@ -1,12 +1,11 @@
 /* eslint-disable max-len */
-import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 12;
 const baseTrans = -24;
 
-const Shoe = (props) => {
-  const yTrans = Math.min(96, Math.max(-50, props.overlap * cmFactor + baseTrans));
+const Shoe = ({ overlap = 0 }) => {
+  const yTrans = Math.min(96, Math.max(-50, overlap * cmFactor + baseTrans));
   const arrowPositions = yTrans > 5 ? "arrowsInside" : "arrowsOutside";
   return (
     <svg viewBox="-30 96 190 157" preserveAspectRatio="xMinYMin meet" className="shoe">

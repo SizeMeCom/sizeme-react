@@ -89,19 +89,27 @@ class SizeGuideDetails extends React.Component {
         >
           <div className="fit-table">
             {product.model.measurementOrder.map((measurement, i) => (
-              <HoverContainer measurement={measurement} onHover={onHover} key={i}>
-                <div className="fit-wrapper" data-tip data-for="fit-tooltip">
-                  {selectedSize && (
-                    <DetailedFit
-                      measurement={measurement}
-                      num={i + 1}
-                      item={item}
-                      measurementName={product.model.measurementName}
-                      match={match}
-                      unit={unit}
-                    />
-                  )}
-                </div>
+              <HoverContainer
+                measurement={measurement}
+                onHover={onHover}
+                key={i}
+                Elem="div"
+                elemProps={{
+                  className: "fit-wrapper",
+                  "data-tip": true,
+                  "data-for": "fit-tooltip",
+                }}
+              >
+                {selectedSize && (
+                  <DetailedFit
+                    measurement={measurement}
+                    num={i + 1}
+                    item={item}
+                    measurementName={product.model.measurementName}
+                    match={match}
+                    unit={unit}
+                  />
+                )}
               </HoverContainer>
             ))}
           </div>

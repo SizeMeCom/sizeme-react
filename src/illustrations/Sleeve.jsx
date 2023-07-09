@@ -1,11 +1,10 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 6.3;
 const baseWidth = 363; // waist line X
 
-const Sleeve = (props) => {
-  const sleeveWidth = cmFactor * Math.min(50, Math.max(-9, props.overlap)) + baseWidth;
+const Sleeve = ({ overlap = 0 }) => {
+  const sleeveWidth = cmFactor * Math.min(50, Math.max(-9, overlap)) + baseWidth;
   const arrowPositions = sleeveWidth > 393 ? "arrowsInside" : "arrowsOutside";
   return (
     <svg

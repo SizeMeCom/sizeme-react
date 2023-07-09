@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import React from "react";
-import { withTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 
 import ProductModel from "../api/ProductModel";
@@ -17,6 +17,7 @@ import ShirtWaist from "./ShirtWaist";
 import Shoe from "./Shoe";
 import Sleeve from "./Sleeve";
 import { convertToInches as toInches, INCH_FRACTION_OPTIONS } from "../common/unit-convertions";
+import clsx from "clsx";
 
 const illustration = (measurement, overlap, model) => {
   switch (measurement) {
@@ -72,77 +73,67 @@ const illustrationDivider = (measurement) => {
   }
 };
 
-class OverlapBox extends React.Component {
-  constructor(props) {
-    super(props);
+const convertToInches = (size) => {
+  const [inchesWhole, inchesPartial] = toInches(size);
+  if (inchesWhole === 0 && inchesPartial === 0) {
+    return "0";
+  } else {
+    return inchesWhole > 0
+      ? inchesWhole + INCH_FRACTION_OPTIONS[inchesPartial]
+      : INCH_FRACTION_OPTIONS[inchesPartial];
   }
+};
 
-  componentDidMount() {
+const OverlapBox = ({ fit, hover, unit, humanProperty, model }) => {
+  const { t } = useTranslation();
+  useEffect(() => {
     ReactTooltip.rebuild();
-  }
+  }, []);
 
-  convertToInches = (size) => {
-    const [inchesWhole, inchesPartial] = toInches(size);
-    if (inchesWhole === 0 && inchesPartial === 0) {
-      return "0";
-    } else {
-      return inchesWhole > 0
-        ? inchesWhole + INCH_FRACTION_OPTIONS[inchesPartial]
-        : INCH_FRACTION_OPTIONS[inchesPartial];
-    }
-  };
+  const overlap = fit.overlap / illustrationDivider(humanProperty);
+  const overlapInches = convertToInches(overlap);
+  const fitLabel = ProductModel.getFit(fit).label;
+  const className = clsx(["overlap-box", fitLabel], { "no-overlap": overlap <= 0 });
 
-  render() {
-    const { fit, humanProperty, hover, t, model } = this.props;
-    const overlap = fit.overlap / illustrationDivider(humanProperty);
-    const overlapInches = this.convertToInches(overlap);
-    let className = "overlap-box";
-    className += " " + ProductModel.getFit(fit).label;
-    if (overlap <= 0) {
-      className += " no-overlap";
-    }
-
-    return (
-      <div
-        className={className}
-        data-tip
-        data-for="fit-tooltip"
-        data-effect="solid"
-        data-place="bottom"
-        onMouseEnter={hover}
-      >
-        <div className="overlap-svg">{illustration(humanProperty, overlap, model)}</div>
-        {this.props.unit === "cm" && (
-          <div className="overlap-text">
-            <div>
-              {overlap > 0 && "+"}
-              {overlap.toFixed(1)} {t("common.cm_short")}
-            </div>
+  return (
+    <div
+      className={className}
+      data-tip
+      data-for="fit-tooltip"
+      data-effect="solid"
+      data-place="bottom"
+      onMouseEnter={hover}
+    >
+      <div className="overlap-svg">{illustration(humanProperty, overlap, model)}</div>
+      {unit === "cm" && (
+        <div className="overlap-text">
+          <div>
+            {overlap > 0 && "+"}
+            {overlap.toFixed(1)} {t("common.cm_short")}
           </div>
-        )}
-        {this.props.unit === "in" && (
-          <div className="overlap-text">
-            <div>
-              {overlap > 0 && "+"}
-              {overlapInches} {t("common.in_short")}
-            </div>
-          </div>
-        )}
-        <div className="overlap-verdict">
-          <div>{t(`fitVerdict.${ProductModel.getFit(fit).label}`)}</div>
         </div>
+      )}
+      {unit === "in" && (
+        <div className="overlap-text">
+          <div>
+            {overlap > 0 && "+"}
+            {overlapInches} {t("common.in_short")}
+          </div>
+        </div>
+      )}
+      <div className="overlap-verdict">
+        <div>{t(`fitVerdict.${fitLabel}`)}</div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 OverlapBox.propTypes = {
   fit: PropTypes.object.isRequired,
   humanProperty: PropTypes.string.isRequired,
   hover: PropTypes.func.isRequired,
   model: PropTypes.object.isRequired,
-  t: PropTypes.func,
   unit: PropTypes.string,
 };
 
-export default withTranslation()(OverlapBox);
+export default OverlapBox;

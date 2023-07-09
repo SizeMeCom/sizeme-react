@@ -55,10 +55,10 @@ const defaultPoster = (gender) => {
 const mobileDetect = new MobileDetect(window.navigator.userAgent);
 const autoplay = !mobileDetect.is("phone");
 
-const VideoGuide = (props) => {
-  const gender = props.gender || "female";
-  if (availableVideos.includes(props.measurement)) {
-    const video = `${videoUrl}/${gender}_${props.measurement}`;
+const VideoGuide = ({ gender: propsGender, measurement }) => {
+  const gender = propsGender || "female";
+  if (availableVideos.includes(measurement)) {
+    const video = `${videoUrl}/${gender}_${measurement}`;
     return (
       <Video autoPlay={autoplay} poster={defaultPoster(gender)} width="250" controls={[]}>
         {Object.keys(videoTypes).map((ext) => (
@@ -68,8 +68,8 @@ const VideoGuide = (props) => {
     );
   } else {
     let poster;
-    if (availablePosters.includes(props.measurement)) {
-      poster = `${videoUrl}/${gender}_${props.measurement}.png`;
+    if (availablePosters.includes(measurement)) {
+      poster = `${videoUrl}/${gender}_${measurement}.png`;
     } else {
       poster = defaultPoster(gender);
     }

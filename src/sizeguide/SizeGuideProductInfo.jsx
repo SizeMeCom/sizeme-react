@@ -39,14 +39,12 @@ class SizeGuideProductInfo extends React.Component {
     const { measurementOrder, measurementName, pinchedFits } = productModel;
 
     const measurementCellCm = (size, measurement) => (
-      <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
-        <td>
-          {(
-            measurements[size][measurement] /
-            (!pinchedFits.includes(measurement) || uiOptions.flatMeasurements ? 10.0 : 5.0)
-          ).toFixed(1)}{" "}
-          {t("common.cm_short")}
-        </td>
+      <HoverContainer measurement={measurement} key={measurement} onHover={onHover} Elem="td">
+        {(
+          measurements[size][measurement] /
+          (!pinchedFits.includes(measurement) || uiOptions.flatMeasurements ? 10.0 : 5.0)
+        ).toFixed(1)}{" "}
+        {t("common.cm_short")}
       </HoverContainer>
     );
     const measurementCellInches = (size, measurement) => {
@@ -55,10 +53,8 @@ class SizeGuideProductInfo extends React.Component {
         (!pinchedFits.includes(measurement) || uiOptions.flatMeasurements ? 10.0 : 5.0);
       const sizeInInches = this.convertToInches(originalSizeToShow);
       return (
-        <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
-          <td>
-            {sizeInInches} {t("common.in_short")}
-          </td>
+        <HoverContainer measurement={measurement} key={measurement} onHover={onHover} Elem="td">
+          {sizeInInches} {t("common.in_short")}
         </HoverContainer>
       );
     };
@@ -77,11 +73,15 @@ class SizeGuideProductInfo extends React.Component {
               <tr>
                 <th className="size-col">{t("common.sizeItself")}</th>
                 {measurementOrder.map((measurement, i) => (
-                  <HoverContainer measurement={measurement} key={measurement} onHover={onHover}>
-                    <th className="measurement-head">
-                      <span className="num">{i + 1}</span>
-                      {measurementName(measurement)}
-                    </th>
+                  <HoverContainer
+                    measurement={measurement}
+                    key={measurement}
+                    onHover={onHover}
+                    Elem="th"
+                    elemProps={{ className: "measurement-head" }}
+                  >
+                    <span className="num">{i + 1}</span>
+                    {measurementName(measurement)}
                   </HoverContainer>
                 ))}
               </tr>

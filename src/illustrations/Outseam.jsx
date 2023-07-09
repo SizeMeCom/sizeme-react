@@ -1,11 +1,10 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 9.0;
 const baseHeight = 330; // ankle bone line Y
 
-const Outseam = (props) => {
-  const sleeveHeight = cmFactor * Math.min(50, Math.max(-9, props.overlap)) + baseHeight;
+const Outseam = ({ overlap = 0 }) => {
+  const sleeveHeight = cmFactor * Math.min(50, Math.max(-9, overlap)) + baseHeight;
   const arrowPositions = sleeveHeight > 360 ? "arrowsInside" : "arrowsOutside";
   return (
     <svg

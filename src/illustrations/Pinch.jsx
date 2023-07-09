@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 const transMatrix = (scaleX, cX, scaleY = 1, cY = 0) =>
@@ -9,8 +8,8 @@ const zeroPinchLine = 486.743;
 const maxPinchLine = 389.982;
 const pinchLinePosRange = zeroPinchLine - maxPinchLine;
 
-const Pinch = (props) => {
-  const scale = props.overlap <= 0 ? 0 : Math.min(1, props.overlap / 10.0);
+const Pinch = ({ overlap = 0 }) => {
+  const scale = overlap <= 0 ? 0 : Math.min(1, overlap / 10.0);
   const pinchLine = zeroPinchLine - scale * pinchLinePosRange;
   return (
     <svg

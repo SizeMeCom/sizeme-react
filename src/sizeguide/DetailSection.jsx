@@ -1,12 +1,6 @@
-import i18n from "i18next";
 import PropTypes from "prop-types";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "../common/SizeForm.scss";
-
-const unitTexts = {
-  cm: i18n.t("common.cm_short"),
-  in: i18n.t("common.in_short"),
-};
 
 const DetailSection = ({
   title,
@@ -15,32 +9,38 @@ const DetailSection = ({
   writeUnitSelectorInHeader,
   handleUnitChange,
   unitChoiceDisallowed,
-}) => (
-  <div className="size-guide-details-section">
-    <div className="size-guide-header-container">
-      <div className="size-guide-header-title">
-        <h2 className="header-h2">
-          <span className="header-left">{title}</span>
-          {!unitChoiceDisallowed && writeUnitSelectorInHeader && (
-            <span className={"header-right unit-selector" + " unit-selector-selected-" + unitProp}>
-              <span className="unit-selector-label" onClick={() => handleUnitChange("cm")}>
-                {unitTexts["cm"]}
-              </span>
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="size-guide-details-section">
+      <div className="size-guide-header-container">
+        <div className="size-guide-header-title">
+          <h2 className="header-h2">
+            <span className="header-left">{title}</span>
+            {!unitChoiceDisallowed && writeUnitSelectorInHeader && (
               <span
-                className="unit-selector-slider"
-                onClick={() => handleUnitChange(unitProp === "cm" ? "in" : "cm")}
-              ></span>
-              <span className="unit-selector-label" onClick={() => handleUnitChange("in")}>
-                {unitTexts["in"]}
+                className={"header-right unit-selector" + " unit-selector-selected-" + unitProp}
+              >
+                <span className="unit-selector-label" onClick={() => handleUnitChange("cm")}>
+                  {t("common.cm_short")}
+                </span>
+                <span
+                  className="unit-selector-slider"
+                  onClick={() => handleUnitChange(unitProp === "cm" ? "in" : "cm")}
+                ></span>
+                <span className="unit-selector-label" onClick={() => handleUnitChange("in")}>
+                  {t("common.in_short")}
+                </span>
               </span>
-            </span>
-          )}
-        </h2>
+            )}
+          </h2>
+        </div>
       </div>
+      {children}
     </div>
-    {children}
-  </div>
-);
+  );
+};
 
 DetailSection.propTypes = {
   title: PropTypes.string,
@@ -52,4 +52,4 @@ DetailSection.propTypes = {
   unitChoiceDisallowed: PropTypes.bool,
 };
 
-export default withTranslation()(DetailSection);
+export default DetailSection;

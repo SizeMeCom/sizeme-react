@@ -1,11 +1,10 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 5;
 const baseHeight = /* waist line Y */ 338.545 - /* shirt rect Y */ 162.204;
 
-const FrontHeight = (props) => {
-  const shirtHeight = Math.min(350, Math.max(115, props.overlap * cmFactor + baseHeight));
+const FrontHeight = ({ overlap = 0 }) => {
+  const shirtHeight = Math.min(350, Math.max(115, overlap * cmFactor + baseHeight));
   const hemLine = /* shirt rect Y */ 162.204 + shirtHeight;
   const arrowPositions = shirtHeight > 196 ? "arrowsInside" : "arrowsOutside";
   return (

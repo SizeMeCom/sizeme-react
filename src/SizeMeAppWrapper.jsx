@@ -103,7 +103,7 @@ const mapDispatchToProps = (dispatch) =>
       resolveAuthToken: redux.resolveAuthToken,
       getProfiles: redux.getProfiles,
       getProduct: redux.getProduct,
-      setSizemeHidden: api.setSizemeHidden,
+      setSizemeHidden: redux.setSizemeHidden,
     },
     dispatch
   );

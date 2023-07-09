@@ -1,10 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 const cmFactor = 5;
 
-const ShirtHips = (props) => {
-  const widthPlus = Math.min(150, Math.max(0, props.overlap * cmFactor));
+const ShirtHips = ({ overlap = 0 }) => {
+  const widthPlus = Math.min(150, Math.max(0, overlap * cmFactor));
   const arrowPositions = widthPlus > 30 ? "arrowsInside" : "arrowsOutside";
   return (
     <svg

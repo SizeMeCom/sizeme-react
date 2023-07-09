@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import React from "react";
-import { withTranslation } from "react-i18next";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
@@ -17,73 +17,61 @@ const SizeGuideModal = Loadable({
   },
 });
 
-class SizeGuide extends React.Component {
-  constructor(props) {
-    super(props);
+const SizeGuide = (props) => {
+  const { t } = useTranslation();
+  const { unit, chooseUnit, loggedIn, onFitHover, unitChoiceDisallowed } = props;
+  const [guideIsOpen, setGuideIsOpen] = useState(false);
+  const [highlight, setHighlight] = useState("");
 
-    this.state = {
-      guideIsOpen: false,
-      highlight: "",
-    };
-  }
+  const removeTimeout = useRef();
 
-  onHover = (measurement) => {
+  const onHover = (measurement) => {
     if (!measurement) {
-      this.removeTimeout = setTimeout(() => {
-        this.setState({ highlight: measurement });
+      removeTimeout.current = setTimeout(() => {
+        setHighlight(measurement);
       }, 100);
     } else {
-      this.props.onFitHover(measurement);
-      this.setState({ highlight: measurement });
-      if (this.removeTimeout) {
-        clearTimeout(this.removeTimeout);
-      }
+      onFitHover(measurement);
+      setHighlight(measurement);
+      clearTimeout(removeTimeout.current);
     }
   };
 
-  openGuide = () => {
-    this.setState({ guideIsOpen: true }, () => {});
+  const openGuide = () => {
+    setGuideIsOpen(true);
   };
 
-  closeGuide = () => {
-    this.setState({ guideIsOpen: false }, () => {
-      ReactTooltip.rebuild();
-    });
+  const closeGuide = () => {
+    setGuideIsOpen(false);
+    ReactTooltip.rebuild();
   };
 
-  componentDidCatch() {
-    this.setState({ guideIsOpen: false });
-  }
+  const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
 
-  render() {
-    const { t, loggedIn, unit, chooseUnit, unitChoiceDisallowed } = this.props;
-    const { guideIsOpen } = this.state;
-    const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
+  const modalProps = {
+    ...props,
+    highlight,
+    guideIsOpen,
+    closeGuide: closeGuide,
+    onHover: onHover,
+  };
 
-    const modalProps = {
-      ...this.state,
-      ...this.props,
-      closeGuide: this.closeGuide,
-      onHover: this.onHover,
-    };
-
-    return (
-      <div className="section-size-guide">
-        <a className="link-btn size-guide" onClick={this.openGuide}>
-          {button} <i className="fa-solid fa-caret-right" />
-        </a>
-        {guideIsOpen && (
-          <SizeGuideModal
-            {...modalProps}
-            unit={unit}
-            chooseUnit={chooseUnit}
-            unitChoiceDisallowed={unitChoiceDisallowed}
-          />
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="section-size-guide">
+      <a className="link-btn size-guide" onClick={openGuide}>
+        {button} <i className="fa-solid fa-caret-right" />
+      </a>
+      {guideIsOpen && (
+        <SizeGuideModal
+          {...modalProps}
+          unit={unit}
+          chooseUnit={chooseUnit}
+          unitChoiceDisallowed={unitChoiceDisallowed}
+        />
+      )}
+    </div>
+  );
+};
 
 SizeGuide.propTypes = {
   product: PropTypes.object.isRequired,
@@ -95,7 +83,6 @@ SizeGuide.propTypes = {
   matchResult: PropTypes.object,
   loggedIn: PropTypes.bool.isRequired,
   matchState: PropTypes.object,
-  t: PropTypes.func,
   unit: PropTypes.string,
   chooseUnit: PropTypes.func,
   unitChoiceDisallowed: PropTypes.bool,
@@ -120,4 +107,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SizeGuide));
+export default connect(mapStateToProps, mapDispatchToProps)(SizeGuide);

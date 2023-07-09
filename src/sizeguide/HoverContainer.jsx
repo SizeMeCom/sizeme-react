@@ -1,35 +1,36 @@
-import React from "react";
+import { useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
-class HoverContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const HoverContainer = ({ measurement, onHover, Elem, elemProps, children }) => {
+  const el = useRef();
 
-  componentDidMount() {
-    if (this.el) {
-      this.el.addEventListener("mouseenter", () => {
-        this.props.onHover(this.props.measurement);
-      });
-      this.el.addEventListener("mouseleave", () => {
-        this.props.onHover("");
-      });
-    }
-  }
+  const mouseEnter = useCallback(() => onHover(measurement), [measurement, onHover]);
+  const mouseLeave = useCallback(() => onHover(""), [onHover]);
 
-  render() {
-    return React.cloneElement(React.Children.only(this.props.children), {
-      ref: (el) => {
-        this.el = el;
-      },
-    });
-  }
-}
+  useEffect(() => {
+    const target = el.current;
+    target.addEventListener("mouseenter", mouseEnter);
+    target.addEventListener("mouseleave", mouseLeave);
+
+    return () => {
+      target.removeEventListener("mouseenter", mouseEnter);
+      target.removeEventListener("mouseleave", mouseLeave);
+    };
+  }, [mouseEnter, mouseLeave]);
+
+  return (
+    <Elem {...elemProps} ref={el}>
+      {children}
+    </Elem>
+  );
+};
 
 HoverContainer.propTypes = {
   children: PropTypes.node,
   measurement: PropTypes.string.isRequired,
   onHover: PropTypes.func.isRequired,
+  Elem: PropTypes.elementType.isRequired,
+  elemProps: PropTypes.any,
 };
 
 export default HoverContainer;

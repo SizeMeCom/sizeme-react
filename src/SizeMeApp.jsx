@@ -30,7 +30,9 @@ class SizeMeApp extends React.Component {
   constructor(props) {
     super(props);
     let selectedUnit = localStorage.getItem("sizemeMeasurementUnit");
-    selectedUnit = ["cm", "in"].includes(selectedUnit) ? selectedUnit : uiOptions.measurementUnit;
+    selectedUnit = ["cm", "in"].includes(selectedUnit)
+      ? selectedUnit
+      : uiOptions.measurementUnit ?? "cm";
     this.state = {
       loginModalOpen: false,
       unit: selectedUnit,
