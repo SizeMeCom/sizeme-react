@@ -1,8 +1,8 @@
-import React from "react";
+import { useEffect } from "react";
 import Loadable from "react-loadable";
 import { Loading } from "./common/Loading";
 import uiOptions from "./api/uiOptions";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import * as api from "./api/sizeme-api";
 import * as redux from "./redux";
@@ -18,78 +18,72 @@ const SizeMeApp = Loadable({
   },
 });
 
-class SizeMeTogglerComp extends React.Component {
-  static propTypes = {
-    sizemeHidden: PropTypes.bool.isRequired,
-    setSizemeHidden: PropTypes.func.isRequired,
-    t: PropTypes.func,
-  };
+const SizemeToggler = ({ setSizemeHidden, sizemeHidden }) => {
+  const { t } = useTranslation();
 
-  toggle = () => {
-    const { sizemeHidden, setSizemeHidden } = this.props;
+  const toggle = () => {
     setSizemeHidden(!sizemeHidden);
   };
 
-  render() {
-    const { t, sizemeHidden } = this.props;
-    return (
-      <div className="sizeme-toggler">
-        <a onClick={this.toggle}>
-          {t("common.togglerText")}{" "}
-          <i
-            className={clsx("fa", { "fa-arrow-down": sizemeHidden, "fa-arrow-up": !sizemeHidden })}
-            aria-hidden
-          />
-        </a>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="sizeme-toggler">
+      <a onClick={toggle}>
+        {t("common.togglerText")}{" "}
+        <i
+          className={clsx("fa", { "fa-arrow-down": sizemeHidden, "fa-arrow-up": !sizemeHidden })}
+          aria-hidden
+        />
+      </a>
+    </div>
+  );
+};
 
-const SizemeToggler = withTranslation()(SizeMeTogglerComp);
+SizemeToggler.propTypes = {
+  sizemeHidden: PropTypes.bool.isRequired,
+  setSizemeHidden: PropTypes.func.isRequired,
+};
 
-class SizeMeAppWrapper extends React.Component {
-  static propTypes = {
-    resolveAuthToken: PropTypes.func.isRequired,
-    getProfiles: PropTypes.func.isRequired,
-    getProduct: PropTypes.func.isRequired,
-    setSelectedProfile: PropTypes.func.isRequired,
-    sizemeHidden: PropTypes.bool.isRequired,
-    resolved: PropTypes.bool.isRequired,
-    setSizemeHidden: PropTypes.func.isRequired,
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    const { resolveAuthToken, getProfiles, getProduct, setSelectedProfile } = this.props;
+const SizeMeAppWrapper = ({
+  getProduct,
+  getProfiles,
+  setSelectedProfile,
+  resolveAuthToken,
+  resolved,
+  sizemeHidden,
+  setSizemeHidden,
+}) => {
+  useEffect(() => {
     Promise.all([
       resolveAuthToken().then((resolved) => getProfiles().then(() => resolved)),
       getProduct(),
     ]).then(() => {
       setSelectedProfile();
     });
-  }
+  }, [getProduct, getProfiles, resolveAuthToken, setSelectedProfile]);
 
-  render() {
-    const { resolved, sizemeHidden, setSizemeHidden } = this.props;
-
-    if (resolved) {
-      return (
-        <>
-          {uiOptions.toggler && (
-            <SizemeToggler sizemeHidden={sizemeHidden} setSizemeHidden={setSizemeHidden} />
-          )}
-          {!sizemeHidden && <SizeMeApp />}
-        </>
-      );
-    } else {
-      return null;
-    }
+  if (resolved) {
+    return (
+      <>
+        {uiOptions.toggler && (
+          <SizemeToggler sizemeHidden={sizemeHidden} setSizemeHidden={setSizemeHidden} />
+        )}
+        {!sizemeHidden && <SizeMeApp />}
+      </>
+    );
+  } else {
+    return null;
   }
-}
+};
+
+SizeMeAppWrapper.propTypes = {
+  resolveAuthToken: PropTypes.func.isRequired,
+  getProfiles: PropTypes.func.isRequired,
+  getProduct: PropTypes.func.isRequired,
+  setSelectedProfile: PropTypes.func.isRequired,
+  sizemeHidden: PropTypes.bool.isRequired,
+  resolved: PropTypes.bool.isRequired,
+  setSizemeHidden: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   resolved: state.authToken.resolved && state.productInfo.resolved,
@@ -108,4 +102,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SizeMeAppWrapper));
+export default connect(mapStateToProps, mapDispatchToProps)(SizeMeAppWrapper);

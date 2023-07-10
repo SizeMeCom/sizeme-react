@@ -1,7 +1,7 @@
 import Optional from "optional-js";
 import PropTypes from "prop-types";
-import React from "react";
-import { withTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
@@ -18,6 +18,7 @@ import SignupBox from "./common/SignupBox";
 import SizingBar from "./common/SizingBar.jsx";
 import sizemeIcon from "./images/sizeme_icon.png";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
+import clsx from "clsx";
 
 const SizeForm = Loadable({
   loader: () => import("./common/SizeForm.jsx"),
@@ -26,115 +27,105 @@ const SizeForm = Loadable({
   },
 });
 
-class SizeMeApp extends React.Component {
-  constructor(props) {
-    super(props);
-    let selectedUnit = localStorage.getItem("sizemeMeasurementUnit");
-    selectedUnit = ["cm", "in"].includes(selectedUnit)
-      ? selectedUnit
-      : uiOptions.measurementUnit ?? "cm";
-    this.state = {
-      loginModalOpen: false,
-      unit: selectedUnit,
-    };
-    this.shopType = Optional.ofNullable(uiOptions.shopType)
-      .map((s) => `sizeme-${s}`)
-      .orElse("");
-    this.skinClasses = uiOptions.skinClasses || "";
-    this.measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false;
-  }
+const measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false;
 
-  userLoggedIn = () => {
-    const { resolveAuthToken, getProfiles, setSelectedProfile } = this.props;
-    resolveAuthToken(true)
-      .then(() => getProfiles())
-      .then(() => setSelectedProfile());
+const SizeMeApp = ({
+  getProfiles,
+  profiles,
+  matchState,
+  resolveAuthToken,
+  resolved,
+  loggedIn,
+  measurementInputs,
+  onSignup,
+  signupStatus,
+  productInfo,
+  selectedProfile,
+  setSelectedProfile,
+}) => {
+  const [unit, setUnit] = useState(() => {
+    const selectedUnit = localStorage.getItem("sizemeMeasurementUnit");
+    return ["cm", "in"].includes(selectedUnit) ? selectedUnit : uiOptions.measurementUnit ?? "cm";
+  });
+
+  const tooltip = useRef();
+
+  const { t } = useTranslation();
+
+  const userLoggedIn = async () => {
+    if (await resolveAuthToken(true)) {
+      await getProfiles();
+      await setSelectedProfile();
+    }
   };
 
-  componentDidMount() {
+  useEffect(() => {
     document.body.classList.add("sizeme-active");
-  }
+    return () => {
+      document.body.classList.remove("sizeme-active");
+    };
+  }, []);
 
-  componentWillUnmount() {
-    document.body.classList.remove("sizeme-active");
-  }
-
-  chooseUnit = (chosenUnit) => {
+  const chooseUnit = (chosenUnit) => {
     localStorage.setItem("sizemeMeasurementUnit", chosenUnit);
-    this.setState({ unit: chosenUnit });
+    setUnit(chosenUnit);
   };
 
-  render() {
-    const {
-      resolved,
-      loggedIn,
-      profiles,
-      selectedProfile,
-      setSelectedProfile,
-      measurementInputs,
-      matchState,
-      productInfo,
-      onSignup,
-      signupStatus,
-      t,
-    } = this.props;
-    const { match, state } = matchState;
-    const itemTypeClass = "sizeme-item-" + productInfo.product.item.itemType.replace(/\./g, "_");
+  const { match, state } = matchState;
 
-    return (
-      <div
-        className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state} ${itemTypeClass}`}
-      >
-        <div className="sizeme-slider-row">
-          <SizingBar />
-          {loggedIn && (
-            <ProfileMenu
-              profiles={profiles}
-              selectedProfile={selectedProfile.id}
-              setSelectedProfile={setSelectedProfile}
-            />
-          )}
-          {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match && (
-            <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone} />
-          )}
-          {!loggedIn && !match && (
-            <div className="profile-menu-container">
-              <img
-                src={sizemeIcon}
-                alt="SizeMe"
-                data-tip
-                data-for="sizeme-tooltip"
-                ref={(el) => {
-                  this.tooltip = el;
-                }}
-              />
-              <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid">
-                <div>{t("common.sizemeTooltip")}</div>
-              </ReactTooltip>
-            </div>
-          )}
-        </div>
-        {measurementInputs && (
-          <SizeForm
-            fields={measurementInputs}
-            unit={this.state.unit}
-            chooseUnit={this.chooseUnit}
-            unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
+  const classes = clsx([
+    "sizeme-content",
+    state,
+    `sizeme-item-${productInfo.product.item.itemType.replace(/\./g, "_")}`,
+    uiOptions.skinClasses,
+    Optional.ofNullable(uiOptions.shopType)
+      .map((s) => `sizeme-${s}`)
+      .orElse(undefined),
+  ]);
+
+  return (
+    <div className={classes}>
+      <div className="sizeme-slider-row">
+        <SizingBar />
+        {loggedIn && (
+          <ProfileMenu
+            profiles={profiles}
+            selectedProfile={selectedProfile.id}
+            setSelectedProfile={setSelectedProfile}
           />
         )}
-        {resolved && !uiOptions.disableSizeGuide && (
-          <SizeGuide
-            unit={this.state.unit}
-            chooseUnit={this.chooseUnit}
-            unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
-          />
+        {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match && (
+          <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone} />
         )}
-        <FitTooltip unit={this.state.unit} />
-        <LoginFrame id="login-frame" onLogin={this.userLoggedIn} />
+        {!loggedIn && !match && (
+          <div className="profile-menu-container">
+            <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip" ref={tooltip} />
+            <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid">
+              <div>{t("common.sizemeTooltip")}</div>
+            </ReactTooltip>
+          </div>
+        )}
       </div>
-    );
-  }
-}
+      {measurementInputs && (
+        <SizeForm
+          fields={measurementInputs}
+          unit={unit}
+          chooseUnit={chooseUnit}
+          unitChoiceDisallowed={measurementUnitChoiceDisallowed}
+        />
+      )}
+      {resolved && !uiOptions.disableSizeGuide && (
+        <SizeGuide
+          unit={unit}
+          chooseUnit={chooseUnit}
+          unitChoiceDisallowed={measurementUnitChoiceDisallowed}
+        />
+      )}
+      <FitTooltip unit={unit} />
+      <LoginFrame id="login-frame" onLogin={userLoggedIn} />
+    </div>
+  );
+};
 
 SizeMeApp.propTypes = {
   resolved: PropTypes.bool.isRequired,
@@ -149,9 +140,6 @@ SizeMeApp.propTypes = {
   resolveAuthToken: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
   onSignup: PropTypes.func.isRequired,
-  t: PropTypes.func,
-  chooseUnit: PropTypes.func,
-  unit: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
@@ -179,4 +167,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(SizeMeApp));
+export default connect(mapStateToProps, mapDispatchToProps)(SizeMeApp);
