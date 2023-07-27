@@ -19,7 +19,9 @@ class AbstractSelect {
         if (this.sizeMapper.find(([s]) => s === size)) {
           selectSize(size);
         } else {
-          if (this.allowEmptySizeSelection) selectSize("");
+          if (this.allowEmptySizeSelection) {
+            selectSize("");
+          }
         }
       },
       useCapture
