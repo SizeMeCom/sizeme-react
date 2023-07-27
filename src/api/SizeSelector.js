@@ -1,6 +1,6 @@
-import uiOptions from "./uiOptions";
-
 import { findVisibleElement } from "../common/utils";
+
+import uiOptions from "./uiOptions";
 
 let selector;
 let selectSize = () => {};
