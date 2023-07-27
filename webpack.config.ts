@@ -3,6 +3,7 @@ import { GitRevisionPlugin } from "git-revision-webpack-plugin";
 import { glob } from "glob";
 import path from "path";
 import { PurgeCSSPlugin } from "purgecss-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 import type { Configuration } from "webpack";
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
@@ -58,6 +59,14 @@ const prodConfig = (env: Record<string, unknown>): Configuration => {
     ],
     optimization: {
       minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          minify: TerserPlugin.swcMinify,
+          // `terserOptions` options will be passed to `swc` (`@swc/core`)
+          // Link to options - https://swc.rs/docs/config-js-minify
+          terserOptions: {},
+        }),
+      ],
     },
   };
 };
@@ -81,15 +90,7 @@ const config = (env: Record<string, unknown>, argv: Record<string, unknown>): Co
           {
             test: /\.jsx?$/,
             include: PATHS.app,
-            loader: "babel-loader",
-            options: {
-              // Enable caching for improved performance during
-              // development.
-              // It uses default OS directory by default. If you need
-              // something more custom, pass a path to it.
-              // I.e., { cacheDirectory: "<path>" }
-              cacheDirectory: true,
-            },
+            loader: "swc-loader",
           },
           {
             test: /\.(png|jpg|svg)$/,
