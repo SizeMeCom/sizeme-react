@@ -457,7 +457,7 @@ const initSizeSelector = (selectSizeFn) => {
 
     case "swatches-variation":
       selector = getInstance(SwatchesVariationSelect);
-      break;      
+      break;
 
     default:
       selector = getInstance(DefaultSelect);
