@@ -548,7 +548,10 @@ function selectSize(size, auto) {
       }
       dispatch(actions.selectSize({ size, auto }));
     } else {
-      dispatch(actions.selectSize({ size: SizeSelector.getSelectedSize(), auto: false }));
+      const selectedSize = SizeSelector.getSelectedSize();
+      if (selectedSize) {
+        dispatch(actions.selectSize({ size: selectedSize, auto: false }));
+      }
     }
 
     let match = null;
