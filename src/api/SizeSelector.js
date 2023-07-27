@@ -367,6 +367,63 @@ class CrasmanForKooKenkaSelect extends AbstractSelect {
   };
 }
 
+class SwatchesVariationSelect extends AbstractSelect {
+  constructor(element) {
+    super(element, { event: "click", useCapture: true });
+
+    this.clearSelection = () => {
+      const selected = element.querySelector("li.selected");
+      if (selected && selected.classList) {
+        selected.classList.remove("selected");
+      }
+    };
+
+    const options = element.querySelectorAll("li");
+    const mkSelectFn = (textSpan) => () => textSpan.click();
+    for (let i = 0; i < options.length; i++) {
+      const option = options.item(i);
+      const sizeValue = option.dataset.value;
+      const textSpan = option.dataset.title;
+      if (textSpan) {
+        this.selectors[sizeValue] = mkSelectFn(textSpan);
+        this.sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
+      }
+    }
+
+    this.getSelectedSize = () => {
+      const selected = element.querySelector("li.selected");
+      if (selected) {
+        return selected.dataset.value;
+      } else {
+        return "";
+      }
+    };
+  }
+
+  clone = () => {
+    if (this.el) {
+      const clone = this.el.cloneNode(true);
+      const clearSelected = () => {
+        clone.querySelector("li.selected").classList.remove("selected");
+      };
+
+      const links = clone.querySelectorAll("li");
+      const mkEventListener = (link) => (e) => {
+        clearSelected();
+        link.classList.add("selected");
+        this.setSelected(e.currentTarget.dataset.value);
+      };
+      for (let i = 0; i < links.length; i++) {
+        const link = links.item(i);
+        link.addEventListener("click", mkEventListener(link), true);
+      }
+      return clone;
+    } else {
+      return document.createElement("div");
+    }
+  };
+}
+
 const initSizeSelector = (selectSizeFn) => {
   selectSize = (size) => {
     selectSizeFn(size);
@@ -397,6 +454,10 @@ const initSizeSelector = (selectSizeFn) => {
     case "swatches-woostify":
       selector = getInstance(SwatchesWoostifySelect);
       break;
+
+    case "swatches-variation":
+      selector = getInstance(SwatchesVariationSelect);
+      break;      
 
     default:
       selector = getInstance(DefaultSelect);
