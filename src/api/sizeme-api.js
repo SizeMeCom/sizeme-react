@@ -548,10 +548,7 @@ function selectSize(size, auto) {
       }
       dispatch(actions.selectSize({ size, auto }));
     } else {
-      const selectedSize = SizeSelector.getSelectedSize();
-      if (selectedSize) {
-        dispatch(actions.selectSize({ size: selectedSize, auto: false }));
-      }
+      dispatch(actions.selectSize({ size: SizeSelector.getSelectedSize(), auto: false }));
     }
 
     let match = null;

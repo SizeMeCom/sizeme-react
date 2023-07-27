@@ -10,6 +10,7 @@ class AbstractSelect {
     this.el = element;
     this.selectors = {};
     this.sizeMapper = [];
+    this.allowEmptySizeSelection = true;
 
     element.addEventListener(
       event,
@@ -18,7 +19,7 @@ class AbstractSelect {
         if (this.sizeMapper.find(([s]) => s === size)) {
           selectSize(size);
         } else {
-          selectSize("");
+          if (this.allowEmptySizeSelection) selectSize("");
         }
       },
       useCapture
@@ -371,6 +372,7 @@ class SwatchesVariationSelect extends AbstractSelect {
   constructor(element) {
     super(element, { event: "click", useCapture: true });
 
+    this.allowEmptySizeSelection = false;
     this.getSize = (e) => {
       const selected = e.target.closest("li");
       return selected?.dataset.value ?? "";
