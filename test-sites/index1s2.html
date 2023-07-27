@@ -86,15 +86,18 @@
     .sizeme_slider table.slider_table td.too_big {
         background-color: #444;
     }
-	.woostify-variation-swatches .swatch-label {
-		cursor: pointer;
-		border: 1px solid blue;
-		display: inline-block;
-		margin: 3px 6px;
-		padding: 3px 6px;
-		text-align: center;
-	}
-	.woostify-variation-swatches .swatch-label.selected { background-color: #ffa; }
+    ul.variable-items-wrapper li {
+        display: inline-block;
+        text-align: center;
+        border: 1px solid #444;
+        padding: 5px 7px;
+        margin-right: 5px;
+        max-width: 30px;
+        cursor: pointer;
+    }
+    ul.variable-items-wrapper li.selected {
+        background-color: yellow;
+    }
 	</style>
     <script type="text/javascript">//<![CDATA[
     var Translator = new Translate([]);
@@ -265,14 +268,34 @@
                                                         <option value="7" price="0">S</option>
                                                         <option value="6" price="0">M</option>
                                                         <option value="5" price="0">L</option>
-                                                        <option value="41" price="0">XL</option>
+                                                        <option value="4" price="0">XL</option>
                                                     </select>
-<div class="woostify-variation-swatches quickview-support variation-circle" data-attribute_name="attribute_pa_size">
-	<span class="swatch swatch-label swatch-s" data-value="7">S</span>
-	<span class="swatch swatch-label swatch-m" data-value="6">M</span>
-	<span class="swatch swatch-label swatch-l" data-value="5">L</span>
-	<span class="swatch swatch-label swatch-xl" data-value="41">XL</span>
-</div>
+                                                    <ul role="radiogroup" aria-label="Size" class="variable-items-wrapper button-variable-items-wrapper wvs-style-squared"
+                                                        data-attribute_name="attribute_pa_size"
+                                                        data-attribute_values="[&quot;xs&quot;,&quot;s&quot;,&quot;m&quot;,&quot;l&quot;,&quot;xl&quot;,&quot;xxl&quot;]">
+                                                        <li aria-checked="false" tabindex="0" data-wvstooltip="S"
+                                                            class="variable-item button-variable-item button-variable-item-s" title="S" data-title="S" data-value="7"
+                                                            role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
+                                                            <div class="variable-item-contents">
+                                                                <span class="variable-item-span variable-item-span-button">S</span>
+                                                            </div>
+                                                        </li>
+                                                        <li aria-checked="true" tabindex="0" data-wvstooltip="M"
+                                                            class="variable-item button-variable-item button-variable-item-m" title="M" data-title="M"
+                                                            data-value="6" role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
+                                                            <div class="variable-item-contents"><span class="variable-item-span variable-item-span-button">M</span></div>
+                                                        </li>
+                                                        <li aria-checked="false" tabindex="0" data-wvstooltip="L"
+                                                            class="variable-item button-variable-item button-variable-item-l" title="L" data-title="L" data-value="5"
+                                                            role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
+                                                            <div class="variable-item-contents"><span class="variable-item-span variable-item-span-button">L</span></div>
+                                                        </li>
+                                                        <li aria-checked="false" tabindex="0" data-wvstooltip="XL"
+                                                            class="variable-item button-variable-item button-variable-item-xl" title="XL" data-title="XL" data-value="4"
+                                                            role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
+                                                            <div class="variable-item-contents"><span class="variable-item-span variable-item-span-button">XL</span></div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </dd>
                                         </dl>
@@ -302,7 +325,7 @@
                                                             "oldPrice": "0",
                                                             "products": ["18"]
                                                         }, {
-                                                            "id": "41",
+                                                            "id": "4",
                                                             "label": "XL",
                                                             "price": "0",
                                                             "oldPrice": "0",
@@ -627,7 +650,7 @@
                                 "SS16_M2180B_BLUE_S": "7",
                                 "SS16_M2180B_BLUE_M": "6",
                                 "SS16_M2180B_BLUE_L": "5",
-                                "SS16_M2180B_BLUE_XL": "41",
+                                "SS16_M2180B_BLUE_XL": "4",
                             }
                         };
                         //]]>
@@ -713,7 +736,7 @@
                                         "hat_width": 0,
                                         "hood_height": 0,
                                     },
-                                    "41": {
+                                    "4": {
                                         "chest": 590,
                                         "waist": 570,
                                         "sleeve": 260,
@@ -782,40 +805,6 @@
                         }
                         //]]>
                     </script>
-                    <div class="block block-poll">
-                        <div class="block-title">
-                            <strong><span>Community Poll</span></strong>
-                        </div>
-                        <form id="pollForm" action="https://www.sizemedemo.com/magento19/poll/vote/add/poll_id/1/"
-                              method="post" onsubmit="return validatePollAnswerIsSelected();">
-                            <div class="block-content">
-                                <p class="block-subtitle">What is your favorite color</p>
-                                <ul id="poll-answers">
-                                    <li class="odd">
-                                        <input type="radio" name="vote" class="radio poll_vote" id="vote_1" value="1">
-                                        <span class="label"><label for="vote_1">Green</label></span>
-                                    </li>
-                                    <li class="even">
-                                        <input type="radio" name="vote" class="radio poll_vote" id="vote_2" value="2">
-                                        <span class="label"><label for="vote_2">Red</label></span>
-                                    </li>
-                                    <li class="odd">
-                                        <input type="radio" name="vote" class="radio poll_vote" id="vote_3" value="3">
-                                        <span class="label"><label for="vote_3">Black</label></span>
-                                    </li>
-                                    <li class="last even">
-                                        <input type="radio" name="vote" class="radio poll_vote" id="vote_4" value="41">
-                                        <span class="label"><label for="vote_4">Magenta</label></span>
-                                    </li>
-                                </ul>
-                                <script type="text/javascript">decorateList('poll-answers');</script>
-                                <div class="actions">
-                                    <button type="submit" title="Vote" class="button"><span><span>Vote</span></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <div class="paypal-logo">
                         <a href="#" title="Additional Options"
                            onclick="javascript:window.open('https://www.paypal.com/us/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside','paypal','width=600,height=350,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;"><img
@@ -867,128 +856,19 @@
         shopType: "magento",
         debugState: false,
         uiOptions: {
-            sizeSelectorType: 'swatches-woostify',
-            invokeElement: ".woostify-variation-swatches[data-attribute_name=attribute_pa_size]"
+            sizeSelectorType: 'swatches-variation',
+            invokeElement: "ul[data-attribute_name=attribute_pa_size]"
         }
     };
 </script>
 
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>jQuery.noConflict();
-jQuery('.woostify-variation-swatches').on('click','.swatch-label', function() {
-	jQuery(this).parents('div').find('.swatch-label').removeClass('selected');
+jQuery('.variable-items-wrapper').on('click','li', function() {
+	jQuery(this).parents('ul').find('li').removeClass('selected');
 	jQuery(this).addClass('selected');
 	jQuery('#attribute132').val(jQuery(this).data('value'));
 });
 </script>
-<div class="ui-dialog ui-widget ui-widget-content ui-corner-all sizeme_detailed_view_window ui-draggable ui-resizable"
-     tabindex="-1" role="dialog" aria-labelledby="ui-id-1"
-     style="outline: 0px; z-index: 1002; position: absolute; height: auto; width: 940px; top: 0px; left: 249px; display: none; max-height: 536px;">
-    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-1"
-                                                                                            class="ui-dialog-title">Size Guide for <span
-            class="name">T-SHIRT (PRODUCT-DB)</span></span><a href="#" class="ui-dialog-titlebar-close ui-corner-all"
-                                                              role="button"><span class="ui-icon ui-icon-closethick">Close</span></a>
-    </div>
-    <div id="sizeme_detailed_view_content" class="ui-dialog-content ui-widget-content resizedH" scrolltop="0"
-         scrollleft="0" style="display: block; width: auto; min-height: 0px; height: 494px; overflow: auto;">
-        <div class="dialog_col" id="col1">
-            <div class="sizeme_detailed_section">
-                <canvas id="sizeme_item_view" width="350" height="480"></canvas>
-            </div>
-        </div>
-        <div class="dialog_col" id="col2">
-            <div class="sizeme_detailed_section"><h2>Actual item measurements</h2>
-                <table id="detailed_table">
-                    <tbody>
-                    <tr class="header_row">
-                        <td class="size_column">Size</td>
-                        <td class="run_highlight cell_chest"><span class="num">1</span>Chest</td>
-                        <td class="run_highlight cell_waist"><span class="num">2</span>Waist</td>
-                        <td class="run_highlight cell_hips"><span class="num">3</span>Hem</td>
-                        <td class="run_highlight cell_shoulder_width"><span class="num">4</span>Shoulder</td>
-                        <td class="run_highlight cell_sleeve_top_width"><span class="num">5</span>Sleeve top</td>
-                        <td class="run_highlight cell_sleeve"><span class="num">6</span>Sleeve</td>
-                        <td class="run_highlight cell_wrist_width"><span class="num">7</span>Sleeve opening</td>
-                        <td class="run_highlight cell_front_height"><span class="num">8</span>Front height</td>
-                    </tr>
-                    <tr class="data_row">
-                        <td class="size_column">S</td>
-                        <td class="run_highlight cell_chest">50.0 cm</td>
-                        <td class="run_highlight cell_waist">48.0 cm</td>
-                        <td class="run_highlight cell_hips">48.0 cm</td>
-                        <td class="run_highlight cell_shoulder_width">12.6 cm</td>
-                        <td class="run_highlight cell_sleeve_top_width">20.8 cm</td>
-                        <td class="run_highlight cell_sleeve">20.0 cm</td>
-                        <td class="run_highlight cell_wrist_width">17.0 cm</td>
-                        <td class="run_highlight cell_front_height">70.0 cm</td>
-                    </tr>
-                    <tr class="data_row">
-                        <td class="size_column">M</td>
-                        <td class="run_highlight cell_chest">53.0 cm</td>
-                        <td class="run_highlight cell_waist">51.0 cm</td>
-                        <td class="run_highlight cell_hips">51.0 cm</td>
-                        <td class="run_highlight cell_shoulder_width">13.0 cm</td>
-                        <td class="run_highlight cell_sleeve_top_width">21.5 cm</td>
-                        <td class="run_highlight cell_sleeve">22.0 cm</td>
-                        <td class="run_highlight cell_wrist_width">17.5 cm</td>
-                        <td class="run_highlight cell_front_height">72.0 cm</td>
-                    </tr>
-                    <tr class="data_row">
-                        <td class="size_column">L</td>
-                        <td class="run_highlight cell_chest">56.0 cm</td>
-                        <td class="run_highlight cell_waist">54.0 cm</td>
-                        <td class="run_highlight cell_hips">54.0 cm</td>
-                        <td class="run_highlight cell_shoulder_width">13.4 cm</td>
-                        <td class="run_highlight cell_sleeve_top_width">22.2 cm</td>
-                        <td class="run_highlight cell_sleeve">24.0 cm</td>
-                        <td class="run_highlight cell_wrist_width">18.0 cm</td>
-                        <td class="run_highlight cell_front_height">74.0 cm</td>
-                    </tr>
-                    <tr class="data_row">
-                        <td class="size_column">XL</td>
-                        <td class="run_highlight cell_chest">60.0 cm</td>
-                        <td class="run_highlight cell_waist">58.0 cm</td>
-                        <td class="run_highlight cell_hips">58.0 cm</td>
-                        <td class="run_highlight cell_shoulder_width">14.0 cm</td>
-                        <td class="run_highlight cell_sleeve_top_width">23.2 cm</td>
-                        <td class="run_highlight cell_sleeve">26.0 cm</td>
-                        <td class="run_highlight cell_wrist_width">18.5 cm</td>
-                        <td class="run_highlight cell_front_height">76.0 cm</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="sizeme_explanation"><p>These measurements are measured <u>flat across the outside of the
-                item</u>.</p></div>
-        </div>
-        <div class="sm-bottombar ui-dialog-bottombar"></div>
-        <div class="sizeme_advertisement"><p>This size guide is brought to you by <a id="sizeme_ad_link"
-                                                                                     href="https://test.sizeme.com"
-                                                                                     class="logo" target="_blank"></a>
-        </p></div>
-        <div id="sizeme_detailed_splash" class="splash"><p class="splash_text">Take a few <b>measurements of
-            yourself</b> and get personalized info on how this item would <b>fit you</b>.<br>Create a free <b>SizeMe</b>
-            profile and stop guessing!</p>
-            <ul class="splash_choices">
-                <li class="sign_in"><a href="https://test.sizeme.com/?mode=signup" target="_blank" class="a_button"
-                                       id="sizeme_btn_sign_up" title="Yes, I'd like to create a free account">Sign
-                    up</a></li>
-                <li class="log_in"><a href="#" class="a_button" id="sizeme_btn_login" title="I already have an account">Log
-                    in</a></li>
-                <li class="no_thanks"><a href="#" class="a_button" id="sizeme_btn_no_thanks" title="Maybe later">No
-                    thanks</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="ui-resizable-handle ui-resizable-n" style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-w" style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se"
-         style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1000;"></div>
-    <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1000;"></div>
-</div>
 </body>
 </html>
