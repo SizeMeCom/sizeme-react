@@ -371,6 +371,11 @@ class SwatchesVariationSelect extends AbstractSelect {
   constructor(element) {
     super(element, { event: "click", useCapture: true });
 
+    this.getSize = (e) => {
+      const selected = e.target.closest("li");
+      return selected?.dataset.value ?? "";
+    };
+
     this.clearSelection = () => {
       const selected = element.querySelector("li.selected");
       if (selected && selected.classList) {
@@ -379,14 +384,14 @@ class SwatchesVariationSelect extends AbstractSelect {
     };
 
     const options = element.querySelectorAll("li");
-    const mkSelectFn = (textSpan) => () => textSpan.click();
+    const mkSelectFn = (option) => () => option.click();
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
       const sizeValue = option.dataset.value;
       const textSpan = option.dataset.title;
       if (textSpan) {
-        this.selectors[sizeValue] = mkSelectFn(textSpan);
-        this.sizeMapper.push([sizeValue, textSpan.textContent.trim()]);
+        this.selectors[sizeValue] = mkSelectFn(option);
+        this.sizeMapper.push([sizeValue, textSpan.trim()]);
       }
     }
 
