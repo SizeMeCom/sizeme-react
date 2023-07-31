@@ -11,7 +11,7 @@ const Sleeve = (props) => {
     <svg
       version="1.1"
       id="Layer_1"
-      viewBox="298 226 250 200"
+      viewBox="358 226 250 200"
       preserveAspectRatio="xMaxYMin meet"
       className="sleeve"
     >
