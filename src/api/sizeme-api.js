@@ -420,10 +420,16 @@ function getRecommendedFit(fitResults, optimalFit) {
           return [accSize, fit];
         }
         const maxStretchArr = [];
+        const importanceArr = [];
+        const componentFitArr = [];
         Object.entries(res.matchMap).forEach(([oKey, oValue]) => {
           maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
+          importanceArr.push(oValue.importance);
+          componentFitArr.push(oValue.componentFit);
         });
         const maxStretch = Math.max.apply(null, maxStretchArr);
+        const maxImportance = Math.max.apply(null, importanceArr);
+        const maxComponentFit = Math.max.apply(null, componentFitArr);
         if (isStretching(res.matchMap, optFit)) {
           const newFit =
             Math.abs(res.totalFit - 1000) * 100 + Math.abs(maxStretch - DEFAULT_OPTIMAL_STRETCH);
@@ -433,7 +439,11 @@ function getRecommendedFit(fitResults, optimalFit) {
             return [accSize, fit];
           }
         } else {
-          const newFit = Math.abs(res.totalFit - optFit) * 100 + Math.abs(maxStretch - optStretch);
+          let effTotalFit = res.totalFit;
+          if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
+            effTotalFit = maxComponentFit;
+          }
+          const newFit = Math.abs(effTotalFit - optFit) * 100 + Math.abs(maxStretch - optStretch);
           if (newFit <= maxDist * 100 && res.totalFit >= 1000 && (!accSize || newFit < fit)) {
             return [size, newFit];
           } else {

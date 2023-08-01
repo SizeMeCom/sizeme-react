@@ -181,16 +181,30 @@ class SizingBar extends React.Component {
                   20,
                   40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20
                 )
-              : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
+                : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
         } else {
           newPos = Math.max(0, 20 - ((1000 - value) / 55) * 20);
         }
       }
       return newPos;
     } else {
+      let effTotalFit = value;
+      if (matchMap) {
+        const importanceArr = [];
+        const componentFitArr = [];
+        Object.entries(matchMap).forEach(([, oValue]) => {
+          importanceArr.push(oValue.importance);
+          componentFitArr.push(oValue.componentFit);
+        });
+        const maxImportance = Math.max.apply(null, importanceArr);
+        const maxComponentFit = Math.max.apply(null, componentFitArr);        
+        if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
+          effTotalFit = maxComponentFit;
+        }      
+      }
       return Math.max(
         0,
-        (Math.min(value, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale
+        (Math.min(effTotalFit, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale
       );
     }
   }
