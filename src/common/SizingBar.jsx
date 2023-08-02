@@ -155,25 +155,38 @@ class SizingBar extends React.Component {
   }
 
   getFitPosition(value, matchMap) {
-    const { fitRecommendation } = this.props;
+    let { fitRecommendation } = this.props;
+    let effTotalFit = value;
+    const maxStretchArr = [];
+    if (matchMap) {
+      const importanceArr = [];
+      const componentFitArr = [];
+      Object.entries(matchMap).forEach(([oKey, oValue]) => {
+        maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
+        importanceArr.push(oValue.importance);
+        componentFitArr.push(oValue.componentFit);
+      });
+      const maxImportance = Math.max.apply(null, importanceArr);
+      const maxComponentFit = Math.max.apply(null, componentFitArr);
+      if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
+        effTotalFit = maxComponentFit;
+        if (fitRecommendation <= 1000) {
+          fitRecommendation = DEFAULT_OPTIMAL_FIT;
+        }
+      }
+    }
     if (isStretching(matchMap, fitRecommendation)) {
       let maxStretch = DEFAULT_OPTIMAL_STRETCH;
       let newPos = 50;
       if (matchMap) {
-        const maxStretchArr = [];
-        const minStretchFactorArr = [];
-        Object.entries(matchMap).forEach(([oKey, oValue]) => {
-          maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
-          minStretchFactorArr.push(stretchFactor(oKey));
-        });
         maxStretch = Math.max.apply(null, maxStretchArr);
-        if (value > 1000) {
+        if (effTotalFit > 1000) {
           if (fitRecommendation === 1000) {
-            newPos = Math.min(100, 60 + ((value - 1000) / 55) * 40);
+            newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 40);
           } else {
-            newPos = Math.min(100, 60 + ((value - 1000) / 55) * 10);
+            newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 10);
           }
-        } else if (value == 1000) {
+        } else if (effTotalFit == 1000) {
           const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
           newPos =
             maxStretch > stretchBreakpoint
@@ -183,25 +196,11 @@ class SizingBar extends React.Component {
                 )
               : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
         } else {
-          newPos = Math.max(0, 20 - ((1000 - value) / 55) * 20);
+          newPos = Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
         }
       }
       return newPos;
     } else {
-      let effTotalFit = value;
-      if (matchMap) {
-        const importanceArr = [];
-        const componentFitArr = [];
-        Object.entries(matchMap).forEach(([, oValue]) => {
-          importanceArr.push(oValue.importance);
-          componentFitArr.push(oValue.componentFit);
-        });
-        const maxImportance = Math.max.apply(null, importanceArr);
-        const maxComponentFit = Math.max.apply(null, componentFitArr);
-        if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
-          effTotalFit = maxComponentFit;
-        }
-      }
       return Math.max(
         0,
         (Math.min(effTotalFit, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale

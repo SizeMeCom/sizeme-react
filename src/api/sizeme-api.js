@@ -409,7 +409,7 @@ function doMatch(fitRequest, token, useProfile) {
 }
 
 function getRecommendedFit(fitResults, optimalFit) {
-  const optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
+  let optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
   const optStretch = optFit > 1000 ? DEFAULT_OPTIMAL_STRETCH / 5 : DEFAULT_OPTIMAL_STRETCH;
   const maxDist = uiOptions.maxRecommendationDistance || 9999;
   const [bestMatch] = fitResults
@@ -430,19 +430,22 @@ function getRecommendedFit(fitResults, optimalFit) {
         const maxStretch = Math.max.apply(null, maxStretchArr);
         const maxImportance = Math.max.apply(null, importanceArr);
         const maxComponentFit = Math.max.apply(null, componentFitArr);
+        let effTotalFit = res.totalFit;
+        if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
+          effTotalFit = maxComponentFit;
+          if (optFit <= 1000) {
+            optFit = DEFAULT_OPTIMAL_FIT;
+          }
+        }
         if (isStretching(res.matchMap, optFit)) {
           const newFit =
-            Math.abs(res.totalFit - 1000) * 100 + Math.abs(maxStretch - DEFAULT_OPTIMAL_STRETCH);
+            Math.abs(effTotalFit - 1000) * 100 + Math.abs(maxStretch - DEFAULT_OPTIMAL_STRETCH);
           if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
             return [size, newFit];
           } else {
             return [accSize, fit];
           }
         } else {
-          let effTotalFit = res.totalFit;
-          if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
-            effTotalFit = maxComponentFit;
-          }
           const newFit = Math.abs(effTotalFit - optFit) * 100 + Math.abs(maxStretch - optStretch);
           if (newFit <= maxDist * 100 && res.totalFit >= 1000 && (!accSize || newFit < fit)) {
             return [size, newFit];
