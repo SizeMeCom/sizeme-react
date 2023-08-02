@@ -42,7 +42,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [lang] (_String_): language to use (fi, sv, en, en is fallback).
   - [appendContentTo] (_String_): DOM element where SizeMe is injected.
   - [invokeElement] (_String_): DOM element that handles size changes
-  - [disableSizeGuide] (_Boolean_): disable SizeGuide
+  - [disableSizeGuide] (_Boolean_): disable size guide
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"
   - [addToCartElement] (_String_): DOM element to listen to for add-to-cart events
   - [addToCartEvent] (_String_): DOM event for add-to-cart
@@ -53,7 +53,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [flatMeasurements] (_Boolean_): show product circumference measurements (chest, waist etc) as measured on a flat surface in the size guide. Default: true
   - [measurementUnit] (_String_): default measurement unit. Possible values: "cm" for metric, "in" for imperials. Default: "cm"
   - [measurementUnitChoiceDisallowed] (_Boolean_): disallow user from switching measurement unit. Default: false
-  - [matchGenderFromNameMale] (_String_): a reg exp string to match that product is for (real) men. Otherwise measuring videos etc. default to women. Default: ""
+  - [matchGenderFromNameMale] (_String_): a reg exp string to match that product is for men. Otherwise measuring videos etc. default to women. Default: ""
 
 - [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to
   override the Swedish translation for chest:
@@ -68,4 +68,4 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
 }
 ```
 
-Similarly override any other key in any other language (en, fi, sv).
+Similarly override any other key in any other language.
