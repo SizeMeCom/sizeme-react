@@ -210,6 +210,12 @@
   border: 1px solid black;
   border-radius: $border_radius;
 
+  .measurement-instruction-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
   .measurement-instruction-box {
     line-height: 1em;
     padding: 18px 22px 18px 18px;

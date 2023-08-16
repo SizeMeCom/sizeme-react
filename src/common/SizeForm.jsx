@@ -108,9 +108,9 @@ const SizeForm = ({
     const humanMeasurement = humanMeasurementMap.get(activeTooltip.current);
     const humanMeasurementName = t(`humanMeasurements.${humanMeasurement}`);
     return (
-      <div>
+      <div className="measurement-instruction-wrapper">
         <div className="measurement-instruction-box">
-          <i className="fa-solid fa-times" onClick={closeGuideModal} />
+          <i className="fa fa-solid fa-times" onClick={closeGuideModal} />
           <h2 className="instruction-title">
             {t("measurementGuide.title")} {humanMeasurementName.toLowerCase()}
           </h2>
