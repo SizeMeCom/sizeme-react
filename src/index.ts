@@ -1,4 +1,4 @@
-void (async (sizemeOptions) => {
+void ((sizemeOptions) => {
   if (!sizemeOptions) {
     return;
   }
@@ -8,10 +8,10 @@ void (async (sizemeOptions) => {
 
   let sizemeDisabled = false;
 
-  if (sizemeOptions.serviceStatus === "ab") {
+  /*if (sizemeOptions.serviceStatus === "ab") {
     const abTesting = (await import("./ab-testing")).default;
     sizemeDisabled = abTesting();
-  }
+  }*/
 
   if (sizemeOptions.serviceStatus === "off") {
     sizemeDisabled = true;

@@ -25,13 +25,6 @@ export const SET_AB_STATUS = "SET_AB_STATUS";
 export const SET_MATCH_STATE = "SET_MATCH_STATE";
 export const SET_SIZEME_HIDDEN = "SET_SIZEME_HIDDEN";
 
-export const { checkToken, fetchToken, resolveToken, clearToken } = createActions(
-  CHECK_TOKEN,
-  FETCH_TOKEN,
-  RESOLVE_TOKEN,
-  CLEAR_TOKEN
-);
-export const { signup, signupDone } = createActions(SIGNUP, SIGNUP_DONE);
 export const { requestProfileList, receiveProfileList } = createActions(
   REQUEST_PROFILE_LIST,
   RECEIVE_PROFILE_LIST

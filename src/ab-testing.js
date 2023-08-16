@@ -1,8 +1,8 @@
-import { sizemeStore } from "./api/sizeme-api";
+/*import { sizemeStore } from "./redux/store";
 import { setAbStatus } from "./api/actions";
-
+*/
 export default () => {
-  let sizemeDisabled = false;
+  /*let sizemeDisabled = false;
   const storageABValue = localStorage.getItem("sizemeABDisabled");
 
   if (!storageABValue) {
@@ -17,5 +17,6 @@ export default () => {
   console.log("SizeMe A/B testing, status: " + abStatus);
   sizemeStore.dispatch(setAbStatus(abStatus));
 
-  return sizemeDisabled;
+  return sizemeDisabled;*/
+  return false;
 };

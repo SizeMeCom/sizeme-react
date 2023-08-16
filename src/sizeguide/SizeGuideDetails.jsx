@@ -4,7 +4,7 @@ import React from "react";
 import { withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
-import ProfileSelect from "../common/ProfileSelect.jsx";
+import ProfileSelect from "../common/ProfileSelect";
 import SizingBar from "../common/SizingBar.jsx";
 import DetailSection from "./DetailSection.jsx";
 import DetailedFit from "./DetailedFit.jsx";

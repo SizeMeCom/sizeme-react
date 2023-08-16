@@ -5,7 +5,7 @@ import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
-import { setTooltip } from "../api/actions";
+import { setTooltip } from "../redux";
 import { setSelectedProfile } from "../api/sizeme-api";
 import { Loading } from "../common/Loading";
 import "./SizeGuide.scss";

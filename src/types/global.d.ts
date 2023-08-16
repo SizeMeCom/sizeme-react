@@ -1,8 +1,9 @@
-import { SizemeOptions } from "./types";
+import { SizemeOptions, SizemeProduct, SKUProduct } from "./types";
 
 declare global {
   interface Window {
-    sizeme_options?: SizemeOptions;
+    sizeme_options: SizemeOptions;
+    sizeme_product: SizemeProduct | SKUProduct;
   }
 
   const VERSION: string;

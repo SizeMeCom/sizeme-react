@@ -5,6 +5,7 @@ import uiOptions from "./api/uiOptions";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import * as api from "./api/sizeme-api";
+import * as redux from "./redux";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import clsx from "clsx";
@@ -99,9 +100,9 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       setSelectedProfile: api.setSelectedProfile,
-      resolveAuthToken: api.resolveAuthToken,
-      getProfiles: api.getProfiles,
-      getProduct: api.getProduct,
+      resolveAuthToken: redux.resolveAuthToken,
+      getProfiles: redux.getProfiles,
+      getProduct: redux.getProduct,
       setSizemeHidden: api.setSizemeHidden,
     },
     dispatch

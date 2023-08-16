@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { Action, handleAction, handleActions } from "redux-actions";
 import * as actions from "./actions";
+import authToken from "../redux/authToken";
 
 function resolvePayload<A>(action: Action<A>, payloadKey: string, errorPayload: unknown = null) {
   return {
@@ -8,37 +9,6 @@ function resolvePayload<A>(action: Action<A>, payloadKey: string, errorPayload: 
     error: action.error ? action.payload : null,
   };
 }
-
-const authToken = handleActions(
-  {
-    [actions.CHECK_TOKEN]: () => ({
-      loggedIn: false,
-      isFetching: false,
-      resolved: false,
-    }),
-
-    [actions.FETCH_TOKEN]: (state) => ({ ...state, isFetching: true }),
-
-    [actions.RESOLVE_TOKEN]: (state, action) => ({
-      ...state,
-      isFetching: false,
-      resolved: true,
-      loggedIn: !action.error && !!action.payload,
-      ...resolvePayload(action, "token"),
-    }),
-
-    [actions.CLEAR_TOKEN]: () => ({
-      loggedIn: false,
-      isFetching: false,
-      resolved: true,
-    }),
-  },
-  {
-    loggedIn: false,
-    isFetching: false,
-    resolved: false,
-  }
-);
 
 interface SignupStatus {
   signupDone?: boolean;
@@ -65,7 +35,7 @@ const signupStatus = handleActions<SignupStatus>(
   }
 );
 
-const profileList = handleActions(
+export const profileList = handleActions(
   {
     [actions.REQUEST_PROFILE_LIST]: (state) => ({ ...state, isFetching: true }),
 
@@ -81,7 +51,7 @@ const profileList = handleActions(
   }
 );
 
-const productInfo = handleActions(
+export const productInfo = handleActions(
   {
     [actions.REQUEST_PRODUCT_INFO]: (state) => ({ ...state, isFetching: true }),
 
@@ -99,7 +69,7 @@ const productInfo = handleActions(
   }
 );
 
-const selectedProfile = handleActions(
+export const selectedProfile = handleActions(
   {
     [actions.SELECT_PROFILE]: (state, action) => ({
       ...state,
@@ -130,7 +100,7 @@ const selectedProfile = handleActions(
   }
 );
 
-const match = handleActions(
+export const match = handleActions(
   {
     [actions.REQUEST_MATCH]: (state) => ({
       ...state,
@@ -154,7 +124,7 @@ const match = handleActions(
   }
 );
 
-const tooltip = handleAction<string | null, string | null>(
+export const tooltip = handleAction<string | null, string | null>(
   actions.SET_TOOLTIP,
   (state, action) => action.payload,
   null
@@ -165,7 +135,7 @@ interface SelectedSizePayload {
   auto?: boolean;
 }
 
-const selectedSize = handleAction<
+export const selectedSize = handleAction<
   SelectedSizePayload & { firstMatch: boolean },
   SelectedSizePayload
 >(
@@ -192,7 +162,7 @@ interface MatchStateAction {
   match: string | null;
   state: string;
 }
-const matchState = handleAction<MatchStateAction, MatchStateAction>(
+export const matchState = handleAction<MatchStateAction, MatchStateAction>(
   actions.SET_MATCH_STATE,
   (state, action) => action.payload,
   {

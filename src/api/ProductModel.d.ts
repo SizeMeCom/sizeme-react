@@ -1,4 +1,4 @@
-import { MeasurementResult } from "../types/types";
+import { FitItem, MeasurementResult } from "../types/types";
 
 interface FitRange {
   label: string;
@@ -6,6 +6,10 @@ interface FitRange {
   end: number;
   arrowColor: string;
   matches: (value: number) => boolean;
+}
+
+declare class ProductModelClass {
+  constructor(item: FitItem);
 }
 
 declare namespace ProductModel {
@@ -30,4 +34,4 @@ declare namespace ProductModel {
   const pinchedFits: string[];
 }
 
-export = ProductModel;
+export = ProductModelClass;

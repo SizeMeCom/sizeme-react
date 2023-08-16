@@ -8,6 +8,7 @@ import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
 import "./SizeMeApp.scss";
 import * as api from "./api/sizeme-api";
+import * as redux from "./redux";
 import uiOptions from "./api/uiOptions";
 import FitTooltip from "./common/FitTooltip";
 import { Loading } from "./common/Loading";
@@ -173,9 +174,9 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       setSelectedProfile: api.setSelectedProfile,
-      resolveAuthToken: api.resolveAuthToken,
-      getProfiles: api.getProfiles,
-      onSignup: api.signup,
+      resolveAuthToken: redux.resolveAuthToken,
+      getProfiles: redux.getProfiles,
+      onSignup: redux.signup,
     },
     dispatch
   );

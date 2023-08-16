@@ -44,3 +44,51 @@ export interface MeasurementResult {
   importance: number;
   componentStretch: number;
 }
+
+export type ItemTypeId = string;
+export type Measurements = Record<string, number>;
+
+export interface FitItem {
+  itemType: ItemTypeId;
+  itemLayer: number;
+  itemThickness: number;
+  itemStretch: number;
+  fitRecommendation: number;
+  measurements: Record<string, Measurements>;
+}
+
+export interface FitRange {
+  label: string;
+  range: {
+    start: number;
+    end: number;
+    step: number;
+  };
+}
+
+export interface FitValues {
+  importance: number;
+  overlap: number;
+  percentage: number;
+  componentFit: number;
+  componentStretch?: number;
+}
+
+export interface FitResult {
+  matchMap: Record<string, FitValues>;
+  totalFit: number;
+  fitRangeLabel: string;
+  accuracy: number;
+  missingMeasurements: [string, string][];
+}
+
+export interface SKUProduct {
+  name: string;
+  SKU: string;
+  item: Record<string, string>;
+}
+
+export interface SizemeProduct {
+  name: string;
+  item: FitItem;
+}

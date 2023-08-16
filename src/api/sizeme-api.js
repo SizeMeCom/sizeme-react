@@ -3,11 +3,6 @@
 import "isomorphic-fetch";
 import i18n from "i18next";
 import Optional from "optional-js";
-import { applyMiddleware, createStore } from "redux";
-import { createLogger } from "redux-logger";
-import thunkMiddleware from "redux-thunk";
-import equals from "shallow-equals";
-import Cookies from "universal-cookie";
 
 import SizeGuideModel, {
   DEFAULT_OPTIMAL_FIT,
@@ -18,7 +13,7 @@ import SizeGuideModel, {
 } from "./ProductModel";
 import SizeSelector from "./SizeSelector";
 import * as actions from "./actions";
-import rootReducer from "./reducers";
+import { setMatchState } from "../redux";
 import uiOptions from "./uiOptions";
 
 const sizemeOptions = () => window.sizeme_options || {};
@@ -27,65 +22,6 @@ const contextAddress = sizemeOptions().contextAddress || "https://www.sizeme.com
 const pluginVersion = sizemeOptions().pluginVersion || "UNKNOWN";
 const cdnLocation = "https://cdn.sizeme.com";
 const storeMeasurementsKey = "sizemeMeasurements";
-
-const cookies = new Cookies();
-
-const sizemeStore = ((sizemeOpts) => {
-  if (!sizemeOpts) {
-    return {};
-  }
-
-  const store = createStore(
-    rootReducer,
-    applyMiddleware(
-      thunkMiddleware,
-      createLogger({
-        predicate: () => sizemeOpts.debugState,
-        duration: true,
-      })
-    )
-  );
-
-  function observeStore(select, onChange) {
-    let currentState;
-
-    function handleChange() {
-      const nextState = select(store.getState());
-      if (!equals(nextState, currentState)) {
-        currentState = nextState;
-        onChange(currentState);
-      }
-    }
-
-    const unsubscribe = store.subscribe(handleChange);
-    handleChange();
-    return unsubscribe;
-  }
-
-  observeStore(
-    ({ productInfo, selectedProfile, abStatus }) => ({
-      product: productInfo.product,
-      selectedProfile,
-      abStatus,
-    }),
-    ({ product, selectedProfile, abStatus }) => {
-      let smAction;
-      const statusPostFix = abStatus ? "-" + abStatus : "";
-      if (!product) {
-        smAction = "noProduct" + statusPostFix;
-      } else if (!Object.values(selectedProfile.measurements).some((item) => item)) {
-        smAction = "noHuman";
-      } else if (!selectedProfile.id) {
-        smAction = "hasUnsaved";
-      } else {
-        smAction = "hasProfile";
-      }
-      cookies.set("sm_action", smAction, { path: "/" });
-    }
-  );
-
-  return store;
-})(window.sizeme_options);
 
 class FitRequest {
   constructor(subject, item) {
@@ -160,88 +96,6 @@ function jsonResponse(response) {
   });
 }
 
-function resolveAuthToken(reset = false) {
-  return async (dispatch, getState) => {
-    if (!reset && getState().authToken.resolved) {
-      return true;
-    }
-
-    dispatch(actions.checkToken());
-
-    const tokenObj = sessionStorage.getItem("sizeme.authtoken");
-    let authToken;
-    if (tokenObj) {
-      let storedToken;
-      try {
-        storedToken = JSON.parse(tokenObj);
-        if (
-          storedToken.token &&
-          storedToken.expires &&
-          Date.parse(storedToken.expires) > new Date().getTime()
-        ) {
-          authToken = storedToken.token;
-        }
-      } catch (e) {
-        // no action
-      }
-    }
-
-    if (authToken) {
-      dispatch(actions.resolveToken(authToken));
-      return true;
-    } else {
-      dispatch(actions.fetchToken());
-      try {
-        const tokenResp = await fetch(
-          getEndpointAddress("authToken"),
-          createRequest("GET", { withCredentials: true })
-        ).then(jsonResponse);
-        sessionStorage.setItem("sizeme.authtoken", JSON.stringify(tokenResp));
-        dispatch(actions.resolveToken(tokenResp.token));
-        return tokenResp.token !== null;
-      } catch (reason) {
-        dispatch(actions.resolveToken(reason));
-        return false;
-      }
-    }
-  };
-}
-
-function signup(email) {
-  return async (dispatch, getState) => {
-    let token;
-    dispatch(actions.signup());
-    try {
-      const signupResp = await fetch(
-        getEndpointAddress("createAccount"),
-        createRequest("POST", {
-          withCredentials: true,
-          body: { email },
-        })
-      ).then(jsonResponse);
-      token = signupResp.token;
-      if (token) {
-        dispatch(actions.resolveToken(token));
-      } else {
-        dispatch(actions.signupDone(new Error("Token was empty")));
-        return;
-      }
-
-      const profile = getState().selectedProfile;
-      profile.id = await fetch(
-        getEndpointAddress("createProfile"),
-        createRequest("POST", { token, body: profile })
-      ).then(jsonResponse);
-      dispatch(actions.receiveProfileList([profile]));
-      dispatch(setSelectedProfile(profile.id));
-      dispatch(actions.signupDone());
-    } catch (reason) {
-      dispatch(actions.signupDone(reason));
-      throw reason;
-    }
-  };
-}
-
 function getProfiles() {
   return async (dispatch, getState) => {
     if (!getState().authToken.loggedIn) {
@@ -258,7 +112,7 @@ function getProfiles() {
       dispatch(actions.receiveProfileList(profileList));
     } catch (reason) {
       sessionStorage.removeItem("sizeme.authtoken");
-      dispatch(actions.clearToken());
+      //dispatch(actions.clearToken());
       dispatch(actions.receiveProfileList(reason));
     }
   };
@@ -520,7 +374,7 @@ function match(doSelectBestFit = true) {
       }
     } else {
       dispatch(actions.resetMatch());
-      dispatch(actions.setMatchState({ match: null, state: "no-meas" }));
+      dispatch(setMatchState({ match: null, state: "no-meas" }));
     }
   };
 }
@@ -534,7 +388,7 @@ function setProfileMeasurements(measurements) {
       await dispatch(match());
     } else {
       dispatch(actions.resetMatch());
-      dispatch(actions.setMatchState({ match: null, state: "no-meas" }));
+      dispatch(setMatchState({ match: null, state: "no-meas" }));
     }
   };
 }
@@ -583,7 +437,7 @@ function selectSize(size, auto) {
     if (firstMatch && matchResult.recommendedFit === currentSize) {
       dispatch(actions.selectSize({ auto: true }));
     }
-    dispatch(actions.setMatchState({ match, state }));
+    dispatch(setMatchState({ match, state }));
   };
 }
 
@@ -595,9 +449,6 @@ function setSizemeHidden(sizemeHidden) {
 }
 
 export {
-  sizemeStore,
-  resolveAuthToken,
-  signup,
   getProfiles,
   getProduct,
   setSelectedProfile,
