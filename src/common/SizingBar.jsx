@@ -1,9 +1,9 @@
-import React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withTranslation } from "react-i18next";
+import { useTranslation, withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, {
+import {
   DEFAULT_OPTIMAL_FIT,
   DEFAULT_OPTIMAL_STRETCH,
   fitRanges,
@@ -26,9 +26,10 @@ const getValueBasedFitLabel = (value) => {
     : "regular";
 };
 
-const FitIndicator = (props) => {
-  const left = `calc(${props.value}% - 9px`;
-  const { selectedSize, t } = props;
+const FitIndicator = ({ selectedSize, value }) => {
+  const { t } = useTranslation();
+  const left = `calc(${value}% - 9px`;
+
   return (
     <div>
       <svg
@@ -38,7 +39,7 @@ const FitIndicator = (props) => {
         viewBox="0 0 10 10"
       >
         <polygon
-          className={getValueBasedFitLabel(props.value)}
+          className={getValueBasedFitLabel(value)}
           points="5,0 10,10 0,10 5,0"
           data-tip
           data-for="fitTooltip"
@@ -60,13 +61,12 @@ const FitIndicator = (props) => {
 
 FitIndicator.propTypes = {
   value: PropTypes.number.isRequired,
-  fitRange: PropTypes.object.isRequired,
   selectedSize: PropTypes.string,
-  t: PropTypes.func,
 };
 
-const RecommendationIndicator = (props) => {
-  const left = `calc(${props.value}% - 18px`;
+const RecommendationIndicator = ({ value }) => {
+  const { t } = useTranslation();
+  const left = `calc(${value}% - 18px`;
   return (
     <div>
       <svg
@@ -80,7 +80,7 @@ const RecommendationIndicator = (props) => {
         <path d="M10 5 L20 10 L0 10 Z" />
       </svg>
       <ReactTooltip id="recommendationTooltip" type="light" class="indicator-tooltip">
-        {props.t("common.sizingBarRecommendationTooltip")}
+        {t("common.sizingBarRecommendationTooltip")}
       </ReactTooltip>
     </div>
   );
@@ -88,183 +88,166 @@ const RecommendationIndicator = (props) => {
 
 RecommendationIndicator.propTypes = {
   value: PropTypes.number.isRequired,
-  t: PropTypes.func,
 };
 
-class SizingBar extends React.Component {
-  static propTypes = {
-    selectedSize: PropTypes.object,
-    fitRecommendation: PropTypes.number,
-    matchState: PropTypes.object,
-    matchResult: PropTypes.object,
-    t: PropTypes.func,
-  };
+const SizingBar = ({ selectedSize, matchState, matchResult, fitRecommendation }) => {
+  const { t } = useTranslation();
+  const [newSize, setNewSize] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.ranges = fitRanges;
-    this.state = {
-      newSize: false,
-    };
-    this.calculateSliderPositions();
-  }
+  const sliderPosition = useRef({
+    sliderPosXMin: 0,
+    sliderPosXMax: 1000,
+    sliderScale: 0.1,
+  });
+  const placeholder = useRef();
+  const timeout = useRef();
 
-  componentDidMount() {
-    this.calculatePlaceholderSize();
-  }
-
-  UNSAFE_componentWillUpdate(newProps) {
-    const { size } = newProps.selectedSize;
-    if (size !== this.props.selectedSize.size) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-      this.setState({ newSize: true });
-    }
-  }
-
-  componentDidUpdate() {
-    this.calculatePlaceholderSize();
-    if (this.state.newSize) {
-      if (!this.timeout) {
-        this.timeout = setTimeout(() => this.setState({ newSize: false }), 3000);
-      }
-    }
-  }
-
-  calculateSliderPositions() {
-    let { fitRecommendation } = this.props;
-    if (fitRecommendation <= 1000) {
-      fitRecommendation = DEFAULT_OPTIMAL_FIT;
-    }
-    const regular = this.ranges.find((r) => r.label === "regular");
+  const calculateSliderPositions = useCallback(() => {
+    const fitRecom = fitRecommendation <= 1000 ? DEFAULT_OPTIMAL_FIT : fitRecommendation;
+    const regular = fitRanges.find((r) => r.label === "regular");
     const rangeWidth = regular.end - regular.start;
     const regularMidPoint = regular.end - rangeWidth / 2;
-    const scaledWidth = rangeWidth / ((regularMidPoint - 1000) / (fitRecommendation - 1000));
-    this.sliderPosXMin = 1000 - scaledWidth;
-    this.sliderPosXMax = this.ranges.slice(1).reduce((end) => end + scaledWidth, 1000);
-    this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
-  }
+    const scaledWidth = rangeWidth / ((regularMidPoint - 1000) / (fitRecom - 1000));
+    const sliderPosXMin = 1000 - scaledWidth;
+    const sliderPosXMax = fitRanges.slice(1).reduce((end) => end + scaledWidth, 1000);
+    const sliderScale = 100 / (sliderPosXMax - sliderPosXMin);
+    sliderPosition.current = {
+      sliderPosXMin,
+      sliderPosXMax,
+      sliderScale,
+    };
+  }, [fitRecommendation]);
 
-  calculatePlaceholderSize() {
-    if (this.placeholder) {
-      const containerWidth = this.placeholder.parentNode.offsetWidth - 10;
-      this.placeholder.style.transform = "scale(1)";
-      const placeholderWidth = this.placeholder.offsetWidth;
-      this.placeholder.style.transform = `scale(${Math.min(1, containerWidth / placeholderWidth)})`;
+  const calculatePlaceholderSize = useCallback(() => {
+    if (placeholder.current) {
+      const containerWidth = placeholder.current.parentNode.offsetWidth - 10;
+      placeholder.current.style.transform = "scale(1)";
+      const placeholderWidth = placeholder.current.offsetWidth;
+      placeholder.current.style.transform = `scale(${Math.min(
+        1,
+        containerWidth / placeholderWidth
+      )})`;
     }
-  }
+  }, []);
 
-  getFitPosition(value, matchMap) {
-    let { fitRecommendation } = this.props;
-    let effTotalFit = value;
-    const maxStretchArr = [];
-    if (matchMap) {
-      const importanceArr = [];
-      const componentFitArr = [];
-      Object.entries(matchMap).forEach(([oKey, oValue]) => {
-        maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
-        importanceArr.push(oValue.importance);
-        componentFitArr.push(oValue.componentFit);
-      });
-      const maxImportance = Math.max.apply(null, importanceArr);
-      const maxComponentFit = Math.max.apply(null, componentFitArr);
-      if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
-        effTotalFit = maxComponentFit;
-        if (fitRecommendation <= 1000) {
-          fitRecommendation = DEFAULT_OPTIMAL_FIT;
-        }
-      }
-    }
-    if (isStretching(matchMap, fitRecommendation)) {
-      let maxStretch = DEFAULT_OPTIMAL_STRETCH;
-      let newPos = 50;
+  useEffect(() => {
+    calculateSliderPositions();
+  }, [calculateSliderPositions]);
+
+  useEffect(() => {
+    clearTimeout(timeout.current);
+    setNewSize(true);
+    timeout.current = setTimeout(() => setNewSize(false), 3000);
+  }, [selectedSize.size]);
+
+  useEffect(() => {
+    calculatePlaceholderSize();
+  });
+
+  const getFitPosition = useCallback(
+    (value, matchMap) => {
+      let recommendedFit = fitRecommendation;
+      let effTotalFit = value;
+      const maxStretchArr = [];
       if (matchMap) {
-        maxStretch = Math.max.apply(null, maxStretchArr);
-        if (effTotalFit > 1000) {
-          if (fitRecommendation === 1000) {
-            newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 40);
-          } else {
-            newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 10);
+        const importanceArr = [];
+        const componentFitArr = [];
+        Object.entries(matchMap).forEach(([oKey, oValue]) => {
+          maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
+          importanceArr.push(oValue.importance);
+          componentFitArr.push(oValue.componentFit);
+        });
+        const maxImportance = Math.max.apply(null, importanceArr);
+        const maxComponentFit = Math.max.apply(null, componentFitArr);
+        if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
+          effTotalFit = maxComponentFit;
+          if (recommendedFit <= 1000) {
+            recommendedFit = DEFAULT_OPTIMAL_FIT;
           }
-        } else if (effTotalFit == 1000) {
-          const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
-          newPos =
-            maxStretch > stretchBreakpoint
-              ? Math.max(
-                  20,
-                  40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20
-                )
-              : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
-        } else {
-          newPos = Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
         }
       }
-      return newPos;
-    } else {
-      return Math.max(
-        0,
-        (Math.min(effTotalFit, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale
-      );
-    }
-  }
-
-  getFitRange() {
-    return ProductModel.getFit(
-      { componentFit: this.props.matchState.match.totalFit, importance: 1 },
-      true
-    );
-  }
-
-  render() {
-    const { t, fitRecommendation, selectedSize, matchState, matchResult } = this.props;
-    const { size, auto } = selectedSize;
-    const { match, state } = matchState;
-    const doShowFit = state === "match";
-    let placeholderText = "";
-    if (state === "match") {
-      if (matchResult.recommendedFit) {
-        placeholderText = t("common.sizingBarSplashMatch", {
-          sizeName: getSizename(matchResult.recommendedFit),
-        });
+      if (isStretching(matchMap, recommendedFit)) {
+        let maxStretch = DEFAULT_OPTIMAL_STRETCH;
+        let newPos = 50;
+        if (matchMap) {
+          maxStretch = Math.max.apply(null, maxStretchArr);
+          if (effTotalFit > 1000) {
+            if (recommendedFit === 1000) {
+              newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 40);
+            } else {
+              newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 10);
+            }
+          } else if (effTotalFit === 1000) {
+            const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
+            newPos =
+              maxStretch > stretchBreakpoint
+                ? Math.max(
+                    20,
+                    40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20
+                  )
+                : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
+          } else {
+            newPos = Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
+          }
+        }
+        return newPos;
+      } else {
+        return Math.max(
+          0,
+          (Math.min(effTotalFit, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale
+        );
       }
-    } else if (state === "no-meas") {
-      placeholderText = t("common.sizingBarSplashNoMeas");
-    } else if (state === "no-fit") {
-      placeholderText = t("common.sizingBarSplashNoFit");
-    } else if (state === "no-size") {
-      placeholderText = t("common.sizingBarSplashNoSize");
+    },
+    [fitRecommendation]
+  );
+
+  const { size, auto } = selectedSize;
+  const { match, state } = matchState;
+  const doShowFit = state === "match";
+  let placeholderText = "";
+  if (state === "match") {
+    if (matchResult.recommendedFit) {
+      placeholderText = t("common.sizingBarSplashMatch", {
+        sizeName: getSizename(matchResult.recommendedFit),
+      });
     }
-    return (
-      <div className={"sizeme-slider" + (this.state.newSize && auto ? " new-size" : "")}>
-        <div className="slider-placeholder">
-          <span
-            className="size-recommendation"
-            ref={(ref) => {
-              this.placeholder = ref;
-            }}
-            dangerouslySetInnerHTML={{ __html: placeholderText }}
-          />
-        </div>
-        {this.ranges.map((fit) => (
-          <div className={fit.label + " fit-area"} key={fit.label}>
-            {t(`sizingBarRangeLabel.${fit.label}`)}
-          </div>
-        ))}
-        {doShowFit && fitRecommendation >= 1000 && (
-          <RecommendationIndicator t={t} value={this.getFitPosition(fitRecommendation)} />
-        )}
-        {doShowFit && (
-          <FitIndicator
-            value={this.getFitPosition(match.totalFit, match.matchMap)}
-            t={t}
-            fitRange={this.getFitRange()}
-            selectedSize={size}
-          />
-        )}
-      </div>
-    );
+  } else if (state === "no-meas") {
+    placeholderText = t("common.sizingBarSplashNoMeas");
+  } else if (state === "no-fit") {
+    placeholderText = t("common.sizingBarSplashNoFit");
+  } else if (state === "no-size") {
+    placeholderText = t("common.sizingBarSplashNoSize");
   }
-}
+  return (
+    <div className={"sizeme-slider" + (newSize && auto ? " new-size" : "")}>
+      <div className="slider-placeholder">
+        <span
+          className="size-recommendation"
+          ref={placeholder}
+          dangerouslySetInnerHTML={{ __html: placeholderText }}
+        />
+      </div>
+      {fitRanges.map((fit) => (
+        <div className={fit.label + " fit-area"} key={fit.label}>
+          {t(`sizingBarRangeLabel.${fit.label}`)}
+        </div>
+      ))}
+      {doShowFit && fitRecommendation >= 1000 && (
+        <RecommendationIndicator value={getFitPosition(fitRecommendation)} />
+      )}
+      {doShowFit && (
+        <FitIndicator value={getFitPosition(match.totalFit, match.matchMap)} selectedSize={size} />
+      )}
+    </div>
+  );
+};
+
+SizingBar.propTypes = {
+  selectedSize: PropTypes.object,
+  fitRecommendation: PropTypes.number,
+  matchState: PropTypes.object,
+  matchResult: PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({
   matchResult: state.match.matchResult,
