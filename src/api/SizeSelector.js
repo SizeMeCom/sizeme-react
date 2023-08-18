@@ -376,18 +376,18 @@ class SwatchesVariationSelect extends AbstractSelect {
 
     this.allowEmptySizeSelection = false;
     this.getSize = (e) => {
-      const selected = e.target.closest("li");
+      const selected = e.target.closest("span");
       return selected?.dataset.value ?? "";
     };
 
     this.clearSelection = () => {
-      const selected = element.querySelector("li.selected");
+      const selected = element.querySelector("span.selected");
       if (selected && selected.classList) {
         selected.classList.remove("selected");
       }
     };
 
-    const options = element.querySelectorAll("li");
+    const options = element.querySelectorAll("span");
     const mkSelectFn = (option) => () => option.click();
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
@@ -400,7 +400,7 @@ class SwatchesVariationSelect extends AbstractSelect {
     }
 
     this.getSelectedSize = () => {
-      const selected = element.querySelector("li.selected");
+      const selected = element.querySelector("span.selected");
       if (selected) {
         return selected.dataset.value;
       } else {
@@ -413,10 +413,10 @@ class SwatchesVariationSelect extends AbstractSelect {
     if (this.el) {
       const clone = this.el.cloneNode(true);
       const clearSelected = () => {
-        clone.querySelector("li.selected").classList.remove("selected");
+        clone.querySelector("span.selected").classList.remove("selected");
       };
 
-      const links = clone.querySelectorAll("li");
+      const links = clone.querySelectorAll("span");
       const mkEventListener = (link) => (e) => {
         clearSelected();
         link.classList.add("selected");
