@@ -86,7 +86,7 @@
     .sizeme_slider table.slider_table td.too_big {
         background-color: #444;
     }
-    ul.variable-items-wrapper li {
+    div.wopb-variation-swatches span.wopb-swatch {
         display: inline-block;
         text-align: center;
         border: 1px solid #444;
@@ -95,15 +95,18 @@
         max-width: 30px;
         cursor: pointer;
     }
-    ul.variable-items-wrapper li.selected {
+    div.wopb-variation-swatches span.wopb-swatch.selected {
         background-color: yellow;
     }
+    div.wopb-variation-swatches span.wopb-variation-swatch-tooltip {
+        display: none;
+    }    
 	</style>
     <script type="text/javascript">//<![CDATA[
     var Translator = new Translate([]);
     //]]></script>
 </head>
-<body class=" catalog-product-view catalog-product-view product-t-shirt-db">
+<body class="catalog-product-view catalog-product-view product-t-shirt-db">
 <div class="wrapper">
     <noscript>
         &lt;div class="global-site-notice noscript"&gt;
@@ -270,32 +273,24 @@
                                                         <option value="5" price="0">L</option>
                                                         <option value="4" price="0">XL</option>
                                                     </select>
-                                                    <ul role="radiogroup" aria-label="Size" class="variable-items-wrapper button-variable-items-wrapper wvs-style-squared"
-                                                        data-attribute_name="attribute_pa_size"
-                                                        data-attribute_values="[&quot;xs&quot;,&quot;s&quot;,&quot;m&quot;,&quot;l&quot;,&quot;xl&quot;,&quot;xxl&quot;]">
-                                                        <li aria-checked="false" tabindex="0" data-wvstooltip="S"
-                                                            class="variable-item button-variable-item button-variable-item-s" title="S" data-title="S" data-value="7"
-                                                            role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
-                                                            <div class="variable-item-contents">
-                                                                <span class="variable-item-span variable-item-span-button">S</span>
-                                                            </div>
-                                                        </li>
-                                                        <li aria-checked="true" tabindex="0" data-wvstooltip="M"
-                                                            class="variable-item button-variable-item button-variable-item-m" title="M" data-title="M"
-                                                            data-value="6" role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
-                                                            <div class="variable-item-contents"><span class="variable-item-span variable-item-span-button">M</span></div>
-                                                        </li>
-                                                        <li aria-checked="false" tabindex="0" data-wvstooltip="L"
-                                                            class="variable-item button-variable-item button-variable-item-l" title="L" data-title="L" data-value="5"
-                                                            role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
-                                                            <div class="variable-item-contents"><span class="variable-item-span variable-item-span-button">L</span></div>
-                                                        </li>
-                                                        <li aria-checked="false" tabindex="0" data-wvstooltip="XL"
-                                                            class="variable-item button-variable-item button-variable-item-xl" title="XL" data-title="XL" data-value="4"
-                                                            role="radio" data-wvstooltip-out-of-stock="" style="--horizontal-position: 0px;">
-                                                            <div class="variable-item-contents"><span class="variable-item-span variable-item-span-button">XL</span></div>
-                                                        </li>
-                                                    </ul>
+
+                                                    <div class="wopb-variation-swatches" data-attribute_name="attribute_pa_size">
+                                                        <span class="wopb-swatch wopb-swatch-label wopb-label-only-text swatch-s-uk10" style="" data-value="7"
+                                                            data-name="s-uk10">S/UK10<span class="wopb-variation-swatch-tooltip">S/UK10</span>
+                                                        </span>
+                                                        <span class="wopb-variation-swatch-separator"> - </span>                                                        
+                                                        <span class="wopb-swatch wopb-swatch-label wopb-label-only-text swatch-m-uk12 " style="" data-value="6"
+                                                            data-name="m-uk12">M/UK12<span class="wopb-variation-swatch-tooltip">M/UK12</span>
+                                                        </span>
+                                                        <span class="wopb-variation-swatch-separator"> - </span>
+                                                        <span class="wopb-swatch wopb-swatch-label wopb-label-only-text swatch-l-uk14 " style="" data-value="5"
+                                                            data-name="l-uk14">L/UK14<span class="wopb-variation-swatch-tooltip">L/UK14</span>
+                                                        </span>
+                                                        <span class="wopb-variation-swatch-separator"> - </span>
+                                                        <span class="wopb-swatch wopb-swatch-label wopb-label-only-text swatch-xl-uk16" style="" data-value="4"
+                                                            data-name="xl-uk16">XL/UK16<span class="wopb-variation-swatch-tooltip">XL/UK16</span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </dd>
                                         </dl>
@@ -857,15 +852,15 @@
         debugState: false,
         uiOptions: {
             sizeSelectorType: 'swatches-variation',
-            invokeElement: "ul[data-attribute_name=attribute_pa_size]"
+            invokeElement: "div[data-attribute_name=attribute_pa_size]"
         }
     };
 </script>
 
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>jQuery.noConflict();
-jQuery('.variable-items-wrapper').on('click','li', function() {
-	jQuery(this).parents('ul').find('li').removeClass('selected');
+jQuery('.wopb-variation-swatches').on('click','span.wopb-swatch', function() {
+	jQuery(this).parents('div').find('span.wopb-swatch').removeClass('selected');
 	jQuery(this).addClass('selected');
 	jQuery('#attribute132').val(jQuery(this).data('value'));
 });

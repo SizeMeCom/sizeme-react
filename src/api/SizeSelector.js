@@ -376,23 +376,23 @@ class SwatchesVariationSelect extends AbstractSelect {
 
     this.allowEmptySizeSelection = false;
     this.getSize = (e) => {
-      const selected = e.target.closest("span");
+      const selected = e.target.closest("span.wopb-swatch");
       return selected?.dataset.value ?? "";
     };
 
     this.clearSelection = () => {
-      const selected = element.querySelector("span.selected");
+      const selected = element.querySelector("span.wopb-swatch.selected");
       if (selected && selected.classList) {
         selected.classList.remove("selected");
       }
     };
 
-    const options = element.querySelectorAll("span");
+    const options = element.querySelectorAll("span.wopb-swatch");
     const mkSelectFn = (option) => () => option.click();
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
       const sizeValue = option.dataset.value;
-      const textSpan = option.dataset.title;
+      const textSpan = option.innerText;
       if (textSpan) {
         this.selectors[sizeValue] = mkSelectFn(option);
         this.sizeMapper.push([sizeValue, textSpan.trim()]);
@@ -400,7 +400,7 @@ class SwatchesVariationSelect extends AbstractSelect {
     }
 
     this.getSelectedSize = () => {
-      const selected = element.querySelector("span.selected");
+      const selected = element.querySelector("span.wopb-swatch.selected");
       if (selected) {
         return selected.dataset.value;
       } else {
@@ -413,10 +413,10 @@ class SwatchesVariationSelect extends AbstractSelect {
     if (this.el) {
       const clone = this.el.cloneNode(true);
       const clearSelected = () => {
-        clone.querySelector("span.selected").classList.remove("selected");
+        clone.querySelector("span.wopb-swatch.selected").classList.remove("selected");
       };
 
-      const links = clone.querySelectorAll("span");
+      const links = clone.querySelectorAll("span.wopb-swatch");
       const mkEventListener = (link) => (e) => {
         clearSelected();
         link.classList.add("selected");
