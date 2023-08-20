@@ -20,7 +20,6 @@ export const REQUEST_MATCH = "REQUEST_MATCH";
 export const RECEIVE_MATCH = "RECEIVE_MATCH";
 export const RESET_MATCH = "RESET_MATCH";
 export const SELECT_SIZE = "SELECT_SIZE";
-export const SET_TOOLTIP = "SET_TOOLTIP";
 export const SET_AB_STATUS = "SET_AB_STATUS";
 export const SET_MATCH_STATE = "SET_MATCH_STATE";
 export const SET_SIZEME_HIDDEN = "SET_SIZEME_HIDDEN";
@@ -41,7 +40,6 @@ export const { requestMatch, receiveMatch, resetMatch } = createActions(
   RESET_MATCH
 );
 export const { selectSize } = createActions(SELECT_SIZE);
-export const { setTooltip } = createActions(SET_TOOLTIP);
 export const { setAbStatus } = createActions(SET_AB_STATUS);
 export const { setMatchState } = createActions(SET_MATCH_STATE);
 export const { setSizemeHidden } = createActions(SET_SIZEME_HIDDEN);

@@ -2,13 +2,11 @@ import Optional from "optional-js";
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 import ProfileSelect from "../common/ProfileSelect";
 import SizingBar from "../common/SizingBar.jsx";
 import DetailSection from "./DetailSection.jsx";
 import DetailedFit from "./DetailedFit.jsx";
-import HoverContainer from "./HoverContainer.jsx";
 
 const DetailsSizeSelector = ({ selectedSize }) => {
   const container = useRef();
@@ -42,10 +40,6 @@ const SizeGuideDetails = ({
   onSelectProfile,
 }) => {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    ReactTooltip.rebuild();
-  }, []);
 
   const handleUnitChange = (unit) => {
     chooseUnit(unit);
@@ -82,17 +76,7 @@ const SizeGuideDetails = ({
       >
         <div className="fit-table">
           {product.model.measurementOrder.map((measurement, i) => (
-            <HoverContainer
-              measurement={measurement}
-              onHover={onHover}
-              key={i}
-              Elem="div"
-              elemProps={{
-                className: "fit-wrapper",
-                "data-tip": true,
-                "data-for": "fit-tooltip",
-              }}
-            >
+            <div className="fit-wrapper" key={measurement}>
               {selectedSize && (
                 <DetailedFit
                   measurement={measurement}
@@ -101,9 +85,10 @@ const SizeGuideDetails = ({
                   measurementName={product.model.measurementName}
                   match={match}
                   unit={unit}
+                  onHover={onHover}
                 />
               )}
-            </HoverContainer>
+            </div>
           ))}
         </div>
       </DetailSection>

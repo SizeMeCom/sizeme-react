@@ -1,10 +1,10 @@
 import Optional from "optional-js";
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Loadable from "react-loadable";
 import { connect } from "react-redux";
-import ReactTooltip from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import { bindActionCreators } from "redux";
 import "./SizeMeApp.scss";
 import * as api from "./api/sizeme-api";
@@ -47,8 +47,6 @@ const SizeMeApp = ({
     const selectedUnit = localStorage.getItem("sizemeMeasurementUnit");
     return ["cm", "in"].includes(selectedUnit) ? selectedUnit : uiOptions.measurementUnit ?? "cm";
   });
-
-  const tooltip = useRef();
 
   const { t } = useTranslation();
 
@@ -99,10 +97,17 @@ const SizeMeApp = ({
         )}
         {!loggedIn && !match && (
           <div className="profile-menu-container">
-            <img src={sizemeIcon} alt="SizeMe" data-tip data-for="sizeme-tooltip" ref={tooltip} />
-            <ReactTooltip id="sizeme-tooltip" type="light" place="bottom" effect="solid">
+            <img src={sizemeIcon} alt="SizeMe" id="sizeme-tooltip" />
+            <Tooltip
+              anchorSelect="#sizeme-tooltip"
+              variant="light"
+              place="bottom"
+              border="1px solid"
+              opacity={1}
+              style={{ zIndex: 1, width: 200 }}
+            >
               <div>{t("common.sizemeTooltip")}</div>
-            </ReactTooltip>
+            </Tooltip>
           </div>
         )}
       </div>

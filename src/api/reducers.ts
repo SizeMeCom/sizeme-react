@@ -124,12 +124,6 @@ export const match = handleActions(
   }
 );
 
-export const tooltip = handleAction<string | null, string | null>(
-  actions.SET_TOOLTIP,
-  (state, action) => action.payload,
-  null
-);
-
 interface SelectedSizePayload {
   size: string;
   auto?: boolean;
@@ -185,7 +179,6 @@ const rootReducer = combineReducers({
   selectedProfile,
   match,
   selectedSize,
-  tooltip,
   abStatus,
   matchState,
   sizemeHidden,

@@ -8,7 +8,6 @@ import sizemeHidden from "./sizemeHidden";
 import profileList from "./profileList";
 import productInfo from "./productInfo";
 import matchState from "./matchState";
-import tooltip from "./tooltip";
 import { match, selectedProfile, selectedSize } from "../api/reducers";
 import Cookies from "universal-cookie";
 import equals from "shallow-equals";
@@ -27,7 +26,6 @@ export const store = configureStore({
     match,
     // @ts-ignore
     selectedSize,
-    tooltip,
     matchState,
   },
   // @ts-ignore

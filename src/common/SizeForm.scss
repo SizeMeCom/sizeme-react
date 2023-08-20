@@ -149,15 +149,20 @@
     }
   }
 
-  .__react_component_tooltip.measurement-tooltip {
+  .measurement-tooltip {
+    z-index: 15 !important;
     background-color: $default_color;
-    padding: 1px;
+    padding: 0;
+    border: 1px solid $default_color;
     opacity: 1;
     pointer-events: all;
     margin-left: 15px;
 
-    &.place-top {
-      margin-top: -40px;
+    .react-tooltip-arrow {
+      background-color: white;
+      border: solid $default_color;
+      border-width: 0 1px 1px 0;
+      top: -5px !important;
     }
 
     ul {
@@ -278,62 +283,4 @@
 }
 .sizeme-shopify .sizeme-signup-box .signup-email input {
   min-height: 24px;
-}
-
-.__react_component_tooltip.unit-menu {
-  border: 1px solid $default_color;
-  opacity: 1 !important;
-  padding: 0;
-  width: 200px;
-  z-index: 100;
-
-  .unit-list {
-    position: relative;
-
-    &::after {
-      content: "";
-      position: relative;
-      display: block;
-      background-color: $light_bg_color;
-      width: 100%;
-      max-height: max-content;
-      border-radius: 0 0 $border_radius $border_radius;
-    }
-
-    .unit-item {
-      pointer-events: auto;
-      white-space: nowrap;
-      padding: 2px 8px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      height: 26px;
-      cursor: pointer;
-
-      &.selected {
-        font-weight: bold;
-        background-color: $selection_selected_bg_color;
-      }
-
-      .unit-name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        vertical-align: bottom;
-        padding-right: 20px;
-        position: relative;
-        cursor: pointer;
-        font-size: 12px;
-
-        &::after {
-          position: absolute;
-          right: 12px;
-        }
-      }
-
-      &:hover {
-        background-color: $selection_hover_bg_color !important;
-      }
-    }
-  }
 }

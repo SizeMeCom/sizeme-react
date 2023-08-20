@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation, withTranslation } from "react-i18next";
-import ReactTooltip from "react-tooltip";
 import "./SizeForm.scss";
 import clsx from "clsx";
 import { INCH_FRACTION_PRECISION, UNIT_FACTORS, convertToInches } from "./unit-convertions";
+import { Tooltip } from "react-tooltip";
 
 const inchFractionOptions = ["0/0", "1/8", "1/4", "3/8", "1/2", "5/8", "3/4", "7/8"];
 
@@ -35,9 +35,10 @@ const cmToModel = (value) =>
   value ? Math.floor(parseFloat(value.replace(",", ".")) * UNIT_FACTORS.cm) : undefined;
 
 const MeasurementInput = ({
+  field,
   unit = "cm",
   chooseUnit,
-  onFocus: parentOnFocus,
+  renderTooltip,
   onChange,
   fitRange,
   unitChoiceDisallowed,
@@ -51,7 +52,7 @@ const MeasurementInput = ({
   const [[wholeInches, partialInches], setInchValue] = useState(modelToInches(value));
   const [wholeInchesViewValue, setWholeInchesViewValue] = useState(hideIfZero(wholeInches));
 
-  const tooltip = useRef();
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const timeout = useRef();
   const tooltipTimeout = useRef();
   const input = useRef();
@@ -65,7 +66,7 @@ const MeasurementInput = ({
   }, [value]);
 
   const hideTooltip = () => {
-    ReactTooltip.hide(tooltip.current);
+    setTooltipOpen(false);
     clearTimeout(timeout.current);
     timeout.current = undefined;
     clearTimeout(tooltipTimeout.current);
@@ -111,9 +112,8 @@ const MeasurementInput = ({
   };
 
   const onFocus = () => {
-    parentOnFocus();
     tooltipTimeout.current = setTimeout(() => {
-      ReactTooltip.show(tooltip.current);
+      setTooltipOpen(true);
     }, 200);
   };
 
@@ -181,16 +181,7 @@ const MeasurementInput = ({
         </span>
       )}
       {unitChoiceDisallowed && <span className="units not-clickable">{unitMark}</span>}
-      <span
-        className="tooltip-trigger"
-        data-for="input-tooltip"
-        data-tip
-        ref={tooltip}
-        data-place="bottom"
-        data-type="light"
-        data-class="measurement-tooltip"
-        data-effect="solid"
-      />
+      <span id={`tooltip-${field}`} className="tooltip-trigger" />
       {unit === "cm" && (
         <input
           className="input_cm"
@@ -234,18 +225,27 @@ const MeasurementInput = ({
           )}
         </span>
       )}
+      <Tooltip
+        anchorSelect={`#tooltip-${field}`}
+        variant="light"
+        place="bottom"
+        isOpen={tooltipOpen}
+        className="measurement-tooltip"
+        render={renderTooltip}
+      />
     </div>
   );
 };
 
 MeasurementInput.propTypes = {
+  field: PropTypes.string.isRequired,
   value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  onFocus: PropTypes.func.isRequired,
   unit: PropTypes.string,
   fitRange: PropTypes.string,
   chooseUnit: PropTypes.func,
   unitChoiceDisallowed: PropTypes.bool,
+  renderTooltip: PropTypes.func.isRequired,
 };
 
 MeasurementInput.defaultProps = {

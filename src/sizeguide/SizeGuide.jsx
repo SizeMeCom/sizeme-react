@@ -3,9 +3,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Loadable from "react-loadable";
 import { connect } from "react-redux";
-import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
-import { setTooltip } from "../redux";
 import { setSelectedProfile } from "../api/sizeme-api";
 import { Loading } from "../common/Loading";
 import "./SizeGuide.scss";
@@ -19,7 +17,7 @@ const SizeGuideModal = Loadable({
 
 const SizeGuide = (props) => {
   const { t } = useTranslation();
-  const { unit, chooseUnit, loggedIn, onFitHover, unitChoiceDisallowed } = props;
+  const { unit, chooseUnit, loggedIn, unitChoiceDisallowed } = props;
   const [guideIsOpen, setGuideIsOpen] = useState(false);
   const [highlight, setHighlight] = useState("");
 
@@ -31,7 +29,6 @@ const SizeGuide = (props) => {
         setHighlight(measurement);
       }, 100);
     } else {
-      onFitHover(measurement);
       setHighlight(measurement);
       clearTimeout(removeTimeout.current);
     }
@@ -43,7 +40,6 @@ const SizeGuide = (props) => {
 
   const closeGuide = () => {
     setGuideIsOpen(false);
-    ReactTooltip.rebuild();
   };
 
   const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
@@ -52,8 +48,8 @@ const SizeGuide = (props) => {
     ...props,
     highlight,
     guideIsOpen,
-    closeGuide: closeGuide,
-    onHover: onHover,
+    closeGuide,
+    onHover,
   };
 
   return (
@@ -79,7 +75,6 @@ SizeGuide.propTypes = {
   selectedProfile: PropTypes.object,
   selectedSize: PropTypes.string,
   onSelectProfile: PropTypes.func.isRequired,
-  onFitHover: PropTypes.func,
   matchResult: PropTypes.object,
   loggedIn: PropTypes.bool.isRequired,
   matchState: PropTypes.object,
@@ -102,7 +97,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onSelectProfile: setSelectedProfile,
-      onFitHover: setTooltip,
     },
     dispatch
   );

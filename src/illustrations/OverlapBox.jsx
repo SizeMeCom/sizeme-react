@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import ReactTooltip from "react-tooltip";
 
 import ProductModel from "../api/ProductModel";
 
@@ -84,11 +82,8 @@ const convertToInches = (size) => {
   }
 };
 
-const OverlapBox = ({ fit, hover, unit, humanProperty, model }) => {
+const OverlapBox = ({ measurement, fit, unit, humanProperty, model }) => {
   const { t } = useTranslation();
-  useEffect(() => {
-    ReactTooltip.rebuild();
-  }, []);
 
   const overlap = fit.overlap / illustrationDivider(humanProperty);
   const overlapInches = convertToInches(overlap);
@@ -98,11 +93,9 @@ const OverlapBox = ({ fit, hover, unit, humanProperty, model }) => {
   return (
     <div
       className={className}
-      data-tip
-      data-for="fit-tooltip"
-      data-effect="solid"
-      data-place="bottom"
-      onMouseEnter={hover}
+      data-tooltip-id="fit-tooltip"
+      data-tooltip-place="bottom"
+      data-tooltip-content={measurement}
     >
       <div className="overlap-svg">{illustration(humanProperty, overlap, model)}</div>
       {unit === "cm" && (
@@ -129,9 +122,9 @@ const OverlapBox = ({ fit, hover, unit, humanProperty, model }) => {
 };
 
 OverlapBox.propTypes = {
+  measurement: PropTypes.string.isRequired,
   fit: PropTypes.object.isRequired,
   humanProperty: PropTypes.string.isRequired,
-  hover: PropTypes.func.isRequired,
   model: PropTypes.object.isRequired,
   unit: PropTypes.string,
 };

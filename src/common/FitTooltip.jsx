@@ -2,7 +2,7 @@ import PropTypes, { bool, string, object, number } from "prop-types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import ReactTooltip from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import { getResult } from "../api/ProductModel";
 import { convertToInches as toInches, INCH_FRACTION_OPTIONS } from "./unit-convertions";
 
@@ -109,9 +109,10 @@ NoMatchItem.propTypes = {
   matchItem: object,
 };
 
-const FitTooltip = ({ measurement, product, unit = "cm", selectedSize, matchResult }) => {
+const TooltipContent = ({ measurement, product, unit = "cm", selectedSize, matchResult }) => {
   const [fitData, setFitData] = useState(null);
   const { t } = useTranslation();
+  const { measurementName } = product.model;
 
   useEffect(() => {
     if (matchResult) {
@@ -131,27 +132,21 @@ const FitTooltip = ({ measurement, product, unit = "cm", selectedSize, matchResu
     }
   }, [matchResult, product, selectedSize, measurement]);
 
-  const { measurementName } = product.model;
-  if (!fitData || !measurement) {
-    return <ReactTooltip id="fit-tooltip" type="light" place="right" className="fit-tooltip" />;
-  } else {
+  if (fitData && measurement) {
     return (
-      <ReactTooltip
-        id="fit-tooltip"
-        type="light"
-        place="right"
-        className={`fit-tooltip ${measurement}`}
-      >
+      <>
         {t("fitInfo.tooltipDefaultText", { measurement: measurementName(measurement) })}
         <Overlap {...fitData} unit={unit} />
         <NoOverlap {...fitData} />
         <NoMatchItem {...fitData} />
-      </ReactTooltip>
+      </>
     );
   }
+
+  return null;
 };
 
-FitTooltip.propTypes = {
+TooltipContent.propTypes = {
   measurement: PropTypes.string,
   product: PropTypes.object,
   selectedSize: PropTypes.string,
@@ -159,8 +154,34 @@ FitTooltip.propTypes = {
   unit: PropTypes.string,
 };
 
+const FitTooltip = ({ product, unit = "cm", selectedSize, matchResult }) => {
+  return (
+    <Tooltip
+      id="fit-tooltip"
+      type="light"
+      place="right"
+      className="fit-tooltip"
+      render={({ content }) => (
+        <TooltipContent
+          measurement={content}
+          product={product}
+          unit={unit}
+          selectedSize={selectedSize}
+          matchResult={matchResult}
+        />
+      )}
+    />
+  );
+};
+
+FitTooltip.propTypes = {
+  product: PropTypes.object,
+  selectedSize: PropTypes.string,
+  matchResult: PropTypes.object,
+  unit: PropTypes.string,
+};
+
 const mapStateToProps = (state) => ({
-  measurement: state.tooltip,
   product: state.productInfo.product,
   selectedSize: state.selectedSize.size,
   matchResult:

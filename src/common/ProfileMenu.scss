@@ -1,6 +1,8 @@
 @import "../scss/variables";
 
 .profile-menu-container {
+  margin-top: 30px;
+
   img,
   .fa-cog {
     margin-left: 7px;
@@ -14,25 +16,21 @@
   .fa-cog:hover {
     color: $default_color;
   }
-
-  .__react_component_tooltip#sizeme-tooltip {
-    border: 1px solid $default_color;
-    opacity: 1 !important;
-    width: 200px;
-    padding: 0;
-    pointer-events: all;
-
-    div {
-      margin: 5px 10px;
-    }
-  }
 }
 
-.__react_component_tooltip.profile-menu {
+.react-tooltip.profile-menu {
   border: 1px solid $default_color;
   opacity: 1 !important;
   padding: 0;
   width: 200px;
+  z-index: 1000;
+
+  .react-tooltip-arrow {
+    border: solid $default_color;
+    border-width: 0 1px 1px 0;
+    right: -5px !important;
+    z-index: -1;
+  }
 
   .profile-list {
     position: relative;

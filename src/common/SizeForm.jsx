@@ -4,10 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation, withTranslation } from "react-i18next";
 import Modal from "react-modal";
 import { connect } from "react-redux";
-import ReactTooltip from "react-tooltip";
 import { bindActionCreators } from "redux";
 import ProductModel, { humanMeasurementMap } from "../api/ProductModel";
-import { setTooltip } from "../redux";
 import { setProfileMeasurements } from "../api/sizeme-api";
 import uiOptions from "../api/uiOptions";
 import OverlapBox from "../illustrations/OverlapBox";
@@ -17,6 +15,70 @@ import VideoGuide from "./VideoGuide.jsx";
 
 Modal.setAppElement(uiOptions.appendContentTo + " div");
 
+const TooltipContent = ({ field, openGuideModal }) => {
+  const { t } = useTranslation();
+  const linkTexts = t("measurementTooltips.linkToGuide", { returnObjects: true });
+  const tooltips = field ? t(`measurementTooltips.${field}`, { returnObjects: true }) : [];
+  return (
+    <div>
+      <ul>
+        {tooltips.map((text, i) => (
+          <li key={i}>{text}</li>
+        ))}
+      </ul>
+      <div className="measurement-guide-link">
+        <span>{linkTexts.start} </span>
+        <a
+          onClick={openGuideModal}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
+        >
+          {linkTexts.link}
+        </a>
+        <span> {linkTexts.end} </span>
+        <i className="fa-solid fa-play-circle" />
+      </div>
+    </div>
+  );
+};
+
+TooltipContent.propTypes = {
+  field: PropTypes.string.isRequired,
+  openGuideModal: PropTypes.func.isRequired,
+};
+
+const ModalContent = ({ field, gender, closeGuideModal }) => {
+  const { t } = useTranslation();
+
+  if (!field) {
+    return null;
+  }
+  const humanMeasurement = humanMeasurementMap.get(field);
+  const humanMeasurementName = t(`humanMeasurements.${humanMeasurement}`);
+  return (
+    <div className="measurement-instruction-wrapper">
+      <div className="measurement-instruction-box">
+        <i className="fa fa-solid fa-times" onClick={closeGuideModal} />
+        <h2 className="instruction-title">
+          {t("measurementGuide.title")} {humanMeasurementName.toLowerCase()}
+        </h2>
+        <div
+          className={`instruction-content gender-${gender}`}
+          dangerouslySetInnerHTML={{ __html: t(`measurementGuide.${field}`) }}
+        />
+      </div>
+      <VideoGuide measurement={humanMeasurement} gender={gender} />
+    </div>
+  );
+};
+
+ModalContent.propTypes = {
+  field: PropTypes.string,
+  gender: PropTypes.string.isRequired,
+  closeGuideModal: PropTypes.func.isRequired,
+};
+
 const SizeForm = ({
   unit,
   chooseUnit,
@@ -25,7 +87,6 @@ const SizeForm = ({
   matchResult,
   measurements: propMeasurements,
   onChange,
-  onOverlapBoxHover,
   product,
   unitChoiceDisallowed,
 }) => {
@@ -33,7 +94,7 @@ const SizeForm = ({
   const [guideModalOpen, setGuideModalOpen] = useState(false);
   const [measurements, setMeasurements] = useState({});
 
-  const activeTooltip = useRef();
+  const [activeField, setActiveField] = useState(undefined);
   const elem = useRef();
 
   const fields = useMemo(
@@ -59,69 +120,13 @@ const SizeForm = ({
     };
   };
 
-  const setActiveTooltip = (field) => {
-    activeTooltip.current = field;
-  };
-
-  const openGuideModal = () => {
+  const openGuideModal = (field) => {
+    setActiveField(field);
     setGuideModalOpen(true);
   };
 
   const closeGuideModal = () => {
     setGuideModalOpen(false);
-  };
-
-  // eslint-disable-next-line react/display-name
-  const tooltipContent = () => () => {
-    const linkTexts = t("measurementTooltips.linkToGuide", { returnObjects: true });
-    const tooltips = activeTooltip.current
-      ? t(`measurementTooltips.${activeTooltip.current}`, { returnObjects: true })
-      : [];
-    return (
-      <div>
-        <ul>
-          {tooltips.map((text, i) => (
-            <li key={i}>{text}</li>
-          ))}
-        </ul>
-        <div className="measurement-guide-link">
-          <span>{linkTexts.start} </span>
-          <a
-            onClick={openGuideModal}
-            onMouseDown={(e) => {
-              e.preventDefault();
-            }}
-          >
-            {linkTexts.link}
-          </a>
-          <span> {linkTexts.end} </span>
-          <i className="fa-solid fa-play-circle" />
-        </div>
-      </div>
-    );
-  };
-
-  const modalContent = () => {
-    if (!activeTooltip.current) {
-      return null;
-    }
-    const humanMeasurement = humanMeasurementMap.get(activeTooltip.current);
-    const humanMeasurementName = t(`humanMeasurements.${humanMeasurement}`);
-    return (
-      <div className="measurement-instruction-wrapper">
-        <div className="measurement-instruction-box">
-          <i className="fa fa-solid fa-times" onClick={closeGuideModal} />
-          <h2 className="instruction-title">
-            {t("measurementGuide.title")} {humanMeasurementName.toLowerCase()}
-          </h2>
-          <div
-            className={`instruction-content gender-${gender}`}
-            dangerouslySetInnerHTML={{ __html: t(`measurementGuide.${activeTooltip.current}`) }}
-          />
-        </div>
-        <VideoGuide measurement={humanMeasurement} gender={gender} />
-      </div>
-    );
   };
 
   const getLeftPosition = () => {
@@ -149,22 +154,23 @@ const SizeForm = ({
         <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
           <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
           <MeasurementInput
+            field={field}
             onChange={valueChanged(humanProperty)}
             value={measurements[humanProperty]}
             unit={unit}
             chooseUnit={chooseUnit}
             unitChoiceDisallowed={unitChoiceDisallowed}
             fitRange={fitRange(field)}
-            onFocus={() => {
-              setActiveTooltip(field);
-            }}
+            renderTooltip={() => (
+              <TooltipContent field={field} openGuideModal={() => openGuideModal(field)} />
+            )}
           />
           {getFit(field)
             .map((f) => (
               <OverlapBox
+                measurement={field}
                 fit={f}
                 humanProperty={humanProperty}
-                hover={() => onOverlapBoxHover(field)}
                 key={humanProperty}
                 model={product.model}
                 unit={unit}
@@ -173,12 +179,6 @@ const SizeForm = ({
             .orElse(null)}
         </div>
       ))}
-      <ReactTooltip
-        id="input-tooltip"
-        type="light"
-        resizeHide={false}
-        getContent={tooltipContent()}
-      />
       <Modal
         isOpen={guideModalOpen}
         onRequestClose={closeGuideModal}
@@ -191,7 +191,7 @@ const SizeForm = ({
           },
         }}
       >
-        {modalContent()}
+        <ModalContent field={activeField} gender={gender} closeGuideModal={closeGuideModal} />
       </Modal>
     </div>
   );
@@ -200,7 +200,6 @@ const SizeForm = ({
 SizeForm.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func,
-  onOverlapBoxHover: PropTypes.func,
   gender: PropTypes.string.isRequired,
   matchResult: PropTypes.object,
   measurements: PropTypes.object,
@@ -214,7 +213,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onChange: setProfileMeasurements,
-      onOverlapBoxHover: setTooltip,
     },
     dispatch
   );

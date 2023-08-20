@@ -1,9 +1,17 @@
 import PropTypes from "prop-types";
-import ReactTooltip from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import { contextAddress } from "../api/sizeme-api";
 import "./ProfileMenu.scss";
+import { useState } from "react";
 
 const ProfileMenu = ({ profiles, selectedProfile, setSelectedProfile }) => {
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const closeMenu = (open) => {
+    if (!open) {
+      setProfileMenuOpen(open);
+    }
+  };
+
   const selectProfile = (e, profileId) => {
     setSelectedProfile(profileId);
   };
@@ -13,14 +21,20 @@ const ProfileMenu = ({ profiles, selectedProfile, setSelectedProfile }) => {
 
   return (
     <div className="profile-menu-container">
-      <i className="fa-solid fa-cog fa-lg" data-tip data-for="profile-menu" data-event="click" />
-      <ReactTooltip
+      <i
+        className="fa-solid fa-cog fa-lg"
         id="profile-menu"
+        onClick={() => setProfileMenuOpen((prev) => !prev)}
+      />
+      <Tooltip
+        anchorSelect="#profile-menu"
         className="profile-menu"
-        globalEventOff="click"
+        isOpen={profileMenuOpen}
+        setIsOpen={closeMenu}
+        openOnClick
+        closeOnEsc
         place="left"
-        type="light"
-        effect="solid"
+        variant="light"
       >
         <div className="profile-list">
           {profiles.map((profile) => (
@@ -53,7 +67,7 @@ const ProfileMenu = ({ profiles, selectedProfile, setSelectedProfile }) => {
             </a>
           </div>
         </div>
-      </ReactTooltip>
+      </Tooltip>
     </div>
   );
 };

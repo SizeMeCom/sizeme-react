@@ -12,7 +12,7 @@ const updateResult = (match, measurement, item) => {
   return getResult(measurement, item.measurements[measurement], matchItem);
 };
 
-const DetailedFit = ({ num, unit, item, measurement, measurementName, match }) => {
+const DetailedFit = ({ num, unit, item, measurement, measurementName, match, onHover }) => {
   const { t } = useTranslation();
   const [result, setResult] = useState(() => updateResult(match, measurement, item));
 
@@ -43,7 +43,13 @@ const DetailedFit = ({ num, unit, item, measurement, measurementName, match }) =
 
   const { fit, fitText, isLongFit } = result;
   return (
-    <div className="detailed-fit">
+    <div
+      className="detailed-fit"
+      onMouseEnter={() => onHover(measurement)}
+      onMouseLeave={() => onHover("")}
+      data-tooltip-id="fit-tooltip"
+      data-tooltip-content={measurement}
+    >
       <div className="measurement-head">
         <span className="num">{num}</span>
         {measurementName(measurement)}
@@ -70,6 +76,7 @@ DetailedFit.propTypes = {
   item: PropTypes.object.isRequired,
   measurementName: PropTypes.func.isRequired,
   unit: PropTypes.string,
+  onHover: PropTypes.func.isRequired,
 };
 
 export default DetailedFit;

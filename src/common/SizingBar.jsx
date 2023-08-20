@@ -11,7 +11,7 @@ import {
   isStretching,
   fitLabelsAndColors,
 } from "../api/ProductModel";
-import ReactTooltip from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
 const getSizename = (selectedSize) =>
@@ -39,13 +39,12 @@ const FitIndicator = ({ selectedSize, value }) => {
         viewBox="0 0 10 10"
       >
         <polygon
+          id="fit-indicator"
           className={getValueBasedFitLabel(value)}
           points="5,0 10,10 0,10 5,0"
-          data-tip
-          data-for="fitTooltip"
         />
       </svg>
-      <ReactTooltip id="fitTooltip" type="light" class="indicator-tooltip">
+      <Tooltip anchorSelect="#fit-indicator" variant="light" className="indicator-tooltip">
         <span
           className="size-recommendation"
           dangerouslySetInnerHTML={{
@@ -54,7 +53,7 @@ const FitIndicator = ({ selectedSize, value }) => {
             }),
           }}
         />
-      </ReactTooltip>
+      </Tooltip>
     </div>
   );
 };
@@ -74,14 +73,13 @@ const RecommendationIndicator = ({ value }) => {
         style={{ left }}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 10"
-        data-tip
-        data-for="recommendationTooltip"
+        id="recommendationTooltip"
       >
         <path d="M10 5 L20 10 L0 10 Z" />
       </svg>
-      <ReactTooltip id="recommendationTooltip" type="light" class="indicator-tooltip">
+      <Tooltip anchorSelect="#recommendationTooltip" variant="light" className="indicator-tooltip">
         {t("common.sizingBarRecommendationTooltip")}
-      </ReactTooltip>
+      </Tooltip>
     </div>
   );
 };
@@ -194,7 +192,9 @@ const SizingBar = ({ selectedSize, matchState, matchResult, fitRecommendation })
       } else {
         return Math.max(
           0,
-          (Math.min(effTotalFit, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale
+          (Math.min(effTotalFit, sliderPosition.current.sliderPosXMax) -
+            sliderPosition.current.sliderPosXMin) *
+            sliderPosition.current.sliderScale
         );
       }
     },
