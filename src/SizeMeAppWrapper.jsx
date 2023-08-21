@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import Loadable from "react-loadable";
+import { lazy, Suspense, useEffect } from "react";
 import { Loading } from "./common/Loading";
 import uiOptions from "./api/uiOptions";
 import { useTranslation } from "react-i18next";
@@ -11,12 +10,7 @@ import { bindActionCreators } from "redux";
 import clsx from "clsx";
 import "./SizeMeApp.scss";
 
-const SizeMeApp = Loadable({
-  loader: () => import(/* webpackChunkName: "app" */ "./SizeMeApp"),
-  loading() {
-    return <Loading />;
-  },
-});
+const SizeMeApp = lazy(() => import(/* webpackChunkName: "app" */ "./SizeMeApp"));
 
 const SizemeToggler = ({ setSizemeHidden, sizemeHidden }) => {
   const { t } = useTranslation();
@@ -67,7 +61,11 @@ const SizeMeAppWrapper = ({
         {uiOptions.toggler && (
           <SizemeToggler sizemeHidden={sizemeHidden} setSizemeHidden={setSizemeHidden} />
         )}
-        {!sizemeHidden && <SizeMeApp />}
+        {!sizemeHidden && (
+          <Suspense fallback={<Loading />}>
+            <SizeMeApp />
+          </Suspense>
+        )}
       </>
     );
   } else {

@@ -1,19 +1,10 @@
 import PropTypes from "prop-types";
 import MobileDetect from "mobile-detect";
 import { cdnLocation } from "../api/sizeme-api";
-import Loadable from "react-loadable";
 import { Loading } from "./Loading";
+import { lazy, Suspense } from "react";
 
-const Video = Loadable({
-  loader: () => import(/* webpackChunkName: "html5video" */ "react-html5video"),
-  loading() {
-    return <Loading />;
-  },
-  render(loaded, props) {
-    const DefaultPlayer = loaded.DefaultPlayer;
-    return <DefaultPlayer {...props} />;
-  },
-});
+const Video = lazy(() => import(/* webpackChunkName: "html5video" */ "react-html5video"));
 
 const videoUrl = cdnLocation + "/videos";
 
@@ -60,11 +51,13 @@ const VideoGuide = ({ gender: propsGender, measurement }) => {
   if (availableVideos.includes(measurement)) {
     const video = `${videoUrl}/${gender}_${measurement}`;
     return (
-      <Video autoPlay={autoplay} poster={defaultPoster(gender)} width="250" controls={[]}>
-        {Object.keys(videoTypes).map((ext) => (
-          <source key={ext} src={`${video}.${ext}`} type={videoTypes[ext]} />
-        ))}
-      </Video>
+      <Suspense fallback={<Loading />}>
+        <Video autoPlay={autoplay} poster={defaultPoster(gender)} width="250" controls={[]}>
+          {Object.keys(videoTypes).map((ext) => (
+            <source key={ext} src={`${video}.${ext}`} type={videoTypes[ext]} />
+          ))}
+        </Video>
+      </Suspense>
     );
   } else {
     let poster;
@@ -73,7 +66,7 @@ const VideoGuide = ({ gender: propsGender, measurement }) => {
     } else {
       poster = defaultPoster(gender);
     }
-    return <img src={poster} width="250" />;
+    return <img alt="Poster" src={poster} width="250" />;
   }
 };
 

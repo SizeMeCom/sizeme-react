@@ -1,8 +1,7 @@
 import Optional from "optional-js";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import { Tooltip } from "react-tooltip";
 import { bindActionCreators } from "redux";
@@ -20,12 +19,7 @@ import sizemeIcon from "./images/sizeme_icon.png";
 import SizeGuide from "./sizeguide/SizeGuide.jsx";
 import clsx from "clsx";
 
-const SizeForm = Loadable({
-  loader: () => import("./common/SizeForm.jsx"),
-  loading() {
-    return <Loading />;
-  },
-});
+const SizeForm = lazy(() => import("./common/SizeForm.jsx"));
 
 const measurementUnitChoiceDisallowed = uiOptions.measurementUnitChoiceDisallowed ?? false;
 
@@ -112,12 +106,14 @@ const SizeMeApp = ({
         )}
       </div>
       {measurementInputs && (
-        <SizeForm
-          fields={measurementInputs}
-          unit={unit}
-          chooseUnit={chooseUnit}
-          unitChoiceDisallowed={measurementUnitChoiceDisallowed}
-        />
+        <Suspense fallback={<Loading />}>
+          <SizeForm
+            fields={measurementInputs}
+            unit={unit}
+            chooseUnit={chooseUnit}
+            unitChoiceDisallowed={measurementUnitChoiceDisallowed}
+          />
+        </Suspense>
       )}
       {resolved && !uiOptions.disableSizeGuide && (
         <SizeGuide

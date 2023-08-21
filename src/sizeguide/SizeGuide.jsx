@@ -1,19 +1,13 @@
 import PropTypes from "prop-types";
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Loadable from "react-loadable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setSelectedProfile } from "../api/sizeme-api";
 import { Loading } from "../common/Loading";
 import "./SizeGuide.scss";
 
-const SizeGuideModal = Loadable({
-  loader: () => import("./SizeGuideModal"),
-  loading() {
-    return <Loading />;
-  },
-});
+const SizeGuideModal = lazy(() => import("./SizeGuideModal"));
 
 const SizeGuide = (props) => {
   const { t } = useTranslation();
@@ -58,12 +52,14 @@ const SizeGuide = (props) => {
         {button} <i className="fa-solid fa-caret-right" />
       </a>
       {guideIsOpen && (
-        <SizeGuideModal
-          {...modalProps}
-          unit={unit}
-          chooseUnit={chooseUnit}
-          unitChoiceDisallowed={unitChoiceDisallowed}
-        />
+        <Suspense fallback={<Loading />}>
+          <SizeGuideModal
+            {...modalProps}
+            unit={unit}
+            chooseUnit={chooseUnit}
+            unitChoiceDisallowed={unitChoiceDisallowed}
+          />
+        </Suspense>
       )}
     </div>
   );
