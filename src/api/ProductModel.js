@@ -3,6 +3,10 @@ import Optional from "optional-js";
 
 const fitStep = 55;
 const norm = 1000;
+
+const DEFAULT_OPTIMAL_FIT = 1070;
+const DEFAULT_OPTIMAL_STRETCH = 5;
+
 let fitRecommendation;
 
 const fitLabelsAndColors = [
@@ -1933,7 +1937,7 @@ export default class ProductModel {
     const { arrows, itemDrawing } = init(itemTypeArr);
 
     this.measurementOrder = [];
-    fitRecommendation = item.fitRecommendation ? item.fitRecommendation : DEFAULT_OPTIMAL_FIT;
+    fitRecommendation = item.fitRecommendation ?? DEFAULT_OPTIMAL_FIT;
 
     const firstSize = Object.entries(item.measurements || {})[0];
     if (firstSize && firstSize[1]) {
@@ -2046,8 +2050,8 @@ const stretchFactor = (measurement) => {
   return factor;
 };
 
-const isStretching = (matchMap, fitRecommendation) => {
-  if (fitRecommendation === 1000) {
+const isStretching = (matchMap, effFitRecommendation) => {
+  if (effFitRecommendation === 1000) {
     return true;
   }
   if (!matchMap) {
@@ -2070,15 +2074,70 @@ const isStretching = (matchMap, fitRecommendation) => {
   return false;
 };
 
-const DEFAULT_OPTIMAL_FIT = 1070;
-const DEFAULT_OPTIMAL_STRETCH = 5;
+const getFitPosition = (value, matchMap) => {
+  let effTotalFit = value;
+  const maxStretchArr = [];
+  const effFitRecommendation = fitRecommendation <= 1000 ? DEFAULT_OPTIMAL_FIT : fitRecommendation;
+  if (matchMap) {
+    const importanceArr = [];
+    const componentFitArr = [];
+    Object.entries(matchMap).forEach(([oKey, oValue]) => {
+      maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
+      importanceArr.push(oValue.importance);
+      componentFitArr.push(oValue.componentFit);
+    });
+    const maxImportance = Math.max.apply(null, importanceArr);
+    const maxComponentFit = Math.max.apply(null, componentFitArr);
+    if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
+      effTotalFit = maxComponentFit;
+    }
+  }
+  if (isStretching(matchMap, effFitRecommendation)) {
+    let maxStretch = DEFAULT_OPTIMAL_STRETCH;
+    let newPos = 50;
+    if (matchMap) {
+      maxStretch = Math.max.apply(null, maxStretchArr);
+      if (effTotalFit > 1000) {
+        if (effFitRecommendation === 1000) {
+          newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 40);
+        } else {
+          newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 10);
+        }
+      } else if (effTotalFit == 1000) {
+        const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
+        newPos =
+          maxStretch > stretchBreakpoint
+            ? Math.max(
+                20,
+                40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20
+              )
+            : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
+      } else {
+        newPos = Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
+      }
+    }
+    return newPos;
+  } else {
+    const effFitRecommendation = fitRecommendation <= 1000 ? DEFAULT_OPTIMAL_FIT : fitRecommendation;
+    const regular = fitRanges.find((r) => r.label === "regular");
+    const rangeWidth = regular.end - regular.start;
+    const regularMidPoint = regular.end - rangeWidth / 2;
+    const scaledWidth = rangeWidth / ((regularMidPoint - 1000) / (effFitRecommendation - 1000));
+    const sliderPosXMin = 1000 - scaledWidth;
+    const sliderPosXMax = fitRanges.slice(1).reduce((end) => end + scaledWidth, 1000);
+    const sliderScale = 100 / (sliderPosXMax - sliderPosXMin);    
+    return Math.max(
+      0,
+      (Math.min(effTotalFit, sliderPosXMax) - sliderPosXMin) * sliderScale
+    );
+  }
+}
 
 export {
   humanMeasurementMap,
   fitRanges,
   getResult,
-  stretchFactor,
-  isStretching,
+  getFitPosition,
   DEFAULT_OPTIMAL_FIT,
   DEFAULT_OPTIMAL_STRETCH,
   fitLabelsAndColors,

@@ -10,11 +10,8 @@ import equals from "shallow-equals";
 import Cookies from "universal-cookie";
 
 import SizeGuideModel, {
-  DEFAULT_OPTIMAL_FIT,
-  DEFAULT_OPTIMAL_STRETCH,
   humanMeasurementMap,
-  isStretching,
-  stretchFactor,
+  getFitPosition,
 } from "./ProductModel";
 import SizeSelector from "./SizeSelector";
 import * as actions from "./actions";
@@ -408,50 +405,19 @@ function doMatch(fitRequest, token, useProfile) {
   return fetch(address, request).then(jsonResponse);
 }
 
-function getRecommendedFit(fitResults, optimalFit) {
-  let optFit = optimalFit ? optimalFit : DEFAULT_OPTIMAL_FIT;
-  const optStretch = optFit > 1000 ? DEFAULT_OPTIMAL_STRETCH / 5 : DEFAULT_OPTIMAL_STRETCH;
+function getRecommendedFit(fitResults) {
   const maxDist = uiOptions.maxRecommendationDistance || 9999;
   const [bestMatch] = fitResults
     .filter(([, res]) => res.accuracy > 0)
     .reduce(
       ([accSize, fit], [size, res]) => {
-        if (res.totalFit < 1000 && optFit >= 1000) {
-          return [accSize, fit];
-        }
-        const maxStretchArr = [];
-        const importanceArr = [];
-        const componentFitArr = [];
-        Object.entries(res.matchMap).forEach(([oKey, oValue]) => {
-          maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
-          importanceArr.push(oValue.importance);
-          componentFitArr.push(oValue.componentFit);
-        });
-        const maxStretch = Math.max.apply(null, maxStretchArr);
-        const maxImportance = Math.max.apply(null, importanceArr);
-        const maxComponentFit = Math.max.apply(null, componentFitArr);
-        let effTotalFit = res.totalFit;
-        if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
-          effTotalFit = maxComponentFit;
-          if (optFit <= 1000) {
-            optFit = DEFAULT_OPTIMAL_FIT;
-          }
-        }
-        if (isStretching(res.matchMap, optFit)) {
-          const newFit =
-            Math.abs(effTotalFit - 1000) * 100 + Math.abs(maxStretch - DEFAULT_OPTIMAL_STRETCH);
-          if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
-            return [size, newFit];
-          } else {
-            return [accSize, fit];
-          }
+        const newFit = Math.abs(getFitPosition(res.totalFit, res.matchMap) - 50);
+        // eslint-disable-next-line no-console
+        console.log(newFit);
+        if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
+          return [size, newFit];
         } else {
-          const newFit = Math.abs(effTotalFit - optFit) * 100 + Math.abs(maxStretch - optStretch);
-          if (newFit <= maxDist * 100 && res.totalFit >= 1000 && (!accSize || newFit < fit)) {
-            return [size, newFit];
-          } else {
-            return [accSize, fit];
-          }
+          return [accSize, fit];
         }
       },
       [null, 0]
@@ -504,10 +470,8 @@ function match(doSelectBestFit = true) {
           );
         }
         const fitResults = Object.entries(result);
-        // if user is logged in, don't care about the accuracy. If not,
-        // filter out results where accuracy is 0
         const recommendedFit = getRecommendedFit(
-          token ? fitResults : fitResults.filter(([, res]) => res.accuracy > 0),
+          fitResults,
           product.item.fitRecommendation
         );
         dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));

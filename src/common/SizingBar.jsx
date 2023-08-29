@@ -4,11 +4,8 @@ import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
 import ProductModel, {
-  DEFAULT_OPTIMAL_FIT,
-  DEFAULT_OPTIMAL_STRETCH,
   fitRanges,
-  stretchFactor,
-  isStretching,
+  getFitPosition,
   fitLabelsAndColors,
 } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
@@ -106,7 +103,6 @@ class SizingBar extends React.Component {
     this.state = {
       newSize: false,
     };
-    this.calculateSliderPositions();
   }
 
   componentDidMount() {
@@ -131,80 +127,12 @@ class SizingBar extends React.Component {
     }
   }
 
-  calculateSliderPositions() {
-    let { fitRecommendation } = this.props;
-    if (fitRecommendation <= 1000) {
-      fitRecommendation = DEFAULT_OPTIMAL_FIT;
-    }
-    const regular = this.ranges.find((r) => r.label === "regular");
-    const rangeWidth = regular.end - regular.start;
-    const regularMidPoint = regular.end - rangeWidth / 2;
-    const scaledWidth = rangeWidth / ((regularMidPoint - 1000) / (fitRecommendation - 1000));
-    this.sliderPosXMin = 1000 - scaledWidth;
-    this.sliderPosXMax = this.ranges.slice(1).reduce((end) => end + scaledWidth, 1000);
-    this.sliderScale = 100 / (this.sliderPosXMax - this.sliderPosXMin);
-  }
-
   calculatePlaceholderSize() {
     if (this.placeholder) {
       const containerWidth = this.placeholder.parentNode.offsetWidth - 10;
       this.placeholder.style.transform = "scale(1)";
       const placeholderWidth = this.placeholder.offsetWidth;
       this.placeholder.style.transform = `scale(${Math.min(1, containerWidth / placeholderWidth)})`;
-    }
-  }
-
-  getFitPosition(value, matchMap) {
-    let { fitRecommendation } = this.props;
-    let effTotalFit = value;
-    const maxStretchArr = [];
-    if (matchMap) {
-      const importanceArr = [];
-      const componentFitArr = [];
-      Object.entries(matchMap).forEach(([oKey, oValue]) => {
-        maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
-        importanceArr.push(oValue.importance);
-        componentFitArr.push(oValue.componentFit);
-      });
-      const maxImportance = Math.max.apply(null, importanceArr);
-      const maxComponentFit = Math.max.apply(null, componentFitArr);
-      if (effTotalFit === 1000 && maxImportance < 0 && maxComponentFit > 1000) {
-        effTotalFit = maxComponentFit;
-        if (fitRecommendation <= 1000) {
-          fitRecommendation = DEFAULT_OPTIMAL_FIT;
-        }
-      }
-    }
-    if (isStretching(matchMap, fitRecommendation)) {
-      let maxStretch = DEFAULT_OPTIMAL_STRETCH;
-      let newPos = 50;
-      if (matchMap) {
-        maxStretch = Math.max.apply(null, maxStretchArr);
-        if (effTotalFit > 1000) {
-          if (fitRecommendation === 1000) {
-            newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 40);
-          } else {
-            newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 10);
-          }
-        } else if (effTotalFit == 1000) {
-          const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
-          newPos =
-            maxStretch > stretchBreakpoint
-              ? Math.max(
-                  20,
-                  40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20
-                )
-              : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
-        } else {
-          newPos = Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
-        }
-      }
-      return newPos;
-    } else {
-      return Math.max(
-        0,
-        (Math.min(effTotalFit, this.sliderPosXMax) - this.sliderPosXMin) * this.sliderScale
-      );
     }
   }
 
@@ -251,11 +179,11 @@ class SizingBar extends React.Component {
           </div>
         ))}
         {doShowFit && fitRecommendation >= 1000 && (
-          <RecommendationIndicator t={t} value={this.getFitPosition(fitRecommendation)} />
+          <RecommendationIndicator t={t} value={getFitPosition(fitRecommendation)} />
         )}
         {doShowFit && (
           <FitIndicator
-            value={this.getFitPosition(match.totalFit, match.matchMap)}
+            value={getFitPosition(match.totalFit, match.matchMap)}
             t={t}
             fitRange={this.getFitRange()}
             selectedSize={size}
