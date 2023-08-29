@@ -406,18 +406,19 @@ function doMatch(fitRequest, token, useProfile) {
 }
 
 function getRecommendedFit(fitResults) {
-  const maxDist = uiOptions.maxRecommendationDistance || 9999;
+  const maxDist = uiOptions.maxRecommendationDistance || 50;
   const [bestMatch] = fitResults
     .filter(([, res]) => res.accuracy > 0)
     .reduce(
-      ([accSize, fit], [size, res]) => {
-        const newFit = Math.abs(getFitPosition(res.totalFit, res.matchMap) - 50);
+      ([accSize, dist], [size, res]) => {
+        const newFit = getFitPosition(res.totalFit, res.matchMap);
+        const newDist = Math.abs(newFit - 50);
         // eslint-disable-next-line no-console
         console.log(newFit);
-        if (newFit <= maxDist * 100 && (!accSize || newFit < fit)) {
-          return [size, newFit];
+        if (newDist <= maxDist && newFit >= 20 && (!accSize || newDist < dist)) {
+          return [size, newDist];
         } else {
-          return [accSize, fit];
+          return [accSize, dist];
         }
       },
       [null, 0]

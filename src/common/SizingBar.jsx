@@ -179,11 +179,11 @@ class SizingBar extends React.Component {
           </div>
         ))}
         {doShowFit && fitRecommendation >= 1000 && (
-          <RecommendationIndicator t={t} value={getFitPosition(fitRecommendation)} />
+          <RecommendationIndicator t={t} value={Math.min(100, getFitPosition(fitRecommendation))} />
         )}
         {doShowFit && (
           <FitIndicator
-            value={getFitPosition(match.totalFit, match.matchMap)}
+            value={Math.min(100, getFitPosition(match.totalFit, match.matchMap))}
             t={t}
             fitRange={this.getFitRange()}
             selectedSize={size}

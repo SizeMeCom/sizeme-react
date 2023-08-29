@@ -2099,9 +2099,9 @@ const getFitPosition = (value, matchMap) => {
       maxStretch = Math.max.apply(null, maxStretchArr);
       if (effTotalFit > 1000) {
         if (effFitRecommendation === 1000) {
-          newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 40);
+          newPos = 60 + ((effTotalFit - 1000) / 55) * 40;
         } else {
-          newPos = Math.min(100, 60 + ((effTotalFit - 1000) / 55) * 10);
+          newPos = 60 + ((effTotalFit - 1000) / 55) * 10;
         }
       } else if (effTotalFit == 1000) {
         const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
@@ -2128,7 +2128,7 @@ const getFitPosition = (value, matchMap) => {
     const sliderScale = 100 / (sliderPosXMax - sliderPosXMin);    
     return Math.max(
       0,
-      (Math.min(effTotalFit, sliderPosXMax) - sliderPosXMin) * sliderScale
+      (effTotalFit - sliderPosXMin) * sliderScale
     );
   }
 }
