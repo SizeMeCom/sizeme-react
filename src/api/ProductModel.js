@@ -2077,7 +2077,6 @@ const isStretching = (matchMap, effFitRecommendation) => {
 const getFitPosition = (value, matchMap) => {
   let effTotalFit = value;
   const maxStretchArr = [];
-  const effFitRecommendation = fitRecommendation <= 1000 ? DEFAULT_OPTIMAL_FIT : fitRecommendation;
   if (matchMap) {
     const importanceArr = [];
     const componentFitArr = [];
@@ -2092,13 +2091,13 @@ const getFitPosition = (value, matchMap) => {
       effTotalFit = maxComponentFit;
     }
   }
-  if (isStretching(matchMap, effFitRecommendation)) {
+  if (isStretching(matchMap, fitRecommendation)) {
     let maxStretch = DEFAULT_OPTIMAL_STRETCH;
     let newPos = 50;
     if (matchMap) {
       maxStretch = Math.max.apply(null, maxStretchArr);
       if (effTotalFit > 1000) {
-        if (effFitRecommendation === 1000) {
+        if (fitRecommendation === 1000) {
           newPos = 60 + ((effTotalFit - 1000) / 55) * 40;
         } else {
           newPos = 60 + ((effTotalFit - 1000) / 55) * 10;
