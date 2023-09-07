@@ -403,7 +403,7 @@ function doMatch(fitRequest, token, useProfile) {
 }
 
 function getRecommendedFit(fitResults) {
-  const maxDist = uiOptions.maxRecommendationDistance || 9999;
+  const maxDist = uiOptions.maxRecommendationDistance || 50;
   const [bestMatch] = fitResults
     .filter(([, res]) => res.accuracy > 0)
     .reduce(
