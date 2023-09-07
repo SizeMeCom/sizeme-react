@@ -2074,6 +2074,23 @@ const isStretching = (matchMap, effFitRecommendation) => {
   return false;
 };
 
+function linearizeObject(inputValue, inputObject) {
+  const keys = Object.keys(inputObject);
+  
+  for (let i = 0; i < keys.length - 1; i++) {
+    const currentKey = parseFloat(keys[i]);
+    const nextKey = parseFloat(keys[i + 1]);
+
+    if (inputValue >= inputObject[currentKey] && inputValue <= inputObject[nextKey]) {
+      const keyDifference = nextKey - currentKey;
+      const valueDifference = inputObject[nextKey] - inputObject[currentKey];
+      const ratio = (inputValue - inputObject[currentKey]) / valueDifference;
+      return currentKey + ratio * keyDifference;
+    }
+  }
+  return null; // If the input value is outside the range of the object values
+}
+
 const getFitPosition = (value, matchMap) => {
   let effTotalFit = value;
   const maxStretchArr = [];
@@ -2091,7 +2108,7 @@ const getFitPosition = (value, matchMap) => {
       effTotalFit = maxComponentFit;
     }
   }
-  if (isStretching(matchMap, fitRecommendation)) {
+  if (isStretching(matchMap, fitRecommendation)) { // RENDER MODE: STRETCHING
     let maxStretch = DEFAULT_OPTIMAL_STRETCH;
     let newPos = 50;
     if (matchMap) {
@@ -2116,7 +2133,31 @@ const getFitPosition = (value, matchMap) => {
       }
     }
     return newPos;
-  } else {
+  } else if (fitRecommendation <= 1020) {          // RENDER MODE: SLIMS
+    // 0..20 too small
+    if (effTotalFit < 1000) {
+      return Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
+    } else if (effTotalFit == 1000) {
+      // 20..40 slim: is stretching
+      let maxStretch = DEFAULT_OPTIMAL_STRETCH;
+      if (matchMap) {
+        maxStretch = Math.max.apply(null, maxStretchArr);
+      }
+      return Math.max(20, ((maxStretch / 100) * 20) + 20);
+    } else {
+      // 40..100 regular, loose and big, create breakpoints
+      const breakPoints = {
+        40: 1000,
+        60: 1000 + ((fitRecommendation - 1000) * 2),
+        80: Math.max(1040, 1000 + (fitRecommendation - 1000) * 8),
+        100: Math.max(1080, 1000 + (fitRecommendation - 1000) * 16),
+        200: 10000
+      }
+      let newPos = 100;
+      newPos = linearizeObject(effTotalFit, breakPoints);
+      return newPos ?? 200;
+    }
+  } else {                                         // RENDER MODE: NORMAL, with big softner
     const effFitRecommendation = fitRecommendation <= 1000 ? DEFAULT_OPTIMAL_FIT : fitRecommendation;
     const regular = fitRanges.find((r) => r.label === "regular");
     const rangeWidth = regular.end - regular.start;
@@ -2125,10 +2166,12 @@ const getFitPosition = (value, matchMap) => {
     const sliderPosXMin = 1000 - scaledWidth;
     const sliderPosXMax = fitRanges.slice(1).reduce((end) => end + scaledWidth, 1000);
     const sliderScale = 100 / (sliderPosXMax - sliderPosXMin);    
-    return Math.max(
+    let newPos = Math.max(
       0,
       (effTotalFit - sliderPosXMin) * sliderScale
     );
+    if (newPos > 80) newPos = ((newPos - 80) / 2) + 80;
+    return newPos;
   }
 }
 
