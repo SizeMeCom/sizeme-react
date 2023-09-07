@@ -9,10 +9,7 @@ import thunkMiddleware from "redux-thunk";
 import equals from "shallow-equals";
 import Cookies from "universal-cookie";
 
-import SizeGuideModel, {
-  humanMeasurementMap,
-  getFitPosition,
-} from "./ProductModel";
+import SizeGuideModel, { humanMeasurementMap, getFitPosition } from "./ProductModel";
 import SizeSelector from "./SizeSelector";
 import * as actions from "./actions";
 import rootReducer from "./reducers";
@@ -469,10 +466,7 @@ function match(doSelectBestFit = true) {
           );
         }
         const fitResults = Object.entries(result);
-        const recommendedFit = getRecommendedFit(
-          fitResults,
-          product.item.fitRecommendation
-        );
+        const recommendedFit = getRecommendedFit(fitResults, product.item.fitRecommendation);
         dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
 
         if (doSelectBestFit) {

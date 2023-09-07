@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import "./SizingBar.scss";
-import ProductModel, {
-  fitRanges,
-  getFitPosition,
-  fitLabelsAndColors,
-} from "../api/ProductModel";
+import ProductModel, { fitRanges, getFitPosition, fitLabelsAndColors } from "../api/ProductModel";
 import ReactTooltip from "react-tooltip";
 import SizeSelector from "../api/SizeSelector";
 
