@@ -413,8 +413,6 @@ function getRecommendedFit(fitResults) {
       ([accSize, dist], [size, res]) => {
         const newFit = getFitPosition(res.totalFit, res.matchMap);
         const newDist = Math.abs(newFit - 50);
-        // eslint-disable-next-line no-console
-        console.log(newFit);
         if (newDist <= maxDist && newFit >= 20 && (!accSize || newDist < dist)) {
           return [size, newDist];
         } else {
