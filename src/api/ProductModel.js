@@ -120,7 +120,7 @@ function getEssentialMeasurements(itemTypeArr, meas) {
       if (isInMeas(meas, "chest")) {
         arr.push("chest");
       }
-      if (itemTypeArr[5] > 1 && itemTypeArr[5] < 5) {
+      if (itemTypeArr[5] > 2 && itemTypeArr[5] < 5) {
         if (isInMeas(meas, "front_height")) {
           arr.push("front_height");
         }
@@ -1215,7 +1215,7 @@ function init(itemTypeArr) {
 
       if (itemTypeArr[0] === 1) {
         switch (
-          itemTypeArr[5] // waistband
+          itemTypeArr[5] // waistband height
         ) {
           case 0: // poncho dude
             itemDrawing.coords.push({ X: 550, Y: 750, cp1X: 450, cp1Y: 70, cp2X: 450, cp2Y: 550 });
@@ -1240,6 +1240,67 @@ function init(itemTypeArr) {
               lift: true,
               midCircle: { X: 480, Y: 444 },
             };
+            break;
+          case 2: // waist
+            if (itemTypeArr[6] === 1) {
+              // elastic
+              itemDrawing.coords.push(
+                {
+                  X: 250,
+                  Y: 708,
+                  cp1X: 247,
+                  cp1Y: 402,
+                  cp2X: 247,
+                  cp2Y: 658,
+                },
+                { X: 230, Y: 778 },
+                { X: 0, Y: 778 }
+              );
+              // eslint-disable-next-line
+              for (let $i = 0; $i < 15; $i++) {
+                const $x = Math.round(($i + 0.5) * (230 / 15));
+                itemDrawing.accents.push({
+                  type: "line",
+                  coords: [
+                    { X: $x, Y: 718 },
+                    { X: $x, Y: 778 },
+                  ],
+                });
+              }
+              arrows.waist = {
+                mirror: false,
+                coords: [
+                  { X: -250, Y: 708 },
+                  { X: 250, Y: 708 },
+                ],
+                lift: false,
+              };
+              arrows.pant_waist = arrows.waist; // in case of slight mis-tablization
+              arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
+            } else {
+              itemDrawing.coords.push(
+                {
+                  X: 250,
+                  Y: 778,
+                  cp1X: 245,
+                  cp1Y: 402,
+                  cp2X: 245,
+                  cp2Y: 728,
+                },
+                { X: 0, Y: 778 }
+              );
+              arrows.waist = {
+                mirror: false,
+                coords: [
+                  { X: -250, Y: 778 },
+                  { X: 250, Y: 778 },
+                ],
+                lift: false,
+              };
+              arrows.pant_waist = arrows.waist; // in case of slight mis-tablization
+              arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
+            }
+            arrows.front_height.coords[1].Y = 778;
             break;
           case 3: // pant waist
             if (itemTypeArr[6] === 1) {
@@ -1484,146 +1545,216 @@ function init(itemTypeArr) {
         },
         { X: 250, Y: 170 }
       );
-      // eslint-disable-next-line
-      const $l = parseInt(itemTypeArr[3]); // sleeve length basically
-      // right sleeve
-      if (itemTypeArr[4] === 1) {
-        // elastic
-        itemDrawing.coords.push(
-          { X: 250 + $l * 9, Y: 170 + $l * 135 },
-          { X: 240 + $l * 9, Y: 180 + $l * 135 },
-          { X: 240 + $l * 10, Y: 160 + $l * 150 },
-          { X: 25 + $l * 25, Y: 170 + $l * 150 },
-          { X: 25 + $l * 23, Y: 200 + $l * 135 },
-          { X: 15 + $l * 23, Y: 190 + $l * 135 }
-        );
+      if (itemTypeArr[4] < 6) {
+        // two sleeves
         // eslint-disable-next-line
-        for (let $i = 0; $i < 7; $i++) {
-          itemDrawing.accents.push({
-            type: "line",
-            coords: [
-              {
-                X: Math.round(40 + $i * 29 + $l * (23 - $i * 2)),
-                Y: Math.round(200 - $i * 3 + $l * 135),
-              },
-              {
-                X: Math.round(50 + $i * 28 + $l * (23 - $i * 2)),
-                Y: Math.round(170 - $i * 2 + $l * 150),
-              },
-            ],
-          });
+        const $l = parseInt(itemTypeArr[3]); // sleeve length basically
+        // right sleeve
+        if (itemTypeArr[4] === 1) {
+          // elastic
+          itemDrawing.coords.push(
+            { X: 250 + $l * 9, Y: 170 + $l * 135 },
+            { X: 240 + $l * 9, Y: 180 + $l * 135 },
+            { X: 240 + $l * 10, Y: 160 + $l * 150 },
+            { X: 25 + $l * 25, Y: 170 + $l * 150 },
+            { X: 25 + $l * 23, Y: 200 + $l * 135 },
+            { X: 15 + $l * 23, Y: 190 + $l * 135 }
+          );
+          // eslint-disable-next-line
+          for (let $i = 0; $i < 7; $i++) {
+            itemDrawing.accents.push({
+              type: "line",
+              coords: [
+                {
+                  X: Math.round(40 + $i * 29 + $l * (23 - $i * 2)),
+                  Y: Math.round(200 - $i * 3 + $l * 135),
+                },
+                {
+                  X: Math.round(50 + $i * 28 + $l * (23 - $i * 2)),
+                  Y: Math.round(170 - $i * 2 + $l * 150),
+                },
+              ],
+            });
+          }
+        } else {
+          itemDrawing.coords.push(
+            { X: 250 + $l * 10, Y: 170 + $l * 150 },
+            { X: 15 + $l * 25, Y: 180 + $l * 150 }
+          );
         }
-      } else {
-        itemDrawing.coords.push(
-          { X: 250 + $l * 10, Y: 170 + $l * 150 },
-          { X: 15 + $l * 25, Y: 180 + $l * 150 }
-        );
-      }
-      itemDrawing.coords.push({ X: 10, Y: 297 }, { X: -10, Y: 297 });
-      // left sleeve (as not mirror)
-      if (itemTypeArr[4] === 1) {
-        // elastic
-        itemDrawing.coords.push(
-          { X: -15 - $l * 23, Y: 190 + $l * 135 },
-          { X: -25 - $l * 23, Y: 200 + $l * 135 },
-          { X: -25 - $l * 25, Y: 170 + $l * 150 },
-          { X: -240 - $l * 10, Y: 160 + $l * 150 },
-          { X: -240 - $l * 9, Y: 180 + $l * 135 },
-          { X: -250 - $l * 9, Y: 170 + $l * 135 }
-        );
-        // eslint-disable-next-line
-        for (let $i = 0; $i < 7; $i++) {
-          itemDrawing.accents.push({
-            type: "line",
-            coords: [
-              {
-                X: -Math.round(40 + $i * 29 + $l * (23 - $i * 2)),
-                Y: Math.round(200 - $i * 3 + $l * 135),
-              },
-              {
-                X: -Math.round(50 + $i * 28 + $l * (23 - $i * 2)),
-                Y: Math.round(170 - $i * 2 + $l * 150),
-              },
-            ],
-          });
-        }
-      } else {
-        itemDrawing.coords.push(
-          { X: -15 - $l * 25, Y: 180 + $l * 150 },
-          { X: -250 - $l * 10, Y: 170 + $l * 150 }
-        );
-      }
-      arrows.outseam = {
-        mirror: false,
-        coords: [
-          { X: 225, Y: 0 },
-          { X: 250, Y: 170 },
-          { X: 250 + $l * 10, Y: 170 + $l * 150 },
-        ],
-        style: "line",
-        lift: true,
-      };
-
-      switch (
-        itemTypeArr[3] // left sleeve (as not mirror)
-      ) {
-        case 1: // very short
-        case 2: // short
-        case 3: // short-medium
-          arrows.knee_width = {
-            mirror: false,
-            coords: [
-              { X: -278, Y: 449 },
-              { X: -38, Y: 474 },
-            ],
-            lift: false,
-          };
-          break;
-        case 4: // medium
-          arrows.knee_width = {
-            mirror: false,
-            coords: [
-              { X: -281, Y: 626 },
-              { X: -77, Y: 651 },
-            ],
-            lift: false,
-          };
-          break;
-        case 5: // semi-long
-        case 6: // long
-          arrows.knee_width = {
-            mirror: false,
-            coords: [
-              { X: -281, Y: 626 },
-              { X: -77, Y: 651 },
-            ],
-            lift: false,
-          };
-          break;
-      }
-
-      // leg opening
-      if (itemTypeArr[4] === 1) {
-        // elastic
-        arrows.pant_sleeve_width = {
-          mirror: false,
-          coords: [
-            { X: -250 - $l * 9, Y: 170 + $l * 135 },
-            { X: -15 - $l * 23, Y: 180 + $l * 135 },
-          ],
-          lift: false,
-        };
-      } else {
-        arrows.pant_sleeve_width = {
-          mirror: false,
-          coords: [
-            { X: -250 - $l * 10, Y: 170 + $l * 150 },
+        itemDrawing.coords.push({ X: 10, Y: 297 }, { X: -10, Y: 297 });
+        // left sleeve (as not mirror)
+        if (itemTypeArr[4] === 1) {
+          // elastic
+          itemDrawing.coords.push(
+            { X: -15 - $l * 23, Y: 190 + $l * 135 },
+            { X: -25 - $l * 23, Y: 200 + $l * 135 },
+            { X: -25 - $l * 25, Y: 170 + $l * 150 },
+            { X: -240 - $l * 10, Y: 160 + $l * 150 },
+            { X: -240 - $l * 9, Y: 180 + $l * 135 },
+            { X: -250 - $l * 9, Y: 170 + $l * 135 }
+          );
+          // eslint-disable-next-line
+          for (let $i = 0; $i < 7; $i++) {
+            itemDrawing.accents.push({
+              type: "line",
+              coords: [
+                {
+                  X: -Math.round(40 + $i * 29 + $l * (23 - $i * 2)),
+                  Y: Math.round(200 - $i * 3 + $l * 135),
+                },
+                {
+                  X: -Math.round(50 + $i * 28 + $l * (23 - $i * 2)),
+                  Y: Math.round(170 - $i * 2 + $l * 150),
+                },
+              ],
+            });
+          }
+        } else {
+          itemDrawing.coords.push(
             { X: -15 - $l * 25, Y: 180 + $l * 150 },
+            { X: -250 - $l * 10, Y: 170 + $l * 150 }
+          );
+        }
+        arrows.outseam = {
+          mirror: false,
+          coords: [
+            { X: 225, Y: 0 },
+            { X: 250, Y: 170 },
+            { X: 250 + $l * 10, Y: 170 + $l * 150 },
           ],
-          lift: false,
+          style: "line",
+          lift: true,
+        };
+
+        switch (
+          itemTypeArr[3] // left sleeve (as not mirror)
+        ) {
+          case 1: // very short
+          case 2: // short
+          case 3: // short-medium
+            arrows.knee_width = {
+              mirror: false,
+              coords: [
+                { X: -278, Y: 449 },
+                { X: -38, Y: 474 },
+              ],
+              lift: false,
+            };
+            break;
+          case 4: // medium
+            arrows.knee_width = {
+              mirror: false,
+              coords: [
+                { X: -281, Y: 626 },
+                { X: -77, Y: 651 },
+              ],
+              lift: false,
+            };
+            break;
+          case 5: // semi-long
+          case 6: // long
+            arrows.knee_width = {
+              mirror: false,
+              coords: [
+                { X: -281, Y: 626 },
+                { X: -77, Y: 651 },
+              ],
+              lift: false,
+            };
+            break;
+        }
+
+        // leg opening
+        if (itemTypeArr[4] === 1) {
+          // elastic
+          arrows.pant_sleeve_width = {
+            mirror: false,
+            coords: [
+              { X: -250 - $l * 9, Y: 170 + $l * 135 },
+              { X: -15 - $l * 23, Y: 180 + $l * 135 },
+            ],
+            lift: false,
+          };
+        } else {
+          arrows.pant_sleeve_width = {
+            mirror: false,
+            coords: [
+              { X: -250 - $l * 10, Y: 170 + $l * 150 },
+              { X: -15 - $l * 25, Y: 180 + $l * 150 },
+            ],
+            lift: false,
+          };
+        }
+      } else {
+        // skirt(s)
+        // eslint-disable-next-line
+        const $l = parseInt(itemTypeArr[3]); // sleeve length basically
+        // right "sleeve"
+        if (itemTypeArr[4] === 7) {
+          // elastic
+          itemDrawing.coords.push(
+            { X: 250 - $l * 8, Y: 170 + $l * 95 },
+            { X: 240 - $l * 8, Y: 180 + $l * 95 },
+            { X: 235 - $l * 8, Y: 220 + $l * 95 }
+          );
+          // eslint-disable-next-line
+          for (let $i = 0; $i < 16 - $l; $i++) {
+            itemDrawing.accents.push({
+              type: "line",
+              coords: [
+                {
+                  X: Math.round($i * (14 + $l)),
+                  Y: Math.round(180 + $l * 95),
+                },
+                {
+                  X: Math.round($i * (14 + $l)),
+                  Y: Math.round(220 + $l * 95),
+                },
+              ],
+            });
+          }
+        } else {
+          itemDrawing.coords.push({ X: 250 - $l * 8, Y: 220 + $l * 95 });
+        }
+        // left "sleeve" (as not mirror)
+        if (itemTypeArr[4] === 7) {
+          // elastic
+          itemDrawing.coords.push(
+            { X: -235 + $l * 8, Y: 220 + $l * 95 },
+            { X: -240 + $l * 8, Y: 180 + $l * 95 },
+            { X: -250 + $l * 8, Y: 170 + $l * 95 }
+          );
+          // eslint-disable-next-line
+          for (let $i = 0; $i < 16 - $l; $i++) {
+            itemDrawing.accents.push({
+              type: "line",
+              coords: [
+                {
+                  X: -Math.round($i * (14 + $l)),
+                  Y: Math.round(180 + $l * 95),
+                },
+                {
+                  X: -Math.round($i * (14 + $l)),
+                  Y: Math.round(220 + $l * 95),
+                },
+              ],
+            });
+          }
+        } else {
+          itemDrawing.coords.push({ X: -250 + $l * 8, Y: 220 + $l * 95 });
+        }
+        arrows.outseam = {
+          mirror: false,
+          coords: [
+            { X: 225, Y: 0 },
+            { X: 250, Y: 170 },
+            { X: 250 - $l * 8, Y: 220 + $l * 95 },
+          ],
+          style: "line",
+          lift: true,
         };
       }
-
       itemDrawing.coords.push({ X: -250, Y: 170 });
       itemDrawing.accents.push({
         type: "area",
@@ -1658,6 +1789,7 @@ function init(itemTypeArr) {
           }
         );
       }
+
       switch (
         itemTypeArr[6] // trouser waistband
       ) {
