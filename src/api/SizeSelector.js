@@ -392,7 +392,7 @@ class SwatchesVariationSelect extends AbstractSelect {
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
       const sizeValue = option.dataset.value;
-      const textSpan = option.innerText;
+      const textSpan = option.dataset.name ?? option.innerText;
       if (textSpan) {
         this.selectors[sizeValue] = mkSelectFn(option);
         this.sizeMapper.push([sizeValue, textSpan.trim()]);
