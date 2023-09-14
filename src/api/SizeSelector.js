@@ -531,7 +531,7 @@ const initSizeSelector = (selectSizeFn) => {
       selector = getInstance(SwatchesVariationSelect);
       break;
 
-    case "swatches-ul-li-active":
+    case "swatches-list-active":
       selector = getInstance(SwatchesListActive);
       break;
 
