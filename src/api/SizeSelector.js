@@ -444,9 +444,9 @@ class SwatchesListActive extends AbstractSelect {
     };
 
     this.clearSelection = () => {
-      const selected = element.querySelector("li.active");
+      const selected = element.querySelector("li.active, li.selected");
       if (selected && selected.classList) {
-        selected.classList.remove("active");
+        selected.classList.remove("active", "selected");
       }
     };
 
@@ -463,7 +463,7 @@ class SwatchesListActive extends AbstractSelect {
     }
 
     this.getSelectedSize = () => {
-      const selected = element.querySelector("li.active");
+      const selected = element.querySelector("li.active, li.selected");
       if (selected) {
         return selected.dataset.value;
       } else {
@@ -476,13 +476,13 @@ class SwatchesListActive extends AbstractSelect {
     if (this.el) {
       const clone = this.el.cloneNode(true);
       const clearSelected = () => {
-        clone.querySelector("li.active").classList.remove("active");
+        clone.querySelector("li.active, li.selected").classList.remove("active", "selected");
       };
 
       const links = clone.querySelectorAll("li");
       const mkEventListener = (link) => (e) => {
         clearSelected();
-        link.classList.add("active");
+        link.classList.add("active", "selected");
         this.setSelected(e.currentTarget.dataset.value);
       };
       for (let i = 0; i < links.length; i++) {
