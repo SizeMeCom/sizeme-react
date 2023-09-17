@@ -1,0 +1,202 @@
+{
+  "common": {
+    "alreadyUser": "¿Ya eres usuario de SizeMe?",
+    "closeText": "Cerrar",
+    "selectedSize": "Talla seleccionada",
+    "shoppingFor": "Comprando para",
+    "sizingBarSplashNoFit": "No se encontró una talla basada en tus medidas",
+    "sizingBarSplashNoMeas": "Ingresa tus medidas para encontrar tu talla",
+    "sizingBarSplashNoSize": "Selecciona una talla para ver cómo te queda",
+    "sizingBarSplashMatch": "Recomendamos la talla <strong>{{- sizeName}}</strong> para ti",
+    "sizingBarFitTooltip": "Esto indica cómo te quedará la talla <strong>{{- selectedSize}}</strong>",
+    "sizingBarRecommendationTooltip": "Recomendamos que busques una talla que esté cerca de esta área",
+    "togglerText": "Encontrar mi talla",
+    "sizemeTooltip": "Este producto es compatible con SizeMe, un servicio que recomienda la talla que te queda mejor comparando tus medidas físicas con las medidas de este producto.",
+    "sizemeTooltipLink": "Leer más",
+    "sizeItself": "Talla",
+    "cm_short": "cm",
+    "in_short": "in",
+    "defaultProfileName": "Mi perfil"
+  },
+  "detailed": {
+    "buttonText": "Vista detallada de cómo te quedaría",
+    "tableTitle": "Medidas detalladas - holguras",
+    "windowTitle": "Vista detallada para"
+  },
+  "fitInfo": {
+    "isSmaller": "es <u>más pequeño</u> que tu medida correspondiente por {{value}}{{whenPinched}}",
+    "noMatchItem": "es {{value}}. {{add}}",
+    "noOverlap": "te queda ajustada sin holgura.",
+    "overallFit": "Calce general",
+    "overlapsYou": "tiene holgura de",
+    "smConsidersFit": "SizeMe considera este calce",
+    "stretchedLittle": "La prenda está estirada un poco.",
+    "stretchedMax": "La prenda está estirada al máximo.",
+    "stretchedMuch": "La prenda está estirada mucho.",
+    "stretchedSomewhat": "La prenda está estirada.",
+    "tooltipDefaultText": "La medida de {{measurement, lowercase}} de la prenda ",
+    "whenPinched": " en ambos lados"
+  },
+  "fitVerdict": {
+    "not_fitted": "Demasiado pequeño",
+    "too_small": "Demasiado pequeño",
+    "slim": "Ajustado",
+    "regular": "Regular",
+    "loose": "Holgado",
+    "very_loose": "Muy holgado",
+    "huge": "Enorme",
+    "too_big": "Demasiado grande"
+  },
+  "fitVerdictLong": {
+    "not_fitted": "Demasiado corto",
+    "too_small": "Demasiado corto",
+    "slim": "Corto",
+    "regular": "Regular",
+    "loose": "Largo",
+    "very_loose": "Muy largo",
+    "huge": "Enorme",
+    "too_big": "Demasiado largo"
+  },
+  "sizingBarRangeLabel": {
+    "too_small": "Aprieta",
+    "slim": "Ajustado",
+    "regular": "Recomendado",
+    "loose": "Holgado",
+    "too_big": "Grande"
+  },
+  "humanMeasurements": {
+    "chest": "Pecho",
+    "shirtWaist": "Cintura de camisa",
+    "sleeve": "Longitud del brazo",
+    "shoulderFull": "Ancho de hombros",
+    "neckCircumference": "Circunferencia del cuello",
+    "frontHeight": "Altura frontal",
+    "underbust": "Bajo el busto",
+    "pantWaist": "Cintura de pantalón",
+    "hips": "Caderas",
+    "inSeam": "Entrepierna",
+    "outSeam": "Costura exterior",
+    "thighCircumference": "Circunferencia del muslo",
+    "kneeCircumference": "Circunferencia de la rodilla",
+    "ankleCircumference": "Circunferencia del tobillo",
+    "calfCircumference": "Circunferencia de la pantorrilla",
+    "footLength": "Longitud del pie",
+    "footWidth": "Ancho del pie",
+    "headCircumference": "Circunferencia de la cabeza"
+  },
+  "measurement": {
+    "chest": "Pecho",
+    "waist": "Cintura",
+    "sleeve": "Manga",
+    "sleeve_top_width": "Ancho de la manga superior",
+    "sleeve_top_opening": "Abertura de la manga superior",
+    "wrist_width": "Ancho de la muñeca",
+    "underbust": "Bajo el busto",
+    "neck_opening_width": "Cuello",
+    "shoulder_width": "Ancho de hombros",
+    "front_height": "Altura frontal",
+    "pant_waist": "Cintura del pantalón",
+    "hips": "Caderas",
+    "inseam": "Entrepierna",
+    "outseam": "Costura exterior",
+    "thigh_width": "Ancho del muslo",
+    "knee_width": "Ancho de la rodilla",
+    "calf_width": "Ancho de la pantorrilla",
+    "pant_sleeve_width": "Abertura de la pierna",
+    "shoe_inside_length": "Longitud del zapato",
+    "shoe_inside_width": "Ancho del zapato",
+    "hat_width": "Circunferencia del gorro",
+    "hood_height": "Altura de la capucha",
+    "hem": "Dobladillo",
+    "sleeve_opening": "Abertura de la manga"
+  },
+  "measurementGuide": {
+    "title": "Cómo medir tu",
+    "chest": "Mide alrededor de tu cuerpo debajo de tus brazos en la <b>parte más completa</b> del pecho<span class='female'> mientras usas un sujetador</span>.<br/><br/><b>Exhala completamente</b> mientras tomas esta medida.",
+    "front_height": "Mide desde donde se encuentra tu cuello con tus hombros directamente hacia abajo hasta tu cintura (donde normalmente llevas tu pantalón).",
+    "sleeve": "Mide desde tu hombro (donde generalmente está la costura de tu camisa) hasta tu muñeca (hasta el hueso del radio para ser exactos). Mantén el brazo recto y apuntando hacia abajo mientras mides.",
+    "pant_waist": "Mide alrededor de tu cuerpo desde donde normalmente llevas tu pantalón, aproximadamente a 6 cm por debajo de la altura del ombligo.<br/><br/><b>Contrae el abdomen</b> como si estuvieras probando un pantalón ajustado.",
+    "waist": "Mide alrededor de tu cuerpo a unos 3 cm por encima de la altura del ombligo.<br/><br/><b>Contrae un poco el abdomen</b> mientras mides.",
+    "outseam": "Mide el exterior de tu pierna desde la parte superior de tu cintura (donde normalmente llevas tus pantalones) hasta el hueso del tobillo (el maléolo lateral para ser exactos).",
+    "shoe_inside_length": "Coloca una cinta métrica junto a una pared y párate sobre la cinta con los pies descalzos",
+    "calf_width": "Mide alrededor de la parte más ancha de la pantorrilla.",
+    "hat_width": "Mide la circunferencia más grande de la cabeza justo por encima de la parte superior de las orejas.",
+    "hips": "Mide alrededor de tu cuerpo en la parte más ancha de tus caderas.",
+    "neck_opening_width": "Mide alrededor de tu cuello tan bajo como sea posible. Mantén la medida ajustada."
+  },
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "Haz",
+      "link": "clic aquí",
+      "end": "para ver la guía"
+    },
+    "chest": [
+      "Alrededor de tu cuerpo debajo de tus brazos en la parte más completa del pecho",
+      "Exhala completamente"
+    ],
+    "front_height": [
+      "Desde donde se encuentra tu cuello con tus hombros directamente hacia abajo hasta tu cintura"
+    ],
+    "sleeve": ["Desde tu hombro hasta tu muñeca", "Mantén el brazo recto y apuntando hacia abajo"],
+    "pant_waist": [
+      "Alrededor de tu cuerpo desde donde normalmente llevas tu pantalón",
+      "Contrae el abdomen como si estuvieras probando un pantalón ajustado"
+    ],
+    "waist": [
+      "Alrededor de tu cuerpo a unos 3 cm por encima de la altura del ombligo",
+      "Contrae un poco el abdomen"
+    ],
+    "hips": ["Alrededor de tu cuerpo en la parte más ancha de tus caderas"],
+    "outseam": [
+      "El exterior de tu pierna desde la parte superior de tu cintura",
+      "Mide hasta el hueso del tobillo"
+    ],
+    "shoe_inside_length": [
+      "Coloca una cinta métrica junto a una pared y párate sobre la cinta con los pies descalzos"
+    ],
+    "calf_width": ["Mide alrededor de la parte más ancha de la pantorrilla"],
+    "hat_width": [
+      "Mide la circunferencia más grande de la cabeza justo por encima de la parte superior de las orejas"
+    ],
+    "neck_opening_width": [
+      "Mide alrededor de tu cuello tan bajo como sea posible",
+      "Mantén la medida ajustada"
+    ]
+  },
+  "message": {
+    "addProfiles": "Agrega perfiles a tu cuenta para obtener una recomendación de talla.",
+    "missingMeasurements": "Agrega más medidas a tu perfil para aumentar la precisión",
+    "noMeasurements": "Agrega medidas a tu perfil para obtener una recomendación de talla.",
+    "addThisMeasurement": "Agrega esta medida a tu perfil para incluirla en el cálculo del calce.",
+    "noProfiles": "No tienes perfiles en tu cuenta.",
+    "noTopButton": "El botón superior de la camisa en esta talla no se cerrará."
+  },
+  "signupBox": {
+    "duplicateUser": "Ya existe una cuenta con este correo electrónico. ¿Intentar iniciar sesión?",
+    "emailPlaceholder": "mi.nombre@ejemplo.com",
+    "message": "Guarda tus medidas para que te recordemos la próxima vez",
+    "save": "Aceptar",
+    "signupPrompt": "Guardar con correo electrónico",
+    "signupChoices": "Regístrate o inicia sesión",
+    "tooltipPolicyLink": "Política de privacidad",
+    "signupDone": "¡Tus medidas se han guardado! Deberías recibir un correo de confirmación de SizeMe en breve."
+  },
+  "sizeGuide": {
+    "advertisement": "Esta guía de tallas es proporcionada por SizeMe",
+    "buttonText": "Guía de tallas",
+    "measurementDisclaimer": "Estas medidas se toman <u>plano en el exterior del artículo</u>.",
+    "measurementDisclaimerCollar": "Excepto por la medida del cuello, que se mide alrededor del interior del cuello.",
+    "measurementDisclaimerInside": "Estas medidas se toman <u>dentro del artículo</u>.",
+    "tableTitle": "Medidas reales del artículo",
+    "windowTitle": "Guía de tallas para"
+  },
+  "splash": {
+    "btnLogInLabel": "Iniciar sesión",
+    "btnLogInTitle": "Ya tengo una cuenta",
+    "btnNoThanksLabel": "No, gracias",
+    "btnNoThanksTitle": "Quizás después",
+    "btnSignUpLabel": "Registrarse",
+    "btnSignUpTitle": "Sí, me gustaría crear una cuenta gratuita",
+    "detailedText": "Toma algunas <b>medidas de ti mismo</b> y obtén información personalizada sobre cómo te quedaría este artículo. ¡Crea un perfil gratuito de <b>SizeMe</b> y deja de adivinar!"
+  }
+}

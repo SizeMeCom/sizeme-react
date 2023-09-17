@@ -5,6 +5,7 @@ import fi from "./i18n/fi.json";
 import sv from "./i18n/sv.json";
 import ar from "./i18n/ar.json";
 import de from "./i18n/de.json";
+import es from "./i18n/es.json";
 
 void i18n.init({
   lng: uiOptions.lang || document.documentElement.lang || "en",
@@ -25,6 +26,9 @@ void i18n.init({
     },
     de: {
       translation: de,
+    },
+    es: {
+      translation: es,
     },
   },
 });
