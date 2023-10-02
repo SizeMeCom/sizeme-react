@@ -2169,21 +2169,8 @@ const getResult = (measurement, value, matchItem) => {
   };
 };
 
-const stretchFactor = (measurement) => {
-  let factor = 1;
-  switch (measurement) {
-    case "pant_waist":
-      factor = 10;
-      break;
-    case "hips":
-      factor = 8;
-      break;
-  }
-  return factor;
-};
-
 const isStretching = (matchMap, effFitRecommendation) => {
-  if (effFitRecommendation === 1000) {
+  if (effFitRecommendation <= 1000) {
     return true;
   }
   if (!matchMap) {
@@ -2229,8 +2216,8 @@ const getFitPosition = (value, matchMap) => {
   if (matchMap) {
     const importanceArr = [];
     const componentFitArr = [];
-    Object.entries(matchMap).forEach(([oKey, oValue]) => {
-      maxStretchArr.push(oValue.componentStretch / stretchFactor(oKey));
+    Object.entries(matchMap).forEach(([, oValue]) => {
+      maxStretchArr.push(oValue.componentStretch);
       importanceArr.push(oValue.importance);
       componentFitArr.push(oValue.componentFit);
     });
@@ -2245,13 +2232,16 @@ const getFitPosition = (value, matchMap) => {
     let newPos = 50;
     if (matchMap) {
       if (effTotalFit > 1000) {
-        if (fitRecommendation === 1000) {
-          newPos = 60 + ((effTotalFit - 1000) / 55) * 40;
+        if (fitRecommendation <= 1000) {
+          newPos = 60 + ((effTotalFit - 1000) / 55) * 60;
         } else {
           newPos = 60 + ((effTotalFit - 1000) / 55) * 10;
         }
       } else if (effTotalFit == 1000) {
-        const stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
+        let stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
+        if (fitRecommendation < 1000) {
+          stretchBreakpoint = 2 * (1000 - fitRecommendation);
+        }
         const maxStretch = Math.max.apply(null, maxStretchArr);
         newPos =
           maxStretch > stretchBreakpoint
@@ -2308,8 +2298,6 @@ export {
   fitRanges,
   getResult,
   getFitPosition,
-  DEFAULT_OPTIMAL_FIT,
-  DEFAULT_OPTIMAL_STRETCH,
   fitLabelsAndColors,
   pinchedFits,
 };
