@@ -8,6 +8,7 @@ const DEFAULT_OPTIMAL_FIT = 1070;
 const DEFAULT_OPTIMAL_STRETCH = 5;
 
 let fitRecommendation;
+let optimalStretch = DEFAULT_OPTIMAL_STRETCH;
 
 const fitLabelsAndColors = [
   { label: "too_small", arrowColor: "#BB5555" },
@@ -2187,6 +2188,7 @@ const isStretching = (matchMap, effFitRecommendation) => {
       }
     });
     if (numOfImportantMeasurements === 1) {
+      optimalStretch = DEFAULT_OPTIMAL_STRETCH * 6;
       return true;
     }
   }
@@ -2238,7 +2240,7 @@ const getFitPosition = (value, matchMap) => {
           newPos = 60 + ((effTotalFit - 1000) / 55) * 10;
         }
       } else if (effTotalFit == 1000) {
-        let stretchBreakpoint = 2 * DEFAULT_OPTIMAL_STRETCH;
+        let stretchBreakpoint = 2 * optimalStretch;
         if (fitRecommendation < 1000) {
           stretchBreakpoint = 2 * (1000 - fitRecommendation);
         }
@@ -2259,7 +2261,7 @@ const getFitPosition = (value, matchMap) => {
       return Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
     } else if (effTotalFit == 1000) {
       // 20..40 slim: is stretching
-      const maxStretch = matchMap ? Math.max.apply(null, maxStretchArr) : DEFAULT_OPTIMAL_STRETCH;
+      const maxStretch = matchMap ? Math.max.apply(null, maxStretchArr) : optimalStretch;
       return Math.max(20, 40 - (maxStretch / 100) * 20);
     } else {
       // 40..100 regular, loose and big, create breakpoints
