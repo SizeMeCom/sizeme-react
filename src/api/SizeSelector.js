@@ -149,6 +149,7 @@ class SwatchesWoostifySelect extends AbstractSelect {
   constructor(element) {
     super(element, { event: "click", useCapture: true });
 
+    this.allowEmptySizeSelection = false;
     this.getSize = (e) => e.target.dataset.value;
 
     this.getSelectedSize = () => {
