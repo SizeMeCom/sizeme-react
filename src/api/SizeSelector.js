@@ -540,7 +540,9 @@ class SwatchesListButtonCGKit extends AbstractSelect {
     if (this.el) {
       const clone = this.el.cloneNode(true);
       const clearSelected = () => {
-        clone.querySelector("button.cgkit-swatch-selected").classList.remove("cgkit-swatch-selected");
+        clone
+          .querySelector("button.cgkit-swatch-selected")
+          .classList.remove("cgkit-swatch-selected");
       };
 
       const links = clone.querySelectorAll("button");
