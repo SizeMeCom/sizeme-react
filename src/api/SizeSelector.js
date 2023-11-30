@@ -497,6 +497,71 @@ class SwatchesListActive extends AbstractSelect {
   };
 }
 
+class SwatchesListButtonCGKit extends AbstractSelect {
+  constructor(element) {
+    super(element, { event: "click", useCapture: true });
+
+    this.allowEmptySizeSelection = false;
+    this.getSize = (e) => {
+      const selected = e.target.closest("button");
+      return selected?.dataset.attributeValue ?? "";
+    };
+
+    this.clearSelection = () => {
+      const selected = element.querySelector("button.cgkit-swatch-selected");
+      if (selected && selected.classList) {
+        selected.classList.remove("cgkit-swatch-selected");
+      }
+    };
+
+    const options = element.querySelectorAll("button");
+    const mkSelectFn = (option) => () => option.click();
+    for (let i = 0; i < options.length; i++) {
+      const option = options.item(i);
+      const sizeValue = option.dataset.attributeValue;
+      const textSpan = option.innerText;
+      if (textSpan) {
+        this.selectors[sizeValue] = mkSelectFn(option);
+        this.sizeMapper.push([sizeValue, textSpan.trim()]);
+      }
+    }
+
+    this.getSelectedSize = () => {
+      const selected = element.querySelector("button.cgkit-swatch-selected");
+      if (selected) {
+        return selected.dataset.attributeValue;
+      } else {
+        return "";
+      }
+    };
+  }
+
+  clone = () => {
+    if (this.el) {
+      const clone = this.el.cloneNode(true);
+      const clearSelected = () => {
+        clone
+          .querySelector("button.cgkit-swatch-selected")
+          .classList.remove("cgkit-swatch-selected");
+      };
+
+      const links = clone.querySelectorAll("button");
+      const mkEventListener = (link) => (e) => {
+        clearSelected();
+        link.classList.add("cgkit-swatch-selected");
+        this.setSelected(e.currentTarget.dataset.attributeValue);
+      };
+      for (let i = 0; i < links.length; i++) {
+        const link = links.item(i);
+        link.addEventListener("click", mkEventListener(link), true);
+      }
+      return clone;
+    } else {
+      return document.createElement("div");
+    }
+  };
+}
+
 const initSizeSelector = (selectSizeFn) => {
   selectSize = (size) => {
     selectSizeFn(size);
@@ -534,6 +599,10 @@ const initSizeSelector = (selectSizeFn) => {
 
     case "swatches-list-active":
       selector = getInstance(SwatchesListActive);
+      break;
+
+    case "swatches-list-button-cgkit":
+      selector = getInstance(SwatchesListButtonCGKit);
       break;
 
     default:
