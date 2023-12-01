@@ -501,7 +501,7 @@ class SwatchesListButtonCGKit extends AbstractSelect {
   constructor(element) {
     super(element, { event: "click", useCapture: true });
 
-    this.allowEmptySizeSelection = false;
+    this.allowEmptySizeSelection = true;
     this.getSize = (e) => {
       const selected = e.target.closest("button");
       return selected?.dataset.attributeValue ?? "";
@@ -515,7 +515,11 @@ class SwatchesListButtonCGKit extends AbstractSelect {
     };
 
     const options = element.querySelectorAll("button");
-    const mkSelectFn = (option) => () => option.click();
+    const mkSelectFn = (sizeItem) => () => {
+      if (!sizeItem.classList.contains("cgkit-swatch-selected")) {
+        sizeItem.click();
+      }
+    };
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
       const sizeValue = option.dataset.attributeValue;
