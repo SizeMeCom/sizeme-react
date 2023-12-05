@@ -573,7 +573,7 @@ class SwatchesListMFN extends AbstractSelect {
     this.allowEmptySizeSelection = false;
     this.getSize = (e) => {
       const selected = e.target.closest("li");
-      return selected?.querySelector('a').dataset.id ?? "";
+      return selected?.querySelector("a").dataset.id ?? "";
     };
 
     this.clearSelection = () => {
@@ -587,8 +587,8 @@ class SwatchesListMFN extends AbstractSelect {
     const mkSelectFn = (option) => () => option.click();
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
-      const sizeValue = option.querySelector('a').dataset.id;
-      const textSpan = option.querySelector('a').innerText;
+      const sizeValue = option.querySelector("a").dataset.id;
+      const textSpan = option.querySelector("a").innerText;
       if (textSpan) {
         this.selectors[sizeValue] = mkSelectFn(option);
         this.sizeMapper.push([sizeValue, textSpan.trim()]);
@@ -598,7 +598,7 @@ class SwatchesListMFN extends AbstractSelect {
     this.getSelectedSize = () => {
       const selected = element.querySelector("li.active");
       if (selected) {
-        return selected.querySelector('a').dataset.id;
+        return selected.querySelector("a").dataset.id;
       } else {
         return "";
       }
@@ -616,7 +616,7 @@ class SwatchesListMFN extends AbstractSelect {
       const mkEventListener = (link) => (e) => {
         clearSelected();
         link.classList.add("active");
-        this.setSelected(e.currentTarget.querySelector('a').dataset.id);
+        this.setSelected(e.currentTarget.querySelector("a").dataset.id);
       };
       for (let i = 0; i < links.length; i++) {
         const link = links.item(i);
