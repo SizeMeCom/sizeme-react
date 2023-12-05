@@ -584,7 +584,7 @@ class SwatchesListMFN extends AbstractSelect {
     };
 
     const options = element.querySelectorAll("li");
-    const mkSelectFn = (option) => () => option.click();
+    const mkSelectFn = (option) => () => option.querySelector("a").click();
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
       const sizeValue = option.querySelector("a").dataset.id;
