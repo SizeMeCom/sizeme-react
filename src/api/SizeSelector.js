@@ -566,6 +566,69 @@ class SwatchesListButtonCGKit extends AbstractSelect {
   };
 }
 
+class SwatchesListMFN extends AbstractSelect {
+  constructor(element) {
+    super(element, { event: "click", useCapture: true });
+
+    this.allowEmptySizeSelection = false;
+    this.getSize = (e) => {
+      const selected = e.target.closest("li");
+      return selected?.querySelector('a').dataset.id ?? "";
+    };
+
+    this.clearSelection = () => {
+      const selected = element.querySelector("li.active");
+      if (selected && selected.classList) {
+        selected.classList.remove("active");
+      }
+    };
+
+    const options = element.querySelectorAll("li");
+    const mkSelectFn = (option) => () => option.click();
+    for (let i = 0; i < options.length; i++) {
+      const option = options.item(i);
+      const sizeValue = option.querySelector('a').dataset.id;
+      const textSpan = option.querySelector('a').innerText;
+      if (textSpan) {
+        this.selectors[sizeValue] = mkSelectFn(option);
+        this.sizeMapper.push([sizeValue, textSpan.trim()]);
+      }
+    }
+
+    this.getSelectedSize = () => {
+      const selected = element.querySelector("li.active");
+      if (selected) {
+        return selected.querySelector('a').dataset.id;
+      } else {
+        return "";
+      }
+    };
+  }
+
+  clone = () => {
+    if (this.el) {
+      const clone = this.el.cloneNode(true);
+      const clearSelected = () => {
+        clone.querySelector("li.active").classList.remove("active");
+      };
+
+      const links = clone.querySelectorAll("li");
+      const mkEventListener = (link) => (e) => {
+        clearSelected();
+        link.classList.add("active");
+        this.setSelected(e.currentTarget.querySelector('a').dataset.id);
+      };
+      for (let i = 0; i < links.length; i++) {
+        const link = links.item(i);
+        link.addEventListener("click", mkEventListener(link), true);
+      }
+      return clone;
+    } else {
+      return document.createElement("div");
+    }
+  };
+}
+
 const initSizeSelector = (selectSizeFn) => {
   selectSize = (size) => {
     selectSizeFn(size);
@@ -607,6 +670,10 @@ const initSizeSelector = (selectSizeFn) => {
 
     case "swatches-list-button-cgkit":
       selector = getInstance(SwatchesListButtonCGKit);
+      break;
+
+    case "swatches-list-mfn":
+      selector = getInstance(SwatchesListMFN);
       break;
 
     default:
