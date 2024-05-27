@@ -1,0 +1,189 @@
+{
+  "common": {
+    "alreadyUser": "Oled juba SizeMe kasutaja?",
+    "closeText": "Sulge",
+    "selectedSize": "Valitud suurus",
+    "shoppingFor": "Ostmine",
+    "sizingBarSplashNoFit": "Sinu mõõtude põhjal suurust ei leitud",
+    "sizingBarSplashNoMeas": "Sisesta oma mõõtmed, et leida oma suurus",
+    "sizingBarSplashNoSize": "Vali suurus, et näha sobivust",
+    "sizingBarSplashMatch": "Soovitame sulle suurust <strong>{{- sizeName}}</strong>",
+    "sizingBarFitTooltip": "See näitab, kuidas suurus <strong>{{- selectedSize}}</strong> sulle sobib",
+    "sizingBarRecommendationTooltip": "Soovitame, et su suurus oleks lähedane sellele piirkonnale",
+    "togglerText": "Leia mu suurus",
+    "sizemeTooltip": "See toode toetab SizeMe'i, teenust, mis soovitab parimat sobivust, võrreldes sinu füüsilisi mõõtmeid selle toote mõõtudega.",
+    "sizemeTooltipLink": "Loe rohkem",
+    "sizeItself": "Suurus",
+    "cm_short": "cm",
+    "in_short": "tolli",
+    "defaultProfileName": "Minu profiil"
+  },
+  "detailed": {
+    "buttonText": "Üksikasjalik vaade sobivusest",
+    "tableTitle": "Üksikasjalik sobivus - kattuvused",
+    "windowTitle": "Üksikasjalik vaade"
+  },
+  "fitInfo": {
+    "isSmaller": "on <u>väiksem</u> kui sinu vastav mõõt {{value}}{{whenPinched}} võrra",
+    "noMatchItem": "on {{value}}. {{add}}",
+    "noOverlap": "on otse sinul ilma katteta.",
+    "overallFit": "Üldine sobivus",
+    "overlapsYou": "katab sulle",
+    "smConsidersFit": "SizeMe peab seda sobivust eriliseks",
+    "stretchedLittle": "Toode on veidi venitatud.",
+    "stretchedMax": "Toode on maksimaalselt venitatud.",
+    "stretchedMuch": "Toode on palju venitatud.",
+    "stretchedSomewhat": "Toode on venitatud.",
+    "tooltipDefaultText": "Toote {{measurement, lowercase}} mõõt ",
+    "whenPinched": " mõlemalt poolt"
+  },
+  "fitVerdict": {
+    "not_fitted": "Liiga väike",
+    "too_small": "Liiga väike",
+    "slim": "Õhuke",
+    "regular": "Tavaline",
+    "loose": "Lai",
+    "very_loose": "Väga lai",
+    "huge": "Hiiglaslik",
+    "too_big": "Liiga suur"
+  },
+  "fitVerdictLong": {
+    "not_fitted": "Liiga lühike",
+    "too_small": "Liiga lühike",
+    "slim": "Lühike",
+    "regular": "Tavaline",
+    "loose": "Pikk",
+    "very_loose": "Väga pikk",
+    "huge": "Hiiglaslik",
+    "too_big": "Liiga pikk"
+  },
+  "sizingBarRangeLabel": {
+    "too_small": "Liiga väike",
+    "slim": "Õhuke",
+    "regular": "Soovitatud",
+    "loose": "Lai",
+    "too_big": "Liiga suur"
+  },
+  "humanMeasurements": {
+    "chest": "Rind",
+    "shirtWaist": "Vöökoht",
+    "sleeve": "Käe pikkus",
+    "shoulderFull": "Õla laius",
+    "neckCircumference": "Kaela ümbermõõt",
+    "frontHeight": "Esi kõrgus",
+    "underbust": "All rinnal",
+    "pantWaist": "Pükste vöökoht",
+    "hips": "Puusad",
+    "inSeam": "Siseõmblus",
+    "outSeam": "Välisõmblus",
+    "thighCircumference": "Reie ümbermõõt",
+    "kneeCircumference": "Põlve ümbermõõt",
+    "ankleCircumference": "Pahkluu ümbermõõt",
+    "calfCircumference": "Sääre ümbermõõt",
+    "footLength": "Jala pikkus",
+    "footWidth": "Jala laius",
+    "headCircumference": "Pea ümbermõõt"
+  },
+  "measurement": {
+    "chest": "Rind",
+    "waist": "Vöökoht",
+    "sleeve": "Käis",
+    "sleeve_top_width": "Käise ülaosa",
+    "sleeve_top_opening": "Käise ülaosa avamine",
+    "wrist_width": "Randme ümbermõõt",
+    "underbust": "All rinnal",
+    "neck_opening_width": "Kaeluse ümbermõõt",
+    "shoulder_width": "Õla laius",
+    "front_height": "Esi kõrgus",
+    "pant_waist": "Pükste vöökoht",
+    "hips": "Puusad",
+    "inseam": "Siseõmblus",
+    "outseam": "Välisõmblus",
+    "thigh_width": "Reie laius",
+    "knee_width": "Põlve laius",
+    "calf_width": "Sääre laius",
+    "pant_sleeve_width": "Pükste sääreava",
+    "shoe_inside_length": "Jala pikkus",
+    "shoe_inside_width": "Jala laius",
+    "hat_width": "Mütsi ümbermõõt",
+    "hood_height": "Kapuutsi kõrgus",
+    "hem": "Äär",
+    "sleeve_opening": "Käise avamine"
+  },
+  "measurementGuide": {
+    "title": "Kuidas mõõta oma",
+    "chest": "Mõõda ümber keha käte all rindkere <b>kõige täidlasema osa</b> juures<span class='female'> olles rinnahoidjat kandes</span>.<br/><br/><b>Hinga täielikult välja</b> selle mõõtmise ajal.",
+    "front_height": "Mõõda alla kaela kohtumiskohast õlaga otse alla vöökohale (kust tavaliselt hoia pükse).",
+    "sleeve": "Mõõda õlast (kus tavaliselt on särgi õmblus) alla randmeni (täpselt raadiusluu lõpuni). Hoia käsi sirgena ja allapoole suunatuna mõõtes.",
+    "pant_waist": "Mõõda ümber keha sellest kohast, kust tavaliselt hoia pükse, umbes 6 cm allpool naba kõrgust.<br/><br/><b.Tõmba kõht sisse</b>, nagu prooviksid jalga panna kitsaid pükse.",
+    "waist": "Mõõda ümber keha umbes 3 cm kõrgusel nabast.<br/><br/><b.Tõmba kõht sisse</b> mõõtmise ajal.",
+    "outseam": "Mõõda jala välisküljelt alates vöökoha ülemisest osast (kust tavaliselt hoia pükse) kuni pahkluuni (täpselt lateraalsele malleoolile).",
+    "shoe_inside_length": "Pane mõõdulint seinale lähedale ja seisa paljajalu lindi peal.",
+    "calf_width": "Mõõda sääre laiemast kohast ümber.",
+    "hat_width": "Mõõda pea suurimat ümbermõõtu otse kõrvade kohal.",
+    "hips": "Mõõda ümber keha laiemast kohast puusade juures.",
+    "neck_opening_width": "Mõõda kaela ümber võimalikult madalal. Hoidke mõõdet pingul."
+  },
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "Vajuta",
+      "link": "siia",
+      "end": "juhendi jaoks"
+    },
+    "chest": ["Ümber keha käte all kõige täidlasema rindkereosa juures", "Hinga täielikult välja"],
+    "front_height": ["Koht, kus kael kohtub õlaga, otse alla vöökohale"],
+    "sleeve": ["Õlast alla randmeni", "Hoia käsi sirge ja allapoole suunatuna"],
+    "pant_waist": [
+      "Ümber keha kohast, kust tavaliselt hoia pükse",
+      "Tõmba kõht sisse nagu prooviksid jalga panna kitsaid pükse"
+    ],
+    "waist": ["Ümber keha kõrgemal kui nabakõrgusel", "Tõmba kõht veidi sisse"],
+    "hips": ["Ümber keha laiemast kohast puusade juures"],
+    "outseam": [
+      "Jala välisküljelt alates vöökoha ülemisest osast",
+      "Mõõda pahkluu luuni"
+    ],
+    "shoe_inside_length": [
+      "Pane mõõdulint seinale lähedale ja seisa paljajalu lindi peal"
+    ],
+    "calf_width": ["Mõõda sääre laiemast kohast ümber"],
+    "hat_width": ["Mõõda pea suurimat ümbermõõtu otse kõrvade kohal"],
+    "neck_opening_width": ["Mõõda kaela ümber võimalikult madalal", "Hoidke mõõdet pingul"]
+  },
+  "message": {
+    "addProfiles": "Lisa oma kontole profiilid suuruse soovitamiseks.",
+    "missingMeasurements": "Lisa rohkem mõõtmeid oma profiilile suurema täpsuse saavutamiseks",
+    "noMeasurements": "Lisa oma profiilile mõõtmed, et saada suuruse soovitus.",
+    "addThisMeasurement": "Lisa see mõõtmine oma profiilile, et see sobivust arvutamisel arvesse võetakse.",
+    "noProfiles": "Sinu kontol pole profiile.",
+    "noTopButton": "Selle suuruse jaoks ei saa särk ülemist nööpi kinni."
+  },
+  "signupBox": {
+    "duplicateUser": "Selle e-posti aadressiga konto on juba olemas. Proovi sisse logida?",
+    "emailPlaceholder": "minunimi@naide.ee",
+    "message": "Salvesta oma mõõtmed, et me mäletaksime sind järgmisel korral",
+    "save": "Okei",
+    "signupPrompt": "Salvesta e-posti aadressiga",
+    "signupChoices": "Registreeri või logi sisse",
+    "tooltipPolicyLink": "Privaatsuspoliitika",
+    "signupDone": "Sinu mõõtmed on salvestatud! Sa peaksid peagi saama kinnitusmeili SizeMe'ilt."
+  },
+  "sizeGuide": {
+    "advertisement": "Seda suurusjuhendit pakub SizeMe",
+    "buttonText": "Suurusjuhend",
+    "measurementDisclaimer": "Need mõõtmised on tehtud <u>toote väliskülje sirgel</u>.",
+    "measurementDisclaimerCollar": "Välja arvatud kaeluse mõõtmine, mis on tehtud kaeluse seest.",
+    "measurementDisclaimerInside": "Need mõõtmised on tehtud <u>toote sees</u>.",
+    "tableTitle": "Tegelikud tootemõõdud",
+    "windowTitle": "Suurusjuhend tootele"
+  },
+  "splash": {
+    "btnLogInLabel": "Logi sisse",
+    "btnLogInTitle": "Mul on juba konto",
+    "btnNoThanksLabel": "Ei, aitäh",
+    "btnNoThanksTitle": "Võib-olla hiljem",
+    "btnSignUpLabel": "Registreeri",
+    "btnSignUpTitle": "Jah, soovin luua tasuta konto",
+    "detailedText": "Võta paar <b>oma mõõtmisi</b> ja saa isikupärastatud teavet selle kohta, kuidas see ese <b>sulle sobib</b>. Loo tasuta <b>SizeMe</b> profiil ja lõpeta oletamine!"
+  }
+}
