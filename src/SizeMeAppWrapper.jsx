@@ -81,7 +81,7 @@ class SizeMeAppWrapper extends React.Component {
           {uiOptions.toggler && (
             <SizemeToggler sizemeHidden={sizemeHidden} setSizemeHidden={setSizemeHidden} />
           )}
-          {!sizemeHidden && <SizeMeApp />}
+          <SizeMeApp sizemeHidden={sizemeHidden} />
         </>
       );
     } else {

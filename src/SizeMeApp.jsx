@@ -74,15 +74,39 @@ class SizeMeApp extends React.Component {
       productInfo,
       onSignup,
       signupStatus,
+      sizemeHidden,
       t,
     } = this.props;
     const { match, state } = matchState;
     const itemTypeClass = "sizeme-item-" + productInfo.product.item.itemType.replace(/\./g, "_");
 
+	if (sizemeHidden) {
+		if (resolved && !uiOptions.disableSizeGuide && uiOptions.outsideSizeGuide) {
+			return (
+			  <SizeGuide
+				unit={this.state.unit}
+				chooseUnit={this.chooseUnit}
+				inchFractionsPrecision={this.inchFractionsPrecision}
+				unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
+			  />
+			);
+		} else {
+			return null;
+		}
+	}
+
     return (
       <div
         className={`sizeme-content ${this.shopType} ${this.skinClasses} ${state} ${itemTypeClass}`}
       >
+        {resolved && !uiOptions.disableSizeGuide && uiOptions.outsideSizeGuide && (
+          <SizeGuide
+            unit={this.state.unit}
+            chooseUnit={this.chooseUnit}
+            inchFractionsPrecision={this.inchFractionsPrecision}
+            unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
+          />
+        )}
         <div className="sizeme-slider-row">
           <SizingBar />
           {loggedIn && (
@@ -121,7 +145,7 @@ class SizeMeApp extends React.Component {
             unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
           />
         )}
-        {resolved && !uiOptions.disableSizeGuide && (
+        {resolved && !uiOptions.disableSizeGuide && !uiOptions.outsideSizeGuide && (
           <SizeGuide
             unit={this.state.unit}
             chooseUnit={this.chooseUnit}
@@ -153,6 +177,7 @@ SizeMeApp.propTypes = {
   chooseUnit: PropTypes.func,
   unit: PropTypes.string,
   inchFractionsPrecision: PropTypes.number,
+  sizemeHidden: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

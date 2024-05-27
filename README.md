@@ -43,6 +43,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [appendContentTo] (_String_): DOM element where SizeMe is injected.
   - [invokeElement] (_String_): DOM element that handles size changes
   - [disableSizeGuide] (_Boolean_): disable size guide
+  - [outsideSizeGuide] (_Boolean_): write size guide outside (somewhat) sizeme-content.  Can be used together with toggler for a sticky size guide option.
   - [sizeSelectorType] (_String_): type of the size selector used in the shop. Possible values at the moment: "default" (default, doh) and "swatches"
   - [addToCartElement] (_String_): DOM element to listen to for add-to-cart events
   - [addToCartEvent] (_String_): DOM event for add-to-cart
