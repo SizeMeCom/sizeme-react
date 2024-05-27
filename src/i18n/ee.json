@@ -139,13 +139,8 @@
     ],
     "waist": ["Ümber keha kõrgemal kui nabakõrgusel", "Tõmba kõht veidi sisse"],
     "hips": ["Ümber keha laiemast kohast puusade juures"],
-    "outseam": [
-      "Jala välisküljelt alates vöökoha ülemisest osast",
-      "Mõõda pahkluu luuni"
-    ],
-    "shoe_inside_length": [
-      "Pane mõõdulint seinale lähedale ja seisa paljajalu lindi peal"
-    ],
+    "outseam": ["Jala välisküljelt alates vöökoha ülemisest osast", "Mõõda pahkluu luuni"],
+    "shoe_inside_length": ["Pane mõõdulint seinale lähedale ja seisa paljajalu lindi peal"],
     "calf_width": ["Mõõda sääre laiemast kohast ümber"],
     "hat_width": ["Mõõda pea suurimat ümbermõõtu otse kõrvade kohal"],
     "neck_opening_width": ["Mõõda kaela ümber võimalikult madalal", "Hoidke mõõdet pingul"]

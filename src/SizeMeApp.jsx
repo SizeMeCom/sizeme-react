@@ -80,20 +80,20 @@ class SizeMeApp extends React.Component {
     const { match, state } = matchState;
     const itemTypeClass = "sizeme-item-" + productInfo.product.item.itemType.replace(/\./g, "_");
 
-	if (sizemeHidden) {
-		if (resolved && !uiOptions.disableSizeGuide && uiOptions.outsideSizeGuide) {
-			return (
-			  <SizeGuide
-				unit={this.state.unit}
-				chooseUnit={this.chooseUnit}
-				inchFractionsPrecision={this.inchFractionsPrecision}
-				unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
-			  />
-			);
-		} else {
-			return null;
-		}
-	}
+    if (sizemeHidden) {
+      if (resolved && !uiOptions.disableSizeGuide && uiOptions.outsideSizeGuide) {
+        return (
+          <SizeGuide
+            unit={this.state.unit}
+            chooseUnit={this.chooseUnit}
+            inchFractionsPrecision={this.inchFractionsPrecision}
+            unitChoiceDisallowed={this.measurementUnitChoiceDisallowed}
+          />
+        );
+      } else {
+        return null;
+      }
+    }
 
     return (
       <div
