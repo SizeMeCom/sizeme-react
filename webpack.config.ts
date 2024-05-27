@@ -17,9 +17,15 @@ const PATHS = {
 };
 
 const devServer: DevServerConfiguration = {
+  https: true,
   hot: true,
   port: 8080,
   static: PATHS.testSites,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*"
+  }
 };
 
 const devConfig: Configuration = {
