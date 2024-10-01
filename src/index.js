@@ -10,7 +10,7 @@
   let sizemeDisabled = false;
 
   if (sizemeOptions.serviceStatus === "ab") {
-    const abTesting = await import("./ab-testing");
+    const { default: abTesting } = await import("./ab-testing");
     sizemeDisabled = abTesting();
   }
 
