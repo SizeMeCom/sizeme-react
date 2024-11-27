@@ -32,6 +32,9 @@
       &.chest:hover {
         transform: scale(3) translate(26%, 3%);
       }
+      &.underbust:hover {
+        transform: scale(3) translate(26%, -7%);
+      }
       &.frontHeight:hover {
         transform: scale(1.7) translate(25%, -15%);
       }
@@ -87,6 +90,15 @@
       &.chest .arrowsOutside {
         marker-start: url(#triangleOutsideChest);
         marker-end: url(#triangleOutsideChest);
+      }
+
+      &.underbust .arrowsInside {
+        marker-start: url(#triangleInsideUnderbust);
+        marker-end: url(#triangleInsideUnderbust);
+      }
+      &.underbust .arrowsOutside {
+        marker-start: url(#triangleOutsideUnderbust);
+        marker-end: url(#triangleOutsideUnderbust);
       }
 
       &.frontHeight .arrowsInside {

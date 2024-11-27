@@ -645,7 +645,7 @@ function init(itemTypeArr) {
           }); // open collar area
           break;
         case 6: // open low round
-          itemDrawing.coords.push({ X: 0, Y: 180 }, { X: 164, Y: 0 });
+          itemDrawing.coords.push({ X: 0, Y: 180 }, { X: 114, Y: 130 }, { X: 164, Y: 0 });
           itemDrawing.accents.push({
             type: "line",
             coords: [
@@ -656,8 +656,8 @@ function init(itemTypeArr) {
           itemDrawing.accents.push({
             type: "area",
             coords: [
-              { X: 0, Y: 47 },
-              { X: 164, Y: 0, cp1X: 55, cp1Y: 45, cp2X: 130, cp2Y: 23 },
+              { X: 0, Y: 117 },
+              { X: 164, Y: 0, cp1X: 55, cp1Y: 115, cp2X: 130, cp2Y: 103 },
               {
                 X: 0,
                 Y: 180,
@@ -822,6 +822,33 @@ function init(itemTypeArr) {
         itemTypeArr[3] // sleeve length
       ) {
         case 0: // tank top, string top or poncho
+          itemDrawing.coords.push({ X: 199, Y: 10 });
+          itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 170, cp1Y: 124, cp2X: 220, cp2Y: 389 });
+          arrows.shoulder_width = {
+            mirror: false,
+            coords: [
+              { X: -299, Y: 32 },
+              { X: -164, Y: -7 },
+            ],
+            style: "line",
+            lift: true,
+          };
+          arrows.sleeve_top_width = {
+            mirror: false,
+            coords: [
+              { X: 250, Y: 399 },
+              { X: 289, Y: 34 },
+            ],
+            lift: false,
+          };
+
+          if (itemTypeArr[4] !== 0) {
+            // is it you, poncho?
+            itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 328, cp1Y: 44, cp2X: 250, cp2Y: 260 });
+            fitOrder.splice(13, 1); // remove sleeve top
+            arrows.sleeve_top_width = false;
+          }
+          break;        
         case 1: // very short (vest)
           itemDrawing.coords.push({ X: 289, Y: 34 });
           itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 285, cp1Y: 44, cp2X: 220, cp2Y: 389 });
@@ -1229,6 +1256,7 @@ function init(itemTypeArr) {
       }
 
       if (itemTypeArr[0] === 1) {
+        let $baseY = 0;        
         switch (
           itemTypeArr[5] // waistband height
         ) {
@@ -1256,20 +1284,25 @@ function init(itemTypeArr) {
               midCircle: { X: 480, Y: 444 },
             };
             break;
+          case 1: // underbust
           case 2: // waist
+            $baseY = 778;
+            if (itemTypeArr[5] === 1) {
+              $baseY = 578;
+            }
             if (itemTypeArr[6] === 1) {
               // elastic
               itemDrawing.coords.push(
                 {
                   X: 250,
-                  Y: 708,
+                  Y: $baseY - 70,
                   cp1X: 247,
                   cp1Y: 402,
                   cp2X: 247,
-                  cp2Y: 658,
+                  cp2Y: $baseY - 120,
                 },
-                { X: 230, Y: 778 },
-                { X: 0, Y: 778 }
+                { X: 230, Y: $baseY },
+                { X: 0, Y: $baseY }
               );
               // eslint-disable-next-line
               for (let $i = 0; $i < 15; $i++) {
@@ -1277,16 +1310,16 @@ function init(itemTypeArr) {
                 itemDrawing.accents.push({
                   type: "line",
                   coords: [
-                    { X: $x, Y: 718 },
-                    { X: $x, Y: 778 },
+                    { X: $x, Y: $baseY - 60 },
+                    { X: $x, Y: $baseY },
                   ],
                 });
               }
               arrows.waist = {
                 mirror: false,
                 coords: [
-                  { X: -250, Y: 708 },
-                  { X: 250, Y: 708 },
+                  { X: -250, Y: $baseY - 70 },
+                  { X: 250, Y: $baseY - 70 },
                 ],
                 lift: false,
               };
@@ -1296,26 +1329,26 @@ function init(itemTypeArr) {
               itemDrawing.coords.push(
                 {
                   X: 250,
-                  Y: 778,
+                  Y: $baseY,
                   cp1X: 245,
                   cp1Y: 402,
                   cp2X: 245,
-                  cp2Y: 728,
+                  cp2Y: $baseY - 50,
                 },
-                { X: 0, Y: 778 }
+                { X: 0, Y: $baseY }
               );
               arrows.waist = {
                 mirror: false,
                 coords: [
-                  { X: -250, Y: 778 },
-                  { X: 250, Y: 778 },
+                  { X: -250, Y: $baseY },
+                  { X: 250, Y: $baseY },
                 ],
                 lift: false,
               };
               arrows.pant_waist = arrows.waist; // in case of slight mis-tablization
               arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
             }
-            arrows.front_height.coords[1].Y = 778;
+            arrows.front_height.coords[1].Y = $baseY;
             break;
           case 3: // pant waist
             if (itemTypeArr[6] === 1) {
@@ -1380,7 +1413,7 @@ function init(itemTypeArr) {
           case 5: // half-way-thigh
           /* falls through */
           default: {
-            let $baseY = 978;
+            $baseY = 978;
             if (itemTypeArr[5] > 4) {
               $baseY = 978 + (itemTypeArr[5] - 4) * 160;
             }

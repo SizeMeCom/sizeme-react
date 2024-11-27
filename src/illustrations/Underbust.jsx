@@ -16,7 +16,7 @@ const Underbust = (props) => {
     >
       <defs>
         <marker
-          id="triangleInsideChest"
+          id="triangleInsideUnderbust"
           viewBox="0 0 10 10"
           refX="9"
           refY="5"
@@ -28,7 +28,7 @@ const Underbust = (props) => {
           <path className="noStroke" d="M 0 0 L 10 5 L 0 10 z" />
         </marker>
         <marker
-          id="triangleOutsideChest"
+          id="triangleOutsideUnderbust"
           viewBox="0 0 10 10"
           refX="1"
           refY="5"
@@ -135,8 +135,8 @@ const Underbust = (props) => {
       <path
         className={`measurementLine noFill ${arrowPositions}`}
         d={`
-                M ${202 - widthPlus},220
-                L 204, 220`}
+                M ${202 - widthPlus},205
+                L 204, 205`}
       />
     </svg>
   );
