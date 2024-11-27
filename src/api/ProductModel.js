@@ -1432,12 +1432,14 @@ function init(itemTypeArr) {
       } else {
         // overalls
         // top/bottom combinations
-        itemDrawing.coords.push({ X: 280, Y: 2200 });
-        itemDrawing.coords.push({ X: 160, Y: 2210 });
+
+        const $l = parseInt(itemTypeArr[5]); // sleeve length in overalls
+        itemDrawing.coords.push({ X: 280, Y: 900 + ($l * 200) });
+        itemDrawing.coords.push({ X: 160, Y: 910 + ($l * 200) });
         itemDrawing.coords.push({ X: 20, Y: 1200 });
         itemDrawing.coords.push({ X: 0, Y: 1200 });
 
-        if (itemTypeArr[0] === 6 && itemTypeArr[4] === 1) {
+        if (itemTypeArr[0] === 6 && itemTypeArr[4] === 1) { // top and bottom, elastic top sleeve
           // eslint-disable-next-line
           for (let $i = 0; $i < 15; $i++) {
             const $x = Math.round(($i + 0.5) * (250 / 15));
@@ -1450,7 +1452,7 @@ function init(itemTypeArr) {
             });
           }
         }
-        if (itemTypeArr[0] === 6) {
+        if (itemTypeArr[0] === 6) { // top and bottom
           itemDrawing.accents.push({
             type: "line",
             coords: [
@@ -1459,13 +1461,13 @@ function init(itemTypeArr) {
             ],
           });
         }
-        if (itemTypeArr[6] === 1) {
+        if (itemTypeArr[6] === 1) {   // elastic bottom sleeve
           for (let $i = 0; $i < 7; $i++) {
             itemDrawing.accents.push({
               type: "line",
               coords: [
-                { X: Math.round(164 + $i * 17), Y: Math.round(2150 - $i * 2) },
-                { X: Math.round(170 + $i * 16), Y: Math.round(2210 - $i * 2) },
+                { X: Math.round(164 + $i * 17), Y: Math.round(850 + ($l * 200) - $i * 2) },
+                { X: Math.round(170 + $i * 16), Y: Math.round(910 + ($l * 200) - $i * 2) },
               ],
             });
           }
@@ -1490,7 +1492,7 @@ function init(itemTypeArr) {
           mirror: false,
           coords: [
             { X: 255, Y: 978 },
-            { X: 280, Y: 2200 },
+            { X: 280, Y: 900 + ($l * 200) },
           ],
           style: "line",
           lift: true,
@@ -1523,8 +1525,8 @@ function init(itemTypeArr) {
         arrows.pant_sleeve_width = {
           mirror: false,
           coords: [
-            { X: -278, Y: 2140 },
-            { X: -160, Y: 2150 },
+            { X: -278, Y: 840 + ($l * 200) },
+            { X: -160, Y: 860 + ($l * 200) },
           ],
           lift: false,
         };
