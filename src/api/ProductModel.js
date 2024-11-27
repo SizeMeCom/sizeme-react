@@ -151,7 +151,7 @@ function getEssentialMeasurements(itemTypeArr, meas) {
         if (isInMeas(meas, "underbust")) {
           arr.push("underbust");
         }
-      }      
+      }
       break;
 
     case 2:
@@ -268,7 +268,7 @@ function init(itemTypeArr) {
       { X: 250, Y: 499 },
     ],
     lift: false,
-  };  
+  };
   arrows.waist = {
     mirror: false,
     coords: [
@@ -848,7 +848,7 @@ function init(itemTypeArr) {
             fitOrder.splice(13, 1); // remove sleeve top
             arrows.sleeve_top_width = false;
           }
-          break;        
+          break;
         case 1: // very short (vest)
           itemDrawing.coords.push({ X: 289, Y: 34 });
           itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 285, cp1Y: 44, cp2X: 220, cp2Y: 389 });
@@ -1256,7 +1256,7 @@ function init(itemTypeArr) {
       }
 
       if (itemTypeArr[0] === 1) {
-        let $baseY = 0;        
+        let $baseY = 0;
         switch (
           itemTypeArr[5] // waistband height
         ) {
@@ -1481,12 +1481,13 @@ function init(itemTypeArr) {
         // top/bottom combinations
 
         const $l = parseInt(itemTypeArr[5]); // sleeve length in overalls
-        itemDrawing.coords.push({ X: 280, Y: 900 + ($l * 200) });
-        itemDrawing.coords.push({ X: 160, Y: 910 + ($l * 200) });
+        itemDrawing.coords.push({ X: 280, Y: 900 + $l * 200 });
+        itemDrawing.coords.push({ X: 160, Y: 910 + $l * 200 });
         itemDrawing.coords.push({ X: 20, Y: 1200 });
         itemDrawing.coords.push({ X: 0, Y: 1200 });
 
-        if (itemTypeArr[0] === 6 && itemTypeArr[4] === 1) { // top and bottom, elastic top sleeve
+        if (itemTypeArr[0] === 6 && itemTypeArr[4] === 1) {
+          // top and bottom, elastic top sleeve
           // eslint-disable-next-line
           for (let $i = 0; $i < 15; $i++) {
             const $x = Math.round(($i + 0.5) * (250 / 15));
@@ -1499,7 +1500,8 @@ function init(itemTypeArr) {
             });
           }
         }
-        if (itemTypeArr[0] === 6) { // top and bottom
+        if (itemTypeArr[0] === 6) {
+          // top and bottom
           itemDrawing.accents.push({
             type: "line",
             coords: [
@@ -1508,13 +1510,14 @@ function init(itemTypeArr) {
             ],
           });
         }
-        if (itemTypeArr[6] === 1) {   // elastic bottom sleeve
+        if (itemTypeArr[6] === 1) {
+          // elastic bottom sleeve
           for (let $i = 0; $i < 7; $i++) {
             itemDrawing.accents.push({
               type: "line",
               coords: [
-                { X: Math.round(164 + $i * 17), Y: Math.round(850 + ($l * 200) - $i * 2) },
-                { X: Math.round(170 + $i * 16), Y: Math.round(910 + ($l * 200) - $i * 2) },
+                { X: Math.round(164 + $i * 17), Y: Math.round(850 + $l * 200 - $i * 2) },
+                { X: Math.round(170 + $i * 16), Y: Math.round(910 + $l * 200 - $i * 2) },
               ],
             });
           }
@@ -1539,7 +1542,7 @@ function init(itemTypeArr) {
           mirror: false,
           coords: [
             { X: 255, Y: 978 },
-            { X: 280, Y: 900 + ($l * 200) },
+            { X: 280, Y: 900 + $l * 200 },
           ],
           style: "line",
           lift: true,
@@ -1572,8 +1575,8 @@ function init(itemTypeArr) {
         arrows.pant_sleeve_width = {
           mirror: false,
           coords: [
-            { X: -278, Y: 840 + ($l * 200) },
-            { X: -160, Y: 860 + ($l * 200) },
+            { X: -278, Y: 840 + $l * 200 },
+            { X: -160, Y: 860 + $l * 200 },
           ],
           lift: false,
         };
