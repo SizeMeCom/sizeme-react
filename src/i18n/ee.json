@@ -113,6 +113,7 @@
   "measurementGuide": {
     "title": "Kuidas mõõta oma",
     "chest": "Mõõda ümber keha käte all rindkere <b>kõige täidlasema osa</b> juures<span class='female'> olles rinnahoidjat kandes</span>.<br/><br/><b>Hinga täielikult välja</b> selle mõõtmise ajal.",
+    "underbust": "Mõõda ümber keha <b>ümber rinna alt</b>.<br/><br/><b>Hinga täielikult välja</b> selle mõõtmise ajal.",
     "front_height": "Mõõda alla kaela kohtumiskohast õlaga otse alla vöökohale (kust tavaliselt hoia pükse).",
     "sleeve": "Mõõda õlast (kus tavaliselt on särgi õmblus) alla randmeni (täpselt raadiusluu lõpuni). Hoia käsi sirgena ja allapoole suunatuna mõõtes.",
     "pant_waist": "Mõõda ümber keha sellest kohast, kust tavaliselt hoia pükse, umbes 6 cm allpool naba kõrgust.<br/><br/><b.Tõmba kõht sisse</b>, nagu prooviksid jalga panna kitsaid pükse.",
@@ -131,6 +132,7 @@
       "end": "juhendi jaoks"
     },
     "chest": ["Ümber keha käte all kõige täidlasema rindkereosa juures", "Hinga täielikult välja"],
+    "underbust": ["Ümber keha, kohe rinna all", "Hinga täielikult välja"],
     "front_height": ["Koht, kus kael kohtub õlaga, otse alla vöökohale"],
     "sleeve": ["Õlast alla randmeni", "Hoia käsi sirge ja allapoole suunatuna"],
     "pant_waist": [

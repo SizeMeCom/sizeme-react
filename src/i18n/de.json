@@ -113,6 +113,7 @@
   "measurementGuide": {
     "title": "So messen Sie Ihre",
     "chest": "Miss unterhalb der Achseln an <b>der stärksten Stelle</b> der Brust<span class='female'>, während du einen BH trägst</span>.<br/><br/><b>Atme während</b> der Messung vollständig aus.",
+    "underbust": "Miss unterhalb der Achseln knapp <b>unterhalb der Brust</b>.<br/><br/><b>Atme während</b> der Messung vollständig aus.",
     "front_height": "Miss von der Stelle, an der dein Nacken in deine Schulter übergeht, direkt nach unten bis zum Hosenbund (wo er normalerweise bei dir sitzt).",
     "sleeve": "Miss von der Schulter aus (da, wo normalerweise der Ärmel deines Hemdes ansetzt) bis zum inneren Handgelenk (bis zum Ende des Speichenknochens). Halte deinen Arm beim Messen gerade und zeige mit der Hand nach unten.",
     "pant_waist": "Miss waagerecht um deinen Körper herum, an der Stelle, an der normalerweise dein Hosenbund sitzt, etwa 6 cm unterhalb des Bauchnabels.<br/><br/><b>Zieh dabei deinen Bauch ein,</b> als würdest du eine enge Hose anziehen.",
@@ -134,6 +135,7 @@
       "Waagerecht um deinen Körper unterhalb der Achseln an der stärksten Stelle deines Oberkörpers",
       "Atme vollständig aus"
     ],
+    "underbust": ["Um Ihren Körper, direkt unter Ihrer Brust", "Atme vollständig aus"],
     "front_height": [
       "von der Stelle, an der dein Nacken in deine Schulter übergeht, direkt nach unten bis zum Hosenbund"
     ],

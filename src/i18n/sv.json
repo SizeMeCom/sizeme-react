@@ -113,6 +113,7 @@
   "measurementGuide": {
     "title": "Hur man mäter din",
     "chest": "Mät runt din kropp under armarna vid <b>fullaste delen</b> av bröstet<span class='female'> medan du bär bh</span>.<br/><br/><b>Andas ut helt</b> medan du gör denna mätning.",
+    "underbust": "Mät runt din kropp precis <b>under din byst</b>.<br/><br/><b>Andas ut helt</b> medan du gör denna mätning.",
     "front_height": "Mät ner från där din nacke möter din axel direkt ner till ditt midjeband (där du normalt har byxorna).",
     "sleeve": "Mät från din axel (där din skjortans axelsöm vanligtvis är) ner till din handled (till slutet av radiebenet för att vara exakt). Håll armen rak och peka nedåt medan du mäter.",
     "pant_waist": "Mät runt din kropp från där du normalt har byxorna, cirka 6 cm ner från navelhöjden.<br/><br/><b>Dra magen in</b> som om du passar på ett par passform byxor.",
@@ -131,6 +132,7 @@
       "end": "för guide"
     },
     "chest": ["Runt din kropp under dina armar på den största delen av bröstet", "Andas ut helt"],
+    "underbust": ["Runt din kropp precis under bysten", "Andas ut helt"],
     "front_height": ["Från där din nacke möter din axel direkt ner till ditt midjeband"],
     "sleeve": ["Från axeln ner till handleden", "Håll armen rak och peka nedåt"],
     "pant_waist": [

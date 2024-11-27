@@ -113,6 +113,7 @@
   "measurementGuide": {
     "title": "How to measure your",
     "chest": "Measure around your body under your arms at <b>fullest part</b> of chest<span class='female'> while wearing bra</span>.<br/><br/><b>Breathe out fully</b> while taking this measurement.",
+    "underbust": "Measure around your body at just <b>under your bust</b>.<br/><br/><b>Breathe out fully</b> while taking this measurement.",
     "front_height": "Measure down from where your neck meets your shoulder directly down to your waistband (where you normally keep your pants).",
     "sleeve": "Measure from your shoulder (where your shirt's seam usually is) down to your wrist (to the end of the radius bone to be exact). Keep your arm straight and pointing down while measuring.",
     "pant_waist": "Measure around your body from where you normally keep your pants, about 6 cm down from belly-button height.<br/><br/><b>Pull your stomach in</b> like you are fitting on a pair of tight pants.",
@@ -131,6 +132,7 @@
       "end": "for guide"
     },
     "chest": ["Around your body under your arms at fullest part of chest", "Breathe out fully"],
+    "underbust": ["Around your body just under your bust", "Breathe out fully"],
     "front_height": ["From where your neck meets your shoulder directly down to your waistband"],
     "sleeve": ["From your shoulder down to your wrist", "Keep your arm straight and pointing down"],
     "pant_waist": [

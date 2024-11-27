@@ -6,6 +6,7 @@ import ReactTooltip from "react-tooltip";
 import ProductModel from "../api/ProductModel";
 
 import Chest from "./Chest";
+import Underbust from "./Underbust";
 import FrontHeight from "./FrontHeight";
 import Hips from "./Hips";
 import Outseam from "./Outseam";
@@ -27,6 +28,8 @@ const illustration = (measurement, overlap, model) => {
       return <FrontHeight overlap={overlap} />;
     case "chest":
       return <Chest overlap={overlap} />;
+    case "underbust":
+      return <Underbust overlap={overlap} />;
     case "pantWaist":
       return <PantWaist overlap={overlap} />;
     case "hips":

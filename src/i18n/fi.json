@@ -113,6 +113,7 @@
   "measurementGuide": {
     "title": "Näin mittaat:",
     "chest": "Mittaa rintakehän ympärysmitta kainaloiden alta <b>leveimmästä kohdasta</b> <span class='female'> rintaliivit yllä</span>.<br/><br/><b>Hengitä ulos</b> mittaushetkellä.",
+    "underbust": "Mittaa rintakehän ympärysmitta <b>rintojen alapuolelta</b>.<br/><br/><b>Hengitä ulos</b> mittaushetkellä.",
     "front_height": "Mittaa kohdasta, jossa kaula kohtaa hartian suoraan alas housujen yläreunaan.",
     "sleeve": "Mittaa olalta (hartiasaumasta) suoraan alas ranteeseen (värttinäluun päähän). Pidä käsi suorana alaspäin mittauksen aikana.",
     "pant_waist": "Mittaa ympärysmitta <b>housujen yläreunan</b> kohdalta.<br/><br/><b>Vedä vatsaa vähän sisään</b> kuten sovittaisit tiukkoja housuja.",
@@ -131,6 +132,7 @@
       "end": ""
     },
     "chest": ["Mittaa rintakehän ympärysmitta leveimmästä kohdasta", "Hengitä ulos mitattaessa"],
+    "underbust": ["Mittaa ympärysmitta rintojen alapuolelta", "Hengitä ulos mitattaessa"],
     "front_height": [
       "Mittaa kohdasta, jossa kaula kohtaa hartian suoraan alas housujen yläreunaan"
     ],

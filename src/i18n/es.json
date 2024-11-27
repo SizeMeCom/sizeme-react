@@ -113,6 +113,7 @@
   "measurementGuide": {
     "title": "Cómo medir tu",
     "chest": "Mide alrededor de tu cuerpo debajo de tus brazos en la <b>parte más completa</b> del pecho<span class='female'> mientras usas un sujetador</span>.<br/><br/><b>Exhala completamente</b> mientras tomas esta medida.",
+    "underbust": "Mide alrededor de tu cuerpo justo <b>debajo de tu busto</b>.<br/><br/><b>Exhala completamente</b> mientras tomas esta medida.",
     "front_height": "Mide desde donde se encuentra tu cuello con tus hombros directamente hacia abajo hasta tu cintura (donde normalmente llevas tu pantalón).",
     "sleeve": "Mide desde tu hombro (donde generalmente está la costura de tu camisa) hasta tu muñeca (hasta el hueso del radio para ser exactos). Mantén el brazo recto y apuntando hacia abajo mientras mides.",
     "pant_waist": "Mide alrededor de tu cuerpo desde donde normalmente llevas tu pantalón, aproximadamente a 6 cm por debajo de la altura del ombligo.<br/><br/><b>Contrae el abdomen</b> como si estuvieras probando un pantalón ajustado.",
@@ -134,6 +135,7 @@
       "Alrededor de tu cuerpo debajo de tus brazos en la parte más completa del pecho",
       "Exhala completamente"
     ],
+    "underbust": ["Alrededor de tu cuerpo justo debajo de tu busto", "Exhala completamente"],
     "front_height": [
       "Desde donde se encuentra tu cuello con tus hombros directamente hacia abajo hasta tu cintura"
     ],

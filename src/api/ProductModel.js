@@ -42,8 +42,8 @@ const superRange = new FitRange("too_big", fitRanges.slice(-1).end, null, "#BB55
 
 const pinchedFits = [
   "chest",
-  "waist",
   "underbust",
+  "waist",
   "pant_waist",
   "hips",
   "thigh_width",
@@ -60,8 +60,8 @@ const longFits = ["inseam", "outseam", "sleeve", "front_height"];
 
 const fitOrder = [
   "chest",
-  "waist",
   "underbust",
+  "waist",
   "pant_waist",
   "hips",
   "inseam",
@@ -86,6 +86,7 @@ const fitOrder = [
 const humanMeasurementMap = new Map([
   ["sleeve", "sleeve"],
   ["chest", "chest"],
+  ["underbust", "underbust"],
   ["waist", "shirtWaist"],
   ["neck_opening_width", "neckCircumference"],
   ["front_height", "frontHeight"],
@@ -146,6 +147,11 @@ function getEssentialMeasurements(itemTypeArr, meas) {
           arr.push("neck_opening_width");
         }
       }
+      if (arr.length < 3) {
+        if (isInMeas(meas, "underbust")) {
+          arr.push("underbust");
+        }
+      }      
       break;
 
     case 2:
@@ -255,6 +261,14 @@ function init(itemTypeArr) {
     ],
     lift: false,
   };
+  arrows.underbust = {
+    mirror: false,
+    coords: [
+      { X: -250, Y: 499 },
+      { X: 250, Y: 499 },
+    ],
+    lift: false,
+  };  
   arrows.waist = {
     mirror: false,
     coords: [
