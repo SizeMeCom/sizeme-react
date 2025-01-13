@@ -1261,7 +1261,7 @@ function init(itemTypeArr) {
           // if shoulder type indicates that there's nothing above chest meas, start from str
           itemDrawing.coords = [];
           itemDrawing.accents = [];
-          itemDrawing.coords.push({ X: 0, Y: 370});
+          itemDrawing.coords.push({ X: 0, Y: 370 });
           itemDrawing.coords.push({ X: 245, Y: 370, cp1X: 100, cp1Y: 355, cp2X: 145, cp2Y: 355 });
           break;
         case 5:
@@ -1269,7 +1269,7 @@ function init(itemTypeArr) {
           // has strap
           itemDrawing.coords = [];
           itemDrawing.accents = [];
-          itemDrawing.coords.push({ X: 0, Y: 361});
+          itemDrawing.coords.push({ X: 0, Y: 361 });
           itemDrawing.coords.push({ X: 132, Y: 297, cp1X: 30, cp1Y: 350, cp2X: 40, cp2Y: 320 });
           itemDrawing.coords.push({ X: 120, Y: 61, cp1X: 150, cp1Y: 180, cp2X: 150, cp2Y: 105 });
           itemDrawing.coords.push({ X: 75, Y: 320, cp1X: 80, cp1Y: 143, cp2X: 75, cp2Y: 320 });
@@ -1286,9 +1286,9 @@ function init(itemTypeArr) {
               { X: 56, Y: 326 },
               { X: 115, Y: 52, cp1X: 75, cp1Y: 180, cp2X: 77, cp2Y: 88 },
             ],
-          });          
+          });
           break;
-      }      
+      }
 
       if (itemTypeArr[0] === 1) {
         let $baseY = 0;
@@ -1328,7 +1328,7 @@ function init(itemTypeArr) {
                 { X: 250, Y: $baseY },
               ],
               lift: false,
-            };            
+            };
             if (itemTypeArr[6] === 1) {
               // elastic
               itemDrawing.coords.push(
@@ -1361,7 +1361,7 @@ function init(itemTypeArr) {
                   { X: 250, Y: $baseY - 30 },
                 ],
                 lift: false,
-              };                
+              };
               arrows.waist = [];
               arrows.pant_waist = arrows.waist; // in case of slight mis-tablization
               arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
@@ -1375,7 +1375,7 @@ function init(itemTypeArr) {
               arrows.hips = arrows.pant_waist; // in case of slight mis-tablization
             }
             arrows.front_height.coords[1].Y = $baseY;
-            break;          
+            break;
           case 2: // waist
             $baseY = 778;
             if (itemTypeArr[6] === 1) {
@@ -1617,7 +1617,7 @@ function init(itemTypeArr) {
             { X: 262, Y: 689 },
           ],
           lift: false,
-        };        
+        };
         arrows.pant_waist = {
           mirror: false,
           coords: [
