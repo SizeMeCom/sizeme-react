@@ -1290,6 +1290,41 @@ function init(itemTypeArr) {
           break;
       }
 
+      // completely separate handling for two shoulder types
+      switch (itemTypeArr[2]) {
+        case 4:
+          // if shoulder type indicates that there's nothing above chest meas, start from str
+          itemDrawing.coords = [];
+          itemDrawing.accents = [];
+          itemDrawing.coords.push({ X: 0, Y: 370});
+          itemDrawing.coords.push({ X: 245, Y: 370, cp1X: 100, cp1Y: 355, cp2X: 145, cp2Y: 355 });
+          break;
+        case 5:
+          // if shoulder type indicates that there's nothing above chest meas, start from str
+          // has strap
+          itemDrawing.coords = [];
+          itemDrawing.accents = [];
+          itemDrawing.coords.push({ X: 0, Y: 361});
+          itemDrawing.coords.push({ X: 132, Y: 297, cp1X: 30, cp1Y: 350, cp2X: 40, cp2Y: 320 });
+          itemDrawing.coords.push({ X: 120, Y: 61, cp1X: 150, cp1Y: 180, cp2X: 150, cp2Y: 105 });
+          itemDrawing.coords.push({ X: 75, Y: 320, cp1X: 80, cp1Y: 143, cp2X: 75, cp2Y: 320 });
+          itemDrawing.coords.push({ X: 56, Y: 333 });
+          itemDrawing.coords.push({ X: 118, Y: 50, cp1X: 72, cp1Y: 200, cp2X: 77, cp2Y: 88 });
+          itemDrawing.coords.push({ X: 245, Y: 340, cp1X: 175, cp1Y: 84, cp2X: 128, cp2Y: 183 });
+          // strap shadow
+          itemDrawing.accents.push({
+            type: "area",
+            coords: [
+              { X: 115, Y: 52 },
+              { X: 120, Y: 61 },
+              { X: 75, Y: 315, cp1X: 80, cp1Y: 143, cp2X: 75, cp2Y: 320 },
+              { X: 56, Y: 326 },
+              { X: 115, Y: 52, cp1X: 75, cp1Y: 180, cp2X: 77, cp2Y: 88 },
+            ],
+          });          
+          break;
+      }      
+
       if (itemTypeArr[0] === 1) {
         let $baseY = 0;
         switch (
