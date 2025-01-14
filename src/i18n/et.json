@@ -40,7 +40,7 @@
   "fitVerdict": {
     "not_fitted": "Liiga väike",
     "too_small": "Liiga väike",
-    "slim": "Õhuke",
+    "slim": "Kitsas",
     "regular": "Tavaline",
     "loose": "Lai",
     "very_loose": "Väga lai",
@@ -59,7 +59,7 @@
   },
   "sizingBarRangeLabel": {
     "too_small": "Liiga väike",
-    "slim": "Õhuke",
+    "slim": "Kitsas",
     "regular": "Soovitatud",
     "loose": "Lai",
     "too_big": "Liiga suur"
