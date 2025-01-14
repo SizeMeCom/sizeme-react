@@ -6,10 +6,10 @@ import sv from "./i18n/sv.json";
 import ar from "./i18n/ar.json";
 import de from "./i18n/de.json";
 import es from "./i18n/es.json";
-import ee from "./i18n/ee.json";
+import et from "./i18n/et.json";
 
 void i18n.init({
-  lng: uiOptions.lang || document.documentElement.lang || "en",
+  lng: (uiOptions.lang || document.documentElement.lang || "en").split("-")[0],
   fallbackLng: "en",
   debug: false,
   resources: {
@@ -31,8 +31,8 @@ void i18n.init({
     es: {
       translation: es,
     },
-    ee: {
-      translation: ee,
+    et: {
+      translation: et,
     },
   },
 });
@@ -42,7 +42,7 @@ i18n.services.formatter.add("capitalize", (value) => value.replace(/^(.)/, "\\u$
 
 const additionalTranslations = window.sizeme_options?.additionalTranslations;
 if (additionalTranslations) {
-  ["en", "fi", "sv", "ar", "de"].forEach((lng) => {
+  ["en", "fi", "sv", "ar", "de", "es", "et"].forEach((lng) => {
     if (additionalTranslations[lng]) {
       i18n.addResourceBundle(lng, "translation", additionalTranslations[lng], true, true);
     }
