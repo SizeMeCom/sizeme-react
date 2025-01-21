@@ -40,9 +40,9 @@
   "fitVerdict": {
     "not_fitted": "Liiga väike",
     "too_small": "Liiga väike",
-    "slim": "Kitsas",
+    "slim": "Pingul",
     "regular": "Tavaline",
-    "loose": "Lai",
+    "loose": "Avar",
     "very_loose": "Väga lai",
     "huge": "Hiiglaslik",
     "too_big": "Liiga suur"
@@ -158,7 +158,7 @@
   "signupBox": {
     "duplicateUser": "Selle e-posti aadressiga konto on juba olemas. Proovi sisse logida?",
     "emailPlaceholder": "minunimi@naide.ee",
-    "message": "Salvesta oma mõõtmed, et me mäletaksime sind järgmisel korral",
+    "message": "Salvesta oma mõõdud, et mäletaksime sind ka järgmisel korral",
     "save": "Okei",
     "signupPrompt": "Salvesta e-posti aadressiga",
     "signupChoices": "Registreeri või logi sisse",
@@ -168,7 +168,7 @@
   "sizeGuide": {
     "advertisement": "Seda suurusjuhendit pakub SizeMe",
     "buttonText": "Suurusjuhend",
-    "measurementDisclaimer": "Need mõõtmised on tehtud <u>toote väliskülje sirgel</u>.",
+    "measurementDisclaimer": "Mõõdud on võetud pinnale laotatud tootest väljaspoolt.",
     "measurementDisclaimerCollar": "Välja arvatud kaeluse mõõtmine, mis on tehtud kaeluse seest.",
     "measurementDisclaimerInside": "Need mõõtmised on tehtud <u>toote sees</u>.",
     "tableTitle": "Tegelikud tootemõõdud",
@@ -181,6 +181,6 @@
     "btnNoThanksTitle": "Võib-olla hiljem",
     "btnSignUpLabel": "Registreeri",
     "btnSignUpTitle": "Jah, soovin luua tasuta konto",
-    "detailedText": "Võta paar <b>oma mõõtmisi</b> ja saa isikupärastatud teavet selle kohta, kuidas see ese <b>sulle sobib</b>. Loo tasuta <b>SizeMe</b> profiil ja lõpeta oletamine!"
+    "detailedText": "Võta endalt <b>vaid mõned mõõdud</b> ning saa personaliseeritud infot <b>toote istuvuse kohta</b>. Loo tasuta <b>SizeMe profiil</b> ning lõpeta oletamine!"
   }
 }
