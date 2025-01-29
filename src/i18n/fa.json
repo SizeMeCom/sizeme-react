@@ -4,17 +4,17 @@
     "closeText": "بستن",
     "selectedSize": "اندازه انتخاب شده",
     "shoppingFor": "خرید برای",
-    "sizingBarSplashNoFit": "هیچ اندازه ای بر اساس اندازه گیری شما پیدا نشد",
+    "sizingBarSplashNoFit": "هیچ سایزی برای اندازه شما پیدا نشد",
     "sizingBarSplashNoMeas": "برای پیدا کردن سایز، اندازه های خود را وارد کنید",
     "sizingBarSplashNoSize": "سایز مناسبی برای اندازه هایی شما پیدا نشد",
     "sizingBarSplashMatch": "ما سایز را توصیه می کنیم <strong>{{- sizeName}}</strong> برای شما",
     "sizingBarFitTooltip": "<strong>{{- selectedSize}}</strong> این نشان می دهد که سایز شما چقدر مناسب است",
-    "sizingBarRecommendationTooltip": "توصیه می کنیم سایز شما نزدیک به این ناحیه باشد",
+    "sizingBarRecommendationTooltip": "سایز نزدیک به این ناحیه مناسب شما است",
     "togglerText": "سایز من را پیدا کن",
     "sizemeTooltip": "این محصول از SizeMe پشتیبانی می‌کند، سرویسی که با مقایسه اندازه‌های فیزیکی شما با اندازه‌های این محصول، بمناسب ترین سایز را پیشنهاد می‌کند.",
     "sizemeTooltipLink": "ادامه مطلب",
     "sizeItself": "اندازه",
-    "cm_short": "سانتی متر",
+    "cm_short": "CM",
     "in_short": "در",
     "defaultProfileName": "پروفایل من"
   },
@@ -24,28 +24,28 @@
     "windowTitle": "تصویر تفصیلی برای"
   },
   "fitInfo": {
-    "isSmaller": "<u>کوچکتر</u> از اندازه های مناسب شما {{value}}{{whenPinched}} است",
+    "isSmaller": "{{value}}{{whenPinched}} کوچکتر از اندازه شما است",
     "noMatchItem": "است {{value}}. {{add}}",
     "noOverlap": "کاملاً سایز شما است",
     "overallFit": "اندازه کلی",
-    "overlapsYou": "بزرگتر از سایز شما",
+    "overlapsYou": "از سایز شما بزرگتر است",
     "smConsidersFit": "SizeMe این سایز را مناسب می داند",
     "stretchedLittle": "این لباس کمی کش آمده است",
     "stretchedMax": "این لباس تا حداکثر کش آمده است",
     "stretchedMuch": "این لباس خیلی کش آمده است",
     "stretchedSomewhat": "این لباس کش آمده است",
-    "tooltipDefaultText": "این لباس {{measurement, lowercase}} اندازه گیری شده",
-    "whenPinched": " از هر دو طرف"
+    "tooltipDefaultText": "اندازه {{measurement, lowercase}}، ",
+    "whenPinched": " از هر طرف است"
   },
   "fitVerdict": {
-    "not_fitted": "خیلی کوچکتر از سایز شما",
-    "too_small": "خیلی کوچک است",
-    "slim": "باریک (Slim)",
+    "not_fitted": "از سایز شما کوچک تر است",
+    "too_small": "کوچک",
+    "slim": "جذب (Slim)",
     "regular": "معمولی (Regular)",
     "loose": "آزاد",
     "very_loose": "خیلی آزاد",
-    "huge": "خیلی بزرگ",
-    "too_big": "بزرگتر از سایز شما"
+    "huge": "بزرگ",
+    "too_big": "از سایز شما بزرگتر است"
   },
   "fitVerdictLong": {
     "not_fitted": "کوتاه تر از اندازه شما",
@@ -59,18 +59,18 @@
   },
   "sizingBarRangeLabel": {
     "too_small": "خیلی کوچک است",
-    "slim": "باریک",
+    "slim": "جذب",
     "regular": "این سایز توصیه می شود",
     "loose": "آزاد",
     "too_big": "بزرگ"
   },
   "humanMeasurements": {
-    "chest": "قفسه سینه",
-    "shirtWaist": "کمر",
+    "chest": "دور قفسه سینه",
+    "shirtWaist": "دور کمر",
     "sleeve": "طول بازو",
     "shoulderFull": "عرض شانه",
     "neckCircumference": "دور گردن",
-    "frontHeight": "ارتفاع جلو",
+    "frontHeight": "بالا تنه",
     "underbust": "زیر سینه",
     "pantWaist": "کمر شلوار",
     "hips": "باسن",
@@ -85,8 +85,8 @@
     "headCircumference": "دور سر"
   },
   "measurement": {
-    "chest": "قفسه سینه",
-    "waist": "کمر",
+    "chest": "دور قفسه سینه",
+    "waist": "دور کمر",
     "sleeve": "آستین",
     "sleeve_top_width": "حلقه آستین",
     "sleeve_top_opening": "حلقه آستین باز",
@@ -94,7 +94,7 @@
     "underbust": "زیر سینه",
     "neck_opening_width": "یقه",
     "shoulder_width": "شانه",
-    "front_height": "ارتفاع جلو",
+    "front_height": "بالا تنه",
     "pant_waist": "کمر شلوار",
     "hips": "باسن",
     "inseam": "درز خارجی",
@@ -107,7 +107,7 @@
     "shoe_inside_width": "عرض کفش",
     "hat_width": "دور کلاه",
     "hood_height": "ارتفاع کلاه",
-    "hem": "سجاف",
+    "hem": "دور سجاف",
     "sleeve_opening": "دور آستین"
   },
   "measurementGuide": {
@@ -192,6 +192,6 @@
     "btnNoThanksTitle": "شاید بعداً",
     "btnSignUpLabel": "ثبت نام کنید",
     "btnSignUpTitle": "بله، من می خواهم یک حساب کاربری رایگان ایجاد کنم",
-    "detailedText": "چند بار <b>اندازه های خودتان را بگیرید</b> و اطلاعات سایز خود را بدست آورید <b>تا ببینید لباس سایز شما است یا خیر</b>.\nیک پروفایل در SizeMe بسازید و دیگر درباره سایزتان حدس و گمان نزنید!"
+    "detailedText": "چند بار <b>اندازه های خودتان را بگیرید</b> و اطلاعات سایز خود را بدست آورید. \nیک پروفایل جدید بسازید و دیگر درباره سایزتان حدس و گمان نزنید!"
   }
 }
