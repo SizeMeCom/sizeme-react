@@ -196,11 +196,16 @@ function getEssentialMeasurements(itemTypeArr, meas) {
       }
       if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1 && isInMeas(meas, "sleeve")) {
         arr.push("sleeve");
+        if (isInMeas(meas, "hips")) {
+          arr.push("hips");
+        }
       }
-      if (isInMeas(meas, "waist")) {
-        arr.push("waist");
-      } else if (isInMeas(meas, "pant_waist")) {
-        arr.push("pant_waist");
+      if (arr.length < 3) {
+        if (isInMeas(meas, "waist")) {
+          arr.push("waist");
+        } else if (isInMeas(meas, "pant_waist")) {
+          arr.push("pant_waist");
+        }
       }
       if (arr.length < 3) {
         if (isInMeas(meas, "hips")) {
