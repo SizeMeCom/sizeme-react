@@ -868,7 +868,6 @@ function init(itemTypeArr) {
             ],
             lift: false,
           };
-
           if (itemTypeArr[4] !== 0) {
             // is it you, poncho?
             itemDrawing.coords.push({ X: 250, Y: 399, cp1X: 328, cp1Y: 44, cp2X: 250, cp2Y: 260 });
@@ -902,6 +901,25 @@ function init(itemTypeArr) {
           switch (
             itemTypeArr[2] // shoulder types
           ) {
+            case 6: // dropped variation (drawing same, but measurement line different)
+              itemDrawing.accents.push({
+                type: "line",
+                coords: [
+                  { X: 250, Y: 399 },
+                  { X: 381, Y: 184 },
+                ],
+              });
+              arrows.sleeve = {
+                mirror: false,
+                coords: [
+                  { X: 381, Y: 184 },
+                  { X: 482, Y: 460 },
+                ],
+                style: "line",
+                lift: true,
+                midCircle: { X: 432, Y: 322 },
+              };
+              break;
             case 3: // dropped
               itemDrawing.accents.push({
                 type: "line",
@@ -1002,6 +1020,25 @@ function init(itemTypeArr) {
           switch (
             itemTypeArr[2] // shoulder types
           ) {
+            case 6: // dropped (different measurement line)
+              itemDrawing.accents.push({
+                type: "line",
+                coords: [
+                  { X: 250, Y: 399 },
+                  { X: 369, Y: 196 },
+                ],
+              });
+              arrows.sleeve = {
+                mirror: false,
+                coords: [
+                  { X: 329, Y: 27 },
+                  { X: 527, Y: 719 },
+                ],
+                style: "line",
+                lift: true,
+                midCircle: { X: 450, Y: 444 },
+              };
+              break;
             case 3: // dropped
               itemDrawing.accents.push({
                 type: "line",
@@ -1178,6 +1215,25 @@ function init(itemTypeArr) {
           switch (
             itemTypeArr[2] // shoulder types
           ) {
+            case 6: // dropped (variation)
+              itemDrawing.accents.push({
+                type: "line",
+                coords: [
+                  { X: 250, Y: 399 },
+                  { X: 369, Y: 196 },
+                ],
+              });
+              arrows.sleeve = {
+                mirror: false,
+                coords: [
+                  { X: 369, Y: 196 },
+                  { X: 571, Y: 978 },
+                ],
+                style: "line",
+                lift: true,
+                midCircle: { X: 470, Y: 587 },
+              };
+              break;
             case 3: // dropped
               itemDrawing.accents.push({
                 type: "line",
