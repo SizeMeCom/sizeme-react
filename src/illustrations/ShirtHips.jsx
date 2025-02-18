@@ -11,7 +11,7 @@ const ShirtHips = (props) => {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className="shirtHips"
-      viewBox="158 290 237.5 210"
+      viewBox="128 290 262.5 210"
       preserveAspectRatio="xMidYMin meet"
     >
       <defs>
