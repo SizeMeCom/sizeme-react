@@ -367,7 +367,7 @@ function writeItemCanvas(canvas, options) {
         },
         measurementArrows[measurement]
       );
-      if (value > 0 && arrow) {
+      if (value > 0 && arrow && arrow.coords) {
         c.strokeStyle = c.fillStyle = arrow.color;
         plotArrow(c, arrow, {
           scale,
