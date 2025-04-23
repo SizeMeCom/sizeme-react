@@ -6,6 +6,7 @@
     "shoppingFor": "Ostmine",
     "sizingBarSplashNoFit": "Sinu mõõtude põhjal suurust ei leitud",
     "sizingBarSplashNoMeas": "Sisesta oma mõõtmed, et leida oma suurus",
+    "sizingBarSplashMoreMeas": "Sisesta rohkem mõõtmeid, et leida oma suurus",
     "sizingBarSplashNoSize": "Vali suurus, et näha sobivust",
     "sizingBarSplashMatch": "Soovitame sulle suurust <strong>{{- sizeName}}</strong>",
     "sizingBarFitTooltip": "See näitab, kuidas suurus <strong>{{- selectedSize}}</strong> sulle sobib",

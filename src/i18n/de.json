@@ -6,6 +6,7 @@
     "shoppingFor": "Du suchst",
     "sizingBarSplashNoFit": "Zu deinen Maßangaben wurde keine Größe gefunden",
     "sizingBarSplashNoMeas": "Gib deine Maße ein, um deine Größe zu finden",
+    "sizingBarSplashMoreMeas": "Gib mehr Maße ein, um deine Größe zu finden",
     "sizingBarSplashNoSize": "Wähle eine Größe, um zu sehen, wie sie dir passt",
     "sizingBarSplashMatch": "Wir empfehlen dir die Größe <strong>{{- sizeName}}</strong>",
     "sizingBarFitTooltip": "Hier wird angezeigt, wie dir die Größe <strong>{{- selectedSize}}</strong> passen wird",

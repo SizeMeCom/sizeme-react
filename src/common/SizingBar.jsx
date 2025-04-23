@@ -153,6 +153,8 @@ class SizingBar extends React.Component {
       }
     } else if (state === "no-meas") {
       placeholderText = t("common.sizingBarSplashNoMeas");
+    } else if (state === "more-meas") {
+      placeholderText = t("common.sizingBarSplashMoreMeas");
     } else if (state === "no-fit") {
       placeholderText = t("common.sizingBarSplashNoFit");
     } else if (state === "no-size") {

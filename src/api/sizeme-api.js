@@ -432,6 +432,9 @@ function match(doSelectBestFit = true) {
 
     const token = getState().authToken.token;
     const useProfile = token && !profile.dirty;
+    const requiredMeasurements = product.model.requiredMeasurements.map((v) =>
+      humanMeasurementMap.get(v)
+    );
     let subject;
     if (useProfile) {
       subject = profile.id;
@@ -448,32 +451,40 @@ function match(doSelectBestFit = true) {
     }
 
     if (subject) {
-      const fitRequest = new FitRequest(subject, product.SKU || product.item);
+      if (
+        requiredMeasurements.length > 0 &&
+        !Object.keys(subject).some((key) => requiredMeasurements.includes(key))
+      ) {
+        dispatch(actions.resetMatch());
+        dispatch(actions.setMatchState({ match: null, state: "more-meas" }));
+      } else {
+        const fitRequest = new FitRequest(subject, product.SKU || product.item);
 
-      dispatch(actions.requestMatch());
+        dispatch(actions.requestMatch());
 
-      try {
-        const matchResult = await doMatch(fitRequest, token, useProfile);
+        try {
+          const matchResult = await doMatch(fitRequest, token, useProfile);
 
-        let result = matchResult;
-        if (product.SKU) {
-          const skuMap = product.skuMap;
-          result = Object.assign(
-            {},
-            ...Object.entries(matchResult)
-              .filter(([sku]) => skuMap.has(sku))
-              .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
-          );
+          let result = matchResult;
+          if (product.SKU) {
+            const skuMap = product.skuMap;
+            result = Object.assign(
+              {},
+              ...Object.entries(matchResult)
+                .filter(([sku]) => skuMap.has(sku))
+                .map(([sku, res]) => ({ [skuMap.get(sku)]: res }))
+            );
+          }
+          const fitResults = Object.entries(result);
+          const recommendedFit = getRecommendedFit(fitResults, product.item.fitRecommendation);
+          dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
+
+          if (doSelectBestFit) {
+            dispatch(selectSize(recommendedFit, true));
+          }
+        } catch (reason) {
+          dispatch(actions.receiveMatch(reason));
         }
-        const fitResults = Object.entries(result);
-        const recommendedFit = getRecommendedFit(fitResults, product.item.fitRecommendation);
-        dispatch(actions.receiveMatch(Object.assign(result, { recommendedFit })));
-
-        if (doSelectBestFit) {
-          dispatch(selectSize(recommendedFit, true));
-        }
-      } catch (reason) {
-        dispatch(actions.receiveMatch(reason));
       }
     } else {
       dispatch(actions.resetMatch());

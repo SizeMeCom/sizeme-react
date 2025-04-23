@@ -6,6 +6,7 @@
     "shoppingFor": "Shoppa för",
     "sizingBarSplashNoFit": "Ingen storlek hittades baserat på din mätning",
     "sizingBarSplashNoMeas": "Ange dina mått för att hitta din storlek",
+    "sizingBarSplashMoreMeas": "Ange fler mått för att hitta din storlek",
     "sizingBarSplashNoSize": "Välj en storlek för att se din fit",
     "sizingBarSplashMatch": "Vi valde storlek <strong>{{- sizeName}}</strong> för dig",
     "sizingBarFitTooltip": "Detta indikerar hur storleken <strong>{{- selectedSize}}</strong> passar dig",

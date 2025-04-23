@@ -116,136 +116,147 @@ function isInMeas(meas, thisMeas) {
 }
 
 function getEssentialMeasurements(itemTypeArr, meas) {
-  const arr = [];
+  // returns essentials and required measurements for the item type
+  const essentials = [];
+  const required = [];
   switch (itemTypeArr[0]) {
     case 1:
       if (isInMeas(meas, "chest")) {
-        arr.push("chest");
+        essentials.push("chest");
+        required.push("chest");
       }
       if (itemTypeArr[5] >= 4 && itemTypeArr[6] !== 3 && itemTypeArr[6] !== 6) {
         if (isInMeas(meas, "hips")) {
-          arr.push("hips");
+          essentials.push("hips");
         }
       }
       if (itemTypeArr[3] === 6 && itemTypeArr[2] === 1) {
         if (isInMeas(meas, "sleeve")) {
-          arr.push("sleeve");
+          essentials.push("sleeve");
         }
       }
-      if (arr.length < 3 && itemTypeArr[5] >= 3) {
+      if (essentials.length < 3 && itemTypeArr[5] >= 3) {
         if (isInMeas(meas, "waist")) {
-          arr.splice(1, 0, "waist"); // stick this sucker in the second slot
+          essentials.splice(1, 0, "waist"); // stick this sucker in the second slot
+          required.push("waist");
         }
       }
-      if (arr.length < 3 && itemTypeArr[5] === 3) {
+      if (essentials.length < 3 && itemTypeArr[5] === 3) {
         if (isInMeas(meas, "front_height")) {
-          arr.push("front_height");
+          essentials.push("front_height");
         }
       }
-      if (arr.length < 3 && itemTypeArr[1] === 2) {
+      if (essentials.length < 3 && itemTypeArr[1] === 2) {
         if (isInMeas(meas, "neck_opening_width")) {
-          arr.push("neck_opening_width");
+          essentials.push("neck_opening_width");
         }
       }
-      if (arr.length < 3) {
+      if (essentials.length < 3) {
         if (isInMeas(meas, "underbust")) {
-          arr.push("underbust");
+          essentials.push("underbust");
+          required.push("underbust");
         }
       }
       break;
 
     case 2:
       if (isInMeas(meas, "pant_waist")) {
-        arr.push("pant_waist");
+        essentials.push("pant_waist");
       }
       if (isInMeas(meas, "hips")) {
-        arr.push("hips");
+        essentials.push("hips");
+        required.push("hips");
       }
       if (itemTypeArr[3] >= 6) {
         if (isInMeas(meas, "outseam")) {
-          arr.push("outseam");
+          essentials.push("outseam");
         }
       }
       break;
 
     case 3:
       if (isInMeas(meas, "shoe_inside_length")) {
-        arr.push("shoe_inside_length");
+        essentials.push("shoe_inside_length");
+        required.push("shoe_inside_length");
       }
       if (itemTypeArr[3] > 6) {
         if (isInMeas(meas, "calf_width")) {
-          arr.push("calf_width");
+          essentials.push("calf_width");
         }
       }
       if (itemTypeArr[3] > 7) {
         if (isInMeas(meas, "knee_width")) {
-          arr.push("knee_width");
+          essentials.push("knee_width");
         }
       }
       break;
 
     case 4:
       if (isInMeas(meas, "hat_width")) {
-        arr.push("hat_width");
+        essentials.push("hat_width");
+        required.push("hat_width");
       }
       break;
 
     case 5:
       if (isInMeas(meas, "chest")) {
-        arr.push("chest");
+        essentials.push("chest");
+        required.push("chest");
       }
       if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1 && isInMeas(meas, "sleeve")) {
-        arr.push("sleeve");
+        essentials.push("sleeve");
         if (isInMeas(meas, "hips")) {
-          arr.push("hips");
+          essentials.push("hips");
         }
       }
-      if (arr.length < 3) {
+      if (essentials.length < 3) {
         if (isInMeas(meas, "waist")) {
-          arr.push("waist");
+          essentials.push("waist");
+          required.push("waist");
         } else if (isInMeas(meas, "pant_waist")) {
-          arr.push("pant_waist");
+          essentials.push("pant_waist");
         }
       }
-      if (arr.length < 3) {
+      if (essentials.length < 3) {
         if (isInMeas(meas, "hips")) {
-          arr.push("hips");
+          essentials.push("hips");
         }
       }
       break;
 
     case 6:
       if (isInMeas(meas, "chest")) {
-        arr.push("chest");
+        essentials.push("chest");
+        required.push("chest");
       }
       if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1) {
         if (isInMeas(meas, "sleeve")) {
-          arr.push("sleeve");
+          essentials.push("sleeve");
         }
       } else {
         if (isInMeas(meas, "front_height")) {
-          arr.push("front_height");
+          essentials.push("front_height");
         }
       }
       if (itemTypeArr[5] >= 6) {
         if (isInMeas(meas, "outseam")) {
-          arr.push("outseam");
+          essentials.push("outseam");
         }
       }
-      if (arr.length < 3) {
+      if (essentials.length < 3) {
         if (isInMeas(meas, "pant_waist")) {
-          arr.push("pant_waist");
+          essentials.push("pant_waist");
         }
       }
-      if (arr.length < 3) {
+      if (essentials.length < 3) {
         if (isInMeas(meas, "hips")) {
-          arr.push("hips");
+          essentials.push("hips");
         }
       }
       break;
   }
 
-  return arr;
+  return { essentials, required };
 }
 
 function init(itemTypeArr) {
@@ -2332,7 +2343,9 @@ export default class ProductModel {
     }
     this.arrows = arrows;
     this.itemDrawing = itemDrawing;
-    this.essentialMeasurements = getEssentialMeasurements(itemTypeArr, item.measurements);
+    const { essentials, required } = getEssentialMeasurements(itemTypeArr, item.measurements);
+    this.essentialMeasurements = essentials;
+    this.requiredMeasurements = required;
     this.pinchedFits = pinchedFits;
 
     this.getItemTypeComponent = (index) => itemTypeArr[index];
