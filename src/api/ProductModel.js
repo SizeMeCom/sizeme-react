@@ -203,23 +203,20 @@ function getEssentialMeasurements(itemTypeArr, meas) {
         essentials.push("chest");
         required.push("chest");
       }
-      if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1 && isInMeas(meas, "sleeve")) {
+      if (itemTypeArr[3] === 6 && itemTypeArr[2] === 1 && isInMeas(meas, "sleeve")) {
         essentials.push("sleeve");
+      }
+      if (essentials.length < 3) {
         if (isInMeas(meas, "hips")) {
           essentials.push("hips");
         }
       }
       if (essentials.length < 3) {
         if (isInMeas(meas, "waist")) {
-          essentials.push("waist");
+          essentials.splice(1, 0, "waist"); // stick this sucker in the second slot
           required.push("waist");
         } else if (isInMeas(meas, "pant_waist")) {
           essentials.push("pant_waist");
-        }
-      }
-      if (essentials.length < 3) {
-        if (isInMeas(meas, "hips")) {
-          essentials.push("hips");
         }
       }
       break;
@@ -229,29 +226,25 @@ function getEssentialMeasurements(itemTypeArr, meas) {
         essentials.push("chest");
         required.push("chest");
       }
-      if (itemTypeArr[3] >= 6 && itemTypeArr[2] === 1) {
-        if (isInMeas(meas, "sleeve")) {
-          essentials.push("sleeve");
-        }
-      } else {
-        if (isInMeas(meas, "front_height")) {
-          essentials.push("front_height");
-        }
+      if (isInMeas(meas, "pant_waist")) {
+        essentials.push("pant_waist");
       }
-      if (itemTypeArr[5] >= 6) {
-        if (isInMeas(meas, "outseam")) {
-          essentials.push("outseam");
-        }
+      if (isInMeas(meas, "hips")) {
+        essentials.push("hips");
       }
-      if (essentials.length < 3) {
-        if (isInMeas(meas, "pant_waist")) {
-          essentials.push("pant_waist");
-        }
+      if (
+        essentials.length < 3 &&
+        itemTypeArr[3] === 6 &&
+        itemTypeArr[2] === 1 &&
+        isInMeas(meas, "sleeve")
+      ) {
+        essentials.push("sleeve");
       }
-      if (essentials.length < 3) {
-        if (isInMeas(meas, "hips")) {
-          essentials.push("hips");
-        }
+      if (essentials.length < 3 && isInMeas(meas, "front_height")) {
+        essentials.push("front_height");
+      }
+      if (essentials.length < 3 && itemTypeArr[5] >= 6 && isInMeas(meas, "outseam")) {
+        essentials.push("outseam");
       }
       break;
   }
