@@ -32,11 +32,11 @@ const getStretchedTxt = (stretchValue, t) => {
 };
 
 const overlap = (fitData, t) => {
-  const { matchItem, fitText, isPinched } = fitData;
+  const { matchItem, fitText, isPinched, isLongFit } = fitData;
   if (matchItem && matchItem.overlap > 0) {
     return (
       <span>
-        {t("fitInfo.overlapsYou")}
+        {t(isLongFit ? "fitInfo.overlapsYouLongs" : "fitInfo.overlapsYou")}
         <strong> {fitText}</strong>
         {isPinched && t("fitInfo.whenPinched")}.
       </span>
@@ -47,11 +47,11 @@ const overlap = (fitData, t) => {
 };
 
 const overlapInches = (fitData, t, inchFractionsPrecision) => {
-  const { matchItem, isPinched } = fitData;
+  const { matchItem, isPinched, isLongFit } = fitData;
   if (matchItem && matchItem.overlap > 0) {
     return (
       <span>
-        {t("fitInfo.overlapsYou")}
+        {t(isLongFit ? "fitInfo.overlapsYouLongs" : "fitInfo.overlapsYou")}
         <strong>
           {" "}
           {convertToInches(fitData.fitValue, inchFractionsPrecision)} {t("common.in_short")}
@@ -65,12 +65,13 @@ const overlapInches = (fitData, t, inchFractionsPrecision) => {
 };
 
 const noOverlap = (fitData, t) => {
-  const { matchItem, fitText, isPinched } = fitData;
+  const { matchItem, fitText, isPinched, isLongFit } = fitData;
   if (matchItem && matchItem.overlap <= 0) {
     if (matchItem.componentFit >= 1000) {
       return (
         <span>
-          {t("fitInfo.noOverlap")} {getStretchedTxt(matchItem.componentStretch, t)}
+          {t(isLongFit ? "fitInfo.noOverlapLongs" : "fitInfo.noOverlap")}{" "}
+          {getStretchedTxt(matchItem.componentStretch, t)}
         </span>
       );
     } else {
@@ -78,9 +79,9 @@ const noOverlap = (fitData, t) => {
         <span
           dangerouslySetInnerHTML={{
             __html:
-              t("fitInfo.isSmaller", {
+              t(isLongFit ? "fitInfo.isSmallerLongs" : "fitInfo.isSmaller", {
                 value: fitText.replace("-", ""),
-                whenPinched: isPinched ? t("fitInfo.whenPinched") : " ",
+                whenPinched: isPinched ? t("fitInfo.whenPinched") : "",
               }) + ".",
           }}
         />

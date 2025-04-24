@@ -26,10 +26,13 @@
   },
   "fitInfo": {
     "isSmaller": "{{value}}{{whenPinched}} کوچکتر از اندازه شما است",
+    "isSmallerLongs": "{{value}}{{whenPinched}} کوتاه‌تر از اندازه شما است",
     "noMatchItem": "است {{value}}. {{add}}",
     "noOverlap": "کاملاً سایز شما است",
+    "noOverlapLongs": "دقیقاً به اندازه‌ی طول شما است",
     "overallFit": "اندازه کلی",
     "overlapsYou": "از سایز شما بزرگتر است",
+    "overlapsYouLongs": "از نظر طول از اندازه‌ی شما بلندتر است",
     "smConsidersFit": "SizeMe این سایز را مناسب می داند",
     "stretchedLittle": "این لباس کمی کش آمده است",
     "stretchedMax": "این لباس تا حداکثر کش آمده است",

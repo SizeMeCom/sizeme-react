@@ -26,10 +26,13 @@
   },
   "fitInfo": {
     "isSmaller": "on {{value}} sinun omaa mittaasi <u>pienempi</u>{{whenPinched}}",
+    "isSmallerLongs": "on {{value}} sinun omaa mittaasi <u>lyhyempi</u>{{whenPinched}}",
     "noMatchItem": "on {{value}}. {{add}}",
     "noOverlap": "on suoraan sinua vasten.",
+    "noOverlapLongs": "on yhtä pitkä kuin oma mittasi.",
     "overallFit": "Sopivuus",
     "overlapsYou": "ylittää mittasi",
+    "overlapsYouLongs": "on omaa mittaasi pidempi",
     "smConsidersFit": "SizeMe:n mielestä tämä sopivuus on",
     "stretchedLittle": "Tuote venyy vähän.",
     "stretchedMax": "Tuote venyy huolella.",

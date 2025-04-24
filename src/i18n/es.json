@@ -26,10 +26,13 @@
   },
   "fitInfo": {
     "isSmaller": "es <u>más pequeño</u> que tu medida correspondiente por {{value}}{{whenPinched}}",
+    "isSmallerLongs": "es <u>más corto</u> que tu medida correspondiente por {{value}}{{whenPinched}}",
     "noMatchItem": "es {{value}}. {{add}}",
     "noOverlap": "te queda ajustada sin holgura.",
+    "noOverlapLongs": "tiene exactamente tu misma longitud.",
     "overallFit": "Calce general",
     "overlapsYou": "tiene holgura de",
+    "overlapsYouLongs": "es más largo que tu medida por",
     "smConsidersFit": "SizeMe considera este calce",
     "stretchedLittle": "La prenda está estirada un poco.",
     "stretchedMax": "La prenda está estirada al máximo.",
