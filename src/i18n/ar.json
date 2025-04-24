@@ -26,10 +26,13 @@
   },
   "fitInfo": {
     "isSmaller": "{{value}}{{whenPinched}} القطعة المطلوبة أصغر من قياساتك المناسبة بـ",
+    "isSmallerLongs": "{{value}}{{whenPinched}} القطعة المطلوبة أصغر من قياساتك المناسبة بـ",
     "noMatchItem": "{{value}} {{add}} ي",
     "noOverlap": " القطعة مناسبة جدًا بدون أية زيادات",
+    "noOverlapLongs": " القطعة مناسبة جدًا بدون أية زيادات",
     "overallFit": " المقاس الكلي",
     "overlapsYou": "يزيد عن مقاسك بـ",
+    "overlapsYouLongs": "يزيد عن مقاسك بـ",
     "smConsidersFit": "”سايزمي” يجد هذا المقاس بالتحديد مناسبًا",
     "stretchedLittle": "هذه القطعة متمددة قليلًأ",
     "stretchedMax": "هذه القطعة متمددة إلى أقصى حد",
