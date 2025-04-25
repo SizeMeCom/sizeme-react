@@ -11,7 +11,7 @@ const Chest = (props) => {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className="chest"
-      viewBox="108 50 337.5 270"
+      viewBox="120 50 305.4 270"
       preserveAspectRatio="xMidYMin meet"
     >
       <defs>

@@ -11,7 +11,7 @@ const Outseam = (props) => {
     <svg
       version="1.1"
       id="Layer_1"
-      viewBox="200 250 250 225"
+      viewBox="175 250 254.5 225"
       preserveAspectRatio="xMaxYMin meet"
       className="outseam"
     >
