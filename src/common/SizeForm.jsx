@@ -152,7 +152,9 @@ class SizeForm extends React.Component {
       >
         {this.fields.map(({ field, humanProperty }) => (
           <div className="measurement-cell" key={field} style={{ width: measurementCellWidth }}>
-            <div className="measurement-label">{t(`humanMeasurements.${humanProperty}`)}</div>
+            <label htmlFor={"input_cm_" + field} className="measurement-label">
+              {t(`humanMeasurements.${humanProperty}`)}
+            </label>
             <MeasurementInput
               onChange={this.valueChanged(humanProperty)}
               value={this.state.measurements[humanProperty]}
@@ -161,6 +163,7 @@ class SizeForm extends React.Component {
               inchFractionsPrecision={inchFractionsPrecision}
               unitChoiceDisallowed={unitChoiceDisallowed}
               fitRange={fitRange(field)}
+              fieldName={field}
               onFocus={() => {
                 this.setActiveTooltip(field);
               }}

@@ -253,7 +253,7 @@ class MeasurementInput extends React.Component {
   };
 
   render() {
-    const { unit, unitChoiceDisallowed } = this.props;
+    const { unit, unitChoiceDisallowed, fieldName } = this.props;
     const { value, valueWholeInches, valuePartialInches } = this.state;
     let className = "measurement-input";
     if (this.state.error) {
@@ -303,7 +303,7 @@ class MeasurementInput extends React.Component {
             }}
             onFocus={this.onFocus}
             autoComplete="off"
-            id="inputCentimeters"
+            id={"input_cm_" + fieldName}
           />
         )}
         {unit === "in" && this.state && (
@@ -320,7 +320,7 @@ class MeasurementInput extends React.Component {
               }}
               onFocus={this.onFocus}
               autoComplete="off"
-              id="inputInches"
+              id={"input_in_" + fieldName}
             />
             {valueWholeInches > 0 && (
               <select
@@ -348,6 +348,7 @@ MeasurementInput.propTypes = {
   onFocus: PropTypes.func.isRequired,
   unit: PropTypes.string,
   fitRange: PropTypes.string,
+  fieldName: PropTypes.string,
   t: PropTypes.func.isRequired,
   chooseUnit: PropTypes.func,
   inchFractionsPrecision: PropTypes.number,

@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-a.link-btn.size-guide {
+button.link-btn.size-guide {
   margin: 10px 0;
   padding: 5px 8px;
   border: 1px solid $default_color;
@@ -15,13 +15,7 @@ a.link-btn.size-guide {
   width: 50%;
   color: $default_color;
   display: inline-block;
-
-  .fa-solid {
-    display: inline-block;
-    float: right;
-    line-height: 24px;
-    color: $default_color;
-  }
+  cursor: pointer;
 }
 
 .fit-tooltip {
@@ -391,27 +385,29 @@ a.link-btn.size-guide {
         justify-content: space-between;
         margin: 0 10px;
 
-        a.link-btn {
+        button.link-btn {
           flex: 1;
           max-width: 140px;
           padding: 5px 8px;
-        }
+          border: 0;
+          cursor: pointer;
 
-        a.sign-up {
-          background-color: #7dcc5d;
-          border: 1px solid #76dc4c;
-          color: #fff !important;
-        }
+          &.sign-up {
+            background-color: #7dcc5d;
+            border: 1px solid #76dc4c;
+            color: #fff !important;
+          }
 
-        a.log-in {
-          background-color: #cfcfcf;
-        }
+          &.log-in {
+            background-color: #cfcfcf;
+          }
 
-        a.no-thanks {
-          background-color: #333333;
-          border: 1px solid #888888;
-          color: #ccc !important;
-          padding: 3px 8px;
+          &.no-thanks {
+            background-color: #333333;
+            border: 1px solid #888888;
+            color: #ccc !important;
+            padding: 3px 8px;
+          }
         }
       }
     }

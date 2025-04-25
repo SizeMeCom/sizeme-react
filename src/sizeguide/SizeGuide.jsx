@@ -59,7 +59,7 @@ class SizeGuide extends React.Component {
     const { t, loggedIn, unit, chooseUnit, inchFractionsPrecision, unitChoiceDisallowed } =
       this.props;
     const { guideIsOpen } = this.state;
-    const button = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
+    const buttonText = loggedIn ? t("detailed.buttonText") : t("sizeGuide.buttonText");
 
     const modalProps = {
       ...this.state,
@@ -70,9 +70,9 @@ class SizeGuide extends React.Component {
 
     return (
       <div className="section-size-guide">
-        <a className="link-btn size-guide" onClick={this.openGuide}>
-          {button} <i className="fa-solid fa-caret-right" />
-        </a>
+        <button type="button" className="link-btn size-guide" onClick={this.openGuide}>
+          {buttonText}
+        </button>
         {guideIsOpen && (
           <SizeGuideModal
             {...modalProps}
