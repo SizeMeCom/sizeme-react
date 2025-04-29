@@ -1,0 +1,196 @@
+{
+  "common": {
+    "alreadyUser": "SizeMeのユーザーですか？",
+    "closeText": "閉じる",
+    "selectedSize": "選択したサイズ",
+    "shoppingFor": "購入対象",
+    "sizingBarSplashNoFit": "測定値に基づいて適切なサイズが見つかりませんでした",
+    "sizingBarSplashNoMeas": "サイズを見つけるために、あなたの測定値を入力してください",
+    "sizingBarSplashMoreMeas": "より正確なサイズを見つけるために、さらに測定値を入力してください",
+    "sizingBarSplashNoSize": "フィット感を確認するにはサイズを選択してください",
+    "sizingBarSplashMatch": "おすすめサイズは<strong>{{- sizeName}}</strong>です",
+    "sizingBarFitTooltip": "これはサイズ<strong>{{- selectedSize}}</strong>がどのようにフィットするかを示します",
+    "sizingBarRecommendationTooltip": "この範囲内のフィット感をおすすめします",
+    "togglerText": "自分のサイズを見つける",
+    "sizemeTooltip": "この商品はSizeMeに対応しており、あなたの身体寸法と商品の寸法を比較して最適なサイズを提案します。",
+    "sizemeTooltipLink": "もっと読む",
+    "sizeItself": "サイズ",
+    "cm_short": "cm",
+    "in_short": "in",
+    "defaultProfileName": "マイプロフィール"
+  },
+  "detailed": {
+    "buttonText": "フィット感の詳細表示",
+    "tableTitle": "フィット詳細 - 重なり",
+    "windowTitle": "の詳細ビュー"
+  },
+  "fitInfo": {
+    "isSmaller": "一致する測定値より<u>{{value}}</u>小さい{{whenPinched}}",
+    "isSmallerLongs": "一致する測定値より<u>{{value}}</u>短い{{whenPinched}}",
+    "noMatchItem": "{{value}}です。{{add}}",
+    "noOverlap": "身体にぴったりフィットし、余裕がありません。",
+    "noOverlapLongs": "あなたの測定値と同じ長さです。",
+    "overallFit": "全体的なフィット感",
+    "overlapsYou": "測定値より大きい",
+    "overlapsYouLongs": "測定値より長い",
+    "smConsidersFit": "SizeMeによるこのフィットの評価",
+    "stretchedLittle": "このアイテムは少し伸びています。",
+    "stretchedMax": "このアイテムは最大限に伸びています。",
+    "stretchedMuch": "このアイテムはかなり伸びています。",
+    "stretchedSomewhat": "このアイテムは伸びています。",
+    "tooltipDefaultText": "このアイテムの{{measurement, lowercase}}の測定値は",
+    "whenPinched": " 両側で"
+  },
+  "fitVerdict": {
+    "not_fitted": "小さすぎる",
+    "too_small": "小さすぎる",
+    "slim": "スリム",
+    "regular": "標準",
+    "loose": "ゆったり",
+    "very_loose": "非常にゆったり",
+    "huge": "大きすぎる",
+    "too_big": "大きすぎる"
+  },
+  "fitVerdictLong": {
+    "not_fitted": "短すぎる",
+    "too_small": "短すぎる",
+    "slim": "短い",
+    "regular": "標準",
+    "loose": "長い",
+    "very_loose": "非常に長い",
+    "huge": "大きすぎる",
+    "too_big": "Too long"
+  },
+  "sizingBarRangeLabel": {
+    "too_small": "小さすぎる",
+    "slim": "スリム",
+    "regular": "おすすめ",
+    "loose": "ゆったり",
+    "too_big": "大きい"
+  },
+  "humanMeasurements": {
+    "chest": "胸囲",
+    "shirtWaist": "ウエスト",
+    "sleeve": "腕の長さ",
+    "shoulderFull": "肩幅",
+    "neckCircumference": "首回り",
+    "frontHeight": "前丈",
+    "underbust": "アンダーバスト",
+    "pantWaist": "パンツのウエスト",
+    "hips": "ヒップ",
+    "inSeam": "股下",
+    "outSeam": "股上",
+    "thighCircumference": "太ももの周囲",
+    "kneeCircumference": "膝の周囲",
+    "ankleCircumference": "足首の周囲",
+    "calfCircumference": "ふくらはぎの周囲",
+    "footLength": "足の長さ",
+    "footWidth": "足の幅",
+    "headCircumference": "頭囲"
+  },
+  "measurement": {
+    "chest": "胸囲",
+    "waist": "ウエスト",
+    "sleeve": "袖丈",
+    "sleeve_top_width": "袖上部幅",
+    "sleeve_top_opening": "袖上部開口部",
+    "wrist_width": "手首幅",
+    "underbust": "アンダーバスト",
+    "neck_opening_width": "襟周り",
+    "shoulder_width": "肩幅",
+    "front_height": "前丈",
+    "pant_waist": "パンツのウエスト",
+    "hips": "ヒップ",
+    "inseam": "股下",
+    "outseam": "股上",
+    "thigh_width": "太もも幅",
+    "knee_width": "膝幅",
+    "calf_width": "ふくらはぎ幅",
+    "pant_sleeve_width": "裾幅",
+    "shoe_inside_length": "靴の内寸長さ",
+    "shoe_inside_width": "靴の内寸幅",
+    "hat_width": "帽子の周囲",
+    "hood_height": "フードの高さ",
+    "hem": "裾",
+    "sleeve_opening": "袖口"
+  },
+  "measurementGuide": {
+    "title": "測定方法：",
+    "chest": "胸の最も大きい部分を脇の下を通して測定してください<span class='female'>（ブラジャーを着用した状態で）</span>。<br/><br/><b>息を完全に吐ききって</b>測定してください。",
+    "underbust": "バストのすぐ下をぐるりと測定してください。<br/><br/><b>息を完全に吐ききって</b>測定してください。",
+    "front_height": "首と肩の付け根からウエストバンドまでまっすぐに測定してください。",
+    "sleeve": "肩（通常シャツの縫い目がある位置）から手首（橈骨の端）まで測定してください。腕をまっすぐ下にして測定してください。",
+    "pant_waist": "普段パンツを履いている位置をぐるりと測定してください（へそから約6cm下）。<br/><br/><b>タイトなパンツを履くようにお腹を引っ込めて</b>測定してください。",
+    "waist": "へその上約3cmの位置をぐるりと測定してください。<br/><br/><b>お腹を軽く引っ込めて</b>測定してください。",
+    "outseam": "ウエスト上端から足の外側に沿って足首のくるぶしまで測定してください。",
+    "shoe_inside_length": "壁に沿ってメジャーを置き、裸足でその上に立って測定します。",
+    "calf_width": "ふくらはぎの最も太い部分を測定してください。",
+    "hat_width": "耳の上、頭の最も広い部分を測定してください。",
+    "hips": "ヒップの最も広い部分をぐるりと測定してください。",
+    "neck_opening_width": "首の付け根の低い位置を測定してください。メジャーをぴったり当ててください。"
+  },
+  "measurementTooltips": {
+    "linkToGuide": {
+      "start": "クリック",
+      "link": "こちら",
+      "end": "で測定ガイドを見る"
+    },
+    "chest": ["胸の最も大きい部分、脇の下周りを測定してください", "息を完全に吐ききってください"],
+    "underbust": ["バストのすぐ下をぐるりと測定してください", "息を完全に吐ききってください"],
+    "front_height": ["首と肩の付け根からウエストバンドまでまっすぐに測定してください"],
+    "sleeve": ["肩から手首までを測定してください", "腕をまっすぐ下にして測定してください"],
+    "pant_waist": [
+      "普段パンツを履いている位置をぐるりと測定してください",
+      "タイトなパンツを履くようにお腹を引っ込めてください"
+    ],
+    "waist": ["へその上をぐるりと測定してください", "お腹を軽く引っ込めてください"],
+    "hips": ["ヒップの最も広い部分をぐるりと測定してください"],
+    "outseam": [
+      "ウエスト上端から足の外側に沿って測定を開始してください",
+      "足首のくるぶしまで測定してください"
+    ],
+    "shoe_inside_length": ["壁に沿ってメジャーを置き、裸足でその上に立って測定します。"],
+    "calf_width": ["ふくらはぎの最も太い部分を測定してください"],
+    "hat_width": ["耳の上、頭の最も広い部分を測定してください"],
+    "neck_opening_width": [
+      "首の付け根の低い位置を測定してください",
+      "メジャーをぴったり当ててください"
+    ]
+  },
+  "message": {
+    "addProfiles": "サイズ提案のためにプロフィールを追加してください。",
+    "missingMeasurements": "より正確なサイズ提案のために、さらに測定値を追加してください",
+    "noMeasurements": "サイズ提案のために測定値をプロフィールに追加してください。",
+    "addThisMeasurement": "この測定値をプロフィールに追加して、フィット計算に含めましょう。",
+    "noProfiles": "アカウントにプロフィールがありません。",
+    "noTopButton": "このサイズではシャツの一番上のボタンが閉まりません。"
+  },
+  "signupBox": {
+    "duplicateUser": "このメールアドレスのアカウントは既に存在します。ログインしますか？",
+    "emailPlaceholder": "myname@example.com",
+    "message": "次回のために測定値を保存しましょう",
+    "save": "OK",
+    "signupPrompt": "メールで保存",
+    "signupChoices": "新規登録またはログイン",
+    "tooltipPolicyLink": "プライバシーポリシー",
+    "signupDone": "測定値が保存されました！まもなく確認メールが届きます。"
+  },
+  "sizeGuide": {
+    "advertisement": "このサイズガイドはSizeMeが提供しています",
+    "buttonText": "サイズガイド",
+    "measurementDisclaimer": "これらの測定値は<u>商品の外側を平らにした状態</u>で測定されています。",
+    "measurementDisclaimerCollar": "襟周りの測定を除き、すべて外側を測定しています。",
+    "measurementDisclaimerInside": "これらの測定値は<u>商品の内側</u>を測定したものです。",
+    "tableTitle": "実際のアイテムの寸法",
+    "windowTitle": "サイズガイド："
+  },
+  "splash": {
+    "btnLogInLabel": "ログイン",
+    "btnLogInTitle": "すでにアカウントを持っています",
+    "btnNoThanksLabel": "いいえ、結構です",
+    "btnNoThanksTitle": "あとで",
+    "btnSignUpLabel": "新規登録",
+    "btnSignUpTitle": "はい、無料アカウントを作成したいです",
+    "detailedText": "いくつかの<b>自分の測定値</b>を入力して、この商品がどのように<b>フィットするか</b>を確認しましょう。無料の<b>SizeMe</b>プロフィールを作成して、サイズ選びの悩みを解消！"
+  }
+}
