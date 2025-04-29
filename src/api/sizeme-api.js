@@ -409,7 +409,7 @@ function getRecommendedFit(fitResults) {
     .reduce(
       ([accSize, dist], [size, res]) => {
         const newFit = getFitPosition(res.totalFit, res.matchMap);
-        const newDist = Math.abs(newFit - 50);
+        const newDist = Math.abs(newFit - 50.0);
         if (newDist <= maxDist && newFit >= 20 && (!accSize || newDist < dist)) {
           return [size, newDist];
         } else {

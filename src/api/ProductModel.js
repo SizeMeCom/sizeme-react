@@ -2484,13 +2484,13 @@ const getFitPosition = (value, matchMap) => {
   }
   if (isStretching(matchMap, fitRecommendation)) {
     // RENDER MODE: STRETCHING
-    let newPos = 50;
+    let newPos = 50.0;
     if (matchMap) {
       if (effTotalFit > 1000) {
         if (fitRecommendation <= 1000) {
-          newPos = 60 + ((effTotalFit - 1000) / 55) * 60;
+          newPos = 60.0 + ((effTotalFit - 1000) / 55) * 60;
         } else {
-          newPos = 60 + ((effTotalFit - 1000) / 55) * 10;
+          newPos = 60.0 + ((effTotalFit - 1000) / 55) * 10;
         }
       } else if (effTotalFit == 1000) {
         let stretchBreakpoint = 2 * optimalStretch;
@@ -2500,10 +2500,10 @@ const getFitPosition = (value, matchMap) => {
         const maxStretch = Math.max.apply(null, maxStretchArr);
         newPos =
           maxStretch > stretchBreakpoint
-            ? Math.max(20, 40 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20)
-            : Math.max(40, 60 - (maxStretch / stretchBreakpoint) * 20);
+            ? Math.max(20.0, 40.0 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20)
+            : Math.max(40.0, 60.0 - (maxStretch / stretchBreakpoint) * 20);
       } else {
-        newPos = Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
+        newPos = Math.max(0.0, 20.0 - ((1000 - effTotalFit) / 55) * 20);
       }
     }
     return newPos;
@@ -2511,11 +2511,11 @@ const getFitPosition = (value, matchMap) => {
     // RENDER MODE: SLIMS
     // 0..20 too small
     if (effTotalFit < 1000) {
-      return Math.max(0, 20 - ((1000 - effTotalFit) / 55) * 20);
+      return Math.max(0.0, 20.0 - ((1000 - effTotalFit) / 55) * 20);
     } else if (effTotalFit == 1000) {
       // 20..40 slim: is stretching
       const maxStretch = matchMap ? Math.max.apply(null, maxStretchArr) : optimalStretch;
-      return Math.max(20, 40 - (maxStretch / 100) * 20);
+      return Math.max(20.0, 40.0 - (maxStretch / 100) * 20);
     } else {
       // 40..100 regular, loose and big, create breakpoints
       const breakPoints = {
@@ -2525,9 +2525,9 @@ const getFitPosition = (value, matchMap) => {
         100: Math.max(1080, 1000 + (fitRecommendation - 1000) * 16),
         200: 10000,
       };
-      let newPos = 100;
-      newPos = linearizeObject(effTotalFit, breakPoints);
-      return newPos ?? 200;
+      let newPos = 100.0;
+      newPos = linearizeObject(effTotalFit, breakPoints) + 0.0;
+      return newPos ?? 200.0;
     }
   } else {
     // RENDER MODE: NORMAL, with big softner
@@ -2540,10 +2540,13 @@ const getFitPosition = (value, matchMap) => {
     const sliderPosXMin = 1000 - scaledWidth;
     const sliderPosXMax = fitRanges.slice(1).reduce((end) => end + scaledWidth, 1000);
     const sliderScale = 100 / (sliderPosXMax - sliderPosXMin);
-    let newPos = Math.max(0, (effTotalFit - sliderPosXMin) * sliderScale);
+    let newPos = Math.max(0.0, (effTotalFit - sliderPosXMin) * sliderScale);
     if (newPos > 80) {
-      newPos = (newPos - 80) / 2 + 80;
+      newPos = (newPos - 80) / 2 + 80.0;
     }
+    // add small tiebreaker from stretching (any stretch is bad)
+    const maxStretch = matchMap ? Math.max.apply(null, maxStretchArr) : 0;
+    newPos = newPos + (0.1 - (maxStretch / 1000.0));
     return newPos;
   }
 };
