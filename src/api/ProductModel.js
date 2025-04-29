@@ -2500,7 +2500,10 @@ const getFitPosition = (value, matchMap) => {
         const maxStretch = Math.max.apply(null, maxStretchArr);
         newPos =
           maxStretch > stretchBreakpoint
-            ? Math.max(20.0, 40.0 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20)
+            ? Math.max(
+                20.0,
+                40.0 - ((maxStretch - stretchBreakpoint) / (100 - stretchBreakpoint)) * 20
+              )
             : Math.max(40.0, 60.0 - (maxStretch / stretchBreakpoint) * 20);
       } else {
         newPos = Math.max(0.0, 20.0 - ((1000 - effTotalFit) / 55) * 20);
@@ -2546,7 +2549,7 @@ const getFitPosition = (value, matchMap) => {
     }
     // add small tiebreaker from stretching (any stretch is bad)
     const maxStretch = matchMap ? Math.max.apply(null, maxStretchArr) : 0;
-    newPos = newPos + (0.1 - (maxStretch / 1000.0));
+    newPos = newPos + (0.1 - maxStretch / 1000.0);
     return newPos;
   }
 };
