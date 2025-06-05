@@ -82,7 +82,7 @@ class SignupBox extends React.Component {
           id="sizeme-signup-box"
           className="sizeme-signup-box"
           clickable={true}
-          place="bottom"
+          place="left"
           type="light"
           effect="solid"
         >

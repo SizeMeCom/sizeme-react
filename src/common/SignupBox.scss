@@ -24,6 +24,7 @@
   opacity: 1 !important;
   pointer-events: all;
   max-width: 240px;
+  min-width: 240px;
   padding: 5px 0 0 0;
 
   div {
@@ -47,7 +48,6 @@
     img {
       height: 16px;
       width: auto;
-      vertical-align: baseline;
       margin: 6px auto;
       display: block;
     }
