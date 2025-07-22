@@ -372,8 +372,7 @@ button.link-btn.size-guide {
       text-align: center;
       background-color: #eee;
       width: calc(100% - 20px);
-      margin-top: 10px;
-      margin-bottom: 0;
+      margin: 10px 0 0;
 
       p {
         margin: 0px 5px 10px 5px;
@@ -484,6 +483,7 @@ button.link-btn.size-guide {
     text-align: center;
     canvas {
       height: 100%;
+      max-height: 324px;
     }
   }
 
@@ -510,5 +510,9 @@ button.link-btn.size-guide {
         line-height: 32px;
       }
     }
+  }
+
+  .size-guide-splash {
+    margin: 10px 10px 0;
   }
 }
