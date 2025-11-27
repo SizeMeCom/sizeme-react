@@ -165,7 +165,11 @@ function getEssentialMeasurements(itemTypeArr, meas) {
       }
       if (isInMeas(meas, "hips")) {
         essentials.push("hips");
-        required.push("hips");
+        if (itemTypeArr[4] == 8) {
+          required.push("pant_waist");
+        } else {
+          required.push("hips");
+        }
       }
       if (itemTypeArr[3] >= 6) {
         if (isInMeas(meas, "outseam")) {
@@ -1346,6 +1350,7 @@ function init(itemTypeArr) {
               { X: 115, Y: 52, cp1X: 75, cp1Y: 180, cp2X: 77, cp2Y: 88 },
             ],
           });
+          arrows.front_height.coords[0].Y = 60;
           break;
       }
 
@@ -1633,6 +1638,17 @@ function init(itemTypeArr) {
                 });
               }
               arrows.front_height.coords[1].Y = $baseY + 60;
+            } else if (itemTypeArr[6] === 7) {
+              // flared
+              const $x = (itemTypeArr[5] - 4) * 40;
+              itemDrawing.coords.push(
+                { X: 250, Y: 702 },
+                { X: 250 + $x, Y: $baseY + 60 },
+                { X: 0, Y: $baseY + 60 }
+              );
+              arrows.hips.coords[0].X = -290;
+              arrows.hips.coords[1].X = 290;
+              arrows.front_height.coords[1].Y = $baseY + 60;
             } else {
               itemDrawing.coords.push(
                 {
@@ -1667,6 +1683,11 @@ function init(itemTypeArr) {
         itemDrawing.coords.push({ X: 160, Y: 910 + $l * 200 });
         itemDrawing.coords.push({ X: 20, Y: 1200 });
         itemDrawing.coords.push({ X: 0, Y: 1200 });
+
+        arrows.inseam.coords = [
+          { X: 0, Y: 1200 },
+          { X: 160, Y: 910 + $l * 200 },
+        ];
 
         if (itemTypeArr[0] === 6 && itemTypeArr[4] === 1) {
           // top and bottom, elastic top sleeve
@@ -1703,6 +1724,9 @@ function init(itemTypeArr) {
               ],
             });
           }
+        }
+        if (itemTypeArr[0] === 5) {
+          arrows.front_height.coords[1].Y = 900 + $l * 200;
         }
         arrows.waist = {
           mirror: false,
@@ -1966,6 +1990,9 @@ function init(itemTypeArr) {
               ],
             });
           }
+        } else if (itemTypeArr[4] === 8) {
+          // flared
+          itemDrawing.coords.push({ X: 250 + $l * 4, Y: 220 + $l * 95 });
         } else {
           itemDrawing.coords.push({ X: 250 - $l * 8, Y: 220 + $l * 95 });
         }
@@ -1993,19 +2020,59 @@ function init(itemTypeArr) {
               ],
             });
           }
+          arrows.outseam = {
+            mirror: false,
+            coords: [
+              { X: 225, Y: 0 },
+              { X: 250, Y: 170 },
+              { X: 250 - $l * 8, Y: 220 + $l * 95 },
+            ],
+            style: "line",
+            lift: true,
+          };
+        } else if (itemTypeArr[4] === 8) {
+          // flared
+          itemDrawing.coords.push({ X: -250 - $l * 4, Y: 220 + $l * 95 });
+          arrows.outseam = {
+            mirror: false,
+            coords: [
+              { X: 225, Y: 0 },
+              { X: 250, Y: 170 },
+              { X: 250 + $l * 4, Y: 220 + $l * 95 },
+            ],
+            style: "line",
+            lift: true,
+          };
+          /*
+          itemDrawing.accents.push({
+            type: "line",
+            coords: [
+              { X: -225, Y: 0 },
+              { X: 225, Y: 0, cp1X: -100, cp1Y: 10, cp2X: 100, cp2Y: 10 },
+              {
+                X: -225,
+                Y: 0,
+                cp1X: 122,
+                cp1Y: 40,
+                cp2X: -122,
+                cp2Y: 40,
+              },
+            ],
+          });                
+          */
         } else {
           itemDrawing.coords.push({ X: -250 + $l * 8, Y: 220 + $l * 95 });
+          arrows.outseam = {
+            mirror: false,
+            coords: [
+              { X: 225, Y: 0 },
+              { X: 250, Y: 170 },
+              { X: 250 - $l * 8, Y: 220 + $l * 95 },
+            ],
+            style: "line",
+            lift: true,
+          };
         }
-        arrows.outseam = {
-          mirror: false,
-          coords: [
-            { X: 225, Y: 0 },
-            { X: 250, Y: 170 },
-            { X: 250 - $l * 8, Y: 220 + $l * 95 },
-          ],
-          style: "line",
-          lift: true,
-        };
       }
       itemDrawing.coords.push({ X: -250, Y: 170 });
       itemDrawing.accents.push({
