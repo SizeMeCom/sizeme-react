@@ -453,7 +453,7 @@ function match(doSelectBestFit = true) {
     if (subject) {
       if (
         requiredMeasurements.length > 0 &&
-        !Object.keys(subject).some((key) => requiredMeasurements.includes(key))
+        !requiredMeasurements.every((k) => Object.prototype.hasOwnProperty.call(subject, k))
       ) {
         dispatch(actions.resetMatch());
         dispatch(actions.setMatchState({ match: null, state: "more-meas" }));

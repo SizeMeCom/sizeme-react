@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import Optional from "optional-js";
+import uiOptions from "./uiOptions";
 
 const fitStep = 55;
 const norm = 1000;
@@ -118,7 +119,7 @@ function isInMeas(meas, thisMeas) {
 function getEssentialMeasurements(itemTypeArr, meas) {
   // returns essentials and required measurements for the item type
   const essentials = [];
-  const required = [];
+  var required = [];
   switch (itemTypeArr[0]) {
     case 1:
       if (isInMeas(meas, "chest")) {
@@ -138,7 +139,6 @@ function getEssentialMeasurements(itemTypeArr, meas) {
       if (essentials.length < 3 && itemTypeArr[5] >= 3) {
         if (isInMeas(meas, "waist")) {
           essentials.splice(1, 0, "waist"); // stick this sucker in the second slot
-          required.push("waist");
         }
       }
       if (essentials.length < 3 && itemTypeArr[5] === 3) {
@@ -162,14 +162,11 @@ function getEssentialMeasurements(itemTypeArr, meas) {
     case 2:
       if (isInMeas(meas, "pant_waist")) {
         essentials.push("pant_waist");
+        required.push("pant_waist");
       }
       if (isInMeas(meas, "hips")) {
         essentials.push("hips");
-        if (itemTypeArr[4] == 8) {
-          required.push("pant_waist");
-        } else {
-          required.push("hips");
-        }
+        required.push("hips");
       }
       if (itemTypeArr[3] >= 6) {
         if (isInMeas(meas, "outseam")) {
@@ -251,6 +248,9 @@ function getEssentialMeasurements(itemTypeArr, meas) {
         essentials.push("outseam");
       }
       break;
+  }
+  if (uiOptions.requireAllMeasurements) {
+    required = essentials;
   }
 
   return { essentials, required };

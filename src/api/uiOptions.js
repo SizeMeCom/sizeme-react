@@ -7,6 +7,7 @@ const general = {
   measurementUnit: "cm",
   measurementUnitChoiceDisallowed: false,
   matchGenderFromNameMale: "",
+  requireAllMeasurements: false,
 };
 
 const shops = {

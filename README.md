@@ -55,6 +55,7 @@ Application expects to find an object named `sizeme_options` (TODO: rename to `S
   - [measurementUnit] (_String_): default measurement unit. Possible values: "cm" for metric, "in" for imperials. Default: "cm"
   - [measurementUnitChoiceDisallowed] (_Boolean_): disallow user from switching measurement unit. Default: false
   - [matchGenderFromNameMale] (_String_): a reg exp string to match that product is for men. Otherwise measuring videos etc. default to women. Default: ""
+  - [requireAllMeasurements] (_Boolean_): require all essentials measurements in the frontend before giving a size recommendation. Default: false
 
 - [additionalTranslations] (_Object_): Optionally override translations defined under ['i18n'](src/i18n). Example of how to
   override the Swedish translation for chest:
