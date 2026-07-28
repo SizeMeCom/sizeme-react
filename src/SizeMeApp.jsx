@@ -116,9 +116,11 @@ class SizeMeApp extends React.Component {
               setSelectedProfile={setSelectedProfile}
             />
           )}
-          {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match && !uiOptions.disableLogin && (
-            <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone} />
-          )}
+          {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) &&
+            match &&
+            !uiOptions.disableLogin && (
+              <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone} />
+            )}
           {!loggedIn && !match && (
             <div className="profile-menu-container">
               <img

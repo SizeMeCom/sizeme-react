@@ -135,7 +135,7 @@ class SizeGuideProductInfo extends React.Component {
           )}
         </DetailSection>
 
-         {!uiOptions.disableLogin && (
+        {!uiOptions.disableLogin && (
           <CookieHideWrapper>
             <div className="size-guide-splash">
               <p dangerouslySetInnerHTML={{ __html: t("splash.detailedText") }} />
