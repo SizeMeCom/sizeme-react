@@ -109,14 +109,14 @@ class SizeMeApp extends React.Component {
         )}
         <div className="sizeme-slider-row">
           <SizingBar />
-          {loggedIn && (
+          {loggedIn && !uiOptions.disableLogin && (
             <ProfileMenu
               profiles={profiles}
               selectedProfile={selectedProfile.id}
               setSelectedProfile={setSelectedProfile}
             />
           )}
-          {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match && (
+          {(!loggedIn || signupStatus.inProgress || signupStatus.signupDone) && match && !uiOptions.disableLogin && (
             <SignupBox onSignup={onSignup} signupDone={signupStatus.signupDone} />
           )}
           {!loggedIn && !match && (

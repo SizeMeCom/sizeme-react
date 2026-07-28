@@ -135,39 +135,41 @@ class SizeGuideProductInfo extends React.Component {
           )}
         </DetailSection>
 
-        <CookieHideWrapper>
-          <div className="size-guide-splash">
-            <p dangerouslySetInnerHTML={{ __html: t("splash.detailedText") }} />
-            <div className="splash-choices">
-              <button
-                type="button"
-                onClick={this.loginFrameOpener("signup")}
-                className="sign-up link-btn"
-                title={t("splash.btnSignUpTitle")}
-              >
-                {t("splash.btnSignUpLabel")}
-              </button>
+         {!uiOptions.disableLogin && (
+          <CookieHideWrapper>
+            <div className="size-guide-splash">
+              <p dangerouslySetInnerHTML={{ __html: t("splash.detailedText") }} />
+              <div className="splash-choices">
+                <button
+                  type="button"
+                  onClick={this.loginFrameOpener("signup")}
+                  className="sign-up link-btn"
+                  title={t("splash.btnSignUpTitle")}
+                >
+                  {t("splash.btnSignUpLabel")}
+                </button>
 
-              <button
-                type="button"
-                onClick={this.loginFrameOpener("login")}
-                className="log-in link-btn"
-                title={t("splash.btnLogInTitle")}
-              >
-                {t("splash.btnLogInLabel")}
-              </button>
+                <button
+                  type="button"
+                  onClick={this.loginFrameOpener("login")}
+                  className="log-in link-btn"
+                  title={t("splash.btnLogInTitle")}
+                >
+                  {t("splash.btnLogInLabel")}
+                </button>
 
-              <button
-                type="button"
-                className="no-thanks link-btn"
-                onClick={hideSizeMe}
-                title={t("splash.btnNoThanksTitle")}
-              >
-                {t("splash.btnNoThanksLabel")}
-              </button>
+                <button
+                  type="button"
+                  className="no-thanks link-btn"
+                  onClick={hideSizeMe}
+                  title={t("splash.btnNoThanksTitle")}
+                >
+                  {t("splash.btnNoThanksLabel")}
+                </button>
+              </div>
             </div>
-          </div>
-        </CookieHideWrapper>
+          </CookieHideWrapper>
+        )}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 const general = {
   disableSizeGuide: false,
   outsideSizeGuide: false,
+  disableLogin: true,
   toggler: false,
   firstRecommendation: true,
   flatMeasurements: true,
